@@ -1,1 +1,165 @@
-<!-- index.html -->
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio de Josué - Développeur Web Full Stack</title>
+    <meta
+      name="description"
+      content="Portfolio de Josué, développeur web full stack passionné par la création d'applications innovantes et performantes." />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap"
+      rel="stylesheet" />
+    <link href="./styles/output.css" rel="stylesheet" />
+    <link href="./styles/custom.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+  </head>
+  <body
+    class="bg-white dark:bg-dark text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <!-- Navbar -->
+    <nav
+      class="navbar fixed top-0 left-0 right-0 p-4 z-10 bg-white/80 dark:bg-dark-black/80 backdrop-blur-md transition-all duration-300">
+      <div class="flex justify-between items-center max-w-6xl mx-auto">
+        <button
+          id="darkModeToggle"
+          class="p-2 rounded-full bg-gray-200 dark:bg-gray-700">
+          🌓
+        </button>
+        <ul class="flex space-x-4">
+          <li><a href="/" class="nav-link">Accueil</a></li>
+          <li><a href="#projects" class="nav-link">Projets</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header
+      class="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl w-full">
+        <h1 class="hero-title">
+          <span
+            class="text-4xl sm:text-5xl text-gray-700 dark:text-gray-300 block"
+            >Salut,</span
+          >
+          <span
+            class="text-6xl sm:text-7xl font-serif-bold text-primary-blue dark:text-primary-blue mt-2 block pl-8"
+            >Je suis Josué !</span
+          >
+        </h1>
+        <p
+          class="text-xl sm:text-2xl mt-4 text-gray-700 dark:text-gray-300 hero-subtitle max-w-2xl">
+          — un développeur web full stack passionné par la création
+          d'applications innovantes et performantes.
+        </p>
+        <div class="mt-8 flex space-x-4">
+          <a
+            href="https://www.linkedin.com/in/josuexavierrocha/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="modern-button bg-primary-blue"
+            >LinkedIn</a
+          >
+          <a
+            href="https://github.com/josuexrocha"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="modern-button bg-primary-red"
+            >GitHub</a
+          >
+          <a
+            href="assets/docs/CV.pdf"
+            download
+            class="modern-button bg-primary-yellow text-gray-900"
+            >Télécharger CV</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <!-- Bio Section -->
+    <section class="py-16 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-4xl mx-auto">
+        <div class="mb-12">
+          <div
+            class="aspect-w-4 aspect-h-3 overflow-hidden rounded-lg shadow-lg profile-image-container">
+            <img
+              src="assets/images/profil.jpeg"
+              alt="Josué"
+              class="profile-image" />
+          </div>
+        </div>
+        <div class="space-y-4 bio-text">
+          <p class="text-lg">
+            J'ai passé les dernières années à me former en développement web
+            full stack, en me concentrant sur les technologies modernes et les
+            meilleures pratiques de l'industrie.
+          </p>
+          <p class="text-lg">
+            Ma passion est de créer des applications web robustes et élégantes
+            qui résolvent des problèmes réels et offrent une excellente
+            expérience utilisateur.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="py-16 px-4 sm:px-6 lg:px-8">
+      <h2
+        class="text-4xl sm:text-5xl font-serif-bold mb-12 text-center text-gray-900 dark:text-gray-100">
+        Voici ce que vous pouvez attendre de moi...
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div
+          class="project-card bg-primary-blue text-white dark:bg-primary-blue dark:text-white">
+          <h3 class="text-xl font-semibold mb-4">Projet 1</h3>
+          <p>Description du projet 1</p>
+        </div>
+        <div
+          class="project-card bg-primary-red text-white dark:bg-primary-red dark:text-white">
+          <h3 class="text-xl font-semibold mb-4">Projet 2</h3>
+          <p>Description du projet 2</p>
+        </div>
+        <div
+          class="project-card bg-primary-yellow text-gray-900 dark:bg-primary-yellow dark:text-gray-900">
+          <h3 class="text-xl font-semibold mb-4">Projet 3</h3>
+          <p>Description du projet 3</p>
+        </div>
+        <div
+          class="project-card bg-gray-900 text-white dark:bg-gray-100 dark:text-gray-900">
+          <h3 class="text-xl font-semibold mb-4">Projet 4</h3>
+          <p>Description du projet 4</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section
+      id="contact"
+      class="py-16 px-4 sm:px-6 lg:px-8 bg-gray-100 dark:bg-gray-800">
+      <h2
+        class="text-4xl sm:text-5xl font-serif-bold mb-8 text-center text-gray-900 dark:text-gray-100">
+        Contactez-moi
+      </h2>
+      <p class="text-center mb-8">
+        Vous pouvez me contacter à l'adresse :
+        <a
+          href="mailto:votre@email.com"
+          class="text-blue-600 dark:text-blue-400 hover:underline"
+          >votre@email.com</a
+        >
+      </p>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-4 text-center">
+      <p>&copy; 2024 Josué. Tous droits réservés.</p>
+    </footer>
+
+    <script src="./scripts/main.js" defer></script>
+  </body>
+</html>

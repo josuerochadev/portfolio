@@ -20,7 +20,7 @@ Ce portfolio présente mes compétences en tant que développeur web full stack,
 
 ## Visualisation du Site
 
-Ce portfolio est hébergé sur GitHub Pages. Vous pouvez le visualiser en visitant [https://votre-username.github.io/nom-du-repo](https://votre-username.github.io/nom-du-repo)
+Ce portfolio est hébergé sur GitHub Pages. Vous pouvez le visualiser en visitant [ce lien](https://josuexrocha.github.io/portfolio/)
 
 ## Développement Local
 
@@ -28,7 +28,7 @@ Pour travailler sur ce projet localement :
 
 1. Clonez ce dépôt
 
-   `git clone https://github.com/votre-username/votre-repo.git`
+   `git clone https://github.com/josuexrocha/portfolio.git`
 
 2. Ouvrez le fichier `index.html` dans votre navigateur
 
@@ -47,6 +47,5 @@ Aucune installation supplémentaire n'est nécessaire car le projet n'utilise pa
 ## Contact
 
 - Email : josuexr@icloud.com
-- LinkedIn : [Mon profil LinkedIn](https://www.linkedin.com/in/josuexavierrocha/)
-- GitHub : [Mon profil GitHub](https://github.com/josuexrocha)
-
+- [LinkedIn](https://www.linkedin.com/in/josuexavierrocha/)
+- [GitHub](https://github.com/josuexrocha)

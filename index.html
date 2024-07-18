@@ -11,7 +11,7 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;700&display=swap"
       rel="stylesheet" />
     <link href="./styles/output.css" rel="stylesheet" />
     <link href="./styles/custom.css" rel="stylesheet" />
@@ -19,20 +19,38 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
   </head>
   <body
-    class="bg-white dark:bg-dark text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    class="font-sans bg-custom-gray-200 dark:bg-custom-gray-900 text-custom-gray-800 dark:text-custom-gray-100 transition-colors duration-300">
     <!-- Navbar -->
     <nav
-      class="navbar fixed top-0 left-0 right-0 p-4 z-10 bg-white/80 dark:bg-dark-black/80 backdrop-blur-md transition-all duration-300">
+      class="navbar fixed top-0 left-0 right-0 p-4 z-10 bg-custom-gray-300 dark:bg-custom-gray-800 text-custom-gray-900 dark:text-custom-gray-100 backdrop-blur-md transition-all duration-300">
       <div class="flex justify-between items-center max-w-6xl mx-auto">
         <button
           id="darkModeToggle"
-          class="p-2 rounded-full bg-gray-200 dark:bg-gray-700">
+          class="p-2 rounded-full bg-custom-gray-200 dark:bg-custom-gray-700 transition-colors duration-300">
           🌓
         </button>
         <ul class="flex space-x-4">
-          <li><a href="/" class="nav-link">Accueil</a></li>
-          <li><a href="#projects" class="nav-link">Projets</a></li>
-          <li><a href="#contact" class="nav-link">Contact</a></li>
+          <li>
+            <a
+              href="/"
+              class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary-blue dark:hover:text-primary-blue transition-colors duration-300"
+              >Accueil</a
+            >
+          </li>
+          <li>
+            <a
+              href="#projects"
+              class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary-red dark:hover:text-primary-red transition-colors duration-300"
+              >Projets</a
+            >
+          </li>
+          <li>
+            <a
+              href="#contact"
+              class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary-yellow dark:hover:text-primary-yellow transition-colors duration-300"
+              >Contact</a
+            >
+          </li>
         </ul>
       </div>
     </nav>
@@ -41,13 +59,13 @@
     <header
       class="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
       <div class="max-w-3xl w-full">
-        <h1 class="hero-title">
+        <h1 class="hero-title font-serif">
           <span
-            class="text-4xl sm:text-5xl text-gray-700 dark:text-gray-300 block"
+            class="text-4xl sm:text-5xl text-gray-700 dark:text-gray-300 block font-normal"
             >Salut,</span
           >
           <span
-            class="text-6xl sm:text-7xl font-serif-bold text-primary-blue dark:text-primary-blue mt-2 block pl-8"
+            class="text-6xl sm:text-7xl font-bold text-primary-blue dark:text-primary-blue mt-2 block pl-16"
             >Je suis Josué !</span
           >
         </h1>
@@ -56,25 +74,26 @@
           — un développeur web full stack passionné par la création
           d'applications innovantes et performantes.
         </p>
-        <div class="mt-8 flex space-x-4">
+        <div
+          class="mt-8 flex flex-col sm:flex-row items-center sm:justify-end space-y-4 sm:space-y-0 sm:space-x-4">
           <a
             href="https://www.linkedin.com/in/josuexavierrocha/"
             target="_blank"
             rel="noopener noreferrer"
-            class="modern-button bg-primary-blue"
+            class="modern-button bg-primary-blue hover:bg-secondary-blue text-custom-gray-200 inline-block px-4 py-2 font-semibold w-[150px] text-center text-sm transition-all duration-300 shadow-md hover:shadow-xl active:scale-95 hover:-translate-y-1 rounded-[15px]"
             >LinkedIn</a
           >
           <a
             href="https://github.com/josuexrocha"
             target="_blank"
             rel="noopener noreferrer"
-            class="modern-button bg-primary-red"
+            class="modern-button bg-primary-red hover:bg-secondary-red text-custom-gray-200 inline-block px-4 py-2 font-semibold w-[150px] text-center text-sm transition-all duration-300 shadow-md hover:shadow-xl active:scale-95 hover:-translate-y-1 rounded-[15px]"
             >GitHub</a
           >
           <a
             href="assets/docs/CV.pdf"
             download
-            class="modern-button bg-primary-yellow text-gray-900"
+            class="modern-button bg-primary-yellow hover:bg-secondary-yellow text-custom-gray-900 inline-block px-4 py-2 font-semibold w-[150px] text-center text-sm transition-all duration-300 shadow-md hover:shadow-xl active:scale-95 hover:-translate-y-1 rounded-[15px]"
             >Télécharger CV</a
           >
         </div>
@@ -86,20 +105,21 @@
       <div class="max-w-4xl mx-auto">
         <div class="mb-12">
           <div
-            class="aspect-w-4 aspect-h-3 overflow-hidden rounded-lg shadow-lg profile-image-container">
+            class="profile-image-container overflow-hidden aspect-w-4 aspect-h-3 rounded-lg shadow-lg transition-transform duration-300 ease-in-out hover:scale-102 relative pt-[75%]">
             <img
               src="assets/images/profil.jpeg"
               alt="Josué"
-              class="profile-image" />
+              class="profile-image absolute top-0 left-0 w-full h-full object-cover object-center opacity-0 scale-110 transition-all duration-500 ease-in-out" />
           </div>
         </div>
-        <div class="space-y-4 bio-text">
-          <p class="text-lg">
+        <div
+          class="space-y-4 bio-text text-xl leading-relaxed ml-4 sm:ml-16 md:ml-64">
+          <p class="mb-4">
             J'ai passé les dernières années à me former en développement web
             full stack, en me concentrant sur les technologies modernes et les
             meilleures pratiques de l'industrie.
           </p>
-          <p class="text-lg">
+          <p>
             Ma passion est de créer des applications web robustes et élégantes
             qui résolvent des problèmes réels et offrent une excellente
             expérience utilisateur.
@@ -110,27 +130,27 @@
 
     <section id="projects" class="py-16 px-4 sm:px-6 lg:px-8">
       <h2
-        class="text-4xl sm:text-5xl font-serif-bold mb-12 text-center text-gray-900 dark:text-gray-100">
-        Voici ce que vous pouvez attendre de moi...
+        class="font-bold font-serif text-4xl sm:text-5xl font-serif-bold mb-12 text-center text-gray-900 dark:text-gray-100">
+        Voici quelques projets et ce que vous pouvez attendre de moi...
       </h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-5xl mx-auto">
         <div
-          class="project-card bg-primary-blue text-white dark:bg-primary-blue dark:text-white">
-          <h3 class="text-xl font-semibold mb-4">Projet 1</h3>
+          class="project-card bg-primary-blue hover:bg-secondary-blue text-white p-8 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+          <h3 class="font-serif text-xl font-semibold mb-4">Projet 1</h3>
           <p>Description du projet 1</p>
         </div>
         <div
-          class="project-card bg-primary-red text-white dark:bg-primary-red dark:text-white">
-          <h3 class="text-xl font-semibold mb-4">Projet 2</h3>
+          class="project-card bg-primary-red hover:bg-secondary-red text-white p-8 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+          <h3 class="font-serif text-xl font-semibold mb-4">Projet 2</h3>
           <p>Description du projet 2</p>
         </div>
         <div
-          class="project-card bg-primary-yellow text-gray-900 dark:bg-primary-yellow dark:text-gray-900">
+          class="font-serif project-card bg-primary-yellow hover:bg-secondary-yellow text-custom-gray-900 p-8 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
           <h3 class="text-xl font-semibold mb-4">Projet 3</h3>
           <p>Description du projet 3</p>
         </div>
         <div
-          class="project-card bg-gray-900 text-white dark:bg-gray-100 dark:text-gray-900">
+          class="font-serif project-card bg-custom-gray-900 hover:bg-custom-gray-800 text-white dark:bg-custom-gray-200 dark:hover:bg-custom-gray-400 dark:text-custom-gray-900 p-8 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
           <h3 class="text-xl font-semibold mb-4">Projet 4</h3>
           <p>Description du projet 4</p>
         </div>
@@ -140,9 +160,9 @@
     <!-- Contact Section -->
     <section
       id="contact"
-      class="py-16 px-4 sm:px-6 lg:px-8 bg-gray-100 dark:bg-gray-800">
+      class="py-16 px-4 sm:px-6 lg:px-8 bg-custom-gray-100 dark:bg-custom-gray-800">
       <h2
-        class="text-4xl sm:text-5xl font-serif-bold mb-8 text-center text-gray-900 dark:text-gray-100">
+        class="font-bold font-serif text-4xl sm:text-5xl font-serif-bold mb-8 text-center text-gray-900 dark:text-gray-100">
         Contactez-moi
       </h2>
       <p class="text-center mb-8">
@@ -156,7 +176,7 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-4 text-center">
+    <footer class="bg-custom-gray-900 text-white py-4 text-center">
       <p>&copy; 2024 Josué. Tous droits réservés.</p>
     </footer>
 

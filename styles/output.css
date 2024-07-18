@@ -2214,6 +2214,11 @@ body {
   line-height: 1.75rem;
 }
 
+.text-7xl {
+  font-size: 4.5rem;
+  line-height: 1;
+}
+
 .font-bold {
   font-weight: 700;
 }
@@ -2915,11 +2920,6 @@ body {
   color: rgb(255 61 0 / var(--tw-text-opacity));
 }
 
-.hover\:text-primary-yellow:hover {
-  --tw-text-opacity: 1;
-  color: rgb(255 214 0 / var(--tw-text-opacity));
-}
-
 .hover\:text-secondary-yellow:hover {
   --tw-text-opacity: 1;
   color: rgb(255 179 0 / var(--tw-text-opacity));
@@ -3065,6 +3065,10 @@ body {
   .sm\:px-6 {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
+  }
+
+  .sm\:pl-8 {
+    padding-left: 2rem;
   }
 
   .sm\:text-2xl {

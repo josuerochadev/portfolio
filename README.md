@@ -28,7 +28,9 @@ Ce portfolio est hébergé sur GitHub Pages. Vous pouvez le visualiser en visita
 Pour travailler sur ce projet localement :
 
 1. Clonez ce dépôt
+
    git clone https://github.com/votre-username/votre-repo.git
+
 2. Ouvrez le fichier `index.html` dans votre navigateur
 
 Aucune installation supplémentaire n'est nécessaire car le projet n'utilise pas de dépendances côté serveur.
@@ -49,10 +51,7 @@ Aucune installation supplémentaire n'est nécessaire car le projet n'utilise pa
 
 ## Contact
 
-- Email : votre-email@example.com
-- LinkedIn : [Votre profil LinkedIn](https://www.linkedin.com/in/votre-profil)
-- GitHub : [Votre profil GitHub](https://github.com/votre-username)
+- Email : josuexr@icloud.com
+- LinkedIn : [Mon profil LinkedIn](https://www.linkedin.com/in/josuexavierrocha/)
+- GitHub : [Mon profil GitHub](https://github.com/josuexrocha)
 
-## Licence
-
-Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.

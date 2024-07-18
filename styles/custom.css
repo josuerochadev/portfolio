@@ -16,30 +16,28 @@
   transform: translateY(20px);
 }
 
+.profile-image-container {
+  @apply relative overflow-hidden rounded-3xl shadow-lg transition-all duration-300 ease-in-out hover:scale-105;
+}
+
 .profile-image {
-  opacity: 0;
-  transform: scale(1.1);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  @apply opacity-0 scale-110 transition-all duration-500 ease-in-out;
 }
 
 .profile-image.visible {
-  opacity: 1;
-  transform: scale(1);
+  @apply opacity-100 scale-100;
 }
 
 .bio-text p {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  @apply opacity-0 translate-y-5 transition-all duration-500 ease-in-out;
 }
 
 .bio-text.visible p {
-  opacity: 1;
-  transform: translateY(0);
+  @apply opacity-100 translate-y-0;
 }
 
 .bio-text p:hover {
-  transform: scale(1.05);
+  @apply scale-105;
 }
 
 .bio-text.visible p:nth-child(2) {

@@ -16,8 +16,7 @@ Ce portfolio présente mes compétences en tant que développeur web full stack,
 - Design responsive
 - Mode sombre/clair
 - Animations fluides
-- Présentation des projets
-- Section de contact
+- SEO et acessibilité
 
 ## Visualisation du Site
 
@@ -29,7 +28,7 @@ Pour travailler sur ce projet localement :
 
 1. Clonez ce dépôt
 
-   git clone https://github.com/votre-username/votre-repo.git
+   `git clone https://github.com/votre-username/votre-repo.git`
 
 2. Ouvrez le fichier `index.html` dans votre navigateur
 
@@ -44,10 +43,6 @@ Aucune installation supplémentaire n'est nécessaire car le projet n'utilise pa
 - `scripts/` : Dossier contenant les fichiers JavaScript
 - `main.js` : Script principal du site
 - `assets/` : Dossier contenant les images et autres ressources
-
-## Captures d'écran
-
-[Insérez ici quelques captures d'écran de votre portfolio]
 
 ## Contact
 

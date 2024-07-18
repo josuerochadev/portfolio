@@ -120,21 +120,22 @@ function setupSmoothScroll() {
   });
 }
 
+// Fonction pour animer le texte de la bio
 function animateBioText() {
   const bioText = document.querySelector(".bio-text");
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          bioText.classList.add("visible");
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.5 }
-  );
-
   if (bioText) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            bioText.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
     observer.observe(bioText);
   }
 }

@@ -29,10 +29,10 @@
           class="p-2 rounded-full bg-custom-gray-200 dark:bg-custom-gray-700 transition-colors duration-300">
           🌓
         </button>
-        <ul class="flex space-x-4">
+        <ul class="flex font-bold space-x-4">
           <li>
             <a
-              href="/"
+              href="#home"
               class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary-blue dark:hover:text-primary-blue transition-colors duration-300"
               >Accueil</a
             >
@@ -57,6 +57,7 @@
 
     <!-- Hero Section -->
     <header
+      id="home"
       class="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
       <div class="max-w-3xl w-full">
         <h1 class="hero-title font-serif">
@@ -65,35 +66,39 @@
             >Salut,</span
           >
           <span
-            class="text-7xl sm:text-7xl font-bold text-primary-blue dark:text-primary-blue mt-2 block pl-16 sm:pl-8"
+            class="text-8xl sm:text-7xl font-bold text-primary-blue dark:text-primary-blue mt-2 block pl-6"
             >Je suis Josué !</span
           >
         </h1>
         <p
-          class="text-xl sm:text-2xl mt-4 text-gray-700 dark:text-gray-300 hero-subtitle max-w-2xl">
+          class="text-xl sm:text-2xl mt-4 text-gray-700 dark:text-gray-300 hero-subtitle max-w-2xl pl-6">
           — un <b>développeur web full stack</b>, chasseur de nouvelles
           expériences, passionné par la conception d'applications.
         </p>
+        <p
+          class="text-xl sm:text-2xl mt-2 text-gray-700 dark:text-gray-300 hero-subtitle max-w-2xl pl-6">
+          et celui-ci est mon portfolio.
+        </p>
         <div
-          class="mt-8 flex flex-col sm:flex-row items-center sm:justify-end space-y-4 sm:space-y-0 sm:space-x-4">
+          class="mt-8 flex flex-row justify-center sm:justify-end space-x-2 sm:space-x-4">
           <a
             href="https://www.linkedin.com/in/josuexavierrocha/"
             target="_blank"
             rel="noopener noreferrer"
-            class="modern-button bg-primary-blue hover:bg-secondary-blue text-custom-gray-200 inline-block px-4 py-2 font-semibold w-[150px] text-center text-sm transition-all duration-300 shadow-md hover:shadow-xl active:scale-95 hover:-translate-y-1 rounded-[10px]"
+            class="modern-button bg-primary-blue hover:bg-secondary-blue text-custom-gray-200 inline-flex items-center justify-center px-3 sm:px-4 py-2 font-semibold text-xs sm:text-sm transition-all duration-300 shadow-md hover:shadow-xl active:scale-95 hover:-translate-y-1 rounded-[10px]"
             >LinkedIn</a
           >
           <a
             href="https://github.com/josuexrocha"
             target="_blank"
             rel="noopener noreferrer"
-            class="modern-button bg-primary-red hover:bg-secondary-red text-custom-gray-200 inline-block px-4 py-2 font-semibold w-[150px] text-center text-sm transition-all duration-300 shadow-md hover:shadow-xl active:scale-95 hover:-translate-y-1 rounded-[10px]"
+            class="modern-button bg-primary-red hover:bg-secondary-red text-custom-gray-200 inline-flex items-center justify-center px-3 sm:px-4 py-2 font-semibold text-xs sm:text-sm transition-all duration-300 shadow-md hover:shadow-xl active:scale-95 hover:-translate-y-1 rounded-[10px]"
             >GitHub</a
           >
           <a
             href="assets/docs/CV.pdf"
             download
-            class="modern-button bg-primary-yellow hover:bg-secondary-yellow text-custom-gray-900 inline-block px-4 py-2 font-semibold w-[150px] text-center text-sm transition-all duration-300 shadow-md hover:shadow-xl active:scale-95 hover:-translate-y-1 rounded-[10px]"
+            class="modern-button bg-primary-yellow hover:bg-secondary-yellow text-custom-gray-900 inline-flex items-center justify-center px-3 sm:px-4 py-2 font-semibold text-xs sm:text-sm transition-all duration-300 shadow-md hover:shadow-xl active:scale-95 hover:-translate-y-1 rounded-[10px]"
             >Télécharger CV</a
           >
         </div>
@@ -191,7 +196,7 @@
 
     <!-- Footer -->
     <footer class="bg-custom-gray-900 text-white py-4 text-center">
-      <p>&copy; 2024 Josué. Tous droits réservés.</p>
+      <p>Fait par JXR ✍️</p>
     </footer>
 
     <script src="./scripts/main.js" defer></script>

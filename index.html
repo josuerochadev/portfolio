@@ -146,221 +146,144 @@
       </div>
     </section>
 
-    <!-- bg-primary-red hover:bg-secondary-red text-white -->
-    <!-- bg-primary-yellow hover:bg-secondary-yellow text-custom-gray-900 -->
-    <!--  bg-custom-gray-900 hover:bg-custom-gray-800 text-white dark:bg-custom-gray-200 dark:hover:bg-custom-gray-400 dark:text-custom-gray-900 -->
-
     <section id="projects" class="py-16 px-4 sm:px-6 lg:px-8">
       <h2
         class="font-bold font-serif text-4xl sm:text-5xl font-serif-bold mb-12 text-center text-gray-900 dark:text-gray-100">
         Voici quelques projets et ce que vous pouvez attendre de moi...
       </h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <!-- Projet 1: Stella -->
         <div
           class="project-card bg-primary-blue hover:bg-secondary-blue text-white p-8 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl relative overflow-hidden">
           <div class="card-content">
-            <h3 class="font-serif text-xl font-semibold mb-4">Stella</h3>
-            <p>
-              Application web e-commerce responsive pour un magasin qui vend des
-              étoiles !
+            <h3 class="font-serif text-3xl font-semibold mb-4">Stella</h3>
+            <p class="mb-4">
+              — une application e-commerce pour un magasin qui vend des étoiles
+              !
             </p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="px-2 py-1 bg-white bg-opacity-20 rounded text-sm"
+                >HTML/CSS</span
+              >
+              <span class="px-2 py-1 bg-white bg-opacity-20 rounded text-sm"
+                >JavaScript</span
+              >
+              <span class="px-2 py-1 bg-white bg-opacity-20 rounded text-sm"
+                >Node.js</span
+              >
+              <span class="px-2 py-1 bg-white bg-opacity-20 rounded text-sm"
+                >Express</span
+              >
+              <span class="px-2 py-1 bg-white bg-opacity-20 rounded text-sm"
+                >PostgresSQL</span
+              >
+            </div>
           </div>
           <div
-            class="card-hover hidden absolute inset-0 flex flex-col justify-center items-center">
-            <div class="absolute inset-0 bg-black opacity-70"></div>
+            class="card-hover absolute inset-0 bg-black bg-opacity-70 flex flex-col justify-center items-center opacity-0 transition-opacity duration-300">
             <img
               src="assets/images/stella-wireframe.png"
               alt="Stella Wireframe"
-              class="absolute inset-0 w-full h-full object-cover" />
-            <button
-              class="see-more-btn z-10 bg-white text-primary-blue px-6 py-3 rounded-lg hover:bg-opacity-90 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg">
-              Voir plus
-            </button>
-          </div>
-          <div class="card-expanded hidden relative p-8">
-            <button
-              class="close-btn absolute top-4 right-4 text-white text-2xl bg-gray-800 rounded-full w-8 h-8 flex items-center justify-center hover:bg-gray-700 transition-colors duration-300">
-              &times;
-            </button>
-
-            <img
-              src="assets/images/stella-wireframe.png"
-              alt="Stella Wireframe"
-              class="w-full h-64 object-cover rounded-lg mb-4" />
-            <h3 class="font-serif text-2xl font-semibold mb-4">Stella</h3>
-            <p class="mb-4">
-              Application web e-commerce responsive pour un magasin qui vend des
-              étoiles !
-            </p>
-            <h4 class="font-semibold mb-2">Réalisations clés :</h4>
-            <ul class="list-disc list-inside mb-4">
-              <li>Intégration front-end responsive et dynamisation des vues</li>
-              <li>
-                Architecture MVC, base de données relationnelle,
-                authentification sécurisée
-              </li>
-              <li>Gestion de projet via GitHub</li>
-            </ul>
-            <h4 class="font-semibold mb-2">Technologies :</h4>
-            <p>
-              HTML/CSS, JavaScript, Node.js, Express, EJS, PostgreSQL,
-              Sequelize, bcrypt
-            </p>
+              class="w-full h-full object-cover absolute inset-0 opacity-50" />
+            <a
+              href="https://github.com/josuexrocha/stella-ecommerce"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="z-10 bg-custom-gray-200 dark:bg-custom-gray-800 font-bold text-primary-blue px-6 py-3 rounded-lg hover:bg-opacity-90 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg mb-4"
+              >Voir le repos</a
+            >
           </div>
         </div>
+
+        <!-- Projet 2 -->
         <div
           class="project-card bg-primary-red hover:bg-secondary-red text-white p-8 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl relative overflow-hidden">
           <div class="card-content">
-            <h3 class="font-serif text-xl font-semibold mb-4">Stella</h3>
-            <p>
-              Application web e-commerce responsive pour un magasin qui vend des
-              étoiles !
+            <h3 class="font-serif text-3xl font-semibold mb-4">
+              Projet Architecture
+            </h3>
+            <p class="mb-4">
+              — (à venir) Concevoir et argumenter une architecture complexe dans
+              le cadre d’un projet logiciel.
             </p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="px-2 py-1 bg-white bg-opacity-20 rounded text-sm"
+                >React</span
+              >
+              <span class="px-2 py-1 bg-white bg-opacity-20 rounded text-sm"
+                >Express</span
+              >
+            </div>
           </div>
           <div
-            class="card-hover hidden absolute inset-0 flex flex-col justify-center items-center">
-            <div class="absolute inset-0 bg-black opacity-70"></div>
-            <img
-              src="assets/images/stella-wireframe.png"
-              alt="Stella Wireframe"
-              class="absolute inset-0 w-full h-full object-cover" />
-            <button
-              class="see-more-btn z-10 bg-white text-primary-blue px-6 py-3 rounded-lg hover:bg-opacity-90 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg">
-              Voir plus
-            </button>
-          </div>
-          <div class="card-expanded hidden relative p-8">
-            <button
-              class="close-btn absolute top-4 right-4 text-white text-2xl bg-gray-800 rounded-full w-8 h-8 flex items-center justify-center hover:bg-gray-700 transition-colors duration-300">
-              &times;
-            </button>
-
-            <img
-              src="assets/images/stella-wireframe.png"
-              alt="Stella Wireframe"
-              class="w-full h-64 object-cover rounded-lg mb-4" />
-            <h3 class="font-serif text-2xl font-semibold mb-4">Stella</h3>
-            <p class="mb-4">
-              Application web e-commerce responsive pour un magasin qui vend des
-              étoiles !
-            </p>
-            <h4 class="font-semibold mb-2">Réalisations clés :</h4>
-            <ul class="list-disc list-inside mb-4">
-              <li>Intégration front-end responsive et dynamisation des vues</li>
-              <li>
-                Architecture MVC, base de données relationnelle,
-                authentification sécurisée
-              </li>
-              <li>Gestion de projet via GitHub</li>
-            </ul>
-            <h4 class="font-semibold mb-2">Technologies :</h4>
-            <p>
-              HTML/CSS, JavaScript, Node.js, Express, EJS, PostgreSQL,
-              Sequelize, bcrypt
-            </p>
+            class="card-hover absolute inset-0 bg-black bg-opacity-70 flex flex-col justify-center items-center opacity-0 transition-opacity duration-300">
+            <a
+              href="#"
+              class="z-10 bg-custom-gray-200 dark:bg-custom-gray-800 font-bold text-primary-red px-6 py-3 rounded-lg hover:bg-opacity-90 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg mb-4"
+              >Voir le repos</a
+            >
           </div>
         </div>
+
+        <!-- Projet 3 -->
         <div
           class="project-card bg-primary-yellow hover:bg-secondary-yellow text-custom-gray-900 p-8 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl relative overflow-hidden">
           <div class="card-content">
-            <h3 class="font-serif text-xl font-semibold mb-4">Stella</h3>
-            <p>
-              Application web e-commerce responsive pour un magasin qui vend des
-              étoiles !
+            <h3 class="font-serif text-3xl font-semibold mb-4">
+              Projet Devops
+            </h3>
+            <p class="mb-4">
+              — (à venir) Mettre en place un projet de déploiement et
+              d’orchestration de service en tenant compte des ressources.
             </p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="px-2 py-1 bg-white bg-opacity-50 rounded text-sm"
+                >Vue.js</span
+              >
+              <span class="px-2 py-1 bg-white bg-opacity-50 rounded text-sm"
+                >MongoDB</span
+              >
+            </div>
           </div>
           <div
-            class="card-hover hidden absolute inset-0 flex flex-col justify-center items-center">
-            <div class="absolute inset-0 bg-black opacity-70"></div>
-            <img
-              src="assets/images/stella-wireframe.png"
-              alt="Stella Wireframe"
-              class="absolute inset-0 w-full h-full object-cover" />
-            <button
-              class="see-more-btn z-10 bg-white text-primary-blue px-6 py-3 rounded-lg hover:bg-opacity-90 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg">
-              Voir plus
-            </button>
-          </div>
-          <div class="card-expanded hidden relative p-8">
-            <button
-              class="close-btn absolute top-4 right-4 text-white text-2xl bg-gray-800 rounded-full w-8 h-8 flex items-center justify-center hover:bg-gray-700 transition-colors duration-300">
-              &times;
-            </button>
-
-            <img
-              src="assets/images/stella-wireframe.png"
-              alt="Stella Wireframe"
-              class="w-full h-64 object-cover rounded-lg mb-4" />
-            <h3 class="font-serif text-2xl font-semibold mb-4">Stella</h3>
-            <p class="mb-4">
-              Application web e-commerce responsive pour un magasin qui vend des
-              étoiles !
-            </p>
-            <h4 class="font-semibold mb-2">Réalisations clés :</h4>
-            <ul class="list-disc list-inside mb-4">
-              <li>Intégration front-end responsive et dynamisation des vues</li>
-              <li>
-                Architecture MVC, base de données relationnelle,
-                authentification sécurisée
-              </li>
-              <li>Gestion de projet via GitHub</li>
-            </ul>
-            <h4 class="font-semibold mb-2">Technologies :</h4>
-            <p>
-              HTML/CSS, JavaScript, Node.js, Express, EJS, PostgreSQL,
-              Sequelize, bcrypt
-            </p>
+            class="card-hover absolute inset-0 bg-black bg-opacity-70 flex flex-col justify-center items-center opacity-0 transition-opacity duration-300">
+            <a
+              href="#"
+              class="z-10 bg-custom-gray-200 dark:bg-custom-gray-800 font-bold text-custom-gray-900 dark:text-primary-yellow px-6 py-3 rounded-lg hover:bg-opacity-90 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg mb-4"
+              >Voir le repos</a
+            >
           </div>
         </div>
+
+        <!-- Projet 4 -->
         <div
           class="project-card bg-custom-gray-900 hover:bg-custom-gray-800 text-white dark:bg-custom-gray-200 dark:hover:bg-custom-gray-400 dark:text-custom-gray-900 p-8 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl relative overflow-hidden">
           <div class="card-content">
-            <h3 class="font-serif text-xl font-semibold mb-4">Stella</h3>
-            <p>
-              Application web e-commerce responsive pour un magasin qui vend des
-              étoiles !
+            <h3 class="font-serif text-3xl font-semibold mb-4">
+              Projet Back-end
+            </h3>
+            <p class="mb-4">
+              — (à venir) Concevoir et réaliser les composants métier et d’accès
+              aux données au travers d’une gestion de projet.
             </p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span
+                class="px-2 py-1 bg-white bg-opacity-20 dark:bg-black dark:bg-opacity-20 rounded text-sm"
+                >TypeScript</span
+              >
+              <span
+                class="px-2 py-1 bg-white bg-opacity-20 dark:bg-black dark:bg-opacity-20 rounded text-sm"
+                >GraphQL</span
+              >
+            </div>
           </div>
           <div
-            class="card-hover hidden absolute inset-0 flex flex-col justify-center items-center">
-            <div class="absolute inset-0 bg-black opacity-70"></div>
-            <img
-              src="assets/images/stella-wireframe.png"
-              alt="Stella Wireframe"
-              class="absolute inset-0 w-full h-full object-cover" />
-            <button
-              class="see-more-btn z-10 bg-white text-primary-blue px-6 py-3 rounded-lg hover:bg-opacity-90 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg">
-              Voir plus
-            </button>
-          </div>
-          <div class="card-expanded hidden relative p-8">
-            <button
-              class="close-btn absolute top-4 right-4 text-white text-2xl bg-gray-800 rounded-full w-8 h-8 flex items-center justify-center hover:bg-gray-700 transition-colors duration-300">
-              &times;
-            </button>
-            <img
-              src="assets/images/stella-wireframe.png"
-              alt="Stella Wireframe"
-              class="w-full h-64 object-cover rounded-lg mb-4" />
-            <h3 class="font-serif text-2xl font-semibold mb-4">Stella</h3>
-            <p class="mb-4">
-              Application web e-commerce responsive pour un magasin qui vend des
-              étoiles !
-            </p>
-            <h4 class="font-semibold mb-2">Réalisations clés :</h4>
-            <ul class="list-disc list-inside mb-4">
-              <li>Intégration front-end responsive et dynamisation des vues</li>
-              <li>
-                Architecture MVC, base de données relationnelle,
-                authentification sécurisée
-              </li>
-              <li>Gestion de projet via GitHub</li>
-            </ul>
-            <h4 class="font-semibold mb-2">Technologies :</h4>
-            <p>
-              HTML/CSS, JavaScript, Node.js, Express, EJS, PostgreSQL,
-              Sequelize, bcrypt
-            </p>
+            class="card-hover absolute inset-0 bg-black bg-opacity-70 flex flex-col justify-center items-center opacity-0 transition-opacity duration-300">
+            <a
+              href="#"
+              class="z-10 bg-custom-gray-200 dark:bg-custom-gray-800 font-bold text-custom-gray-900 dark:text-custom-gray-200 px-6 py-3 rounded-lg hover:bg-opacity-90 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg mb-4"
+              >Voir le repos</a
+            >
           </div>
         </div>
       </div>

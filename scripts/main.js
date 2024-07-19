@@ -139,90 +139,23 @@ function animateBioText() {
     observer.observe(bioText);
   }
 }
-
 function setupProjectCards() {
-  const cards = document.querySelectorAll(".project-card");
+  const cards = document.querySelectorAll('.project-card');
 
-  cards.forEach((card) => {
-    const content = card.querySelector(".card-content");
-    const hoverContent = card.querySelector(".card-hover");
-    const expandedContent = card.querySelector(".card-expanded");
-    const seeMoreBtn = card.querySelector(".see-more-btn");
-    const closeBtn = card.querySelector(".close-btn");
+  cards.forEach(card => {
+    const content = card.querySelector('.card-content');
+    const hoverContent = card.querySelector('.card-hover');
 
-    card.addEventListener("mouseenter", () => {
-      content.classList.add("hidden");
-      hoverContent.classList.remove("hidden");
+    card.addEventListener('mouseenter', () => {
+      hoverContent.style.opacity = '1';
+      content.style.opacity = '0.7';
     });
 
-    card.addEventListener("mouseleave", () => {
-      if (!expandedContent.classList.contains("active")) {
-        content.classList.remove("hidden");
-        hoverContent.classList.add("hidden");
-      }
-    });
-
-    seeMoreBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      expandCard(card);
-    });
-
-    card.addEventListener("click", () => {
-      expandCard(card);
-    });
-
-    closeBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      collapseCard(card);
+    card.addEventListener('mouseleave', () => {
+      hoverContent.style.opacity = '0';
+      content.style.opacity = '1';
     });
   });
-}
-
-function expandCard(card) {
-  card.style.transition = "all 1s cubic-bezier(0.25, 0.1, 0.25, 1)";
-  card.classList.add("expanding");
-  setTimeout(() => {
-    card.classList.add("expanded");
-    const expandedContent = card.querySelector(".card-expanded");
-    expandedContent.style.display = "block";
-    setTimeout(() => {
-      expandedContent.style.opacity = "1";
-      expandedContent.style.transform = "scale(1)";
-    }, 50);
-  }, 50);
-}
-
-function collapseCard(card) {
-  const expandedContent = card.querySelector(".card-expanded");
-  const cardContent = card.querySelector(".card-content");
-
-  // Début de l'animation de fermeture
-  expandedContent.style.opacity = "0";
-  expandedContent.style.transform = "scale(0.98)";
-
-  // Attendre que l'animation de fermeture du contenu étendu commence
-  setTimeout(() => {
-    // Réduire la taille du card
-    card.style.gridColumn = "span 1";
-    card.style.height = "";
-
-    // Attendre que la réduction de taille commence
-    setTimeout(() => {
-      // Afficher le contenu original avec une animation fade-in
-      cardContent.style.display = "block";
-      cardContent.style.opacity = "0";
-
-      setTimeout(() => {
-        cardContent.style.opacity = "1";
-      }, 50);
-
-      // Cacher le contenu étendu
-      expandedContent.style.display = "none";
-
-      // Retirer la classe 'expanded'
-      card.classList.remove("expanded");
-    }, 300);
-  }, 300);
 }
 
 // Fonction d'initialisation

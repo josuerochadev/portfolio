@@ -6,7 +6,15 @@
     <title>Portfolio de Josué - Développeur Web Full Stack</title>
     <meta
       name="description"
-      content="Portfolio de Josué, développeur web full stack passionné par la création d'applications innovantes et performantes." />
+      content="Portfolio de Josué Xavier Rocha, développeur web full stack." />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Josué Xavier Rocha" />
+    <meta
+      name="keywords"
+      content="développeur web, full stack, Josué, portfolio, Strasbourg, JavaScript, Node.js, Express, PostgreSQL, React, Vue.js, MongoDB, TypeScript, GraphQL, concepteur développeur d'applications, stage, projets web" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:;" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet" />
@@ -26,7 +34,8 @@
       <div class="flex justify-between items-center max-w-6xl mx-auto">
         <button
           id="darkModeToggle"
-          class="p-2 rounded-full bg-custom-gray-200 dark:bg-custom-gray-700 transition-colors duration-300">
+          class="p-2 rounded-full bg-custom-gray-200 dark:bg-custom-gray-700 transition-colors duration-300"
+          aria-label="Basculer le mode sombre">
           🌓
         </button>
         <ul class="flex font-bold space-x-4">
@@ -124,6 +133,8 @@
               >Concepteur Développeur d'Applications en formation (BAC+4,
               <a
                 href="https://oclock.io/formations/concepteur-developpeur-d-applications?_gl=1*1pz0rxk*_up*MQ.."
+                rel="noopener noreferrer"
+                target="_blank"
                 >École O'Clock)</a
               ></b
             >💻🎓, je suis un développeur web full stack. Originaire du Brésil
@@ -158,8 +169,8 @@
           <div class="card-content">
             <h3 class="font-serif text-3xl font-semibold mb-4">Stella</h3>
             <p class="mb-4">
-              — (en production) une application e-commerce pour un magasin qui vend des étoiles
-              !
+              — (en production) une application e-commerce pour un magasin qui
+              vend des étoiles !
             </p>
             <div class="flex flex-wrap gap-2 mb-4">
               <span class="px-2 py-1 bg-white bg-opacity-20 rounded text-sm"
@@ -310,6 +321,7 @@
         Vous pouvez me contacter à l'adresse :
         <a
           href="mailto:votre@email.com"
+          rel="noopener noreferrer"
           class="text-blue-600 dark:text-blue-400 hover:underline font-bold"
           >josuexr@icloud.com</a
         >
@@ -323,5 +335,30 @@
     </footer>
 
     <script src="./scripts/main.js" defer></script>
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "Person",
+        "name": "Josué",
+        "jobTitle": "Développeur Web Full Stack",
+        "url": "https://josuexrocha.github.io/portfolio/",
+        "sameAs": [
+          "https://www.linkedin.com/in/josuexavierrocha/",
+          "https://github.com/josuexrocha"
+        ],
+        "description": "Développeur web full stack, chasseur de nouvelles expériences, passionné par la conception d'applications.",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Strasbourg",
+          "addressCountry": "FR"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "École O'Clock",
+          "url": "https://oclock.io"
+        },
+        "knowsLanguage": ["fr", "en", "pt"]
+      }
+    </script>
   </body>
 </html>

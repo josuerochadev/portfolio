@@ -39,21 +39,21 @@ function animateHero() {
   gsap.to(".hero-title span", {
     opacity: 1,
     y: 0,
-    duration: 0.8,
+    duration: 0.4,
     stagger: 0.2,
   });
   gsap.to(".hero-subtitle", {
     opacity: 1,
     y: 0,
-    duration: 0.8,
+    duration: 0.4,
     delay: 0.4,
   });
   gsap.to(".modern-button", {
     opacity: 1,
     y: 0,
-    duration: 0.8,
+    duration: 0.4,
     stagger: 0.2,
-    delay: 0.6,
+    delay: 0.3,
   });
 }
 
@@ -140,20 +140,20 @@ function animateBioText() {
   }
 }
 function setupProjectCards() {
-  const cards = document.querySelectorAll('.project-card');
+  const cards = document.querySelectorAll(".project-card");
 
-  cards.forEach(card => {
-    const content = card.querySelector('.card-content');
-    const hoverContent = card.querySelector('.card-hover');
+  cards.forEach((card) => {
+    const content = card.querySelector(".card-content");
+    const hoverContent = card.querySelector(".card-hover");
 
-    card.addEventListener('mouseenter', () => {
-      hoverContent.style.opacity = '1';
-      content.style.opacity = '0.7';
+    card.addEventListener("mouseenter", () => {
+      hoverContent.style.opacity = "1";
+      content.style.opacity = "0.7";
     });
 
-    card.addEventListener('mouseleave', () => {
-      hoverContent.style.opacity = '0';
-      content.style.opacity = '1';
+    card.addEventListener("mouseleave", () => {
+      hoverContent.style.opacity = "0";
+      content.style.opacity = "1";
     });
   });
 }

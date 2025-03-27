@@ -1,362 +1,40 @@
 <!DOCTYPE html>
 <html lang="fr" class="scroll-smooth">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portfolio de Josué - Développeur Web Full Stack</title>
-    <meta
-      name="description"
-      content="Portfolio de Josué Xavier Rocha, développeur web full stack." />
-    <meta name="robots" content="index, follow" />
-    <meta name="author" content="Josué Xavier Rocha" />
-    <meta
-      name="keywords"
-      content="développeur web, full stack, Josué, portfolio, Strasbourg, JavaScript, Node.js, Express, PostgreSQL, React, Vue.js, MongoDB, TypeScript, GraphQL, concepteur développeur d'applications, stage, projets web" />
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:;" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;700&display=swap"
-      rel="stylesheet" />
-    <link href="./styles/output.css" rel="stylesheet" />
-    <link href="./styles/custom.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
-  </head>
-  <body
-    class="font-sans bg-custom-gray-200 dark:bg-custom-gray-900 text-custom-gray-800 dark:text-custom-gray-100 transition-colors duration-300">
-    <!-- Navbar -->
-    <nav
-      class="navbar fixed top-0 left-0 right-0 p-4 z-10 bg-custom-gray-300 dark:bg-custom-gray-800 text-custom-gray-900 dark:text-custom-gray-100 backdrop-blur-md transition-all duration-300">
-      <div class="flex justify-between items-center max-w-6xl mx-auto">
-        <button
-          id="darkModeToggle"
-          class="p-2 rounded-full bg-custom-gray-200 dark:bg-custom-gray-700 transition-colors duration-300"
-          aria-label="Basculer le mode sombre">
-          🌓
-        </button>
-        <ul class="flex font-bold space-x-4">
-          <li>
-            <a
-              href="#home"
-              class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary-blue dark:hover:text-primary-blue transition-colors duration-300"
-              >Accueil</a
-            >
-          </li>
-          <li>
-            <a
-              href="#projects"
-              class="nav-link text-gray-700 dark:text-gray-300 hover:text-primary-red dark:hover:text-primary-red transition-colors duration-300"
-              >Projets</a
-            >
-          </li>
-          <li>
-            <a
-              href="#contact"
-              class="nav-link text-gray-700 dark:text-gray-300 hover:text-secondary-yellow dark:hover:text-primary-yellow transition-colors duration-300"
-              >Contact</a
-            >
-          </li>
-        </ul>
-      </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <header
-      id="home"
-      class="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
-      <div class="max-w-3xl w-full">
-        <h1 class="hero-title font-serif">
-          <span
-            class="text-4xl sm:text-5xl text-gray-700 dark:text-gray-300 block font-normal"
-            >Salut,</span
-          >
-          <span
-            class="text-8xl sm:text-7xl font-bold text-primary-blue dark:text-primary-blue mt-2 block pl-6"
-            >Je suis Josué !</span
-          >
-        </h1>
-        <p
-          class="text-xl sm:text-2xl mt-4 text-gray-700 dark:text-gray-300 hero-subtitle max-w-2xl pl-6">
-          — un <b>développeur web full stack</b>, chasseur de nouvelles
-          expériences, passionné par la conception d'applications.
-        </p>
-        <p
-          class="text-xl sm:text-2xl mt-2 text-gray-700 dark:text-gray-300 hero-subtitle max-w-2xl pl-6">
-          et celui-ci est mon portfolio 🧑‍💻.
-        </p>
-        <div
-          class="mt-8 flex flex-row justify-center sm:justify-end space-x-2 sm:space-x-4">
-          <a
-            href="https://www.linkedin.com/in/josuexavierrocha/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="modern-button bg-primary-blue hover:bg-secondary-blue text-custom-gray-200 inline-flex items-center justify-center px-3 sm:px-4 py-2 font-semibold text-xs sm:text-sm transition-all duration-300 shadow-md hover:shadow-xl active:scale-95 hover:-translate-y-1 rounded-[10px]"
-            >LinkedIn</a
-          >
-          <a
-            href="https://github.com/josuexrocha"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="modern-button bg-primary-red hover:bg-secondary-red text-custom-gray-200 inline-flex items-center justify-center px-3 sm:px-4 py-2 font-semibold text-xs sm:text-sm transition-all duration-300 shadow-md hover:shadow-xl active:scale-95 hover:-translate-y-1 rounded-[10px]"
-            >GitHub</a
-          >
-          <a
-            href="assets/docs/CV - Josué Xavier Rocha.pdf"
-            download
-            class="modern-button bg-primary-yellow hover:bg-secondary-yellow text-custom-gray-900 inline-flex items-center justify-center px-3 sm:px-4 py-2 font-semibold text-xs sm:text-sm transition-all duration-300 shadow-md hover:shadow-xl active:scale-95 hover:-translate-y-1 rounded-[10px]"
-            >Télécharger CV</a
-          >
-        </div>
-      </div>
-    </header>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Bio Section -->
-    <section class="py-16 px-4 sm:px-6 lg:px-8">
-      <div class="max-w-4xl mx-auto">
-        <div class="mb-12">
-          <div
-            class="profile-image-container mb-12 w-full max-w-2xl mx-auto h-[400px] sm:h-[500px] md:h-[600px]">
-            <img
-              src="assets/images/profil.jpeg"
-              alt="Josué"
-              class="profile-image w-full h-full object-cover object-center rounded-3xl shadow-lg transition-all duration-500 ease-in-out" />
-          </div>
-        </div>
-        <div
-          class="space-y-4 bio-text text-xl leading-relaxed ml-4 sm:ml-16 md:ml-64">
-          <p class="mb-4">
-            <b
-              >Concepteur Développeur d'Applications en formation (BAC+4,
-              <a
-                href="https://oclock.io/formations/concepteur-developpeur-d-applications?_gl=1*1pz0rxk*_up*MQ.."
-                rel="noopener noreferrer"
-                target="_blank"
-                >École O'Clock)</a
-              ></b
-            >💻🎓, je suis un développeur web full stack. Originaire du Brésil
-            🇧🇷 et installé à Strasbourg 🇫🇷 depuis 2020, mon parcours m'a mené du
-            droit ⚖️ au code 👨‍💻, combinant rigueur analytique et créativité
-            technique. Trilingue 🌎 et adaptable, j'apporte une perspective
-            unique à chaque projet.
-          </p>
-          <p class="mb-4">
-            <b
-              >Je suis disponible pour collaborer sur des projets à partir de
-              décembre.</b
-            >🔍📅 Mon objectif : contribuer à des projets innovants tout en
-            approfondissant mon expertise 🎯. Avec mon background diversifié et
-            ma détermination 💪, je suis prêt à relever de nouveaux défis et à
-            apporter une réelle valeur ajoutée à votre équipe 🚀.
-          </p>
-          <p>Sur la photo, avec moi, je vous presente Rétine🐕.</p>
-        </div>
-      </div>
-    </section>
+  <title>Josué Rocha — Développeur Web Full Stack</title>
 
-    <section id="projects" class="py-16 px-4 sm:px-6 lg:px-8">
-      <h2
-        class="font-bold font-serif text-4xl sm:text-5xl font-serif-bold mb-12 text-center text-gray-900 dark:text-gray-100">
-        Voici quelques projets et ce que vous pouvez attendre de moi...
-      </h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-5xl mx-auto">
-        <!-- Projet 1: Stella -->
-        <div
-          class="project-card bg-primary-blue hover:bg-secondary-blue text-white p-8 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl relative overflow-hidden">
-          <div class="card-content">
-            <h3 class="font-serif text-3xl font-semibold mb-4">Stella</h3>
-            <p class="mb-4">
-              — (en production) une application e-commerce pour un magasin qui
-              vend des étoiles !
-            </p>
-            <div class="flex flex-wrap gap-2 mb-4">
-              <span class="px-2 py-1 bg-white bg-opacity-20 rounded text-sm"
-                >React/Typescript</span
-              >
-              <span class="px-2 py-1 bg-white bg-opacity-20 rounded text-sm"
-                >TailwindCSS</span
-              >
-              <span class="px-2 py-1 bg-white bg-opacity-20 rounded text-sm"
-                >Node.js</span
-              >
-              <span class="px-2 py-1 bg-white bg-opacity-20 rounded text-sm"
-                >Express</span
-              >
-              <span class="px-2 py-1 bg-white bg-opacity-20 rounded text-sm"
-                >PostgresSQL</span
-              >
-            </div>
-          </div>
-          <div
-            class="card-hover absolute inset-0 bg-black bg-opacity-70 flex flex-col justify-center items-center opacity-0 transition-opacity duration-300">
-            <img
-              src="assets/images/stella.jpg"
-              alt="Page d'accueil Stella"
-              class="w-full h-full object-cover absolute inset-0 opacity-50" />
-            <a
-              href="https://github.com/josuexrocha/stella-ecommerce"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="z-10 bg-custom-gray-200 dark:bg-custom-gray-800 font-bold text-primary-blue px-6 py-3 rounded-lg hover:bg-opacity-90 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg mb-4"
-              >Voir plus</a
-            >
-          </div>
-        </div>
+  <meta name="description"
+    content="Portfolio de Josué Xavier Rocha, développeur web full stack, passionné par le clean code et l'AGILE." />
+  <meta name="author" content="Josué Xavier Rocha" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#6900FF" />
 
-        <!-- Projet 2 -->
-        <div
-          class="project-card bg-primary-red hover:bg-secondary-red text-white p-8 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl relative overflow-hidden">
-          <div class="card-content">
-            <h3 class="font-serif text-3xl font-semibold mb-4">
-              Projets O'Clock
-            </h3>
-            <p class="mb-4">
-              — (à venir).
-            </p>
-            <div class="flex flex-wrap gap-2 mb-4">
-              <span class="px-2 py-1 bg-white bg-opacity-20 rounded text-sm"
-                >React</span
-              >
-              <span class="px-2 py-1 bg-white bg-opacity-20 rounded text-sm"
-                >Express</span
-              >
-            </div>
-          </div>
-          <div
-            class="card-hover absolute inset-0 bg-black bg-opacity-70 flex flex-col justify-center items-center opacity-0 transition-opacity duration-300">
-            <a
-              href="#"
-              class="z-10 bg-custom-gray-200 dark:bg-custom-gray-800 font-bold text-primary-red px-6 py-3 rounded-lg hover:bg-opacity-90 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg mb-4"
-              >Voir plus</a
-            >
-          </div>
-        </div>
+  <!-- Open Graph pour les réseaux sociaux -->
+  <meta property="og:title" content="Josué Rocha — Développeur Web Full Stack" />
+  <meta property="og:description" content="Découvrez mon travail, mes projets, mon parcours." />
+  <meta property="og:image" content="/assets/images/preview.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://josuexrocha.github.io/portfolio/" />
 
-        <!-- Projet 3 -->
-        <div
-          class="project-card bg-primary-yellow hover:bg-secondary-yellow text-custom-gray-900 p-8 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl relative overflow-hidden">
-          <div class="card-content">
-            <h3 class="font-serif text-3xl font-semibold mb-4">
-              Projets freeCodeCamp
-            </h3>
-            <p class="mb-4">
-              — (à venir) Mettre en place un projet de déploiement et
-              d’orchestration de service en tenant compte des ressources.
-            </p>
-            <div class="flex flex-wrap gap-2 mb-4">
-              <span class="px-2 py-1 bg-white bg-opacity-50 rounded text-sm"
-                >HTML/CSS</span
-              >
-              <span class="px-2 py-1 bg-white bg-opacity-50 rounded text-sm"
-                >JavaScript</span
-              >
-            </div>
-          </div>
-          <div
-            class="card-hover absolute inset-0 bg-black bg-opacity-70 flex flex-col justify-center items-center opacity-0 transition-opacity duration-300">
-            <a
-              href="#"
-              class="z-10 bg-custom-gray-200 dark:bg-custom-gray-800 font-bold text-custom-gray-900 dark:text-primary-yellow px-6 py-3 rounded-lg hover:bg-opacity-90 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg mb-4"
-              >Voir plus</a
-            >
-          </div>
-        </div>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+    rel="stylesheet" />
 
-        <!-- Projet 4 -->
-        <div
-          class="project-card bg-custom-gray-900 hover:bg-custom-gray-800 text-white dark:bg-custom-gray-200 dark:hover:bg-custom-gray-400 dark:text-custom-gray-900 p-8 rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl relative overflow-hidden">
-          <div class="card-content">
-            <h3 class="font-serif text-3xl font-semibold mb-4">
-              Projet Site Vitrine
-            </h3>
-            <p class="mb-4">
-              — (à venir).
-            </p>
-            <div class="flex flex-wrap gap-2 mb-4">
-              <span
-                class="px-2 py-1 bg-white bg-opacity-20 dark:bg-black dark:bg-opacity-20 rounded text-sm"
-                >TypeScript</span
-              >
-              <span
-                class="px-2 py-1 bg-white bg-opacity-20 dark:bg-black dark:bg-opacity-20 rounded text-sm"
-                >GraphQL</span
-              >
-            </div>
-          </div>
-          <div
-            class="card-hover absolute inset-0 bg-black bg-opacity-70 flex flex-col justify-center items-center opacity-0 transition-opacity duration-300">
-            <a
-              href="#"
-              class="z-10 bg-custom-gray-200 dark:bg-custom-gray-800 font-bold text-custom-gray-900 dark:text-custom-gray-200 px-6 py-3 rounded-lg hover:bg-opacity-90 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg mb-4"
-              >Voir plus</a
-            >
-          </div>
-        </div>
-      </div>
-      <div class="mt-8 flex justify-center">
-        <a
-          href="https://github.com/josuexrocha?tab=repositories"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="modern-button bg-primary-blue hover:bg-secondary-blue text-custom-gray-200 inline-flex items-center justify-center px-6 py-3 font-semibold text-sm transition-all duration-300 shadow-md hover:shadow-xl active:scale-95 hover:-translate-y-1 rounded-[10px]">
-          Voir tous mes projets sur GitHub
-        </a>
-      </div>
-    </section>
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
 
-    <!-- Contact Section -->
-    <section
-      id="contact"
-      class="py-16 px-4 sm:px-6 lg:px-8 bg-custom-gray-100 dark:bg-custom-gray-800">
-      <h2
-        class="font-bold font-serif text-4xl sm:text-5xl font-serif-bold mb-8 text-center text-gray-900 dark:text-gray-100">
-        Contactez-moi
-      </h2>
-      <p class="text-center mb-8">
-        Vous pouvez me contacter à l'adresse :
-        <a
-          href="mailto:votre@email.com"
-          rel="noopener noreferrer"
-          class="text-blue-600 dark:text-blue-400 hover:underline font-bold"
-          >josuexr@icloud.com</a
-        >
-      </p>
-    </section>
+</head>
 
-    <!-- Footer -->
-    <footer
-      class="bg-custom-gray-300 dark:bg-custom-gray-900 font-bold text-custom-gray-900 dark:text-custom-gray-100 text-center p-4">
-      <p>Fait par JXR ✍️</p>
-    </footer>
+<body class="bg-beige text-darkgray dark:bg-darkgray dark:text-beige transition-colors duration-300">
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
 
-    <script src="./scripts/main.js" defer></script>
-    <script type="application/ld+json">
-      {
-        "@context": "http://schema.org",
-        "@type": "Person",
-        "name": "Josué",
-        "jobTitle": "Développeur Web Full Stack",
-        "url": "https://josuexrocha.github.io/portfolio/",
-        "sameAs": [
-          "https://www.linkedin.com/in/josuexavierrocha/",
-          "https://github.com/josuexrocha"
-        ],
-        "description": "Développeur web full stack, chasseur de nouvelles expériences, passionné par la conception d'applications.",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Strasbourg",
-          "addressCountry": "FR"
-        },
-        "alumniOf": {
-          "@type": "EducationalOrganization",
-          "name": "École O'Clock",
-          "url": "https://oclock.io"
-        },
-        "knowsLanguage": ["fr", "en", "pt"]
-      }
-    </script>
-  </body>
 </html>

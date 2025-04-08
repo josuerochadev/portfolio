@@ -1,24 +1,36 @@
-import React from "react";
+import type React from "react";
 import Navbar from "./components/navbar";
 import Hero from "./components/hero";
-import Bio from "./components/bio";
-import Projects from "./components/projects_section";
-import Contact from "./components/contact";
-import Footer from "./components/footer";
+import Projects from "./components/projects";
 
-const App = () => {
-  return (
-    <div className="bg-custom-gray-100 text-custom-gray-900 dark:bg-custom-gray-900 dark:text-custom-gray-100 transition-colors duration-300">
-      <Navbar />
-      <main>
-        <Hero />
-        <Bio />
-        <Projects />
-        <Contact />
-      </main>
-      <Footer />
-    </div>
-  );
+const App: React.FC = () => {
+	return (
+		<div className="text-darkgray transition-colors duration-300 font-body">
+			<Navbar />
+			<div className="pt-20" />
+			<main>
+				<Hero />
+
+				<section id="projects">
+					<Projects />
+				</section>
+
+				<section
+					id="bio"
+					className="min-h-screen flex items-center justify-center"
+				>
+					<h2 className="text-3xl font-display">Bio</h2>
+				</section>
+
+				<section
+					id="contact"
+					className="min-h-screen flex items-center justify-center"
+				>
+					<h2 className="text-3xl font-display">Contact</h2>
+				</section>
+			</main>
+		</div>
+	);
 };
 
 export default App;

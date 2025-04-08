@@ -2,18 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-/* === Custom global styles === */
-
+/* === Global styles === */
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  @apply bg-beige text-darkgray transition-colors duration-300;
+  @apply bg-beige text-darkgray transition-colors duration-300 font-sans;
   font-family: 'Rubik', sans-serif;
 }
 
-/* Exemple de titre funky */
+/* Titre principal */
 .funky-title {
   font-family: 'Fraunces', serif;
   font-size: 3rem;
@@ -22,7 +21,11 @@ body {
   text-align: center;
 }
 
-/* Exemple de bouton stylé */
-.funky-button {
-  @apply inline-flex items-center justify-center gap-2 px-6 py-2 border-2 rounded-xl text-sm font-semibold hover:scale-105 transition-all duration-300;
+/* Bouton */
+.button {
+  @apply border-2 border-violet text-violet px-6 py-2 rounded-full font-bold inline-flex items-center transition-all duration-300;
+}
+
+.button:hover {
+  @apply bg-lime text-orange;
 }

@@ -1,122 +1,122 @@
-import { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+// src/components/projects.tsx
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
+import LetterRippleEffect from "./letter_ripple_effect";
+import { fadeInUpSpring } from "../utils/motion_variants";
+import { FaEye } from "react-icons/fa";
+import SunIcon from "../assets/images/sun.svg?react";
 
 const projects = [
 	{
 		title: "Project 1",
-		description:
-			"Une application web intuitive pour gérer vos tâches quotidiennes.",
-		image: "/assets/project1.png",
+		description: "A simple and intuitive task management web app.",
+		deliverables: "Wireframes, front-end dev, documentation",
+		context: "Personal side project to improve productivity.",
+		image: "/src/assets/images/project1.jpg",
 	},
 	{
 		title: "Project 2",
-		description:
-			"Un site e-commerce moderne et rapide, optimisé pour le mobile.",
-		image: "/assets/project2.png",
+		description: "A fast and modern e-commerce website optimized for mobile.",
+		deliverables: "UI design, responsive integration, testing",
+		context: "Redesign of an existing online shop for a client.",
+		image: "/src/assets/images/project2.jpg",
 	},
 	{
 		title: "Project 3",
-		description: "Une plateforme sociale pour partager vos centres d’intérêt.",
-		image: "/assets/project3.png",
+		description:
+			"A social platform to share interests and connect with others.",
+		deliverables: "Figma prototype, REST API, Node.js backend",
+		context: "Team collaboration during a coding bootcamp.",
+		image: "/src/assets/images/project3.jpg",
 	},
 ];
 
 export default function Projects() {
-	const [current, setCurrent] = useState(0);
-
-	const changeProject = useCallback((direction: number) => {
-		setCurrent(
-			(prev) => (prev + direction + projects.length) % projects.length,
-		);
-	}, []);
-
-	const next = () => changeProject(1);
-	const prev = () => changeProject(-1);
-
-	useEffect(() => {
-		const handleKey = (e: KeyboardEvent) => {
-			if (e.key === "ArrowRight") changeProject(1);
-			if (e.key === "ArrowLeft") changeProject(-1);
-		};
-		window.addEventListener("keydown", handleKey);
-		return () => window.removeEventListener("keydown", handleKey);
-	}, [changeProject]);
-
+	const sectionRef = useRef(null);
+	const { scrollYProgress } = useScroll({ target: sectionRef });
+	const rotation = useTransform(scrollYProgress, [0, 1], [0, 90]);
 	return (
-		<section className="h-screen overflow-hidden bg-background">
-			<div className="h-full max-w-container mx-auto px-4 md:px-8 py-8 flex flex-col items-center justify-center">
+		<section
+			id="projects"
+			ref={sectionRef}
+			className="relative w-full bg-beige dark:bg-darkgray px-6 py-20 text-violet overflow-hidden"
+		>
+			{/* SUN ICON BACKGROUND */}
+			<motion.div
+				className="absolute top-[100px] right-[-200px] w-[1600px] h-[1600px] z-0 pointer-events-none"
+				style={{ rotate: rotation }}
+			>
+				<SunIcon className="w-full h-full" />
+			</motion.div>
+
+			<div className="max-w-6xl mx-auto flex flex-col gap-20 relative z-10">
+				{/* TITLE */}
 				<motion.h2
-					className="font-display text-3xl md:text-4xl font-bold text-left text-violet mb-6 max-w-3xl"
-					initial={{ opacity: 0, y: 50 }}
-					whileInView={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.6, ease: "backInOut" }}
-					viewport={{ once: true, amount: 0.3 }}
+					className="relative max-w-6xl mx-auto px-4 text-[clamp(2rem,7vw,7rem)] leading-[1.1] font-display font-extrabold text-violet text-center flex flex-wrap justify-left gap-x-2"
+					variants={fadeInUpSpring}
+					initial="initial"
+					whileInView="animate"
+					viewport={{ once: true, amount: 0.7 }}
+					transition={{ delay: 0.6 }}
 				>
-					Here’s a glimpse into my work — a taste of what I can bring to your
-					team
+					<LetterRippleEffect text="Here’s " />
+					<LetterRippleEffect text="a " />
+					<LetterRippleEffect text="glimpse " />
+					<LetterRippleEffect text="into " />
+					<LetterRippleEffect text="my " />
+					<LetterRippleEffect text="work " />
+					<LetterRippleEffect text="— " />
+					<LetterRippleEffect text="a " />
+					<LetterRippleEffect text="taste " />
+					<LetterRippleEffect text="of " />
+					<LetterRippleEffect text="what " />
+					<LetterRippleEffect text="I " />
+					<LetterRippleEffect text="can " />
+					<LetterRippleEffect text="bring" />
 				</motion.h2>
 
-				<div className="flex flex-col items-start text-left w-full max-w-xl gap-4">
-					<AnimatePresence mode="wait">
+				{/* PROJECTS */}
+				<div className="flex flex-col gap-20">
+					{projects.map((project, index) => (
 						<motion.div
-							key={projects[current].title}
-							className="w-full flex flex-col gap-3 items-start"
-							initial={{ opacity: 0 }}
-							animate={{ opacity: 1 }}
-							exit={{ opacity: 0 }}
-							transition={{ duration: 0.3 }}
+							key={project.title}
+							className="flex flex-col lg:flex-row gap-6 items-start"
+							initial="initial"
+							whileInView="animate"
+							viewport={{ once: true, amount: 0.6 }}
+							variants={fadeInUpSpring}
+							transition={{ delay: 0.6 + index * 0.3 }}
 						>
-							<img
-								src={projects[current].image}
-								alt={projects[current].title}
-								className="w-full h-[clamp(160px,30vh,240px)] object-cover rounded-xl"
-							/>
-							<h3 className="text-xl font-display font-extrabold text-violet">
-								{projects[current].title}
-							</h3>
-							<p className="text-sm md:text-base text-violet max-w-prose">
-								{projects[current].description}
-							</p>
-							<button
-								type="button"
-								className="button inline-flex justify-center self-start"
-							>
-								SEE MORE{" "}
-							</button>
+							{/* Image */}
+							<div className="w-full lg:w-1/2 aspect-[4/3]">
+								<img
+									src={project.image}
+									alt={project.title}
+									className="w-full h-full object-cover rounded-xl shadow-md"
+								/>
+							</div>
+							{/* Text */}
+							<div className="w-full lg:w-1/2 flex flex-col gap-2">
+								<p className="text-6xl font-display text-orange font-extralight">
+									{index + 1}.
+								</p>
+								<h3 className="text-3xl font-extrabold font-display">
+									{project.title}
+								</h3>
+								<p className="text-lg leading-snug">{project.description}</p>
+								<p className="text-xl font-bold mt-2">Deliverables</p>
+								<p className="text-base mb-1">{project.deliverables}</p>
+								<p className="text-xl font-bold">Context</p>
+								<p className="text-base">{project.context}</p>
+								<a
+									href="/projects/details"
+									className="button mt-4 inline-flex justify-center items-center gap-2 self-start"
+								>
+									<FaEye className="inline-block" /> MORE DETAILS
+								</a>
+							</div>
 						</motion.div>
-					</AnimatePresence>
-				</div>
-
-				<div className="flex items-center justify-center gap-4 mt-6">
-					<button
-						type="button"
-						onClick={prev}
-						className="flex items-center gap-1 text-violet font-semibold"
-					>
-						<span className="text-orange text-xl font-bold">&#x2190;</span>{" "}
-						Previous
-					</button>
-
-					<div className="flex items-center gap-2">
-						{projects.map((project) => (
-							<div
-								key={project.title}
-								className={`w-5 h-5 rounded-full transition-all duration-300 ${
-									project.title === projects[current].title
-										? "bg-orange"
-										: "bg-lime"
-								}`}
-							/>
-						))}
-					</div>
-
-					<button
-						type="button"
-						onClick={next}
-						className="flex items-center gap-1 text-violet font-semibold"
-					>
-						Next <span className="text-orange text-xl font-bold">&#x2192;</span>
-					</button>
+					))}
 				</div>
 			</div>
 		</section>

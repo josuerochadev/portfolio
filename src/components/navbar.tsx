@@ -1,10 +1,14 @@
+// src/components/navbar.tsx
 import type React from "react";
 import { useRef, useState } from "react";
+import SmileIcon from "../assets/images/smile.svg?react";
 
+// Navigation links
 const links = [
-	{ label: "PROJECTS", href: "#projects" },
-	{ label: "BIO", href: "#bio" },
-	{ label: "GET IN TOUCH", href: "#contact" },
+	{ label: "Home", href: "#hero" },
+	{ label: "Work", href: "#projects" },
+	{ label: "About", href: "#bio" },
+	{ label: "Contact", href: "#contact" },
 ];
 
 const Navbar: React.FC = () => {
@@ -12,6 +16,7 @@ const Navbar: React.FC = () => {
 	const navRef = useRef<HTMLDivElement>(null);
 	const [mouseX, setMouseX] = useState<number | null>(null);
 
+	// Handle mouse movement
 	const handleMouseMove = (e: React.MouseEvent) => {
 		const rect = navRef.current?.getBoundingClientRect();
 		if (!rect) return;
@@ -22,30 +27,25 @@ const Navbar: React.FC = () => {
 		<nav
 			ref={navRef}
 			onMouseMove={handleMouseMove}
-			className="fixed top-0 w-full z-50 bg-beige text-violet font-bold text-sm uppercase tracking-wider font-sans overflow-hidden"
+			className="relative w-full bg-lime text-violet font-bold text-lg uppercase tracking-wider font-sans overflow-hidden py-6"
 		>
-			{/* Failles vertes dans un fond beige */}
-			<div className="absolute inset-0 bg-beige z-0">
+			{/* Background bars (glitch effect) */}
+			<div className="absolute inset-0 bg-lime z-[1]">
 				<div className="relative w-full h-full">
 					{Array.from({ length: barCount }).map((_, i) => {
 						const total = barCount;
 						const colWidth = 100 / total;
 						const leftPercent = i * colWidth;
-
 						const distance =
 							mouseX !== null
 								? Math.abs((mouseX / window.innerWidth) * total - i)
 								: Number.POSITIVE_INFINITY;
-
-						const baseWidth = 1; // faille la plus fine
-						const maxWidth = 16;
-
-						const width = Math.min(maxWidth, baseWidth + distance * 2.5);
-
+						const proximity = Math.max(0, 12 - distance);
+						const width = proximity > 0 ? proximity * 2.2 : 0;
 						return (
 							<div
-								key={`bar-${i}-${Date.now()}`}
-								className="absolute top-0 h-full bg-lime transition-all duration-200"
+								key={`bar-${leftPercent}`}
+								className="absolute top-0 h-full bg-beige transition-all duration-100 ease-out"
 								style={{
 									left: `${leftPercent}%`,
 									width: `${width}px`,
@@ -56,10 +56,19 @@ const Navbar: React.FC = () => {
 				</div>
 			</div>
 
-			{/* Liens centrés */}
-			<div className="relative z-10 flex justify-center py-3">
-				<ul className="flex gap-8">
-					{links.map((link) => (
+			{/* Navigation links */}
+			<div className="relative z-20 flex justify-center">
+				<ul className="flex gap-8 items-center">
+					{/* Home link */}
+					<li>
+						<a
+							href="#hero"
+							className="transition-colors duration-200 text-violet hover:text-orange"
+						>
+							<SmileIcon className="w-10 h-10" />
+						</a>
+					</li>
+					{links.slice(1).map((link) => (
 						<li key={link.href}>
 							<a
 								href={link.href}

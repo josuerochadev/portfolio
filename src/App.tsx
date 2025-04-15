@@ -1,34 +1,59 @@
 import type React from "react";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "./components/navbar";
 import Hero from "./components/hero";
 import Projects from "./components/projects";
+import Bio from "./components/bio";
+import Contact from "./components/contact";
+import Footer from "./components/footer";
+import ScrollToTop from "./components/scroll_to_top";
+import ScrollBlur from "./components/bottom_blur";
 
 const App: React.FC = () => {
+	const [showCurtain, setShowCurtain] = useState(true);
+
+	useEffect(() => {
+		const timeout = setTimeout(() => setShowCurtain(false), 800);
+		return () => clearTimeout(timeout);
+	}, []);
+
 	return (
-		<div className="text-darkgray transition-colors duration-300 font-body">
-			<Navbar />
-			<div className="pt-20" />
-			<main>
-				<Hero />
+		<div className="grainy-bg min-h-screen">
+			<AnimatePresence>
+				{showCurtain && (
+					<motion.div
+						className="fixed inset-0 z-[999] bg-lime"
+						initial={{ y: 0 }}
+						animate={{ y: "-100%" }}
+						exit={{ y: "-100%" }}
+						transition={{ duration: 0.6, ease: "easeInOut" }}
+					/>
+				)}
+			</AnimatePresence>
 
-				<section id="projects">
-					<Projects />
-				</section>
+			<div className="text-violet transition-colors duration-300 font-body">
+				<Navbar />
+				<main>
+					<Hero />
 
-				<section
-					id="bio"
-					className="min-h-screen flex items-center justify-center"
-				>
-					<h2 className="text-3xl font-display">Bio</h2>
-				</section>
+					<section id="projects">
+						<Projects />
+					</section>
 
-				<section
-					id="contact"
-					className="min-h-screen flex items-center justify-center"
-				>
-					<h2 className="text-3xl font-display">Contact</h2>
-				</section>
-			</main>
+					<section id="bio">
+						<Bio />
+					</section>
+
+					<section id="contact">
+						<Contact />
+					</section>
+				</main>
+
+				<ScrollToTop />
+				<ScrollBlur />
+				<Footer />
+			</div>
 		</div>
 	);
 };

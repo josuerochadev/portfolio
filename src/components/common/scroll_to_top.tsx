@@ -1,6 +1,6 @@
 // src/components/ScrollToTop.tsx
 import { useEffect, useState } from "react";
-import SmileIcon from "../../assets/images/ui/smile.svg?react";
+import SmileIcon from "@/assets/images/ui/smile.svg?react";
 
 export default function ScrollToTop() {
 	const [visible, setVisible] = useState(false);

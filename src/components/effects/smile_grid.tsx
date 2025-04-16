@@ -1,7 +1,7 @@
 import type React from "react";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import SmileIcon from "../../assets/images/ui/smile.svg?react";
+import SmileIcon from "@/assets/images/ui/smile.svg?react";
 
 interface SmileGridProps {
 	active: boolean;

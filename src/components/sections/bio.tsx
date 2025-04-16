@@ -1,8 +1,6 @@
-// src/components/bio.tsx
-import { motion } from "framer-motion";
-import { fadeInUpSpring } from "../../utils/motion_variants";
-import LetterRippleEffect from "../effects/letter_ripple";
-import ProfileBackground from "../effects/profile_background";
+import FadeInUpOnScroll from "@/components/common/animations/fade_in_up_on_scroll";
+import LetterRippleEffect from "@/components/effects/letter_ripple";
+import ProfileBackground from "@/components/effects/profile_background";
 
 const ADJECTIVES = ["creative", "curious", "empathetic", "resilient", "bold"];
 
@@ -31,37 +29,21 @@ export default function Bio() {
 
 			<div className="max-w-6xl mx-auto flex flex-col items-center">
 				{/* TITLE */}
-				<motion.h2
-					className="relative w-full px-4 text-[clamp(2rem,7vw,7rem)] leading-[1.1] font-display font-extrabold text-violet text-center flex flex-wrap justify-left gap-x-2"
-					variants={fadeInUpSpring}
-					initial="initial"
-					whileInView="animate"
-					viewport={{ once: true, amount: 0.7 }}
-					transition={{ delay: 0.6 }}
-				>
-					{"And more about me".split(" ").map((word) => (
-						<LetterRippleEffect key={word} text={`${word} `} />
-					))}
-				</motion.h2>
+				<FadeInUpOnScroll delay={0.2}>
+					<h2 className="relative w-full px-4 text-[clamp(2rem,7vw,6rem)] leading-[1.1] font-display font-extrabold text-violet text-center flex flex-wrap justify-left gap-x-2">
+						{"And more about me".split(" ").map((word) => (
+							<LetterRippleEffect key={word} text={`${word} `} />
+						))}
+					</h2>
+				</FadeInUpOnScroll>
 
 				{/* ADJECTIVES */}
 				<div className="w-full px-4">
 					<div className="max-w-6xl mx-auto flex flex-wrap justify-start gap-6 mt-4 mb-20">
 						{ADJECTIVES.map((word, i) => (
-							<motion.span
-								key={word}
-								className="text-lg md:text-xl font-bold"
-								initial={{ opacity: 0, y: 20 }}
-								whileInView={{ opacity: 1, y: 0 }}
-								viewport={{ once: true, amount: 0.5 }}
-								transition={{
-									delay: 0.8 + i * 0.1,
-									type: "spring",
-									stiffness: 100,
-								}}
-							>
-								{word}
-							</motion.span>
+							<FadeInUpOnScroll key={word} delay={0.6 + i * 0.1}>
+								<span className="text-lg md:text-xl font-bold">{word}</span>
+							</FadeInUpOnScroll>
 						))}
 					</div>
 				</div>
@@ -69,24 +51,16 @@ export default function Bio() {
 				{/* TEXT BLOCK */}
 				<div className="w-full px-4 max-w-4xl flex flex-col gap-20 text-center md:text-left">
 					{SECTIONS.map((section, i) => (
-						<motion.div
-							key={section.title}
-							initial={{ opacity: 0, y: 20 }}
-							whileInView={{ opacity: 1, y: 0 }}
-							viewport={{ once: true, amount: 0.6 }}
-							transition={{
-								delay: 1 + i * 0.2,
-								type: "spring",
-								stiffness: 100,
-							}}
-						>
-							<h3 className="text-2xl font-serif font-bold text-violet mb-2 capitalize">
-								{section.title}
-							</h3>
-							<p className="text-base md:text-lg leading-relaxed text-violet">
-								{section.text}
-							</p>
-						</motion.div>
+						<FadeInUpOnScroll key={section.title} delay={1 + i * 0.2}>
+							<div>
+								<h3 className="text-2xl font-serif font-bold text-violet mb-2 capitalize">
+									{section.title}
+								</h3>
+								<p className="text-base md:text-lg leading-relaxed text-violet">
+									{section.text}
+								</p>
+							</div>
+						</FadeInUpOnScroll>
 					))}
 				</div>
 			</div>

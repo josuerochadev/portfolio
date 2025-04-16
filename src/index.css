@@ -3,9 +3,6 @@
 @tailwind utilities;
 
 /* === GLOBAL === */
-html {
-  scroll-behavior: smooth;
-}
 
 body {
   @apply font-sans text-violet;

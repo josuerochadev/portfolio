@@ -1,37 +1,35 @@
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 
 export default function Footer() {
-    return (
-        <footer className="py-6 px-4 text-center text-sm">
-            <div className="flex flex-col md:flex-row justify-between items-center max-w-5xl mx-auto gap-4">
-                {/* Name and rights */}
-                <p className="text-xs">
-                    &copy; {new Date().getFullYear()} Josué Xavier Rocha. All rights
-                    reserved.
-                </p>
-
-                {/* Social links */}
-                <div className="flex items-center gap-4 text-lg">
-                    <a
-                        href="https://github.com/josuexrocha"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="GitHub"
-                        className="hover:text-orange transition-colors duration-300"
-                    >
-                        <FaGithub />
-                    </a>
-                    <a
-                        href="https://linkedin.com/in/josuexrocha"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="LinkedIn"
-                        className="hover:text-orange transition-colors duration-300"
-                    >
-                        <FaLinkedin />
-                    </a>
-                </div>
-            </div>
-        </footer>
-    );
+	return (
+		<footer className="relative w-full bg-lime text-violet mt-8 pt-8 pb-40 px-6 md:px-10 text-center">
+			{/* Social icons */}
+			<div className="flex justify-center gap-6 mb-4 text-3xl">
+				<a
+					href="https://github.com/josuexrocha"
+					target="_blank"
+					rel="noopener noreferrer"
+					aria-label="GitHub"
+					className="transition-colors duration-300 hover:text-orange"
+				>
+					<FaGithub />
+				</a>
+				<a
+					href="https://www.linkedin.com/in/josuexrocha/"
+					target="_blank"
+					rel="noopener noreferrer"
+					aria-label="LinkedIn"
+					className="transition-colors duration-300 hover:text-orange"
+				>
+					<FaLinkedin />
+				</a>
+			</div>
+            {/* Phrase */}
+			<p className="text-sm italic mb-2">Crafted with love and TypeScript.</p>
+            {/* Copyright */}
+			<p className="text-xs font-medium">
+				© {new Date().getFullYear()} Josué Rocha. All rights reserved.
+			</p>
+		</footer>
+	);
 }

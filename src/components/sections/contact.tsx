@@ -1,63 +1,32 @@
-import { FaEnvelope, FaGithub, FaLinkedin } from "react-icons/fa";
+import FadeInUpOnScroll from "@/components/common/animations/fade_in_up_on_scroll";
+import LetterRippleEffect from "@/components/effects/letter_ripple";
+import Hand from "@/assets/images/ui/hand.svg?react";
 import { motion } from "framer-motion";
-import { fadeInUp, fadeIn, zoomIn } from "../../utils/motion_variants";
 
 export default function Contact() {
 	return (
-		<section id="contact" className="py-20 px-6 md:px-20 text-center">
-			<motion.h2
-				className="text-3xl font-bold text-violet mb-6"
-				variants={fadeInUp}
-				initial="initial"
-				whileInView="animate"
-				viewport={{ once: true, amount: 0.5 }}
-			>
-				Let's connect!
-			</motion.h2>
+		<section
+			id="contact"
+			className="relative px-6 py-32 md:py-48 min-h-[65vh] text-center overflow-hidden"
+		>
+			{/* TITLE */}
+			<FadeInUpOnScroll delay={0.2}>
+				<h2 className="relative z-10 text-[clamp(2rem,6vw,5rem)] leading-tight font-display font-extrabold text-violet flex flex-wrap justify-center gap-x-2">
+					{"Let's work together! Or just chat".split(" ").map((word) => (
+						<LetterRippleEffect key={word} text={`${word} `} />
+					))}
+				</h2>
+			</FadeInUpOnScroll>
 
-			<motion.p
-				className="text-lg mb-8"
-				variants={fadeIn}
-				initial="initial"
-				whileInView="animate"
-				viewport={{ once: true, amount: 0.5 }}
-			>
-				I'm happy to exchange ideas, collaborate on projects, or discuss
-				opportunities. You can write to me directly or find me on social media:
-			</motion.p>
-
+			{/* SVG */}
 			<motion.div
-				className="flex justify-center gap-8 text-3xl"
-				variants={zoomIn}
-				initial="initial"
-				whileInView="animate"
-				viewport={{ once: true, amount: 0.5 }}
+				className="absolute bottom-0 left-0 w-full max-w-[1400px] z-0 pointer-events-none"
+				initial={{ opacity: 0, y: 100 }}
+				whileInView={{ opacity: 1, y: 0 }}
+				transition={{ duration: 1.2, ease: [0.6, 0.05, 0.01, 0.99] }}
+				viewport={{ once: true, amount: 0.3 }}
 			>
-				<a
-					href="mailto:josue@email.com"
-					aria-label="Email"
-					className="hover:text-orange transition-colors duration-300"
-				>
-					<FaEnvelope />
-				</a>
-				<a
-					href="https://github.com/josuexrocha"
-					target="_blank"
-					rel="noopener noreferrer"
-					aria-label="GitHub"
-					className="hover:text-orange transition-colors duration-300"
-				>
-					<FaGithub />
-				</a>
-				<a
-					href="https://www.linkedin.com/in/josuexrocha/"
-					target="_blank"
-					rel="noopener noreferrer"
-					aria-label="LinkedIn"
-					className="hover:text-orange transition-colors duration-300"
-				>
-					<FaLinkedin />
-				</a>
+				<Hand className="w-full h-auto" />
 			</motion.div>
 		</section>
 	);

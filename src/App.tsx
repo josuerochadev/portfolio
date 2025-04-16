@@ -16,7 +16,7 @@ const App: React.FC = () => {
 	const [showCurtain, setShowCurtain] = useState(true);
 
 	useEffect(() => {
-		const timeout = setTimeout(() => setShowCurtain(false), 800);
+		const timeout = setTimeout(() => setShowCurtain(false), 400); // ou 350
 		return () => clearTimeout(timeout);
 	}, []);
 
@@ -30,14 +30,15 @@ const App: React.FC = () => {
 						initial={{ y: 0 }}
 						animate={{ y: "-100%" }}
 						exit={{ y: "-100%" }}
-						transition={{ duration: 0.6, ease: "easeInOut" }}
+						transition={{ duration: 0.4, ease: [0.83, 0, 0.17, 1] }}
 					/>
 				)}
 			</AnimatePresence>
 
 			<div className="relative z-100 min-h-screen font-body">
-				{" "}
-				<Navbar />
+				<header>
+					<Navbar />
+				</header>
 				<main>
 					<Hero />
 					<section id="projects">

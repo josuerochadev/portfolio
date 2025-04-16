@@ -2,8 +2,8 @@
 import type React from "react";
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { navLinkHover } from "../../utils/motion_variants";
-import SmileIcon from "../../assets/images/ui/smile.svg?react";
+import { navLinkHover } from "@/utils/motion_variants";
+import SmileIcon from "@/assets/images/ui/smile.svg?react";
 
 // Navigation links
 const NAV_LINKS = [

@@ -1,35 +1,11 @@
-// src/components/projects.tsx
-import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import LetterRippleEffect from "../effects/letter_ripple";
-import { fadeInUpSpring } from "../../utils/motion_variants";
+import { useScroll, useTransform, motion } from "framer-motion";
 import { FaEye } from "react-icons/fa";
-import SunIcon from "../../assets/images/ui/sun.svg?react";
+import { PROJECTS } from "@/data/projects";
 
-const PROJECTS = [
-	{
-		title: "Project 1",
-		description: "A simple and intuitive task management web app.",
-		deliverables: "Wireframes, front-end dev, documentation",
-		context: "Personal side project to improve productivity.",
-		image: "/src/assets/images/projects/project1.webp",
-	},
-	{
-		title: "Project 2",
-		description: "A fast and modern e-commerce website optimized for mobile.",
-		deliverables: "UI design, responsive integration, testing",
-		context: "Redesign of an existing online shop for a client.",
-		image: "/src/assets/images/projects/project2.webp",
-	},
-	{
-		title: "Project 3",
-		description:
-			"A social platform to share interests and connect with others.",
-		deliverables: "Figma prototype, REST API, Node.js backend",
-		context: "Team collaboration during a coding bootcamp.",
-		image: "/src/assets/images/projects/project3.webp",
-	},
-];
+import FadeInUpOnScroll from "@/components/common/animations/fade_in_up_on_scroll";
+import LetterRippleEffect from "@/components/effects/letter_ripple";
+import SunIcon from "@/assets/images/ui/sun.svg?react";
 
 export default function Projects() {
 	const sectionRef = useRef(null);
@@ -52,71 +28,67 @@ export default function Projects() {
 
 			<div className="max-w-6xl mx-auto flex flex-col gap-20 relative z-10">
 				{/* TITLE */}
-				<motion.h2
-					className="relative max-w-6xl mx-auto px-4 text-[clamp(2rem,7vw,7rem)] leading-[1.1] font-display font-extrabold text-violet text-center flex flex-wrap justify-left gap-x-2"
-					variants={fadeInUpSpring}
-					initial="initial"
-					whileInView="animate"
-					viewport={{ once: true, amount: 0.7 }}
-					transition={{ delay: 0.6 }}
-				>
-					{"Here’s a glimpse into my work — a taste of what I can bring"
-						.split(" ")
-						.map((word, i) => (
-							<LetterRippleEffect
-								key={`${word}-${i}-${Math.random()}`}
-								text={`${word} `}
-							/>
-						))}
-				</motion.h2>
+				<FadeInUpOnScroll delay={0.2}>
+					<h2 className="relative max-w-6xl mx-auto px-4 text-[clamp(2rem,7vw,7rem)] leading-[1.1] font-display font-extrabold text-violet text-center flex flex-wrap justify-left gap-x-2">
+						{"Here’s a glimpse into my work — a taste of what I can bring"
+							.split(" ")
+							.map((word, i) => (
+								<LetterRippleEffect
+									key={`${word}-${i}-${Math.random()}`}
+									text={`${word} `}
+								/>
+							))}
+					</h2>
+				</FadeInUpOnScroll>
 
 				{/* PROJECT LIST */}
 				<div className="flex flex-col gap-20">
 					{PROJECTS.map((project, index) => (
-						<motion.div
-							key={project.title}
-							className="flex flex-col lg:flex-row gap-6 items-start"
-							initial="initial"
-							whileInView="animate"
-							viewport={{ once: true, amount: 0.6 }}
-							variants={fadeInUpSpring}
-							transition={{ delay: 0.6 + index * 0.3 }}
-						>
-							{/* IMAGE */}
-							<div className="w-full lg:w-1/2 aspect-[4/3]">
-								<img
-									src={project.image}
-									alt={project.title}
-									loading="lazy"
-									className="w-full h-full object-cover rounded-xl shadow-md"
-								/>
-							</div>
+						<FadeInUpOnScroll key={project.title} delay={0.3 + index * 0.15}>
+							<article
+								className="w-full flex flex-col lg:flex-row gap-6 items-start 
+  backdrop-blur-md bg-lime/20 border border-lime/20 rounded-2xl shadow-md p-6
+  hover:shadow-lg hover:scale-[1.05]
+  will-change-transform transition-all duration-300 ease-[cubic-bezier(0.83,0,0.17,1)]"
+							>
+								{/* IMAGE */}
+								<div className="w-full lg:w-1/2 aspect-[4/3]">
+									<img
+										loading="lazy"
+										src={project.image}
+										alt={`Preview of ${project.title}`}
+										className="w-full h-full object-cover rounded-xl shadow-sm"
+									/>
+								</div>
+								{/* TEXT */}
+								<div className="w-full lg:w-1/2 flex flex-col gap-2">
+									<div className="flex items-end gap-4 mb-2">
+										<span className="text-6xl font-display font-extralight text-orange leading-none">
+											{index + 1}.
+										</span>
+										<h3 className="text-3xl font-extrabold font-display leading-snug">
+											{project.title}
+										</h3>
+									</div>
 
-							{/* TEXT */}
-							<div className="w-full lg:w-1/2 flex flex-col gap-2">
-								<p className="text-6xl font-display text-orange font-extralight">
-									{index + 1}.
-								</p>
-								<h3 className="text-3xl font-extrabold font-display">
-									{project.title}
-								</h3>
-								<p className="text-lg leading-snug">{project.description}</p>
+									<p className="text-lg leading-snug">{project.description}</p>
 
-								<p className="text-xl font-bold mt-2">Deliverables</p>
-								<p className="text-base mb-1">{project.deliverables}</p>
+									<p className="text-xl font-bold mt-2">Deliverables</p>
+									<p className="text-base mb-1">{project.deliverables}</p>
 
-								<p className="text-xl font-bold">Context</p>
-								<p className="text-base">{project.context}</p>
+									<p className="text-xl font-bold">Context</p>
+									<p className="text-base">{project.context}</p>
 
-								<a
-									href="/projects/details"
-									className="button mt-4 inline-flex justify-center items-center gap-2 self-start"
-									aria-label={`See more details about ${project.title}`}
-								>
-									<FaEye className="inline-block" /> MORE DETAILS
-								</a>
-							</div>
-						</motion.div>
+									<a
+										href="/projects/details"
+										className="button mt-4 inline-flex justify-center items-center gap-2 self-start"
+										aria-label={`See more details about ${project.title}`}
+									>
+										<FaEye className="inline-block" /> MORE DETAILS
+									</a>
+								</div>
+							</article>
+						</FadeInUpOnScroll>
 					))}
 				</div>
 			</div>

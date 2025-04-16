@@ -2,31 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
-/* === Global styles === */
+/* === GLOBAL === */
 html {
   scroll-behavior: smooth;
 }
 
-.grainy-bg {
-  background-color: #F5F0E8;
-  background-image:
-    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.05), transparent 60%),
-    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.05), transparent 60%),
-    url("data:image/svg+xml,%3Csvg width='160' height='160' viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
-  background-size: 200px 200px;
-  background-repeat: repeat;
-}
-
 body {
-  @apply transition-colors duration-300 font-sans;
+  @apply font-sans text-violet;
   font-family: 'Rubik', sans-serif;
   overflow-x: hidden;
 }
-body.grainy-bg {
-  @apply text-violet;
+
+/* === BUTTONS === */
+.button {
+  @apply border-2 border-violet text-violet px-6 py-2 rounded-full font-bold inline-flex items-center transition-all duration-300;
+}
+.button:hover {
+  @apply bg-lime text-orange;
+}
+.button:active {
+  transform: scale(0.95);
+  transition: transform 0.15s ease;
 }
 
-/* Titre principal */
+/* === FOCUS VISUAL === */
+:focus-visible {
+  outline: 2px solid #FFA500; /* Orange */
+  outline-offset: 2px;
+  border-radius: 9999px;
+}
+
+/* === TITRES === */
 .funky-title {
   font-family: 'Fraunces', serif;
   font-size: 3rem;
@@ -35,31 +41,14 @@ body.grainy-bg {
   text-align: center;
 }
 
-/* Bouton */
-.button {
-  @apply border-2 border-violet text-violet px-6 py-2 rounded-full font-bold inline-flex items-center transition-all duration-300;
+/* === ANIMAÇÕES === */
+
+@keyframes gradient-move {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-.button:hover {
-  @apply bg-lime text-orange;
-}
-
-.button:active {
-	transform: scale(0.95);
-	transition: transform 0.15s ease;
-}
-
-:focus-visible {
-  outline: 2px solid #FFA500; /* Replace with the actual orange color value from your Tailwind config */
-	outline-offset: 2px;
-	border-radius: 9999px; /* full, para seguir com os botões arredondados */
-}
-
-@keyframes spin-slow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-.animate-spin-slow {
-  animation: spin-slow 8s linear infinite;
+.animate-gradient-move {
+  animation: gradient-move 25s ease-in-out infinite;
 }

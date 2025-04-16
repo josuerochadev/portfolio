@@ -1,14 +1,16 @@
+// src/App.tsx
 import type React from "react";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Navbar from "./components/navbar";
-import Hero from "./components/hero";
-import Projects from "./components/projects";
-import Bio from "./components/bio";
-import Contact from "./components/contact";
-import Footer from "./components/footer";
-import ScrollToTop from "./components/scroll_to_top";
-import ScrollBlur from "./components/bottom_blur";
+import BackgroundGradient from "./components/layout/background_gradient";
+import Navbar from "./components/layout/navbar";
+import Hero from "./components/sections/hero";
+import Projects from "./components/sections/projects";
+import Bio from "./components/sections/bio";
+import Contact from "./components/sections/contact";
+import Footer from "./components/layout/footer";
+import ScrollToTop from "./components/common/scroll_to_top";
+import ScrollBlur from "./components/common/bottom_blur";
 
 const App: React.FC = () => {
 	const [showCurtain, setShowCurtain] = useState(true);
@@ -19,7 +21,8 @@ const App: React.FC = () => {
 	}, []);
 
 	return (
-		<div className="grainy-bg min-h-screen">
+		<div className="min-h-screen">
+			<BackgroundGradient />
 			<AnimatePresence>
 				{showCurtain && (
 					<motion.div
@@ -32,24 +35,21 @@ const App: React.FC = () => {
 				)}
 			</AnimatePresence>
 
-			<div className="text-violet transition-colors duration-300 font-body">
+			<div className="relative z-100 min-h-screen font-body">
+				{" "}
 				<Navbar />
 				<main>
 					<Hero />
-
 					<section id="projects">
 						<Projects />
 					</section>
-
 					<section id="bio">
 						<Bio />
 					</section>
-
 					<section id="contact">
 						<Contact />
 					</section>
 				</main>
-
 				<ScrollToTop />
 				<ScrollBlur />
 				<Footer />

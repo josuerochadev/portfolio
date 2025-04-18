@@ -11,11 +11,12 @@ export default function BackgroundGradient() {
 				className="absolute inset-0 bg-[length:300%_300%] animate-gradient-move"
 				style={{
 					backgroundImage: `
-      radial-gradient(at 20% 30%, #ffefc1 0%, transparent 60%),
-      radial-gradient(at 80% 80%, #e2a788 0%, transparent 60%),
-      linear-gradient(135deg, #c4817f, #fef3c7, #b28d6e)
-    `,
+            radial-gradient(at 20% 30%, #ffefc1 0%, transparent 60%),
+            radial-gradient(at 80% 80%, #e2a788 0%, transparent 60%),
+            linear-gradient(135deg, #c4817f, #fef3c7, #b28d6e)
+          `,
 					backgroundBlendMode: "overlay, soft-light, normal",
+					willChange: "background-position",
 				}}
 			/>
 		</div>

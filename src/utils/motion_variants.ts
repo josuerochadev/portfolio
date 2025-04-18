@@ -3,29 +3,28 @@
 export const navLinkHover = {
 	initial: {
 		scale: 1,
-		color: "#6900FF", // original
+		color: "#6900FF",
 	},
 	hover: {
 		scale: 1.15,
-		color: "#FFA500", // hover
+		color: "#FFA500",
 		transition: {
-			type: "spring",
-			stiffness: 300,
-			damping: 20,
+			duration: 0.3,
+			ease: "easeOut",
 		},
 	},
 };
 
-export const fadeInUpSpring = {
+export const fadeInUpTween = {
 	initial: { opacity: 0, y: 20 },
 	animate: { opacity: 1, y: 0 },
-	transition: { type: "spring", stiffness: 140, damping: 16, mass: 0.5 },
+	transition: { duration: 0.5, ease: [0.65, 0, 0.35, 1] }, // ou "easeOut"
 };
 
-export const fadeInDownSpring = {
+export const fadeInDownTween = {
 	initial: { opacity: 0, y: -20 },
 	animate: { opacity: 1, y: 0 },
-	transition: { type: "spring", stiffness: 140, damping: 16, mass: 0.5 },
+	transition: { duration: 0.5, ease: [0.65, 0, 0.35, 1] },
 };
 
 export const fadeInUp = {

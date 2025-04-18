@@ -54,11 +54,14 @@ const Navbar: React.FC = () => {
 		<nav
 			ref={navRef}
 			onMouseMove={handleMouseMove}
-			className="relative w-full bg-transparent backdrop-blur-xl text-violet font-bold text-lg uppercase tracking-wider font-sans overflow-hidden py-6 z-10 border-b-2 border-lime"
+			className="relative w-full bg-transparent backdrop-blur-md text-violet font-bold text-lg uppercase tracking-wider font-sans overflow-hidden py-6 z-10 border-b-2 border-lime"
 		>
 			{/* Animated bars background */}
 			<div className="absolute inset-0 z-[1]">
-				<div className="relative w-full h-full">
+				<div
+					className="relative w-full h-full"
+					style={{ willChange: "transform" }}
+				>
 					{Array.from({ length: BAR_COUNT }).map((_, i) => {
 						const left = `${(100 / BAR_COUNT) * i}%`;
 						const width = `${getBarWidth(i)}px`;

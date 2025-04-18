@@ -39,12 +39,15 @@ const SmileGrid: React.FC<SmileGridProps> = ({ active }) => {
 
 	useEffect(() => {
 		if (!active) return;
-		const newSmiles = generateSmiles(8);
+		const newSmiles = generateSmiles(6);
 		setSmiles((prev) => [...prev, ...newSmiles]);
 	}, [active]);
 
 	return (
-		<div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+		<div
+			className="absolute inset-0 z-0 pointer-events-none overflow-hidden"
+			style={{ transformStyle: "preserve-3d" }}
+		>
 			<AnimatePresence>
 				{smiles.map((smile) => (
 					<motion.div
@@ -60,11 +63,12 @@ const SmileGrid: React.FC<SmileGridProps> = ({ active }) => {
 						exit={{ opacity: 0 }}
 						transition={smileTransition}
 						style={{
-							position: "absolute",
 							top: `${smile.y}%`,
 							left: `${smile.x}%`,
 							width: `${smile.size}rem`,
 							height: `${smile.size}rem`,
+							willChange: "transform, opacity",
+							position: "absolute",
 						}}
 						onAnimationComplete={() =>
 							setSmiles((prev) => prev.filter((s) => s.id !== smile.id))

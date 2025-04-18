@@ -27,10 +27,11 @@ const App: React.FC = () => {
 				{showCurtain && (
 					<motion.div
 						className="fixed inset-0 z-[999] bg-lime"
+						style={{ willChange: "transform" }} // ✅ otimização
 						initial={{ y: 0 }}
 						animate={{ y: "-100%" }}
 						exit={{ y: "-100%" }}
-						transition={{ duration: 0.4, ease: [0.83, 0, 0.17, 1] }}
+						transition={{ duration: 0.6, ease: [0.65, 0, 0.35, 1] }} // ✅ animação suave
 					/>
 				)}
 			</AnimatePresence>

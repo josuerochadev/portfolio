@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 
-// Invertido: começa extrabold, suaviza no hover
 const rippleWeights = ["100", "300", "500", "700"];
 
 interface Props {
@@ -14,7 +13,7 @@ const LetterRippleEffect = ({ text, className = "" }: Props) => {
 	const [hoverIndex, setHoverIndex] = useState<number | null>(null);
 
 	const getWeight = (index: number) => {
-		if (hoverIndex === null) return "900"; // padrão extrabold
+		if (hoverIndex === null) return "900";
 		const distance = Math.abs(index - hoverIndex);
 		return rippleWeights[distance] || rippleWeights[rippleWeights.length - 1];
 	};
@@ -32,6 +31,7 @@ const LetterRippleEffect = ({ text, className = "" }: Props) => {
 					animate={{ fontVariationSettings: `'wght' ${getWeight(index)}` }}
 					transition={{ type: "spring", stiffness: 250, damping: 25 }}
 					style={{
+						willChange: "font-variation-settings, transform",
 						fontVariationSettings: `'wght' ${getWeight(index)}`,
 						display: "inline-block",
 						minWidth: "0.6em",

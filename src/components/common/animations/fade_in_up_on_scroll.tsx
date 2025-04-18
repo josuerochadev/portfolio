@@ -1,6 +1,6 @@
 // src/components/common/animations/fade_in_up_on_scroll.tsx
 import { motion } from "framer-motion";
-import { fadeInUpSpring } from "@/utils/motion_variants";
+import { fadeInUpTween } from "@/utils/motion_variants";
 
 interface Props {
   children: React.ReactNode;
@@ -11,11 +11,11 @@ interface Props {
 
 const FadeInUpOnScroll: React.FC<Props> = ({ children, delay = 0, amount = 0.3, className = "" }) => (
   <motion.div
-    variants={fadeInUpSpring}
+    variants={fadeInUpTween}
     initial="initial"
     whileInView="animate"
     viewport={{ once: true, amount }}
-    transition={{ ...fadeInUpSpring.transition, delay }}
+    transition={{ ...fadeInUpTween.transition, delay }}
     className={className}
   >
     {children}

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { fadeInUpSpring } from "@/utils/motion_variants";
+import { fadeInUpTween } from "@/utils/motion_variants";
 
 interface FadeInUpProps {
   children: React.ReactNode;
@@ -9,10 +9,10 @@ interface FadeInUpProps {
 
 const FadeInUp: React.FC<FadeInUpProps> = ({ children, delay = 0, className = "" }) => (
   <motion.div
-    variants={fadeInUpSpring}
+    variants={fadeInUpTween}
     initial="initial"
     animate="animate"
-    transition={{ ...fadeInUpSpring.transition, delay }}
+    transition={{ ...fadeInUpTween.transition, delay }}
     className={className}
   >
     {children}

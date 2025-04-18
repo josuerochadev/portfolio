@@ -1,6 +1,7 @@
 import FadeInUpOnScroll from "@/components/common/animations/fade_in_up_on_scroll";
 import LetterRippleEffect from "@/components/effects/letter_ripple";
 import ProfileBackground from "@/components/effects/profile_background";
+import PhotoFrame from "@/components/layout/photo_frame";
 
 const ADJECTIVES = ["creative", "curious", "empathetic", "resilient", "bold"];
 
@@ -26,11 +27,12 @@ export default function Bio() {
 			className="relative z-10 w-full px-6 py-20 text-violet overflow-hidden"
 		>
 			<ProfileBackground />
+			<PhotoFrame />
 
-			<div className="max-w-6xl mx-auto flex flex-col items-center">
+			<div className="max-w-6xl mx-auto flex flex-col items-start">
 				{/* TITLE */}
 				<FadeInUpOnScroll delay={0.2}>
-					<h2 className="relative w-full px-4 text-[clamp(2rem,7vw,6rem)] leading-[1.1] font-display font-extrabold text-violet text-center flex flex-wrap justify-left gap-x-2">
+					<h2 className="relative w-full px-4 text-[clamp(2rem,7vw,6rem)] leading-[1.1] font-display font-extrabold text-violet text-left flex flex-wrap gap-x-2">
 						{"And more about me".split(" ").map((word) => (
 							<LetterRippleEffect key={word} text={`${word} `} />
 						))}
@@ -38,8 +40,8 @@ export default function Bio() {
 				</FadeInUpOnScroll>
 
 				{/* ADJECTIVES */}
-				<div className="w-full px-4">
-					<div className="max-w-6xl mx-auto flex flex-wrap justify-start gap-6 mt-4 mb-20">
+				<div className="w-full px-4 mt-6 mb-12">
+					<div className="max-w-6xl mx-auto flex flex-wrap gap-x-6 gap-y-2">
 						{ADJECTIVES.map((word, i) => (
 							<FadeInUpOnScroll key={word} delay={0.6 + i * 0.1}>
 								<span className="text-lg md:text-xl font-bold">{word}</span>
@@ -49,7 +51,7 @@ export default function Bio() {
 				</div>
 
 				{/* TEXT BLOCK */}
-				<div className="w-full px-4 max-w-4xl flex flex-col gap-20 text-center md:text-left">
+				<div className="w-full px-4 max-w-4xl flex flex-col gap-12 text-left">
 					{SECTIONS.map((section, i) => (
 						<FadeInUpOnScroll key={section.title} delay={1 + i * 0.2}>
 							<div>

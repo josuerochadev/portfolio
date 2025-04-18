@@ -46,10 +46,11 @@ export default function Projects() {
 					{PROJECTS.map((project, index) => (
 						<FadeInUpOnScroll key={project.title} delay={0.3 + index * 0.15}>
 							<article
-								className="w-full flex flex-col lg:flex-row gap-6 items-start 
-  backdrop-blur-md bg-lime/20 border border-lime/20 rounded-2xl shadow-md p-6
-  hover:shadow-lg hover:scale-[1.05]
-  will-change-transform transition-all duration-300 ease-[cubic-bezier(0.83,0,0.17,1)]"
+								className="w-full flex flex-col lg:flex-row gap-6 items-start
+  bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5
+  backdrop-blur-xl border border-lime/30 rounded-2xl shadow-xl p-6
+  hover:shadow-2xl hover:scale-[1.04]
+  will-change-transform transition-all duration-500 ease-[cubic-bezier(0.83,0,0.17,1)]"
 							>
 								{/* IMAGE */}
 								<div className="w-full lg:w-1/2 aspect-[4/3]">

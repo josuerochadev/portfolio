@@ -1,6 +1,5 @@
-// src/components/navbar.tsx
 import type React from "react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { navLinkHover } from "@/utils/motion_variants";
 import SmileIcon from "@/assets/images/ui/smile.svg?react";
@@ -16,23 +15,37 @@ const NAV_LINKS = [
 // Number of bars to display
 const BAR_COUNT = 45;
 
-// Navbar component
 const Navbar: React.FC = () => {
-	// State to track mouse position
 	const navRef = useRef<HTMLDivElement>(null);
-	const [mouseX, setMouseX] = useState<number | null>(null);
+	const mouseX = useRef<number | null>(null);
+	const [tick, setTick] = useState(0); // Força re-render suave
 
-	// Effect to handle mouse movement
+	// Atualiza mouseX sem trigger de re-render
 	const handleMouseMove = (e: React.MouseEvent) => {
 		const rect = navRef.current?.getBoundingClientRect();
 		if (!rect) return;
-		setMouseX(e.clientX - rect.left);
+		mouseX.current = e.clientX - rect.left;
 	};
 
-	// Function to calculate the width of each bar based on mouse position
+	// Força atualização contínua (reactive loop)
+	useEffect(() => {
+		let animationFrameId: number;
+
+		const update = () => {
+			setTick((prev) => (prev + 1) % 1000); // força um re-render leve
+			animationFrameId = requestAnimationFrame(update);
+		};
+
+		animationFrameId = requestAnimationFrame(update);
+
+		return () => cancelAnimationFrame(animationFrameId);
+	}, []);
+
 	const getBarWidth = (index: number): number => {
-		if (mouseX === null) return 0;
-		const distance = Math.abs((mouseX / window.innerWidth) * BAR_COUNT - index);
+		if (mouseX.current === null) return 0;
+		const distance = Math.abs(
+			(mouseX.current / window.innerWidth) * BAR_COUNT - index,
+		);
 		const proximity = Math.max(0, 12 - distance);
 		return proximity > 0 ? proximity * 2.2 : 0;
 	};
@@ -49,11 +62,16 @@ const Navbar: React.FC = () => {
 					{Array.from({ length: BAR_COUNT }).map((_, i) => {
 						const left = `${(100 / BAR_COUNT) * i}%`;
 						const width = `${getBarWidth(i)}px`;
+						const opacity = getBarWidth(i) > 0 ? 1 : 0;
+
 						return (
 							<div
-								key={`bar-${i}-${Math.random().toString(36).substr(2, 9)}`}
-								className="absolute top-0 h-full bg-lime backdrop-blur-md transition-all duration-100 ease-out"
-								style={{ left, width }}
+								key={`bar-${
+									// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+									i
+								}`}
+								className="absolute top-0 h-full bg-lime backdrop-blur-md will-change-transform transition-[width,opacity] duration-100 ease-[cubic-bezier(0.83,0,0.17,1)]"
+								style={{ left, width, opacity }}
 							/>
 						);
 					})}
@@ -73,7 +91,6 @@ const Navbar: React.FC = () => {
 						</a>
 					</li>
 
-					{/* Map through navigation links */}
 					{NAV_LINKS.slice(1).map(({ href, label }) => (
 						<li key={href}>
 							<motion.a

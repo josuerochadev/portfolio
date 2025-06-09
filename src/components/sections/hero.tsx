@@ -17,7 +17,7 @@ const PHRASES = [
 
 const ACTION_LINKS = [
 	{
-		href: "/resume.pdf",
+		href: "/public/Josue_Rocha_CV_Dev2025.pdf",
 		icon: <FaFileAlt className="inline-block mr-2" />,
 		label: "RESUME",
 		delay: 1.7,

@@ -1,24 +1,32 @@
 export const PROJECTS = [
 	{
-		title: "Project 1",
-		description: "A simple and intuitive task management web app.",
-		deliverables: "Wireframes, front-end dev, documentation",
-		context: "Personal side project to improve productivity.",
+		title: "LLDC – Optician Appointment Booking",
+		description:
+			"Custom-built web application to streamline appointment scheduling for a local optician.",
+		deliverables:
+			"Full stack architecture, Node/Express back-end, React front-end, automated reminders",
+		context:
+			"Client project developed for an independent optician. Currently being finalized (v1).",
 		image: "/assets/images/projects/project1.webp",
 	},
 	{
-		title: "Project 2",
-		description: "A fast and modern e-commerce website optimized for mobile.",
-		deliverables: "UI design, responsive integration, testing",
-		context: "Redesign of an existing online shop for a client.",
+		title: "Personal Portfolio",
+		description:
+			"A modular, high-performance portfolio to showcase my full-stack development skills.",
+		deliverables:
+			"Design system, responsive integration, Framer Motion animations, SEO optimization",
+		context:
+			"Ongoing personal project serving as a professional showcase and technical demonstration.",
 		image: "/assets/images/projects/project2.webp",
 	},
 	{
-		title: "Project 3",
+		title: "Showcase Website – Young Attorney",
 		description:
-			"A social platform to share interests and connect with others.",
-		deliverables: "Figma prototype, REST API, Node.js backend",
-		context: "Team collaboration during a coding bootcamp.",
+			"Minimalist multilingual platform to increase digital presence and streamline client contact.",
+		deliverables:
+			"Wireframes, Tailwind integration, secure form, mobile-first responsive design",
+		context:
+			"Concept phase of a freelance project for a legal professional focused on local visibility and GDPR compliance.",
 		image: "/assets/images/projects/project3.webp",
 	},
 ];

@@ -23,13 +23,13 @@ const ACTION_LINKS = [
 		delay: 1.7,
 	},
 	{
-		href: "https://github.com/josuexrocha",
+		href: "https://github.com/josuerochadev",
 		icon: <FaGithub className="inline-block mr-2" />,
 		label: "GITHUB",
 		delay: 1.85,
 	},
 	{
-		href: "https://www.linkedin.com/in/josuexrocha/",
+		href: "https://www.linkedin.com/in/josuerochadev/",
 		icon: <FaLinkedin className="inline-block mr-2" />,
 		label: "LINKEDIN",
 		delay: 2.0,

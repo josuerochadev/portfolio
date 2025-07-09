@@ -7,7 +7,7 @@ export const PROJECTS = [
 			"Full stack architecture, Node/Express back-end, React front-end, automated reminders",
 		context:
 			"Client project developed for an independent optician. Currently being finalized (v1).",
-		image: "/assets/images/projects/project1.webp",
+		image: "/portfolio/assets/images/projects/project1.webp",
 	},
 	{
 		title: "Personal Portfolio",
@@ -17,7 +17,7 @@ export const PROJECTS = [
 			"Design system, responsive integration, Framer Motion animations, SEO optimization",
 		context:
 			"Ongoing personal project serving as a professional showcase and technical demonstration.",
-		image: "/assets/images/projects/project2.webp",
+		image: "/portfolio/assets/images/projects/project2.webp",
 	},
 	{
 		title: "Showcase Website – Young Attorney",
@@ -27,6 +27,6 @@ export const PROJECTS = [
 			"Wireframes, Tailwind integration, secure form, mobile-first responsive design",
 		context:
 			"Concept phase of a freelance project for a legal professional focused on local visibility and GDPR compliance.",
-		image: "/assets/images/projects/project3.webp",
+		image: "/portfolio/assets/images/projects/project3.webp",
 	},
 ];

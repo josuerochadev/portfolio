@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import FadeInUp from "@/components/common/animations/fade_in_up";
+import BackgroundGradient from "@/components/layout/background_gradient";
 
 export default function NotFound() {
 	return (
 		<div className="min-h-screen flex flex-col items-center justify-center px-6 text-violet">
+			<BackgroundGradient />
 			<motion.div 
-				className="text-center max-w-2xl mx-auto"
+				className="relative z-10 text-center max-w-2xl mx-auto"
 				initial={{ opacity: 0, y: 20 }}
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.6 }}

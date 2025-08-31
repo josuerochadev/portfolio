@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import FadeInUp from "@/components/common/animations/fade_in_up";
+import BackgroundGradient from "@/components/layout/background_gradient";
 
 export default function LegalNotice() {
 	return (
-		<div className="min-h-screen bg-beige text-violet">
-			<div className="max-w-4xl mx-auto px-6 py-20">
+		<div className="min-h-screen text-violet">
+			<BackgroundGradient />
+			<div className="relative z-10 max-w-4xl mx-auto px-6 py-20">
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
@@ -29,10 +31,19 @@ export default function LegalNotice() {
 								<h2 className="text-2xl font-bold mb-4">Éditeur du site</h2>
 								<p>
 									<strong>Josué Xavier Rocha</strong><br />
+									Entrepreneur individuel (EI)<br />
 									Développeur Web Full Stack<br />
-									Auto-entrepreneur<br />
-									France
+									<br />
+									<strong>Contact :</strong><br />
+									Email : [À compléter avec votre email]<br />
+									Téléphone : [À compléter avec votre téléphone]<br />
+									Adresse : [À compléter avec votre adresse complète]<br />
+									<br />
+									<em>SIRET : [À compléter si inscrit au registre]</em>
 								</p>
+								<div className="p-4 bg-orange/10 border-l-4 border-orange mt-4 text-sm">
+									<p><strong>⚠️ À COMPLÉTER :</strong> Vous devez renseigner vos informations personnelles réelles pour être conforme à la loi française.</p>
+								</div>
 							</section>
 						</FadeInUp>
 
@@ -89,11 +100,25 @@ export default function LegalNotice() {
 						</FadeInUp>
 
 						<FadeInUp delay={1.1}>
+							<section className="mb-8">
+								<h2 className="text-2xl font-bold mb-4">Cookies et données personnelles</h2>
+								<p>
+									Ce site peut utiliser des cookies pour améliorer votre expérience utilisateur. 
+									Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de 
+									suppression de vos données personnelles. Pour plus d'informations, consultez 
+									notre <Link to="/politique-confidentialite" className="text-orange hover:underline">
+									politique de confidentialité</Link>.
+								</p>
+							</section>
+						</FadeInUp>
+
+						<FadeInUp delay={1.2}>
 							<section>
 								<h2 className="text-2xl font-bold mb-4">Contact</h2>
 								<p>
 									Pour toute question concernant ces mentions légales, vous pouvez nous contacter 
-									via le formulaire de contact disponible sur le site.
+									via le formulaire de contact disponible sur le site ou aux coordonnées mentionnées 
+									dans la section "Éditeur du site".
 								</p>
 							</section>
 						</FadeInUp>

@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import FadeInUp from "@/components/common/animations/fade_in_up";
+import BackgroundGradient from "@/components/layout/background_gradient";
 
 export default function PrivacyPolicy() {
 	return (
-		<div className="min-h-screen bg-beige text-violet">
-			<div className="max-w-4xl mx-auto px-6 py-20">
+		<div className="min-h-screen text-violet">
+			<BackgroundGradient />
+			<div className="relative z-10 max-w-4xl mx-auto px-6 py-20">
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}

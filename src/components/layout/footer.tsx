@@ -1,4 +1,5 @@
 import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
 	return (
@@ -23,6 +24,22 @@ export default function Footer() {
 				>
 					<FaLinkedin />
 				</a>
+			</div>
+			{/* Legal Links */}
+			<div className="flex justify-center gap-4 mb-4 text-xs">
+				<Link 
+					to="/mentions-legales" 
+					className="hover:text-orange transition-colors underline"
+				>
+					Mentions légales
+				</Link>
+				<span>•</span>
+				<Link 
+					to="/politique-confidentialite" 
+					className="hover:text-orange transition-colors underline"
+				>
+					Politique de confidentialité
+				</Link>
 			</div>
 			{/* Phrase */}
 			<p className="text-sm italic mb-2">Crafted with love and TypeScript.</p>

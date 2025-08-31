@@ -57,7 +57,7 @@ export default function PhotoFrame() {
 				</button>
 
 					<img
-					src={`${import.meta.env.BASE_URL}assets/videos/profile.gif`}
+					src="/assets/videos/profile.gif"
 					alt="GIF of Josué in frame"
 					className="w-[180px] sm:w-[220px] md:w-[260px] h-auto rounded-md"
 					draggable={false}

@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://josuerocha.dev/sitemap.xml
+
+# Disallow specific paths (if any)
+Disallow: /dist/
+Disallow: *.js.map
+Disallow: *.css.map

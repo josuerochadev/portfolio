@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
-import profileImg from "@/assets/images/bio/profile.png";
 
 export default function PhotoFrame() {
 	const triggerRef = useRef(null);
@@ -57,12 +56,17 @@ export default function PhotoFrame() {
 					×
 				</button>
 
-					<img
-					src={profileImg}
-					alt="Profile photo of Josué"
+					<video
+					src="/assets/videos/profile.mp4"
+					autoPlay
+					loop
+					muted
+					playsInline
 					className="w-[180px] sm:w-[220px] md:w-[260px] h-auto rounded-md"
-					draggable={false}
-					/>
+					onError={(e) => console.error('Video failed to load:', e)}
+					>
+						Votre navigateur ne supporte pas les vidéos.
+					</video>
 			</motion.div>
 		</div>
 	);

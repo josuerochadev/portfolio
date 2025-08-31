@@ -61,6 +61,13 @@ export default function PhotoFrame() {
 					alt="GIF of Josué in frame"
 					className="w-[180px] sm:w-[220px] md:w-[260px] h-auto rounded-md"
 					draggable={false}
+					onError={(e) => {
+						console.error('Failed to load GIF, trying PNG fallback');
+						// Fallback au PNG qui est dans src/assets
+						import('/src/assets/images/bio/profile.png').then(module => {
+							e.currentTarget.src = module.default;
+						});
+					}}
 					/>
 			</motion.div>
 		</div>

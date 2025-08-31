@@ -103,7 +103,7 @@ export default function LegalNotice() {
 									Ce site peut utiliser des cookies pour améliorer votre expérience utilisateur. 
 									Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de 
 									suppression de vos données personnelles. Pour plus d'informations, consultez 
-									notre <Link to="/politique-confidentialite" className="text-orange hover:underline">
+									la <Link to="/politique-confidentialite" className="text-orange hover:underline">
 									politique de confidentialité</Link>.
 								</p>
 							</section>
@@ -113,9 +113,8 @@ export default function LegalNotice() {
 							<section>
 								<h2 className="text-2xl font-bold mb-4">Contact</h2>
 								<p>
-									Pour toute question concernant ces mentions légales, vous pouvez nous contacter 
-									via le formulaire de contact disponible sur le site ou aux coordonnées mentionnées 
-									dans la section "Éditeur du site".
+									Pour toute question concernant ces mentions légales, vous pouvez me contacter 
+									aux coordonnées mentionnées dans la section "Éditeur du site".
 								</p>
 							</section>
 						</FadeInUp>

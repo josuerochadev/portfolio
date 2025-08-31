@@ -32,8 +32,8 @@ export default function PrivacyPolicy() {
 									Dernière mise à jour : {new Date().toLocaleDateString('fr-FR')}
 								</p>
 								<p>
-									Cette politique de confidentialité explique comment nous collectons, 
-									utilisons et protégeons vos informations lorsque vous visitez notre site web.
+									Cette politique de confidentialité explique comment vos informations 
+									sont collectées, utilisées et protégées lorsque vous visitez ce site web.
 								</p>
 							</section>
 						</FadeInUp>
@@ -42,7 +42,7 @@ export default function PrivacyPolicy() {
 							<section className="mb-8">
 								<h2 className="text-2xl font-bold mb-4">Collecte des données</h2>
 								<h3 className="text-xl font-semibold mb-2">Données collectées automatiquement</h3>
-								<p>Lors de votre visite, nous collectons automatiquement :</p>
+								<p>Lors de votre visite, les données suivantes sont collectées automatiquement :</p>
 								<ul className="list-disc ml-6 mb-4">
 									<li>Adresse IP</li>
 									<li>Type de navigateur et version</li>
@@ -51,13 +51,6 @@ export default function PrivacyPolicy() {
 									<li>Référent (site d'où vous venez)</li>
 								</ul>
 								
-								<h3 className="text-xl font-semibold mb-2">Données fournies volontairement</h3>
-								<p>Via le formulaire de contact :</p>
-								<ul className="list-disc ml-6">
-									<li>Nom et prénom</li>
-									<li>Adresse email</li>
-									<li>Message</li>
-								</ul>
 							</section>
 						</FadeInUp>
 
@@ -66,10 +59,9 @@ export default function PrivacyPolicy() {
 								<h2 className="text-2xl font-bold mb-4">Utilisation des données</h2>
 								<p>Vos données sont utilisées pour :</p>
 								<ul className="list-disc ml-6">
-									<li>Répondre à vos demandes de contact</li>
 									<li>Améliorer l'expérience utilisateur du site</li>
 									<li>Analyser le trafic et les performances du site</li>
-									<li>Se conformer aux obligations légales</li>
+									<li>Respecter les obligations légales</li>
 								</ul>
 							</section>
 						</FadeInUp>
@@ -93,13 +85,13 @@ export default function PrivacyPolicy() {
 							<section className="mb-8">
 								<h2 className="text-2xl font-bold mb-4">Partage des données</h2>
 								<p>
-									Nous ne vendons, n'échangeons ni ne louons vos informations personnelles 
+									Vos informations personnelles ne sont ni vendues, ni échangées, ni louées 
 									à des tiers. Vos données peuvent être partagées uniquement dans les cas suivants :
 								</p>
 								<ul className="list-disc ml-6">
 									<li>Avec votre consentement explicite</li>
 									<li>Pour se conformer à une obligation légale</li>
-									<li>Pour protéger nos droits et notre sécurité</li>
+									<li>Pour protéger les droits et la sécurité du site</li>
 								</ul>
 							</section>
 						</FadeInUp>
@@ -109,7 +101,7 @@ export default function PrivacyPolicy() {
 								<h2 className="text-2xl font-bold mb-4">Vos droits (RGPD)</h2>
 								<p>Conformément au RGPD, vous disposez des droits suivants :</p>
 								<ul className="list-disc ml-6">
-									<li><strong>Droit d'accès :</strong> connaître les données que nous détenons</li>
+									<li><strong>Droit d'accès :</strong> connaître les données détenues sur vous</li>
 									<li><strong>Droit de rectification :</strong> corriger les données inexactes</li>
 									<li><strong>Droit à l'effacement :</strong> demander la suppression de vos données</li>
 									<li><strong>Droit à la portabilité :</strong> récupérer vos données dans un format lisible</li>
@@ -122,7 +114,7 @@ export default function PrivacyPolicy() {
 							<section className="mb-8">
 								<h2 className="text-2xl font-bold mb-4">Sécurité des données</h2>
 								<p>
-									Nous mettons en œuvre des mesures de sécurité appropriées pour protéger 
+									Des mesures de sécurité appropriées sont mises en œuvre pour protéger 
 									vos informations personnelles contre l'accès non autorisé, l'altération, 
 									la divulgation ou la destruction.
 								</p>
@@ -145,8 +137,8 @@ export default function PrivacyPolicy() {
 								<h2 className="text-2xl font-bold mb-4">Contact</h2>
 								<p>
 									Pour toute question concernant cette politique de confidentialité ou 
-									pour exercer vos droits, contactez-nous via le formulaire de contact 
-									disponible sur le site.
+									pour exercer vos droits, vous pouvez me contacter aux coordonnées 
+									mentionnées dans les mentions légales.
 								</p>
 							</section>
 						</FadeInUp>

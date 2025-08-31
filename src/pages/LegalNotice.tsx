@@ -35,15 +35,12 @@ export default function LegalNotice() {
 									Développeur Web Full Stack<br />
 									<br />
 									<strong>Contact :</strong><br />
-									Email : [À compléter avec votre email]<br />
-									Téléphone : [À compléter avec votre téléphone]<br />
-									Adresse : [À compléter avec votre adresse complète]<br />
+									Email : josuexr@icloud.com<br />
+									Téléphone : + 33 7 81 40 36 80<br />
+									Adresse : 3 rue d'Erstein 67100 STRASBOURG France<br />
 									<br />
-									<em>SIRET : [À compléter si inscrit au registre]</em>
+									<em>SIRET : 94066040000018</em>
 								</p>
-								<div className="p-4 bg-orange/10 border-l-4 border-orange mt-4 text-sm">
-									<p><strong>⚠️ À COMPLÉTER :</strong> Vous devez renseigner vos informations personnelles réelles pour être conforme à la loi française.</p>
-								</div>
 							</section>
 						</FadeInUp>
 

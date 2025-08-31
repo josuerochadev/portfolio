@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import profileImg from "@/assets/images/bio/profile.png";
 
 export default function PhotoFrame() {
 	const triggerRef = useRef(null);
@@ -57,17 +58,10 @@ export default function PhotoFrame() {
 				</button>
 
 					<img
-					src="/assets/videos/profile.gif"
-					alt="GIF of Josué in frame"
+					src={profileImg}
+					alt="Profile photo of Josué"
 					className="w-[180px] sm:w-[220px] md:w-[260px] h-auto rounded-md"
 					draggable={false}
-					onError={(e) => {
-						console.error('Failed to load GIF, trying PNG fallback');
-						// Fallback au PNG qui est dans src/assets
-						import('/src/assets/images/bio/profile.png').then(module => {
-							e.currentTarget.src = module.default;
-						});
-					}}
 					/>
 			</motion.div>
 		</div>

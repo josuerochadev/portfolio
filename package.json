@@ -7,6 +7,12 @@
 		"dev": "vite",
 		"build": "vite build",
 		"lint": "eslint .",
+		"test": "vitest",
+		"test:run": "vitest run",
+		"test:coverage": "vitest run --coverage",
+		"test:e2e": "playwright test",
+		"test:e2e:ui": "playwright test --ui",
+		"lighthouse": "lhci autorun",
 		"preview": "vite preview",
 		"vercel-build": "vite build"
 	},
@@ -26,6 +32,11 @@
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",
 		"@eslint/js": "^9.21.0",
+		"@lhci/cli": "^0.15.1",
+		"@playwright/test": "^1.55.0",
+		"@testing-library/jest-dom": "^6.8.0",
+		"@testing-library/react": "^16.3.0",
+		"@testing-library/user-event": "^14.6.1",
 		"@types/node": "^22.14.0",
 		"@types/react": "^19.0.12",
 		"@types/react-dom": "^19.0.4",
@@ -38,12 +49,14 @@
 		"eslint-plugin-react-refresh": "^0.4.19",
 		"globals": "^15.15.0",
 		"jiti": "^2.5.1",
+		"jsdom": "^26.1.0",
 		"postcss": "^8.5.3",
 		"rollup-plugin-visualizer": "^6.0.3",
 		"tailwindcss": "^3.3.5",
 		"ts-node": "^10.9.2",
 		"typescript": "^5.8.2",
 		"vite": "^5.2.8",
-		"vite-plugin-svgr": "^4.3.0"
+		"vite-plugin-svgr": "^4.3.0",
+		"vitest": "^3.2.4"
 	}
 }

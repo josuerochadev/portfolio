@@ -1,22 +1,27 @@
 // src/App.tsx
 import type React from "react";
+import { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 import ScrollToTopOnRouteChange from "./components/common/ScrollToTopOnRouteChange";
 import HomePage from "./components/pages/HomePage";
-import NotFound from "./pages/NotFound";
-import LegalNotice from "./pages/LegalNotice";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
+
+// Lazy load pages for code splitting
+const LegalNotice = lazy(() => import("./pages/LegalNotice"));
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App: React.FC = () => {
 	return (
 		<>
 			<ScrollToTopOnRouteChange />
-			<Routes>
-				<Route path="/" element={<HomePage />} />
-				<Route path="/mentions-legales" element={<LegalNotice />} />
-				<Route path="/politique-confidentialite" element={<PrivacyPolicy />} />
-				<Route path="*" element={<NotFound />} />
-			</Routes>
+			<Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-dark text-violet">Loading...</div>}>
+				<Routes>
+					<Route path="/" element={<HomePage />} />
+					<Route path="/mentions-legales" element={<LegalNotice />} />
+					<Route path="/politique-confidentialite" element={<PrivacyPolicy />} />
+					<Route path="*" element={<NotFound />} />
+				</Routes>
+			</Suspense>
 		</>
 	);
 };

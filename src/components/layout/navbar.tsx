@@ -18,7 +18,7 @@ const BAR_COUNT = 45;
 const Navbar: React.FC = () => {
 	const navRef = useRef<HTMLDivElement>(null);
 	const mouseX = useRef<number | null>(null);
-	const [tick, setTick] = useState(0); // Força re-render suave
+	const [_tick, setTick] = useState(0); // Força re-render suave
 
 	// Atualiza mouseX sem trigger de re-render
 	const handleMouseMove = (e: React.MouseEvent) => {

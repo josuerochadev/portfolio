@@ -64,13 +64,13 @@ const Hero: React.FC = () => {
 			/>
 
 			{/* TITLE */}
-			<div className="flex flex-col items-center justify-start pt-12 mb-6 sm:mb-0 relative z-10">
+			<div className="flex flex-col items-center justify-start pt-8 sm:pt-12 mb-6 sm:mb-0 relative z-10 px-2">
 				<FadeInDown delay={0.6}>
 					<h1
-						className="relative text-[clamp(5.5rem,10vw,12rem)] leading-[0.85] font-extrabold font-display text-left"
+						className="relative text-[clamp(4rem,12vw,12rem)] leading-[0.85] font-extrabold font-display text-left"
 						style={{ willChange: "transform, opacity" }}
 					>
-						<span className="absolute left-0 -top-6 text-xl md:text-2xl font-normal text-violet">
+						<span className="absolute left-0 -top-4 sm:-top-6 text-lg sm:text-xl md:text-2xl font-normal text-violet">
 							I’m
 						</span>
 						<div className="ml-0 sm:ml-[3.5rem] flex flex-col sm:flex-row gap-y-2 sm:gap-x-2 items-center sm:items-start">

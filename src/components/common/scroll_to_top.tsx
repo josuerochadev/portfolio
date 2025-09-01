@@ -25,7 +25,7 @@ export default function ScrollToTop() {
 			style={{ willChange: "transform, opacity" }}
 			className={`fixed bottom-6 right-6 z-[9999] flex items-center gap-2
         px-4 py-2 sm:px-6 sm:py-3
-        rounded-full border-2 border-violet text-violet font-bold bg-beige
+        rounded-full border-2 border-violet-dark text-violet-dark font-bold bg-beige
         transition-all duration-300 ease-in-out
         hover:bg-lime hover:text-orange
         focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-orange

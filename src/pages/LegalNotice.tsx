@@ -14,7 +14,7 @@ export default function LegalNotice() {
 					transition={{ duration: 0.6 }}
 				>
 					<FadeInUp delay={0.2}>
-						<Link to="/" className="inline-flex items-center text-orange hover:text-violet mb-8 transition-colors">
+						<Link to="/" className="inline-flex items-center text-orange hover:text-violet mb-8 transition-colors focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2 rounded px-2 py-1">
 							← Retour à l'accueil
 						</Link>
 					</FadeInUp>

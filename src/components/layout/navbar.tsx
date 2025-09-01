@@ -87,7 +87,7 @@ const Navbar: React.FC = () => {
 					<li>
 						<a
 							href="#hero"
-							className="transition-colors duration-200 text-violet hover:text-orange"
+							className="transition-colors duration-200 text-violet hover:text-orange focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2 rounded-lg"
 							aria-label="Home"
 						>
 							<SmileIcon className="w-10 h-10" />
@@ -102,7 +102,7 @@ const Navbar: React.FC = () => {
 								initial="initial"
 								animate="initial"
 								whileHover="hover"
-								className="inline-block cursor-pointer"
+								className="inline-block cursor-pointer focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2 rounded px-2 py-1"
 							>
 								{label}
 							</motion.a>

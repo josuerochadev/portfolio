@@ -2,10 +2,10 @@ import type React from "react";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaFileAlt, FaGithub, FaLinkedin } from "react-icons/fa";
-import LetterRippleEffect from "@/components/effects/letter_ripple";
-import SmileGrid from "@/components/effects/smile_grid";
-import FadeInUp from "@/components/common/animations/fade_in_up";
-import FadeInDown from "@/components/common/animations/fade_in_down";
+import LetterRippleEffect from "@/components/effects/letter-ripple";
+import SmileGrid from "@/components/effects/smile-grid";
+import FadeInUp from "@/components/common/animations/fade-in-up";
+import FadeInDown from "@/components/common/animations/fade-in-down";
 
 const PHRASES = [
 	{ id: "phrase-2", text: "a brazilian former lawyer" },

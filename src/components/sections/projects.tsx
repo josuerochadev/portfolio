@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
 import { PROJECTS } from "@/data/projects";
 
-import FadeInUpOnScroll from "@/components/common/animations/fade_in_up_on_scroll";
-import LetterRippleEffect from "@/components/effects/letter_ripple";
+import FadeInUpOnScroll from "@/components/common/animations/fade-in-up-on-scroll";
+import LetterRippleEffect from "@/components/effects/letter-ripple";
 import SunIcon from "@/assets/images/ui/sun.svg?react";
 
 export default function Projects() {

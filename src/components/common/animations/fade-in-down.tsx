@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { fadeInDownTween } from "@/utils/motion_variants";
+import { fadeInDownTween } from "@/utils/motion-variants";
 
 interface FadeInDownProps {
   children: React.ReactNode;

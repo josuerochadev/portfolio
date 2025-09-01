@@ -16,7 +16,7 @@ vi.mock('@/assets/images/ui/smile.svg?react', () => ({
 }));
 
 // Mock motion variants
-vi.mock('@/utils/motion_variants', () => ({
+vi.mock('@/utils/motion-variants', () => ({
   navLinkHover: {},
 }));
 

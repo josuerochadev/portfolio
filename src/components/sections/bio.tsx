@@ -1,7 +1,7 @@
-import FadeInUpOnScroll from "@/components/common/animations/fade_in_up_on_scroll";
-import LetterRippleEffect from "@/components/effects/letter_ripple";
-import ProfileBackground from "@/components/effects/profile_background";
-import PhotoFrame from "@/components/layout/photo_frame";
+import FadeInUpOnScroll from "@/components/common/animations/fade-in-up-on-scroll";
+import LetterRippleEffect from "@/components/effects/letter-ripple";
+import ProfileBackground from "@/components/effects/profile-background";
+import PhotoFrame from "@/components/layout/photo-frame";
 
 const ADJECTIVES = ["creative", "curious", "empathetic", "resilient", "bold"];
 

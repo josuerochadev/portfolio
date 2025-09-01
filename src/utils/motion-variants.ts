@@ -1,4 +1,4 @@
-// src/utils/motion_variants.ts
+// src/utils/motion-variants.ts
 
 export const navLinkHover = {
 	initial: {

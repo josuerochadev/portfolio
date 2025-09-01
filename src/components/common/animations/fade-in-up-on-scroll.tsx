@@ -1,6 +1,6 @@
-// src/components/common/animations/fade_in_up_on_scroll.tsx
+// src/components/common/animations/fade-in-up-on-scroll.tsx
 import { motion } from "framer-motion";
-import { fadeInUpTween } from "@/utils/motion_variants";
+import { fadeInUpTween } from "@/utils/motion-variants";
 
 interface Props {
   children: React.ReactNode;

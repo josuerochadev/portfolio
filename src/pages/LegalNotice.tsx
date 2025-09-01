@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import FadeInUp from "@/components/common/animations/fade_in_up";
-import BackgroundGradient from "@/components/layout/background_gradient";
+import FadeInUp from "@/components/common/animations/fade-in-up";
+import BackgroundGradient from "@/components/layout/background-gradient";
 
 export default function LegalNotice() {
 	return (

@@ -2,8 +2,8 @@ import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaArrowLeft, FaGithub, FaExternalLinkAlt, FaCalendar, FaCog } from "react-icons/fa";
 import { PROJECTS, type Project } from "@/data/projects";
-import FadeInUp from "@/components/common/animations/fade_in_up";
-import BackgroundGradient from "@/components/layout/background_gradient";
+import FadeInUp from "@/components/common/animations/fade-in-up";
+import BackgroundGradient from "@/components/layout/background-gradient";
 
 const getStatusColor = (status: Project['status']) => {
 	switch (status) {

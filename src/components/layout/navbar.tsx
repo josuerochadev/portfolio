@@ -1,7 +1,7 @@
 import type React from "react";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { motion } from "framer-motion";
-import { navLinkHover } from "@/utils/motion_variants";
+import { navLinkHover } from "@/utils/motion-variants";
 import SmileIcon from "@/assets/images/ui/smile.svg?react";
 
 // Navigation links
@@ -17,37 +17,25 @@ const BAR_COUNT = 45;
 
 const Navbar: React.FC = () => {
 	const navRef = useRef<HTMLDivElement>(null);
-	const mouseX = useRef<number | null>(null);
-	const [_tick, setTick] = useState(0); // Força re-render suave
 
-	// Atualiza mouseX sem trigger de re-render
 	const handleMouseMove = (e: React.MouseEvent) => {
 		const rect = navRef.current?.getBoundingClientRect();
 		if (!rect) return;
-		mouseX.current = e.clientX - rect.left;
-	};
+		
+		const mouseX = e.clientX - rect.left;
+		const bars = navRef.current?.querySelectorAll('.animated-bar');
+		
+		if (!bars) return;
 
-	// Força atualização contínua (reactive loop)
-	useEffect(() => {
-		let animationFrameId: number;
-
-		const update = () => {
-			setTick((prev) => (prev + 1) % 1000); // força um re-render leve
-			animationFrameId = requestAnimationFrame(update);
-		};
-
-		animationFrameId = requestAnimationFrame(update);
-
-		return () => cancelAnimationFrame(animationFrameId);
-	}, []);
-
-	const getBarWidth = (index: number): number => {
-		if (mouseX.current === null) return 0;
-		const distance = Math.abs(
-			(mouseX.current / window.innerWidth) * BAR_COUNT - index,
-		);
-		const proximity = Math.max(0, 12 - distance);
-		return proximity > 0 ? proximity * 2.2 : 0;
+		bars.forEach((bar, index) => {
+			const distance = Math.abs((mouseX / window.innerWidth) * BAR_COUNT - index);
+			const proximity = Math.max(0, 12 - distance);
+			const width = proximity > 0 ? proximity * 2.2 : 0;
+			const opacity = width > 0 ? 1 : 0;
+			
+			(bar as HTMLElement).style.width = `${width}px`;
+			(bar as HTMLElement).style.opacity = opacity.toString();
+		});
 	};
 
 	return (
@@ -64,17 +52,12 @@ const Navbar: React.FC = () => {
 				>
 					{Array.from({ length: BAR_COUNT }).map((_, i) => {
 						const left = `${(100 / BAR_COUNT) * i}%`;
-						const width = `${getBarWidth(i)}px`;
-						const opacity = getBarWidth(i) > 0 ? 1 : 0;
 
 						return (
 							<div
-								key={`bar-${
-									// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-									i
-								}`}
-								className="absolute top-0 h-full bg-lime backdrop-blur-md transition-[width,opacity] duration-100 ease-[cubic-bezier(0.83,0,0.17,1)]"
-								style={{ left, width, opacity }}
+								key={`bar-${i}`}
+								className="animated-bar absolute top-0 h-full bg-lime backdrop-blur-md transition-[width,opacity] duration-100 ease-[cubic-bezier(0.83,0,0.17,1)]"
+								style={{ left, width: '0px', opacity: 0 }}
 							/>
 						);
 					})}

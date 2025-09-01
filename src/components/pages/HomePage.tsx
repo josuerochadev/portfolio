@@ -2,15 +2,15 @@
 import type React from "react";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import BackgroundGradient from "../layout/background_gradient";
+import BackgroundGradient from "../layout/background-gradient";
 import Navbar from "../layout/navbar";
 import Hero from "../sections/hero";
 import Projects from "../sections/projects";
 import Bio from "../sections/bio";
 import Contact from "../sections/contact";
 import Footer from "../layout/footer";
-import ScrollToTop from "../common/scroll_to_top";
-import ScrollBlur from "../common/bottom_blur";
+import ScrollToTop from "../common/scroll-to-top";
+import ScrollBlur from "../common/bottom-blur";
 
 const HomePage: React.FC = () => {
 	const [showCurtain, setShowCurtain] = useState(true);

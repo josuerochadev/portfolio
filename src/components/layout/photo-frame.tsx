@@ -1,4 +1,4 @@
-// src/components/layout/photo_frame.tsx
+// src/components/layout/photo-frame.tsx
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
@@ -63,7 +63,9 @@ export default function PhotoFrame() {
 					muted
 					playsInline
 					className="w-[180px] sm:w-[220px] md:w-[260px] h-auto rounded-md"
-					onError={(e) => console.error('Video failed to load:', e)}
+					onError={() => {
+						// Video fallback handled by fallback text inside video tag
+					}}
 					>
 						Votre navigateur ne supporte pas les vidéos.
 					</video>

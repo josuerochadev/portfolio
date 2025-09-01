@@ -29,7 +29,7 @@ test.describe('Portfolio - Core functionality', () => {
     await page.waitForTimeout(1000);
     
     // Check projects section is visible
-    await expect(page.locator('section#projects')).toBeInViewport();
+    await expect(page.locator('section#projects').first()).toBeInViewport();
   });
 
   test('should display project cards', async ({ page }) => {

@@ -1,5 +1,5 @@
-import { useRef, useState, useEffect } from "react";
-import { useScroll, useTransform, motion, useInView } from "framer-motion";
+import { useRef } from "react";
+import { useScroll, useTransform, motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
 import { PROJECTS } from "@/data/projects";
@@ -7,30 +7,12 @@ import { PROJECTS } from "@/data/projects";
 import FadeInUpOnScroll from "@/components/common/animations/fade_in_up_on_scroll";
 import LetterRippleEffect from "@/components/effects/letter_ripple";
 import SunIcon from "@/assets/images/ui/sun.svg?react";
-import ModalNotice from "@/components/common/modal_notice";
 
 export default function Projects() {
 	const sectionRef = useRef(null);
-	const triggerRef = useRef(null);
 
 	const { scrollYProgress } = useScroll({ target: sectionRef });
 	const rotation = useTransform(scrollYProgress, [0, 1], [0, 90]);
-
-	const isInView = useInView(triggerRef, {
-		once: true,
-		margin: "-40% 0px -50%",
-	});
-	const [modalShown, setModalShown] = useState(false);
-	const [showModal, setShowModal] = useState(false);
-
-	useEffect(() => {
-		if (isInView && !modalShown) {
-			setShowModal(true);
-			setModalShown(true); // ne se réaffichera plus
-		}
-	}, [isInView, modalShown]);
-
-	const handleClose = () => setShowModal(false);
 
 	return (
 		<section
@@ -38,7 +20,6 @@ export default function Projects() {
 			ref={sectionRef}
 			className="relative w-full px-6 py-20 text-violet overflow-hidden"
 		>
-			<ModalNotice show={showModal} onClose={handleClose} />
 
 			<motion.div
 				className="absolute top-[100px] right-[-200px] w-[1600px] h-[1600px] z-0 pointer-events-none"
@@ -61,8 +42,6 @@ export default function Projects() {
 					</h2>
 				</FadeInUpOnScroll>
 
-				{/* Déclencheur après la phrase */}
-				<div ref={triggerRef} className="w-full h-[1px]" />
 
 				<div className="flex flex-col gap-20">
 					{PROJECTS.map((project, index) => (

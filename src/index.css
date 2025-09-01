@@ -46,7 +46,23 @@ button:focus-visible {
   text-align: center;
 }
 
-/* === ANIMAÇÕES === */
+/* === ANIMATIONS & PERFORMANCE === */
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .animate-gradient-move {
+    animation: none !important;
+  }
+}
 
 @keyframes gradient-move {
   0% { background-position: 0% 50%; }
@@ -56,4 +72,17 @@ button:focus-visible {
 
 .animate-gradient-move {
   animation: gradient-move 25s ease-in-out infinite;
+}
+
+/* Performance optimizations */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+.will-change-auto {
+  will-change: auto;
 }

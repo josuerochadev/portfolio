@@ -71,7 +71,7 @@ export default function Projects() {
 								bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5
 								backdrop-blur-md border border-lime/30 rounded-2xl shadow-md p-6
 								hover:shadow-lg hover:scale-[1.01]
-								will-change-transform transition-all duration-300 ease-[cubic-bezier(0.83,0,0.17,1)]"
+								transition-all duration-300 ease-[cubic-bezier(0.83,0,0.17,1)]"
 							>
 								<div className="w-full lg:w-1/2 aspect-[4/3]">
 									<img

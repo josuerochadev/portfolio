@@ -73,7 +73,7 @@ const Navbar: React.FC = () => {
 									// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 									i
 								}`}
-								className="absolute top-0 h-full bg-lime backdrop-blur-md will-change-transform transition-[width,opacity] duration-100 ease-[cubic-bezier(0.83,0,0.17,1)]"
+								className="absolute top-0 h-full bg-lime backdrop-blur-md transition-[width,opacity] duration-100 ease-[cubic-bezier(0.83,0,0.17,1)]"
 								style={{ left, width, opacity }}
 							/>
 						);

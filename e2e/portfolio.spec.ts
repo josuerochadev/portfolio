@@ -9,8 +9,8 @@ test.describe('Portfolio - Core functionality', () => {
     // Check hero section is visible
     await expect(page.locator('#hero')).toBeVisible();
     
-    // Check main title contains "Josué Rocha"
-    await expect(page.getByText('Josué Rocha')).toBeVisible();
+    // Check main title contains "Josué Rocha" in hero section specifically
+    await expect(page.locator('#hero').getByText('Josué Rocha')).toBeVisible();
     
     // Check navigation is present
     await expect(page.locator('nav')).toBeVisible();
@@ -21,15 +21,15 @@ test.describe('Portfolio - Core functionality', () => {
     await page.click('a[href="#bio"]');
     await page.waitForTimeout(1000); // Wait for smooth scroll
     
-    // Check bio section is visible
-    await expect(page.locator('#bio')).toBeInViewport();
+    // Check bio section is visible (target the main content section)
+    await expect(page.locator('section#bio').first()).toBeInViewport();
     
     // Click on Work link
     await page.click('a[href="#projects"]');
     await page.waitForTimeout(1000);
     
     // Check projects section is visible
-    await expect(page.locator('#projects')).toBeInViewport();
+    await expect(page.locator('section#projects')).toBeInViewport();
   });
 
   test('should display project cards', async ({ page }) => {
@@ -68,11 +68,11 @@ test.describe('Portfolio - Core functionality', () => {
     await page.click('a[href="#contact"]');
     await page.waitForTimeout(1000);
     
-    // Check contact section is visible
-    await expect(page.locator('#contact')).toBeInViewport();
+    // Check contact section is visible (target the main section)
+    await expect(page.locator('section#contact').first()).toBeInViewport();
     
-    // Check contact elements are present
-    await expect(page.getByText('Contact')).toBeVisible();
+    // Check contact elements are present (more specific selector)
+    await expect(page.locator('section#contact h2')).toBeVisible();
   });
 
   test('should have responsive design', async ({ page }) => {
@@ -92,20 +92,21 @@ test.describe('Portfolio - Legal pages', () => {
   test('should navigate to legal notice', async ({ page }) => {
     await page.goto('/mentions-legales');
     
-    await expect(page.getByText('Mentions Légales')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Mentions Légales' })).toBeVisible();
     await expect(page.getByText('Retour à l\'accueil')).toBeVisible();
   });
 
   test('should navigate to privacy policy', async ({ page }) => {
     await page.goto('/politique-confidentialite');
     
-    await expect(page.getByText('Politique de Confidentialité')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Politique de Confidentialité' })).toBeVisible();
     await expect(page.getByText('Retour à l\'accueil')).toBeVisible();
   });
 
   test('should handle 404 page', async ({ page }) => {
     await page.goto('/non-existent-page');
     
-    await expect(page.getByText('Oops')).toBeVisible();
+    await expect(page.getByText('404')).toBeVisible();
+    await expect(page.getByText('Page introuvable')).toBeVisible();
   });
 });

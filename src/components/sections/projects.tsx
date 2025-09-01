@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { useScroll, useTransform, motion, useInView } from "framer-motion";
+import { Link } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
 import { PROJECTS } from "@/data/projects";
 
@@ -95,13 +96,13 @@ export default function Projects() {
 									<p className="text-base mb-1">{project.deliverables}</p>
 									<p className="text-xl font-bold">Context</p>
 									<p className="text-base">{project.context}</p>
-									<a
-										href="/projects/details"
+									<Link
+										to={`/projet/${project.id}`}
 										className="button mt-4 inline-flex justify-center items-center gap-2 self-start"
 										aria-label={`See more details about ${project.title}`}
 									>
 										<FaEye className="inline-block" /> MORE DETAILS
-									</a>
+									</Link>
 								</div>
 							</article>
 						</FadeInUpOnScroll>

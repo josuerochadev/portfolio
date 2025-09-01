@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { PROJECTS } from '../projects';
+import { PROJECTS } from '../../data/projects';
 
 describe('Projects data', () => {
   it('should have 5 projects', () => {

@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import Navbar from '../navbar';
+import Navbar from '../../../components/layout/navbar';
 
 // Mock framer-motion
 vi.mock('framer-motion', () => ({

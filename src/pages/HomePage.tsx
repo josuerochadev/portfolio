@@ -1,16 +1,16 @@
-// src/components/pages/HomePage.tsx
+// src/pages/HomePage.tsx
 import type React from "react";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import BackgroundGradient from "../layout/background-gradient";
-import Navbar from "../layout/navbar";
-import Hero from "../sections/hero";
-import Projects from "../sections/projects";
-import Bio from "../sections/bio";
-import Contact from "../sections/contact";
-import Footer from "../layout/footer";
-import ScrollToTop from "../common/scroll-to-top";
-import ScrollBlur from "../common/bottom-blur";
+import BackgroundGradient from "../components/layout/background-gradient";
+import Navbar from "../components/layout/navbar";
+import Hero from "../components/sections/hero";
+import Projects from "../components/sections/projects";
+import Bio from "../components/sections/bio";
+import Contact from "../components/sections/contact";
+import Footer from "../components/layout/footer";
+import ScrollToTop from "../components/common/scroll-to-top";
+import ScrollBlur from "../components/common/bottom-blur";
 
 const HomePage: React.FC = () => {
 	const [showCurtain, setShowCurtain] = useState(true);

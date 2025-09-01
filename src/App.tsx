@@ -3,9 +3,8 @@ import type React from "react";
 import { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 import ScrollToTopOnRouteChange from "./components/common/ScrollToTopOnRouteChange";
-import HomePage from "./components/pages/HomePage";
-
 // Lazy load pages for code splitting
+const HomePage = lazy(() => import("./pages/HomePage"));
 const LegalNotice = lazy(() => import("./pages/LegalNotice"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const ProjectDetail = lazy(() => import("./pages/ProjectDetail"));

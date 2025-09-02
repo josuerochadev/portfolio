@@ -36,7 +36,7 @@ export const PROJECTS: Project[] = [
 			"Wireframes, intégration Tailwind, formulaire sécurisé, design responsive mobile-first",
 		context:
 			"Phase conceptuelle d'un projet freelance pour une professionnelle du droit axée sur la visibilité locale et la conformité RGPD.",
-		image: "/assets/images/projects/project3.webp",
+		image: "/assets/images/projects/project3-desktop.webp",
 		technologies: ["Next.js", "Tailwind CSS", "TypeScript", "Framer Motion"],
 		status: "concept",
 		year: "2024",

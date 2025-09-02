@@ -1,6 +1,6 @@
 import FadeInUpOnScroll from "@/components/common/animations/fade-in-up-on-scroll";
 import LetterRippleEffect from "@/components/effects/letter-ripple";
-import Hand from "@/assets/images/ui/hand.svg?react";
+import handImage from "@/assets/images/ui/hand.webp";
 import { motion } from "framer-motion";
 
 export default function Contact() {
@@ -13,15 +13,17 @@ export default function Contact() {
 			<div className="absolute bottom-0 left-0 w-full h-12 bg-lime opacity-60 blur-2xl z-[1] pointer-events-none" />
 
 			{/* HAND SVG – mover para o topo para evitar sobreposição */}
-			<motion.div
-				className="absolute bottom-0 left-0 w-full max-w-[1400px] z-0 pointer-events-none select-none pb-24"
+			<motion.img
+				src={handImage}
+				alt="Hand illustration"
+				className="absolute bottom-0 left-0 w-full max-w-[1400px] h-auto z-0 pointer-events-none select-none pb-24"
 				initial={{ opacity: 0, y: 100 }}
 				whileInView={{ opacity: 1, y: 0 }}
-				style={{ willChange: "transform" }} transition={{ duration: 1.2, ease: [0.6, 0.05, 0.01, 0.99] }}
+				style={{ willChange: "transform" }} 
+				transition={{ duration: 1.2, ease: [0.6, 0.05, 0.01, 0.99] }}
 				viewport={{ once: true, amount: 0.3 }}
-			>
-				<Hand className="w-full h-auto" />
-			</motion.div>
+				loading="lazy"
+			/>
 
 			{/* TITLE */}
 			<FadeInUpOnScroll delay={0.2}>

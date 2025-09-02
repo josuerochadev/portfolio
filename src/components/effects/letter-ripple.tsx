@@ -31,7 +31,6 @@ const LetterRippleEffect = ({ text, className = "" }: Props) => {
 					animate={{ fontVariationSettings: `'wght' ${getWeight(index)}` }}
 					transition={{ type: "spring", stiffness: 250, damping: 25 }}
 					style={{
-						willChange: "font-variation-settings, transform",
 						fontVariationSettings: `'wght' ${getWeight(index)}`,
 						display: "inline-block",
 						minWidth: "0.6em",

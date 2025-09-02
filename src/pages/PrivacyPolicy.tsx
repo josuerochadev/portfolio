@@ -5,22 +5,26 @@ import BackgroundGradient from "@/components/layout/background-gradient";
 
 export default function PrivacyPolicy() {
 	return (
-		<div className="min-h-screen text-violet">
+		<div className="min-h-screen text-violet-dark">
 			<BackgroundGradient />
-			<div className="relative z-10 max-w-4xl mx-auto px-6 py-20">
+			<main className="relative z-10 max-w-4xl mx-auto px-6 py-20" role="main">
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.6 }}
 				>
 					<FadeInUp delay={0.2}>
-						<Link to="/" className="inline-flex items-center text-orange hover:text-violet mb-8 transition-colors focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2 rounded px-2 py-1">
+						<Link 
+							to="/" 
+							className="inline-flex items-center text-orange hover:text-violet mb-8 transition-colors focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2 rounded px-2 py-1"
+							aria-label="Retour à la page d'accueil"
+						>
 							← Retour à l'accueil
 						</Link>
 					</FadeInUp>
 
 					<FadeInUp delay={0.4}>
-						<h1 className="text-4xl md:text-5xl font-display font-extrabold mb-8">
+						<h1 className="text-4xl md:text-5xl font-display font-extrabold mb-8 text-violet">
 							Politique de Confidentialité
 						</h1>
 					</FadeInUp>
@@ -144,7 +148,7 @@ export default function PrivacyPolicy() {
 						</FadeInUp>
 					</div>
 				</motion.div>
-			</div>
+			</main>
 		</div>
 	);
 }

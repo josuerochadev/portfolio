@@ -20,9 +20,10 @@ test.describe('Portfolio - Core functionality', () => {
     // Click on About link
     await page.click('a[href="#bio"]');
     
-    // Wait for lazy loading to complete
+    // Wait for lazy loading to complete and content to be actually rendered
     await page.waitForSelector('section#bio', { state: 'visible', timeout: 15000 });
-    await page.waitForTimeout(1500); // Extra time for scroll and render
+    await page.waitForSelector('section#bio > *', { state: 'visible', timeout: 15000 }); // Wait for child content
+    await page.waitForTimeout(2000); // Extra time for scroll and render
     
     // Check bio section is visible (target the main content section)
     await expect(page.locator('section#bio').first()).toBeInViewport();

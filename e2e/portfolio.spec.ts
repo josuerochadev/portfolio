@@ -19,7 +19,10 @@ test.describe('Portfolio - Core functionality', () => {
   test('should navigate through sections', async ({ page }) => {
     // Click on About link
     await page.click('a[href="#bio"]');
-    await page.waitForTimeout(1000); // Wait for smooth scroll
+    
+    // Wait for lazy loading to complete
+    await page.waitForSelector('section#bio', { state: 'visible', timeout: 15000 });
+    await page.waitForTimeout(1500); // Extra time for scroll and render
     
     // Check bio section is visible (target the main content section)
     await expect(page.locator('section#bio').first()).toBeInViewport();
@@ -35,7 +38,10 @@ test.describe('Portfolio - Core functionality', () => {
   test('should display project cards', async ({ page }) => {
     // Navigate to projects section
     await page.click('a[href="#projects"]');
-    await page.waitForTimeout(1000);
+    
+    // Wait for lazy loading to complete
+    await page.waitForSelector('section#projects', { state: 'visible', timeout: 15000 });
+    await page.waitForTimeout(1500); // Extra time for content to render
     
     // Check projects are displayed
     const projectCards = page.locator('article');
@@ -66,7 +72,10 @@ test.describe('Portfolio - Core functionality', () => {
   test('should have working contact section', async ({ page }) => {
     // Navigate to contact section
     await page.click('a[href="#contact"]');
-    await page.waitForTimeout(1000);
+    
+    // Wait for lazy loading to complete
+    await page.waitForSelector('section#contact', { state: 'visible', timeout: 15000 });
+    await page.waitForTimeout(1500); // Extra time for scroll and render
     
     // Check contact section is visible (target the main section)
     await expect(page.locator('section#contact').first()).toBeInViewport();

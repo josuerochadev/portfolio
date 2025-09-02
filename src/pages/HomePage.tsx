@@ -15,12 +15,13 @@ const Bio = lazy(() => import("../components/sections/bio"));
 const Contact = lazy(() => import("../components/sections/contact"));
 
 const HomePage: React.FC = () => {
-	const [showCurtain, setShowCurtain] = useState(true);
+	const [showCurtain, setShowCurtain] = useState(false);
 
-	useEffect(() => {
-		const timeout = setTimeout(() => setShowCurtain(false), 100);
-		return () => clearTimeout(timeout);
-	}, []);
+	// Disabled curtain for LCP optimization
+	// useEffect(() => {
+	// 	const timeout = setTimeout(() => setShowCurtain(false), 100);
+	// 	return () => clearTimeout(timeout);
+	// }, []);
 
 	return (
 		<div className="min-h-screen">

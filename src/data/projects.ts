@@ -21,7 +21,7 @@ export const PROJECTS: Project[] = [
 			"Architecture full stack, back-end Node/Express, front-end React, rappels automatisés",
 		context:
 			"Projet client développé pour un opticien indépendant. Actuellement en cours de finalisation (v1).",
-		image: "/assets/images/projects/project1.webp",
+		image: "/assets/images/projects/project1-desktop.webp",
 		technologies: ["React", "Node.js", "Express", "PostgreSQL", "TypeScript"],
 		status: "in-progress",
 		year: "2024",
@@ -66,7 +66,7 @@ export const PROJECTS: Project[] = [
 			"Système de paiement, catalogue interactif, générateur de certificats, dashboard admin",
 		context:
 			"Projet d'apprentissage pour maîtriser les technologies e-commerce et l'UX complexe.",
-		image: "/assets/images/projects/project1.webp",
+		image: "/assets/images/projects/project1-desktop.webp",
 		technologies: ["Next.js", "Stripe", "Prisma", "PostgreSQL", "Tailwind CSS"],
 		status: "concept",
 		year: "2024",

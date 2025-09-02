@@ -54,13 +54,10 @@ const Hero: React.FC = () => {
 		>
 			<SmileGrid active={showSmiles} />
 
-			{/* LIGHT STRIP animated */}
-			<motion.div
+			{/* LIGHT STRIP simplified for LCP */}
+			<div
 				className="absolute top-0 left-0 w-full h-12 bg-lime blur-2xl z-0 pointer-events-none"
-				style={{ willChange: "opacity, transform" }}
-				initial={{ opacity: 0 }}
-				animate={{ opacity: lightOn ? 0.6 : 0 }}
-				transition={{ duration: 1, ease: [0.65, 0, 0.35, 1] }}
+				style={{ opacity: lightOn ? 0.6 : 0, transition: lightOn ? "opacity 1s ease-out" : "none" }}
 			/>
 
 			{/* TITLE */}

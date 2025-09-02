@@ -39,7 +39,7 @@ const SmileGrid: React.FC<SmileGridProps> = ({ active }) => {
 
 	useEffect(() => {
 		if (!active) return;
-		const newSmiles = generateSmiles(6);
+		const newSmiles = generateSmiles(3); // Reduced for performance
 		setSmiles((prev) => [...prev, ...newSmiles]);
 	}, [active]);
 

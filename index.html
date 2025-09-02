@@ -25,12 +25,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   
-  <!-- Google Fonts with optimized loading and font-display swap -->
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+  <!-- Preload only essential font weights used in LCP -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@900&family=Rubik:wght@400;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@900&family=Rubik:wght@400;700&display=swap"></noscript>
   
   <!-- Preload critical assets -->
   <link rel="modulepreload" href="/src/main.tsx" />
   <link rel="preload" href="/src/components/sections/hero.tsx" as="script" />
+  <link rel="preload" href="/assets/images/projects/project1-desktop.webp" as="image" fetchpriority="high" />
 
   <!-- Critical CSS for font fallbacks and FOUT prevention -->
   <style>

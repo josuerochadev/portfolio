@@ -1,6 +1,5 @@
 import type React from "react";
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import { FaFileAlt, FaGithub, FaLinkedin } from "react-icons/fa";
 import LetterRippleEffect from "@/components/effects/letter-ripple";
 import SmileGrid from "@/components/effects/smile-grid";

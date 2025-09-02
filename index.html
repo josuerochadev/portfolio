@@ -20,23 +20,63 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://josuerocha.dev/" />
 
-  <!-- Google Fonts - Simple and fast -->
+  <!-- Resource hints for performance -->
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+  <!-- Google Fonts with optimized loading -->
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+  
+  <!-- Preload critical assets -->
+  <link rel="modulepreload" href="/src/main.tsx" />
+  <link rel="preload" href="/src/components/sections/hero.tsx" as="script" />
 
-  <!-- Critical CSS for font fallbacks -->
+  <!-- Critical CSS for font fallbacks and FOUT prevention -->
   <style>
-    /* Ensure fonts load properly with system fallbacks */
+    /* Font loading with fallbacks that match metrics */
+    @font-face {
+      font-family: 'Fraunces-fallback';
+      src: local('Georgia');
+      ascent-override: 85%;
+      descent-override: 20%;
+      line-gap-override: 10%;
+      size-adjust: 107%;
+    }
+    
+    @font-face {
+      font-family: 'Rubik-fallback';
+      src: local('Helvetica Neue'), local('Arial');
+      ascent-override: 92%;
+      descent-override: 22%;
+      line-gap-override: 0%;
+      size-adjust: 95%;
+    }
+
+    /* Base font styles with smooth transitions */
     body { 
-      font-family: 'Rubik', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+      font-family: 'Rubik', 'Rubik-fallback', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
+    
     .font-display { 
-      font-family: 'Fraunces', Georgia, 'Times New Roman', serif; 
-      font-weight: 900; 
+      font-family: 'Fraunces', 'Fraunces-fallback', Georgia, 'Times New Roman', serif;
+      font-weight: 900;
+      font-synthesis: none;
     }
+    
     .font-body { 
-      font-family: 'Rubik', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+      font-family: 'Rubik', 'Rubik-fallback', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-synthesis: none;
+    }
+
+    /* Smooth font loading transition */
+    * {
+      font-variation-settings: normal;
+      transition: font-variation-settings 0.1s ease;
     }
   </style>
 

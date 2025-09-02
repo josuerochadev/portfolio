@@ -15,7 +15,7 @@ const LetterRippleEffect = ({ text, className = "" }: Props) => {
 
 	// Delay interactivity to improve LCP
 	useEffect(() => {
-		const timeout = setTimeout(() => setIsInteractive(true), 1500);
+		const timeout = setTimeout(() => setIsInteractive(true), 2000);
 		return () => clearTimeout(timeout);
 	}, []);
 

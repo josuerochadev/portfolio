@@ -43,7 +43,7 @@ const Hero: React.FC = () => {
 	useEffect(() => {
 		const timeout = setTimeout(() => {
 			setLightOn(true);
-		}, 50);
+		}, 10);
 		return () => clearTimeout(timeout);
 	}, []);
 

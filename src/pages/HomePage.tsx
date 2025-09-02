@@ -41,15 +41,9 @@ const HomePage: React.FC = () => {
 				<main>
 					<Hero />
 					<Suspense fallback={<div className="min-h-[50vh] flex items-center justify-center"><div className="text-violet">Loading...</div></div>}>
-						<section id="projects">
-							<Projects />
-						</section>
-						<section id="bio">
-							<Bio />
-						</section>
-						<section id="contact">
-							<Contact />
-						</section>
+						<Projects />
+						<Bio />
+						<Contact />
 					</Suspense>
 				</main>
 				<ScrollToTop />

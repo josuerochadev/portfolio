@@ -20,19 +20,19 @@ const ACTION_LINKS = [
 		href: "/Josue_Rocha_CV_Dev2025.pdf",
 		icon: <FaFileAlt className="inline-block mr-2" />,
 		label: "RESUME",
-		delay: 1.7,
+		delay: 1.1,
 	},
 	{
 		href: "https://github.com/josuerochadev",
 		icon: <FaGithub className="inline-block mr-2" />,
 		label: "GITHUB",
-		delay: 1.85,
+		delay: 1.2,
 	},
 	{
 		href: "https://www.linkedin.com/in/josuerochadev/",
 		icon: <FaLinkedin className="inline-block mr-2" />,
 		label: "LINKEDIN",
-		delay: 2.0,
+		delay: 1.3,
 	},
 ];
 
@@ -43,7 +43,7 @@ const Hero: React.FC = () => {
 	useEffect(() => {
 		const timeout = setTimeout(() => {
 			setLightOn(true);
-		}, 250);
+		}, 100);
 		return () => clearTimeout(timeout);
 	}, []);
 
@@ -65,7 +65,7 @@ const Hero: React.FC = () => {
 
 			{/* TITLE */}
 			<div className="flex flex-col items-center justify-start pt-8 sm:pt-12 mb-6 sm:mb-0 relative z-10 px-2">
-				<FadeInDown delay={0.2}>
+				<FadeInDown delay={0.1}>
 					<h1 className="relative text-[clamp(4rem,12vw,12rem)] leading-[0.85] font-extrabold font-display text-left">
 						<span className="absolute left-0 -top-4 sm:-top-6 text-lg sm:text-xl md:text-2xl font-normal text-violet">
 							I'm
@@ -82,7 +82,7 @@ const Hero: React.FC = () => {
 			<div className="flex flex-col items-center justify-end gap-4 mt-10 mb-32">
 				<div className="text-left mx-auto px-4 max-w-3xl space-y-1">
 					{PHRASES.map(({ id, text }, index) => (
-						<FadeInUp key={id} delay={0.8 + index * 0.15}>
+						<FadeInUp key={id} delay={0.4 + index * 0.1}>
 							<div className="text-base sm:text-lg md:text-xl font-medium leading-snug cursor-default">
 								<LetterRippleEffect text={text} />
 							</div>
@@ -91,7 +91,7 @@ const Hero: React.FC = () => {
 				</div>
 
 				{/* SLOGAN */}
-				<FadeInUp delay={1.5}>
+				<FadeInUp delay={0.9}>
 					<p
 						onMouseEnter={() => setShowSmiles(true)}
 						onMouseLeave={() => setShowSmiles(false)}

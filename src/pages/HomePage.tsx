@@ -1,6 +1,6 @@
 // src/pages/HomePage.tsx
 import type React from "react";
-import { useEffect, useState, lazy, Suspense } from "react";
+import { lazy, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import BackgroundGradient from "../components/layout/background-gradient";
 import Navbar from "../components/layout/navbar";
@@ -15,13 +15,8 @@ const Bio = lazy(() => import("../components/sections/bio"));
 const Contact = lazy(() => import("../components/sections/contact"));
 
 const HomePage: React.FC = () => {
-	const [showCurtain, setShowCurtain] = useState(false);
-
-	// Disabled curtain for LCP optimization
-	// useEffect(() => {
-	// 	const timeout = setTimeout(() => setShowCurtain(false), 100);
-	// 	return () => clearTimeout(timeout);
-	// }, []);
+	// Curtain disabled for LCP optimization
+	const showCurtain = false;
 
 	return (
 		<div className="min-h-screen">

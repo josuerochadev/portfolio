@@ -20,38 +20,24 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://josuerocha.dev/" />
 
-  <!-- Google Fonts - Optimized for LCP -->
+  <!-- Google Fonts - Simple and fast -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <!-- Direct preload of critical font files -->
-  <link rel="preload" href="https://fonts.gstatic.com/s/fraunces/v31/6NUV8F2OJg6MeR7l4e0vtMYAwdRZfw.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="https://fonts.gstatic.com/s/rubik/v28/iJWZBXyIfDnIV5PNhY1KTN7Z.woff2" as="font" type="font/woff2" crossorigin />
-  <!-- Load full font CSS after critical fonts -->
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link
-    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
-    rel="stylesheet" /></noscript>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
 
-  <!-- Critical CSS for fonts - Fast loading strategy -->
+  <!-- Critical CSS for font fallbacks -->
   <style>
-    @font-face {
-      font-family: 'Fraunces';
-      font-style: normal;
-      font-weight: 900;
-      font-display: swap;
-      src: url(https://fonts.gstatic.com/s/fraunces/v31/6NUV8F2OJg6MeR7l4e0vtMYAwdRZfw.woff2) format('woff2');
+    /* Ensure fonts load properly with system fallbacks */
+    body { 
+      font-family: 'Rubik', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
     }
-    @font-face {
-      font-family: 'Rubik';
-      font-style: normal;
-      font-weight: 400;
-      font-display: swap;
-      src: url(https://fonts.gstatic.com/s/rubik/v28/iJWZBXyIfDnIV5PNhY1KTN7Z.woff2) format('woff2');
+    .font-display { 
+      font-family: 'Fraunces', Georgia, 'Times New Roman', serif; 
+      font-weight: 900; 
     }
-    /* Critical styles for immediate rendering */
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
-    .font-display { font-family: 'Fraunces', Georgia, serif; font-weight: 900; }
-    .font-body { font-family: 'Rubik', -apple-system, BlinkMacSystemFont, sans-serif; }
+    .font-body { 
+      font-family: 'Rubik', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+    }
   </style>
 
   <!-- Favicon -->

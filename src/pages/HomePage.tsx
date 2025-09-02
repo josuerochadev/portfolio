@@ -18,7 +18,7 @@ const HomePage: React.FC = () => {
 	const [showCurtain, setShowCurtain] = useState(true);
 
 	useEffect(() => {
-		const timeout = setTimeout(() => setShowCurtain(false), 400);
+		const timeout = setTimeout(() => setShowCurtain(false), 100);
 		return () => clearTimeout(timeout);
 	}, []);
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 const rippleWeights = ["100", "300", "500", "700"];
@@ -11,12 +11,28 @@ interface Props {
 const LetterRippleEffect = ({ text, className = "" }: Props) => {
 	const letters = text.split("");
 	const [hoverIndex, setHoverIndex] = useState<number | null>(null);
+	const [isInteractive, setIsInteractive] = useState(false);
+
+	// Delay interactivity to improve LCP
+	useEffect(() => {
+		const timeout = setTimeout(() => setIsInteractive(true), 800);
+		return () => clearTimeout(timeout);
+	}, []);
 
 	const getWeight = (index: number) => {
 		if (hoverIndex === null) return "900";
 		const distance = Math.abs(index - hoverIndex);
 		return rippleWeights[distance] || rippleWeights[rippleWeights.length - 1];
 	};
+
+	// Static version for better LCP
+	if (!isInteractive) {
+		return (
+			<span className={`inline-block select-none font-extrabold ${className}`}>
+				{text}
+			</span>
+		);
+	}
 
 	return (
 		<div

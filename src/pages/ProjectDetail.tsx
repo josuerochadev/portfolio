@@ -51,7 +51,7 @@ export default function ProjectDetail() {
 	return (
 		<div className="min-h-screen text-violet">
 			<BackgroundGradient />
-			<div className="relative z-10 max-w-6xl mx-auto px-6 py-20">
+			<main className="relative z-10 max-w-6xl mx-auto px-6 py-20" role="main">
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
@@ -61,8 +61,9 @@ export default function ProjectDetail() {
 						<Link 
 							to="/#projects" 
 							className="inline-flex items-center text-orange hover:text-violet mb-8 transition-colors focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2 rounded px-2 py-1"
+							aria-label="Retour à la section projets"
 						>
-							<FaArrowLeft className="mr-2" />
+							<FaArrowLeft className="mr-2" aria-hidden="true" />
 							Retour aux projets
 						</Link>
 					</FadeInUp>
@@ -73,8 +74,9 @@ export default function ProjectDetail() {
 							<div className="relative">
 								<img
 									src={project.image}
-									alt={project.title}
+									alt={`Aperçu du projet ${project.title} - ${project.description}`}
 									className="w-full h-auto rounded-2xl shadow-lg"
+									loading="eager"
 								/>
 								<div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-sm font-bold ${getStatusColor(project.status)}`}>
 									{getStatusLabel(project.status)}
@@ -89,7 +91,7 @@ export default function ProjectDetail() {
 									<h1 className="text-4xl md:text-5xl font-display font-extrabold mb-4">
 										{project.title}
 									</h1>
-									<div className="flex items-center gap-4 text-violet/70 mb-6">
+									<div className="flex items-center gap-4 text-violet/80 mb-6">
 										<span className="flex items-center gap-2">
 											<FaCalendar />
 											{project.year}
@@ -149,12 +151,12 @@ export default function ProjectDetail() {
 
 							<FadeInUp delay={1.6}>
 								<div className="flex gap-4 pt-4">
-									<button className="button" disabled>
-										<FaGithub className="mr-2" />
+									<button className="button" disabled aria-label="Code source non disponible - Projet privé">
+										<FaGithub className="mr-2" aria-hidden="true" />
 										Code (Privé)
 									</button>
-									<button className="button" disabled>
-										<FaExternalLinkAlt className="mr-2" />
+									<button className="button" disabled aria-label="Démonstration non disponible - Bientôt disponible">
+										<FaExternalLinkAlt className="mr-2" aria-hidden="true" />
 										Demo (Bientôt)
 									</button>
 								</div>
@@ -162,7 +164,7 @@ export default function ProjectDetail() {
 						</div>
 					</div>
 				</motion.div>
-			</div>
+			</main>
 		</div>
 	);
 }

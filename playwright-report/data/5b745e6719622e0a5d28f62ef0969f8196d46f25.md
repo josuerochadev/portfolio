@@ -1,0 +1,396 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e4]:
+  - banner [ref=e5]:
+    - navigation [ref=e6]:
+      - list [ref=e34]:
+        - listitem [ref=e35]:
+          - link "Home" [ref=e36] [cursor=pointer]:
+            - /url: "#hero"
+            - img [ref=e37] [cursor=pointer]
+        - listitem [ref=e40]:
+          - link "Work" [ref=e41] [cursor=pointer]:
+            - /url: "#projects"
+        - listitem [ref=e42]:
+          - link "About" [ref=e43] [cursor=pointer]:
+            - /url: "#bio"
+        - listitem [ref=e44]:
+          - link "Contact" [active] [ref=e45] [cursor=pointer]:
+            - /url: "#contact"
+  - main [ref=e46]:
+    - generic [ref=e47]:
+      - heading "I'm J o s u é R o c h a" [level=1] [ref=e50]:
+        - generic [ref=e51]: I'm
+        - generic [ref=e52]:
+          - generic [ref=e53]:
+            - generic [ref=e54]: J
+            - generic [ref=e55]: o
+            - generic [ref=e56]: s
+            - generic [ref=e57]: u
+            - generic [ref=e58]: é
+          - generic [ref=e60]:
+            - generic [ref=e61]: R
+            - generic [ref=e62]: o
+            - generic [ref=e63]: c
+            - generic [ref=e64]: h
+            - generic [ref=e65]: a
+      - generic [ref=e66]:
+        - generic [ref=e67]:
+          - generic [ref=e70]:
+            - generic [ref=e71]: a
+            - generic [ref=e73]: b
+            - generic [ref=e74]: r
+            - generic [ref=e75]: a
+            - generic [ref=e76]: z
+            - generic [ref=e77]: i
+            - generic [ref=e78]: l
+            - generic [ref=e79]: i
+            - generic [ref=e80]: a
+            - generic [ref=e81]: "n"
+            - generic [ref=e83]: f
+            - generic [ref=e84]: o
+            - generic [ref=e85]: r
+            - generic [ref=e86]: m
+            - generic [ref=e87]: e
+            - generic [ref=e88]: r
+            - generic [ref=e90]: l
+            - generic [ref=e91]: a
+            - generic [ref=e92]: w
+            - generic [ref=e93]: "y"
+            - generic [ref=e94]: e
+            - generic [ref=e95]: r
+          - generic [ref=e98]:
+            - generic [ref=e99]: b
+            - generic [ref=e100]: a
+            - generic [ref=e101]: s
+            - generic [ref=e102]: e
+            - generic [ref=e103]: d
+            - generic [ref=e105]: i
+            - generic [ref=e106]: "n"
+            - generic [ref=e108]: F
+            - generic [ref=e109]: r
+            - generic [ref=e110]: a
+            - generic [ref=e111]: "n"
+            - generic [ref=e112]: c
+            - generic [ref=e113]: e
+          - generic [ref=e116]:
+            - generic [ref=e117]: w
+            - generic [ref=e118]: h
+            - generic [ref=e119]: o
+            - generic [ref=e121]: t
+            - generic [ref=e122]: u
+            - generic [ref=e123]: r
+            - generic [ref=e124]: "n"
+            - generic [ref=e125]: e
+            - generic [ref=e126]: d
+            - generic [ref=e128]: d
+            - generic [ref=e129]: e
+            - generic [ref=e130]: v
+            - generic [ref=e131]: e
+            - generic [ref=e132]: l
+            - generic [ref=e133]: o
+            - generic [ref=e134]: p
+            - generic [ref=e135]: e
+            - generic [ref=e136]: r
+          - generic [ref=e139]:
+            - generic [ref=e140]: i
+            - generic [ref=e141]: "n"
+            - generic [ref=e143]: l
+            - generic [ref=e144]: o
+            - generic [ref=e145]: v
+            - generic [ref=e146]: e
+            - generic [ref=e148]: w
+            - generic [ref=e149]: i
+            - generic [ref=e150]: t
+            - generic [ref=e151]: h
+            - generic [ref=e153]: c
+            - generic [ref=e154]: l
+            - generic [ref=e155]: e
+            - generic [ref=e156]: a
+            - generic [ref=e157]: "n"
+            - generic [ref=e159]: c
+            - generic [ref=e160]: o
+            - generic [ref=e161]: d
+            - generic [ref=e162]: e
+          - generic [ref=e165]:
+            - generic [ref=e166]: a
+            - generic [ref=e167]: "n"
+            - generic [ref=e168]: d
+            - generic [ref=e170]: A
+            - generic [ref=e171]: G
+            - generic [ref=e172]: I
+            - generic [ref=e173]: L
+            - generic [ref=e174]: E
+            - generic [ref=e176]: m
+            - generic [ref=e177]: e
+            - generic [ref=e178]: t
+            - generic [ref=e179]: h
+            - generic [ref=e180]: o
+            - generic [ref=e181]: d
+            - generic [ref=e182]: o
+            - generic [ref=e183]: l
+            - generic [ref=e184]: o
+            - generic [ref=e185]: g
+            - generic [ref=e186]: "y"
+        - paragraph [ref=e188]: — This is my portfolio
+        - generic [ref=e189]:
+          - link "Link to resume" [ref=e191] [cursor=pointer]:
+            - /url: /Josue_Rocha_CV_Dev2025.pdf
+            - img [ref=e192] [cursor=pointer]
+            - text: RESUME
+          - link "Link to github" [ref=e195] [cursor=pointer]:
+            - /url: https://github.com/josuerochadev
+            - img [ref=e196] [cursor=pointer]
+            - text: GITHUB
+          - link "Link to linkedin" [ref=e199] [cursor=pointer]:
+            - /url: https://www.linkedin.com/in/josuerochadev/
+            - img [ref=e200] [cursor=pointer]
+            - text: LINKEDIN
+    - generic [ref=e203]:
+      - generic:
+        - img
+      - generic [ref=e204]:
+        - heading "H e r e ’ s a g l i m p s e i n t o m y w o r k — a t a s t e o f w h a t I c a n b r i n g" [level=2] [ref=e206]:
+          - generic [ref=e207]:
+            - generic [ref=e208]: H
+            - generic [ref=e209]: e
+            - generic [ref=e210]: r
+            - generic [ref=e211]: e
+            - generic [ref=e212]: ’
+            - generic [ref=e213]: s
+          - generic [ref=e216]: a
+          - generic [ref=e218]:
+            - generic [ref=e219]: g
+            - generic [ref=e220]: l
+            - generic [ref=e221]: i
+            - generic [ref=e222]: m
+            - generic [ref=e223]: p
+            - generic [ref=e224]: s
+            - generic [ref=e225]: e
+          - generic [ref=e227]:
+            - generic [ref=e228]: i
+            - generic [ref=e229]: "n"
+            - generic [ref=e230]: t
+            - generic [ref=e231]: o
+          - generic [ref=e233]:
+            - generic [ref=e234]: m
+            - generic [ref=e235]: "y"
+          - generic [ref=e237]:
+            - generic [ref=e238]: w
+            - generic [ref=e239]: o
+            - generic [ref=e240]: r
+            - generic [ref=e241]: k
+          - generic [ref=e244]: —
+          - generic [ref=e247]: a
+          - generic [ref=e249]:
+            - generic [ref=e250]: t
+            - generic [ref=e251]: a
+            - generic [ref=e252]: s
+            - generic [ref=e253]: t
+            - generic [ref=e254]: e
+          - generic [ref=e256]:
+            - generic [ref=e257]: o
+            - generic [ref=e258]: f
+          - generic [ref=e260]:
+            - generic [ref=e261]: w
+            - generic [ref=e262]: h
+            - generic [ref=e263]: a
+            - generic [ref=e264]: t
+          - generic [ref=e267]: I
+          - generic [ref=e269]:
+            - generic [ref=e270]: c
+            - generic [ref=e271]: a
+            - generic [ref=e272]: "n"
+          - generic [ref=e274]:
+            - generic [ref=e275]: b
+            - generic [ref=e276]: r
+            - generic [ref=e277]: i
+            - generic [ref=e278]: "n"
+            - generic [ref=e279]: g
+        - generic [ref=e281]:
+          - article [ref=e283]:
+            - img "Preview of La Lunetterie du Coin" [ref=e285]
+            - generic [ref=e286]:
+              - generic [ref=e287]:
+                - generic [ref=e288]: "1."
+                - heading "La Lunetterie du Coin" [level=3] [ref=e289]
+              - paragraph [ref=e290]: Application web sur mesure pour faciliter la prise de rendez-vous chez un opticien local.
+              - paragraph [ref=e291]: Deliverables
+              - paragraph [ref=e292]: Architecture full stack, back-end Node/Express, front-end React, rappels automatisés
+              - paragraph [ref=e293]: Context
+              - paragraph [ref=e294]: Projet client développé pour un opticien indépendant. Actuellement en cours de finalisation (v1).
+              - link "See more details about La Lunetterie du Coin" [ref=e295] [cursor=pointer]:
+                - /url: /projet/lunetterie-du-coin
+                - img [ref=e296] [cursor=pointer]
+                - text: MORE DETAILS
+          - article [ref=e299]:
+            - img "Preview of Site vitrine pour une avocate" [ref=e301]
+            - generic [ref=e302]:
+              - generic [ref=e303]:
+                - generic [ref=e304]: "2."
+                - heading "Site vitrine pour une avocate" [level=3] [ref=e305]
+              - paragraph [ref=e306]: Plateforme multilingue minimaliste pour accroître la présence numérique et faciliter le contact client.
+              - paragraph [ref=e307]: Deliverables
+              - paragraph [ref=e308]: Wireframes, intégration Tailwind, formulaire sécurisé, design responsive mobile-first
+              - paragraph [ref=e309]: Context
+              - paragraph [ref=e310]: Phase conceptuelle d'un projet freelance pour une professionnelle du droit axée sur la visibilité locale et la conformité RGPD.
+              - link "See more details about Site vitrine pour une avocate" [ref=e311] [cursor=pointer]:
+                - /url: /projet/site-vitrine-avocate
+                - img [ref=e312] [cursor=pointer]
+                - text: MORE DETAILS
+          - article [ref=e315]:
+            - img "Preview of Site vitrine pour un poète" [ref=e317]
+            - generic [ref=e318]:
+              - generic [ref=e319]:
+                - generic [ref=e320]: "3."
+                - heading "Site vitrine pour un poète" [level=3] [ref=e321]
+              - paragraph [ref=e322]: Portfolio artistique élégant pour présenter les œuvres et la biographie d'un poète contemporain.
+              - paragraph [ref=e323]: Deliverables
+              - paragraph [ref=e324]: Design poétique, galerie interactive, blog intégré, optimisation SEO
+              - paragraph [ref=e325]: Context
+              - paragraph [ref=e326]: Projet personnel pour valoriser l'art littéraire avec une approche moderne et accessible.
+              - link "See more details about Site vitrine pour un poète" [ref=e327] [cursor=pointer]:
+                - /url: /projet/site-vitrine-poete
+                - img [ref=e328] [cursor=pointer]
+                - text: MORE DETAILS
+          - article [ref=e331]:
+            - img "Preview of E-commerce fictif - Achat d'étoiles en ligne" [ref=e333]
+            - generic [ref=e334]:
+              - generic [ref=e335]:
+                - generic [ref=e336]: "4."
+                - heading "E-commerce fictif - Achat d'étoiles en ligne" [level=3] [ref=e337]
+              - paragraph [ref=e338]: Boutique en ligne conceptuelle permettant l'achat symbolique d'étoiles avec certificats personnalisés.
+              - paragraph [ref=e339]: Deliverables
+              - paragraph [ref=e340]: Système de paiement, catalogue interactif, générateur de certificats, dashboard admin
+              - paragraph [ref=e341]: Context
+              - paragraph [ref=e342]: Projet d'apprentissage pour maîtriser les technologies e-commerce et l'UX complexe.
+              - link "See more details about E-commerce fictif - Achat d'étoiles en ligne" [ref=e343] [cursor=pointer]:
+                - /url: /projet/ecommerce-etoiles
+                - img [ref=e344] [cursor=pointer]
+                - text: MORE DETAILS
+          - article [ref=e347]:
+            - img "Preview of Mon parcours vers le titre pro CDA" [ref=e349]
+            - generic [ref=e350]:
+              - generic [ref=e351]:
+                - generic [ref=e352]: "5."
+                - heading "Mon parcours vers le titre pro CDA" [level=3] [ref=e353]
+              - paragraph [ref=e354]: Documentation complète et portfolio de mon parcours de reconversion professionnelle vers le développement.
+              - paragraph [ref=e355]: Deliverables
+              - paragraph [ref=e356]: Blog technique, documentation projets, timeline interactive, témoignages
+              - paragraph [ref=e357]: Context
+              - paragraph [ref=e358]: Projet personnel pour documenter et partager mon expérience de reconversion du droit vers le développement.
+              - link "See more details about Mon parcours vers le titre pro CDA" [ref=e359] [cursor=pointer]:
+                - /url: /projet/parcours-titre-pro-cda
+                - img [ref=e360] [cursor=pointer]
+                - text: MORE DETAILS
+    - generic [ref=e363]:
+      - generic:
+        - generic:
+          - img
+        - generic:
+          - img
+        - generic:
+          - img
+        - generic:
+          - img
+        - generic:
+          - img
+        - generic:
+          - img
+        - generic:
+          - img
+      - generic [ref=e365]:
+        - heading "A n d m o r e a b o u t m e" [level=2] [ref=e367]:
+          - generic [ref=e368]:
+            - generic [ref=e369]: A
+            - generic [ref=e370]: "n"
+            - generic [ref=e371]: d
+          - generic [ref=e373]:
+            - generic [ref=e374]: m
+            - generic [ref=e375]: o
+            - generic [ref=e376]: r
+            - generic [ref=e377]: e
+          - generic [ref=e379]:
+            - generic [ref=e380]: a
+            - generic [ref=e381]: b
+            - generic [ref=e382]: o
+            - generic [ref=e383]: u
+            - generic [ref=e384]: t
+          - generic [ref=e386]:
+            - generic [ref=e387]: m
+            - generic [ref=e388]: e
+        - generic [ref=e391]:
+          - generic [ref=e393]: creative
+          - generic [ref=e395]: curious
+          - generic [ref=e397]: empathetic
+          - generic [ref=e399]: resilient
+          - generic [ref=e401]: bold
+        - generic [ref=e402]:
+          - generic [ref=e404]:
+            - heading "approach" [level=3] [ref=e405]
+            - paragraph [ref=e406]: My work is guided by thoughtful planning, clean and reusable code, and a collaborative spirit. I believe that design and development walk hand in hand.
+          - generic [ref=e408]:
+            - heading "background" [level=3] [ref=e409]
+            - paragraph [ref=e410]: I started my career as a lawyer in Brazil, then moved to France, where I transitioned into tech. My experience taught me analytical thinking, empathy, and adaptability.
+          - generic [ref=e412]:
+            - heading "beyond code" [level=3] [ref=e413]
+            - paragraph [ref=e414]: Outside of development, I love cinema, running, dogs, and cooking. These hobbies keep me balanced and continuously inspired.
+    - generic [ref=e416]:
+      - generic:
+        - img
+      - heading "L e t ' s w o r k t o g e t h e r ! O r j u s t c h a t" [level=2] [ref=e418]:
+        - generic [ref=e419]:
+          - generic [ref=e420]: L
+          - generic [ref=e421]: e
+          - generic [ref=e422]: t
+          - generic [ref=e423]: "'"
+          - generic [ref=e424]: s
+        - generic [ref=e426]:
+          - generic [ref=e427]: w
+          - generic [ref=e428]: o
+          - generic [ref=e429]: r
+          - generic [ref=e430]: k
+        - generic [ref=e432]:
+          - generic [ref=e433]: t
+          - generic [ref=e434]: o
+          - generic [ref=e435]: g
+          - generic [ref=e436]: e
+          - generic [ref=e437]: t
+          - generic [ref=e438]: h
+          - generic [ref=e439]: e
+          - generic [ref=e440]: r
+          - generic [ref=e441]: "!"
+        - generic [ref=e443]:
+          - generic [ref=e444]: O
+          - generic [ref=e445]: r
+        - generic [ref=e447]:
+          - generic [ref=e448]: j
+          - generic [ref=e449]: u
+          - generic [ref=e450]: s
+          - generic [ref=e451]: t
+        - generic [ref=e453]:
+          - generic [ref=e454]: c
+          - generic [ref=e455]: h
+          - generic [ref=e456]: a
+          - generic [ref=e457]: t
+  - button "Back to top":
+    - img
+    - generic: BACK TO TOP
+  - contentinfo [ref=e459]:
+    - generic [ref=e460]:
+      - link "GitHub" [ref=e461] [cursor=pointer]:
+        - /url: https://github.com/josuexrocha
+        - img [ref=e462] [cursor=pointer]
+      - link "LinkedIn" [ref=e464] [cursor=pointer]:
+        - /url: https://www.linkedin.com/in/josuexrocha/
+        - img [ref=e465] [cursor=pointer]
+    - generic [ref=e467]:
+      - link "Mentions légales" [ref=e468] [cursor=pointer]:
+        - /url: /mentions-legales
+      - generic [ref=e469]: •
+      - link "Politique de confidentialité" [ref=e470] [cursor=pointer]:
+        - /url: /politique-confidentialite
+    - paragraph [ref=e471]: Crafted with love and TypeScript.
+    - paragraph [ref=e472]: © 2025 Josué Rocha. All rights reserved.
+```

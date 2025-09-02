@@ -1,7 +1,11 @@
 import type React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { FaFileAlt, FaGithub, FaLinkedin } from "react-icons/fa";
+import LetterRippleEffect from "@/components/effects/letter-ripple";
 import SmileGrid from "@/components/effects/smile-grid";
+import FadeInUp from "@/components/common/animations/fade-in-up";
+import FadeInDown from "@/components/common/animations/fade-in-down";
 
 const PHRASES = [
 	{ id: "phrase-2", text: "a brazilian former lawyer" },
@@ -34,6 +38,14 @@ const ACTION_LINKS = [
 
 const Hero: React.FC = () => {
 	const [showSmiles, setShowSmiles] = useState(false);
+	const [lightOn, setLightOn] = useState(false);
+
+	useEffect(() => {
+		const timeout = setTimeout(() => {
+			setLightOn(true);
+		}, 250);
+		return () => clearTimeout(timeout);
+	}, []);
 
 	return (
 		<section
@@ -42,54 +54,68 @@ const Hero: React.FC = () => {
 		>
 			<SmileGrid active={showSmiles} />
 
-			{/* LIGHT STRIP static */}
-			<div className="absolute top-0 left-0 w-full h-12 bg-lime blur-2xl z-0 pointer-events-none opacity-60" />
+			{/* LIGHT STRIP animated */}
+			<motion.div
+				className="absolute top-0 left-0 w-full h-12 bg-lime blur-2xl z-0 pointer-events-none"
+				style={{ willChange: "opacity, transform" }}
+				initial={{ opacity: 0 }}
+				animate={{ opacity: lightOn ? 0.6 : 0 }}
+				transition={{ duration: 1, ease: [0.65, 0, 0.35, 1] }}
+			/>
 
-			{/* TITLE - Immediate render for LCP */}
+			{/* TITLE */}
 			<div className="flex flex-col items-center justify-start pt-8 sm:pt-12 mb-6 sm:mb-0 relative z-10 px-2">
-				<h1 className="relative text-[clamp(4rem,12vw,12rem)] leading-[0.85] font-extrabold font-display text-left">
-					<span className="absolute left-0 -top-4 sm:-top-6 text-lg sm:text-xl md:text-2xl font-normal text-violet">
-						I'm
-					</span>
-					<div className="ml-0 sm:ml-[3.5rem] flex flex-col sm:flex-row gap-y-2 sm:gap-x-2 items-center sm:items-start">
-						<span className="font-extrabold">Josué </span>
-						<span className="font-extrabold">Rocha</span>
-					</div>
-				</h1>
+				<FadeInDown delay={0.2}>
+					<h1 className="relative text-[clamp(4rem,12vw,12rem)] leading-[0.85] font-extrabold font-display text-left">
+						<span className="absolute left-0 -top-4 sm:-top-6 text-lg sm:text-xl md:text-2xl font-normal text-violet">
+							I'm
+						</span>
+						<div className="ml-0 sm:ml-[3.5rem] flex flex-col sm:flex-row gap-y-2 sm:gap-x-2 items-center sm:items-start">
+							<LetterRippleEffect text="Josué " />
+							<LetterRippleEffect text="Rocha" />
+						</div>
+					</h1>
+				</FadeInDown>
 			</div>
 
-			{/* PHRASES + CTA - Static for instant LCP */}
+			{/* PHRASES + CTA */}
 			<div className="flex flex-col items-center justify-end gap-4 mt-10 mb-32">
 				<div className="text-left mx-auto px-4 max-w-3xl space-y-1">
-					{PHRASES.map(({ id, text }) => (
-						<div key={id} className="text-base sm:text-lg md:text-xl font-medium leading-snug cursor-default">
-							{text}
-						</div>
+					{PHRASES.map(({ id, text }, index) => (
+						<FadeInUp key={id} delay={0.8 + index * 0.15}>
+							<div className="text-base sm:text-lg md:text-xl font-medium leading-snug cursor-default">
+								<LetterRippleEffect text={text} />
+							</div>
+						</FadeInUp>
 					))}
 				</div>
 
-				{/* SLOGAN - Static */}
-				<p
-					onMouseEnter={() => setShowSmiles(true)}
-					onMouseLeave={() => setShowSmiles(false)}
-					className="text-2xl font-bold font-display text-left max-w-2xl pt-2 hover:text-orange transition-all duration-300"
-				>
-					— This is my portfolio
-				</p>
+				{/* SLOGAN */}
+				<FadeInUp delay={1.5}>
+					<p
+						onMouseEnter={() => setShowSmiles(true)}
+						onMouseLeave={() => setShowSmiles(false)}
+						className="text-2xl font-bold font-display text-left max-w-2xl pt-2 hover:text-orange transition-all duration-300"
+						style={{ willChange: "color, transform" }}
+					>
+						— This is my portfolio
+					</p>
+				</FadeInUp>
 
-				{/* ACTION BUTTONS - Static */}
+				{/* ACTION BUTTONS */}
 				<div className="flex gap-4 flex-wrap justify-center pt-2">
-					{ACTION_LINKS.map(({ href, icon, label }) => (
-						<a
-							key={label}
-							href={href}
-							target={href.startsWith("http") ? "_blank" : undefined}
-							rel="noopener noreferrer"
-							className="button"
-							aria-label={`Link to ${label.toLowerCase()}`}
-						>
-							{icon} {label}
-						</a>
+					{ACTION_LINKS.map(({ href, icon, label, delay }) => (
+						<FadeInUp key={label} delay={delay}>
+							<a
+								href={href}
+								target={href.startsWith("http") ? "_blank" : undefined}
+								rel="noopener noreferrer"
+								className="button"
+								aria-label={`Link to ${label.toLowerCase()}`}
+							>
+								{icon} {label}
+							</a>
+						</FadeInUp>
 					))}
 				</div>
 			</div>

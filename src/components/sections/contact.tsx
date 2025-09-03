@@ -1,6 +1,6 @@
 import FadeInUpOnScroll from "@/components/common/animations/fade-in-up-on-scroll";
 import LetterRippleEffect from "@/components/effects/letter-ripple";
-import handImage from "@/assets/images/ui/hand.webp";
+import handImage from "@/assets/images/ui/hand-transparent.webp";
 import { motion } from "framer-motion";
 
 export default function Contact() {

@@ -1,6 +1,7 @@
 import FadeInUpOnScroll from "@/components/common/animations/fade-in-up-on-scroll";
 import LetterRippleEffect from "@/components/effects/letter-ripple";
-import handImage from "@/assets/images/ui/hand-final.webp";
+// Use public path for Vercel deployment
+const handImage = "/assets/images/ui/hand-test.webp";
 import { motion } from "framer-motion";
 
 export default function Contact() {

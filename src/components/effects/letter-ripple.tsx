@@ -25,12 +25,28 @@ const LetterRippleEffect = ({ text, className = "" }: Props) => {
 		return rippleWeights[distance] || rippleWeights[rippleWeights.length - 1];
 	};
 
-	// Static version for better LCP
+	// Static version for better LCP - keep consistent layout structure and spacing
 	if (!isInteractive) {
 		return (
-			<span className={`inline-block select-none font-extrabold ${className}`}>
-				{text}
-			</span>
+			<div
+				className={`inline-block select-none ${className}`}
+				style={{ display: "flex" }}
+			>
+				{letters.map((letter, index) => (
+					<span
+						key={`${letter}-${index}-static`}
+						className="inline-block font-extrabold"
+						style={{
+							fontWeight: 900,
+							minWidth: "0.6em",
+							textAlign: "center",
+							display: "inline-block"
+						}}
+					>
+						{letter}
+					</span>
+				))}
+			</div>
 		);
 	}
 

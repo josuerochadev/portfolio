@@ -88,11 +88,13 @@ const HomePage = lazy(() => import("./pages/HomePage"));
 ## Amélioration par Rapport à l'Ancienne Structure
 
 ### Avant :
+
 - HomePage dans `components/pages/` (incohérent)
 - Tests dispersés dans différents dossiers
 - Nommage snake_case/kebab-case mixte
 
 ### Après :
+
 - Séparation claire pages/composants
 - Tests centralisés
 - Convention de nommage uniforme

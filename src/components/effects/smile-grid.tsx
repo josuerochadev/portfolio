@@ -14,15 +14,24 @@ interface Smile {
 	id: string;
 }
 
-// Function to generate random smiles
+// Stable pseudo-random generator using seed
+const seededRandom = (seed: number) => {
+	let x = Math.sin(seed) * 10000;
+	return x - Math.floor(x);
+};
+
+// Function to generate smiles with stable positions
 const generateSmiles = (count: number): Smile[] => {
 	const smiles: Smile[] = [];
+	const timestamp = Date.now();
+	
 	for (let i = 0; i < count; i++) {
+		const seed = timestamp + i;
 		smiles.push({
-			id: `${i}-${Date.now()}-${Math.random()}`,
-			x: Math.random() * 100,
-			y: Math.random() * 100,
-			size: Math.random() * 8 + 2, // Random size between 2 and 10
+			id: `smile-${timestamp}-${i}`,
+			x: seededRandom(seed) * 100,
+			y: seededRandom(seed + 1000) * 100,
+			size: seededRandom(seed + 2000) * 8 + 2, // Size between 2 and 10
 		});
 	}
 	return smiles;

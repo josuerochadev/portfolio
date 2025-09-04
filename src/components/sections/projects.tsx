@@ -35,7 +35,7 @@ export default function Projects() {
 							.split(" ")
 							.map((word, i) => (
 								<LetterRippleEffect
-									key={`${word}-${i}-${Math.random()}`}
+									key={`projects-title-${word}-${i}`}
 									text={`${word} `}
 								/>
 							))}

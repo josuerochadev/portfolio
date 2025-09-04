@@ -48,12 +48,18 @@ export const COLORS = {
 		HOVER_TEXT: "hover:text-lime",
 	},
 	VARIANTS: {
-		VIOLET_DARK: "text-violet-dark",
+		VIOLET_DARK: "text-violet-dark", // Better contrast for accessibility
 		VIOLET_80: "text-violet/80",
-		VIOLET_70: "text-violet/70",
+		VIOLET_70: "text-violet/70", 
 		VIOLET_90: "text-violet/90",
 		LIME_20: "bg-lime/20",
 		LIME_30: "border-lime/30",
+	},
+	// High contrast alternatives for better accessibility
+	HIGH_CONTRAST: {
+		VIOLET_ON_LIGHT: "text-violet-dark", // Use darker violet for better contrast
+		TEXT_MUTED: "text-gray-600", // Better than violet/70 for readability
+		TEXT_SECONDARY: "text-gray-700", // Better than violet/80
 	},
 } as const;
 

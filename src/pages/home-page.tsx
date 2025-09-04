@@ -9,6 +9,7 @@ import Footer from "../components/layout/footer";
 import ScrollToTop from "../components/common/scroll-to-top";
 import ScrollBlur from "../components/common/bottom-blur";
 import SectionErrorBoundary from "../components/common/section-error-boundary";
+import SkipLink from "../components/common/skip-link";
 
 // Conditional lazy loading - production only for LCP optimization
 const Projects = lazy(() => import("../components/sections/projects"));
@@ -21,6 +22,7 @@ const HomePage: React.FC = () => {
 
 	return (
 		<div className="min-h-screen">
+			<SkipLink />
 			<BackgroundGradient />
 			<AnimatePresence>
 				{showCurtain && (
@@ -41,7 +43,7 @@ const HomePage: React.FC = () => {
 						<Navbar />
 					</SectionErrorBoundary>
 				</header>
-				<main>
+				<main id="main-content">
 					<SectionErrorBoundary sectionName="Hero">
 						<Hero />
 					</SectionErrorBoundary>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
+// Font weight cascade: closer to hover = heavier weight (distance-based)
 const rippleWeights = ["100", "300", "500", "700"];
 
 interface Props {
@@ -13,7 +14,8 @@ const LetterRippleEffect = ({ text, className = "" }: Props) => {
 	const [hoverIndex, setHoverIndex] = useState<number | null>(null);
 	const [isInteractive, setIsInteractive] = useState(false);
 
-	// Delay interactivity to improve LCP
+	// Critical: 2s delay prevents Framer Motion from blocking LCP measurement
+	// Static version renders immediately for performance, interactive version lazy-loads
 	useEffect(() => {
 		const timeout = setTimeout(() => setIsInteractive(true), 2000);
 		return () => clearTimeout(timeout);
@@ -21,11 +23,12 @@ const LetterRippleEffect = ({ text, className = "" }: Props) => {
 
 	const getWeight = (index: number) => {
 		if (hoverIndex === null) return "900";
+		// Ripple algorithm: weight decreases with distance from hover point
 		const distance = Math.abs(index - hoverIndex);
 		return rippleWeights[distance] || rippleWeights[rippleWeights.length - 1];
 	};
 
-	// Static version for better LCP - keep consistent layout structure and spacing
+	// Performance optimization: identical layout prevents CLS when switching to interactive
 	if (!isInteractive) {
 		return (
 			<div
@@ -34,7 +37,7 @@ const LetterRippleEffect = ({ text, className = "" }: Props) => {
 			>
 				{letters.map((letter, index) => (
 					<span
-						key={`${letter}-${index}-static`}
+						key={`${letter}-${index}-static`} // Unique keys prevent React reconciliation issues
 						className="inline-block font-extrabold"
 						style={{
 							fontWeight: 900,

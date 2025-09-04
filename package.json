@@ -1,7 +1,7 @@
 {
 	"name": "portfolio",
 	"private": true,
-	"version": "0.0.0",
+	"version": "1.2.0",
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
@@ -14,7 +14,10 @@
 		"test:e2e:ui": "playwright test --ui",
 		"lighthouse": "lhci autorun",
 		"preview": "vite preview",
-		"vercel-build": "vite build"
+		"vercel-build": "vite build",
+		"changelog:check": "grep -q \"$(cat package.json | grep '\"version\"' | cut -d'\"' -f4)\" CHANGELOG.md || (echo '❌ Version not found in CHANGELOG.md' && exit 1)",
+		"release:check": "npm run test:run && npm run lint && npm run changelog:check && echo '✅ Ready for release'",
+		"version:sync": "node -e \"const pkg=require('./package.json'); console.log('Package:', pkg.version); console.log('CHANGELOG:'); require('fs').readFileSync('CHANGELOG.md', 'utf8').split('\\n').filter(l=>l.startsWith('## [')).slice(0,3).forEach(l=>console.log(l))\""
 	},
 	"dependencies": {
 		"@studio-freight/lenis": "^1.0.42",

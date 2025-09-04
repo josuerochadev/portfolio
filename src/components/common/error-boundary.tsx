@@ -19,13 +19,16 @@ class ErrorBoundary extends Component<Props, State> {
 		this.state = { hasError: false };
 	}
 
+	// React lifecycle: called during render phase, must be pure (no side effects)
 	static getDerivedStateFromError(error: Error): State {
 		return { hasError: true, error };
 	}
 
+	// Commit phase: safe for side effects (logging, analytics)
 	componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
 		console.error("ErrorBoundary caught an error:", error, errorInfo);
 		
+		// Optional callback for error reporting service (Sentry, etc.)
 		if (this.props.onError) {
 			this.props.onError(error, errorInfo);
 		}
@@ -37,6 +40,7 @@ class ErrorBoundary extends Component<Props, State> {
 				return this.props.fallback;
 			}
 
+			// Graceful fallback: maintains design system consistency
 			return (
 				<div className="min-h-[200px] flex flex-col items-center justify-center p-6 rounded-lg border-2 border-red-200 bg-red-50">
 					<div className="text-center max-w-md">

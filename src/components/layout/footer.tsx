@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 export default function Footer() {
 	return (
 		<footer className="relative w-full bg-lime text-violet-dark pt-8 pb-40 px-6 md:px-10 text-center">
-			{/* Social icons */}
 			<div className="flex justify-center gap-6 mb-4 text-3xl">
 				<a
 					href="https://github.com/josuexrocha"
@@ -25,7 +24,6 @@ export default function Footer() {
 					<FaLinkedin />
 				</a>
 			</div>
-			{/* Legal Links */}
 			<div className="flex justify-center gap-4 mb-4 text-xs">
 				<Link 
 					to="/mentions-legales" 
@@ -41,9 +39,7 @@ export default function Footer() {
 					Politique de confidentialité
 				</Link>
 			</div>
-			{/* Phrase */}
 			<p className="text-sm italic mb-2">Crafted with love and TypeScript.</p>
-			{/* Copyright */}
 			<p className="text-xs font-medium">
 				© {new Date().getFullYear()} Josué Rocha. All rights reserved.
 			</p>

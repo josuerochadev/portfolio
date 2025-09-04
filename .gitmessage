@@ -1,0 +1,25 @@
+# <type>(<scope>): <subject>
+#
+# <body>
+#
+# <footer>
+
+# Types: feat, fix, perf, refactor, docs, test, style, chore
+# Scopes: hero, navbar, footer, animations, accessibility, performance, tests
+# 
+# Rules:
+# - Use imperative mood in subject line
+# - Don't capitalize first letter
+# - Don't end subject line with period
+# - Include CHANGELOG.md update in body when relevant
+# - Reference issues/PRs in footer
+#
+# Example:
+# feat(contact): add form validation with success animation
+# 
+# - Implement email validation with regex patterns
+# - Add success state with confetti animation
+# - Update CHANGELOG.md with new features
+# - Add unit tests for form validation logic
+#
+# Closes #123

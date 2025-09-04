@@ -1,4 +1,3 @@
-// Animation durations and delays
 export const ANIMATION = {
 	DURATIONS: {
 		FAST: 0.3,
@@ -27,7 +26,6 @@ export const ANIMATION = {
 	},
 } as const;
 
-// Color classes (Tailwind)
 export const COLORS = {
 	VIOLET: {
 		BG: "bg-violet",
@@ -48,22 +46,20 @@ export const COLORS = {
 		HOVER_TEXT: "hover:text-lime",
 	},
 	VARIANTS: {
-		VIOLET_DARK: "text-violet-dark", // Better contrast for accessibility
+		VIOLET_DARK: "text-violet-dark",
 		VIOLET_80: "text-violet/80",
 		VIOLET_70: "text-violet/70", 
 		VIOLET_90: "text-violet/90",
 		LIME_20: "bg-lime/20",
 		LIME_30: "border-lime/30",
 	},
-	// High contrast alternatives for better accessibility
 	HIGH_CONTRAST: {
-		VIOLET_ON_LIGHT: "text-violet-dark", // Use darker violet for better contrast
-		TEXT_MUTED: "text-gray-600", // Better than violet/70 for readability
-		TEXT_SECONDARY: "text-gray-700", // Better than violet/80
+		VIOLET_ON_LIGHT: "text-violet-dark",
+		TEXT_MUTED: "text-gray-600",
+		TEXT_SECONDARY: "text-gray-700",
 	},
 } as const;
 
-// Common transition classes
 export const TRANSITIONS = {
 	DEFAULT: "transition-all duration-300",
 	COLORS: "transition-colors duration-300",
@@ -73,9 +69,8 @@ export const TRANSITIONS = {
 	SCROLL_TO_TOP: "transition-all duration-300 ease-in-out",
 } as const;
 
-// Common component styles
 export const COMPONENTS = {
-	BUTTON: "button", // Uses CSS class from index.css
+	BUTTON: "button",
 	FOCUS_RING: "focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2",
 	ROUNDED: {
 		SM: "rounded",
@@ -86,7 +81,6 @@ export const COMPONENTS = {
 	},
 } as const;
 
-// Common layout patterns
 export const LAYOUTS = {
 	PAGE_CONTAINER: "min-h-screen",
 	CONTENT_CENTER: "flex items-center justify-center",

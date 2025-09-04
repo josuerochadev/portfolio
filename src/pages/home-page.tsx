@@ -8,6 +8,7 @@ import Hero from "../components/sections/hero";
 import Footer from "../components/layout/footer";
 import ScrollToTop from "../components/common/scroll-to-top";
 import ScrollBlur from "../components/common/bottom-blur";
+import SectionErrorBoundary from "../components/common/section-error-boundary";
 
 // Conditional lazy loading - production only for LCP optimization
 const Projects = lazy(() => import("../components/sections/projects"));
@@ -36,14 +37,24 @@ const HomePage: React.FC = () => {
 
 			<div className="relative z-100 min-h-screen font-body">
 				<header>
-					<Navbar />
+					<SectionErrorBoundary sectionName="Navigation">
+						<Navbar />
+					</SectionErrorBoundary>
 				</header>
 				<main>
-					<Hero />
+					<SectionErrorBoundary sectionName="Hero">
+						<Hero />
+					</SectionErrorBoundary>
 					<Suspense fallback={<div className="min-h-[50vh] flex items-center justify-center"><div className="text-violet">Loading...</div></div>}>
-						<Projects />
-						<Bio />
-						<Contact />
+						<SectionErrorBoundary sectionName="Projects">
+							<Projects />
+						</SectionErrorBoundary>
+						<SectionErrorBoundary sectionName="Bio">
+							<Bio />
+						</SectionErrorBoundary>
+						<SectionErrorBoundary sectionName="Contact">
+							<Contact />
+						</SectionErrorBoundary>
 					</Suspense>
 				</main>
 				<ScrollToTop />

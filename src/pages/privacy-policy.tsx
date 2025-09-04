@@ -1,33 +1,27 @@
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import FadeInUp from "@/components/common/animations/fade-in-up";
-import BackgroundGradient from "@/components/layout/background-gradient";
+import PageLayout from "@/components/layout/page-layout";
+import SequentialFadeIn from "@/components/common/animations/sequential-fade-in";
+import { COLORS, TRANSITIONS } from "@/constants";
 
 export default function PrivacyPolicy() {
-	return (
-		<div className="min-h-screen text-violet-dark">
-			<BackgroundGradient />
-			<main className="relative z-10 max-w-4xl mx-auto px-6 py-20" role="main">
-				<motion.div
-					initial={{ opacity: 0, y: 20 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.6 }}
-				>
-					<FadeInUp delay={0.2}>
-						<Link 
-							to="/" 
-							className="inline-flex items-center text-orange hover:text-violet mb-8 transition-colors focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2 rounded px-2 py-1"
-							aria-label="Retour à la page d'accueil"
-						>
-							← Retour à l'accueil
-						</Link>
-					</FadeInUp>
+	const headerContent = [
+		<Link 
+			to="/" 
+			className={`inline-flex items-center ${COLORS.ORANGE.TEXT} ${COLORS.VIOLET.HOVER_TEXT} mb-8 ${TRANSITIONS.COLORS} focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2 rounded px-2 py-1`}
+			aria-label="Retour à la page d'accueil"
+		>
+			← Retour à l'accueil
+		</Link>,
+		<h1 className={`text-4xl md:text-5xl font-display font-extrabold mb-8 ${COLORS.VIOLET.TEXT}`}>
+			Politique de Confidentialité
+		</h1>
+	];
 
-					<FadeInUp delay={0.4}>
-						<h1 className="text-4xl md:text-5xl font-display font-extrabold mb-8 text-violet">
-							Politique de Confidentialité
-						</h1>
-					</FadeInUp>
+	return (
+		<PageLayout className={COLORS.VARIANTS.VIOLET_DARK}>
+			<SequentialFadeIn>
+				{headerContent}
+			</SequentialFadeIn>
 
 					<div className="prose prose-lg max-w-none">
 						<FadeInUp delay={0.6}>
@@ -147,8 +141,6 @@ export default function PrivacyPolicy() {
 							</section>
 						</FadeInUp>
 					</div>
-				</motion.div>
-			</main>
-		</div>
+		</PageLayout>
 	);
 }

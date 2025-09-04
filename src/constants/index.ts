@@ -66,3 +66,28 @@ export const TRANSITIONS = {
 	NAVBAR_BAR: "transition-[width,opacity] duration-100 ease-[cubic-bezier(0.83,0,0.17,1)]",
 	SCROLL_TO_TOP: "transition-all duration-300 ease-in-out",
 } as const;
+
+// Common component styles
+export const COMPONENTS = {
+	BUTTON: "button", // Uses CSS class from index.css
+	FOCUS_RING: "focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2",
+	ROUNDED: {
+		SM: "rounded",
+		MD: "rounded-lg", 
+		LG: "rounded-xl",
+		FULL: "rounded-full",
+		"2XL": "rounded-2xl",
+	},
+} as const;
+
+// Common layout patterns
+export const LAYOUTS = {
+	PAGE_CONTAINER: "min-h-screen",
+	CONTENT_CENTER: "flex items-center justify-center",
+	TEXT_CENTER: "text-center",
+	RESPONSIVE_TEXT: {
+		H1: "text-4xl md:text-5xl",
+		H2: "text-2xl md:text-3xl",
+		DISPLAY: "text-[clamp(4rem,8vw,8rem)]",
+	},
+} as const;

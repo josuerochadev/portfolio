@@ -1,12 +1,18 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
+import type { ReactNode } from 'react';
 import Navbar from '../../../components/layout/navbar';
+
+interface MockMotionProps {
+  children: ReactNode;
+  [key: string]: unknown;
+}
 
 // Mock framer-motion
 vi.mock('framer-motion', () => ({
   motion: {
-    a: ({ children, ...props }: any) => <a {...props}>{children}</a>,
+    a: ({ children, ...props }: MockMotionProps) => <a {...props}>{children}</a>,
   },
 }));
 

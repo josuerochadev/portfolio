@@ -4,6 +4,7 @@ import { FaArrowLeft, FaGithub, FaExternalLinkAlt, FaCalendar, FaCog } from "rea
 import { PROJECTS, type Project } from "@/data/projects";
 import FadeInUp from "@/components/common/animations/fade-in-up";
 import BackgroundGradient from "@/components/layout/background-gradient";
+import ErrorBoundary from "@/components/common/error-boundary";
 
 const getStatusColor = (status: Project['status']) => {
 	switch (status) {
@@ -49,14 +50,15 @@ export default function ProjectDetail() {
 	}
 
 	return (
-		<div className="min-h-screen text-violet">
-			<BackgroundGradient />
-			<main className="relative z-10 max-w-6xl mx-auto px-6 py-20" role="main">
-				<motion.div
-					initial={{ opacity: 0, y: 20 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.6 }}
-				>
+		<ErrorBoundary>
+			<div className="min-h-screen text-violet">
+				<BackgroundGradient />
+				<main className="relative z-10 max-w-6xl mx-auto px-6 py-20" role="main">
+					<motion.div
+						initial={{ opacity: 0, y: 20 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.6 }}
+					>
 					<FadeInUp delay={0.2}>
 						<Link 
 							to="/#projects" 
@@ -166,5 +168,6 @@ export default function ProjectDetail() {
 				</motion.div>
 			</main>
 		</div>
+		</ErrorBoundary>
 	);
 }

@@ -1,6 +1,7 @@
 import type React from "react";
 import { Component, type ReactNode, type ErrorInfo } from "react";
 import { COLORS } from "@/constants";
+import { logReactError } from "@/utils/logger";
 
 interface Props {
 	children: ReactNode;
@@ -26,7 +27,8 @@ class ErrorBoundary extends Component<Props, State> {
 
 	// Commit phase: safe for side effects (logging, analytics)
 	componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-		console.error("ErrorBoundary caught an error:", error, errorInfo);
+		// Centralized logging system
+		logReactError(error, errorInfo, 'ErrorBoundary');
 		
 		// Optional callback for error reporting service (Sentry, etc.)
 		if (this.props.onError) {

@@ -6,6 +6,7 @@ import { PROJECTS } from "@/data/projects";
 
 import FadeInUpOnScroll from "@/components/common/animations/fade-in-up-on-scroll";
 import LetterRippleEffect from "@/components/effects/letter-ripple";
+import ResponsiveImage from "@/components/common/responsive-image";
 import SunIcon from "@/assets/images/ui/sun.svg?react";
 
 export default function Projects() {
@@ -35,7 +36,8 @@ export default function Projects() {
 							.split(" ")
 							.map((word, i) => (
 								<LetterRippleEffect
-									key={`projects-title-${word}-${i}`}
+									key={`projects-title-${word}-${// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+i}`}
 									text={`${word} `}
 								/>
 							))}
@@ -54,11 +56,11 @@ export default function Projects() {
 								transition-all duration-300 ease-[cubic-bezier(0.83,0,0.17,1)]"
 							>
 								<div className="w-full lg:w-1/2 aspect-[4/3]">
-									<img
-										loading="lazy"
-										src={project.image}
+									<ResponsiveImage
+										images={project.image}
 										alt={`Preview of ${project.title}`}
-										className="w-full h-full object-cover rounded-xl shadow-sm"
+										className="w-full h-full rounded-xl shadow-sm"
+										loading="lazy"
 									/>
 								</div>
 								<div className="w-full lg:w-1/2 flex flex-col gap-2">

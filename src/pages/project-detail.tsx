@@ -5,6 +5,7 @@ import { PROJECTS, type Project } from "@/data/projects";
 import FadeInUp from "@/components/common/animations/fade-in-up";
 import BackgroundGradient from "@/components/layout/background-gradient";
 import ErrorBoundary from "@/components/common/error-boundary";
+import ResponsiveImage from "@/components/common/responsive-image";
 
 const getStatusColor = (status: Project['status']) => {
 	switch (status) {
@@ -74,8 +75,8 @@ export default function ProjectDetail() {
 						{/* Image */}
 						<FadeInUp delay={0.4}>
 							<div className="relative">
-								<img
-									src={project.image}
+								<ResponsiveImage
+									images={project.image}
 									alt={`Aperçu du projet ${project.title} - ${project.description}`}
 									className="w-full h-auto rounded-2xl shadow-lg"
 									loading="eager"

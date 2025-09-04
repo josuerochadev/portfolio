@@ -4,7 +4,11 @@ export interface Project {
 	description: string;
 	deliverables: string;
 	context: string;
-	image: string;
+	image: {
+		desktop: string;
+		mobile: string;
+		thumbnail: string;
+	};
 	technologies?: string[];
 	status: 'completed' | 'in-progress' | 'concept';
 	year: string;
@@ -21,7 +25,11 @@ export const PROJECTS: Project[] = [
 			"Architecture full stack, back-end Node/Express, front-end React, rappels automatisés",
 		context:
 			"Projet client développé pour un opticien indépendant. Actuellement en cours de finalisation (v1).",
-		image: "/assets/images/projects/project1-desktop.webp",
+		image: {
+			desktop: "/assets/images/projects/optimized/project-la-lunetterie-du-coin-desktop.webp",
+			mobile: "/assets/images/projects/optimized/project-la-lunetterie-du-coin-mobile.webp",
+			thumbnail: "/assets/images/projects/optimized/project-la-lunetterie-du-coin-thumb.webp"
+		},
 		technologies: ["React", "Node.js", "Express", "PostgreSQL", "TypeScript"],
 		status: "in-progress",
 		year: "2024",
@@ -36,7 +44,11 @@ export const PROJECTS: Project[] = [
 			"Wireframes, intégration Tailwind, formulaire sécurisé, design responsive mobile-first",
 		context:
 			"Phase conceptuelle d'un projet freelance pour une professionnelle du droit axée sur la visibilité locale et la conformité RGPD.",
-		image: "/assets/images/projects/project3-desktop.webp",
+		image: {
+			desktop: "/assets/images/projects/optimized/project-avocate-rayssa-desktop.webp",
+			mobile: "/assets/images/projects/optimized/project-avocate-rayssa-mobile.webp",
+			thumbnail: "/assets/images/projects/optimized/project-avocate-rayssa-thumb.webp"
+		},
 		technologies: ["Next.js", "Tailwind CSS", "TypeScript", "Framer Motion"],
 		status: "concept",
 		year: "2024",
@@ -51,7 +63,11 @@ export const PROJECTS: Project[] = [
 			"Design poétique, galerie interactive, blog intégré, optimisation SEO",
 		context:
 			"Projet personnel pour valoriser l'art littéraire avec une approche moderne et accessible.",
-		image: "/assets/images/projects/project2.webp",
+		image: {
+			desktop: "/assets/images/projects/optimized/project-poetry-desktop.webp",
+			mobile: "/assets/images/projects/optimized/project-poetry-mobile.webp",
+			thumbnail: "/assets/images/projects/optimized/project-poetry-thumb.webp"
+		},
 		technologies: ["Astro", "Vue.js", "Tailwind CSS", "Markdown"],
 		status: "concept",
 		year: "2024",
@@ -66,7 +82,11 @@ export const PROJECTS: Project[] = [
 			"Système de paiement, catalogue interactif, générateur de certificats, dashboard admin",
 		context:
 			"Projet d'apprentissage pour maîtriser les technologies e-commerce et l'UX complexe.",
-		image: "/assets/images/projects/project1-desktop.webp",
+		image: {
+			desktop: "/assets/images/projects/optimized/project-stella-desktop.webp",
+			mobile: "/assets/images/projects/optimized/project-stella-mobile.webp",
+			thumbnail: "/assets/images/projects/optimized/project-stella-thumb.webp"
+		},
 		technologies: ["Next.js", "Stripe", "Prisma", "PostgreSQL", "Tailwind CSS"],
 		status: "concept",
 		year: "2024",
@@ -81,7 +101,11 @@ export const PROJECTS: Project[] = [
 			"Blog technique, documentation projets, timeline interactive, témoignages",
 		context:
 			"Projet personnel pour documenter et partager mon expérience de reconversion du droit vers le développement.",
-		image: "/assets/images/projects/project2.webp",
+		image: {
+			desktop: "/assets/images/projects/optimized/project-cda-oclock-desktop.webp",
+			mobile: "/assets/images/projects/optimized/project-cda-oclock-mobile.webp",
+			thumbnail: "/assets/images/projects/optimized/project-cda-oclock-thumb.webp"
+		},
 		technologies: ["React", "Markdown", "Git", "Various APIs"],
 		status: "in-progress",
 		year: "2024-2025",

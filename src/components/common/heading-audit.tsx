@@ -1,4 +1,5 @@
 import type React from "react";
+import { logger } from "@/utils/logger";
 
 interface Props {
 	level: 1 | 2 | 3 | 4 | 5 | 6;
@@ -20,7 +21,10 @@ const HeadingAudit: React.FC<Props> = ({ level, children, className = "" }) => {
 		if (lastHeading) {
 			const lastLevel = parseInt(lastHeading.tagName.charAt(1)); // Extract level from 'H3'->3
 			if (level > lastLevel + 1) {
-				console.warn(`⚠️ Accessibility Warning: Heading h${level} skips levels. Previous heading was h${lastLevel}`);
+				logger.accessibilityWarning(
+					`Heading h${level} skips levels. Previous heading was h${lastLevel}`,
+					`h${level}`
+				);
 			}
 		}
 	}

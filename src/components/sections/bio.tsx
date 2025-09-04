@@ -30,8 +30,7 @@ export default function Bio() {
 			<PhotoFrame />
 
 			<div className="max-w-6xl mx-auto flex flex-col items-start">
-				{/* TITLE */}
-				<FadeInUpOnScroll delay={0.2}>
+					<FadeInUpOnScroll delay={0.2}>
 					<h2 className="relative w-full px-4 text-[clamp(2rem,7vw,6rem)] leading-[1.1] font-display font-extrabold text-violet text-left flex flex-wrap gap-x-2">
 						{"And more about me".split(" ").map((word) => (
 							<LetterRippleEffect key={word} text={`${word} `} />
@@ -39,8 +38,7 @@ export default function Bio() {
 					</h2>
 				</FadeInUpOnScroll>
 
-				{/* ADJECTIVES */}
-				<div className="w-full px-4 mt-6 mb-12">
+					<div className="w-full px-4 mt-6 mb-12">
 					<div className="max-w-6xl mx-auto flex flex-wrap gap-x-6 gap-y-2">
 						{ADJECTIVES.map((word, i) => (
 							<FadeInUpOnScroll key={word} delay={0.6 + i * 0.1}>
@@ -50,8 +48,7 @@ export default function Bio() {
 					</div>
 				</div>
 
-				{/* TEXT BLOCK */}
-				<div className="w-full px-4 max-w-4xl flex flex-col gap-12 text-left">
+					<div className="w-full px-4 max-w-4xl flex flex-col gap-12 text-left">
 					{SECTIONS.map((section, i) => (
 						<FadeInUpOnScroll key={section.title} delay={1 + i * 0.2}>
 							<div>

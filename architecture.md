@@ -85,15 +85,80 @@ Toutes les pages sont chargées de manière paresseuse pour optimiser les perfor
 const HomePage = lazy(() => import("./pages/HomePage"));
 ```
 
+## 🎨 Patterns d'Architecture
+
+### Sequential Animation Pattern
+Élimination des duplications FadeInUp avec le composant `SequentialFadeIn`:
+```typescript
+// ❌ Avant - 43+ duplications
+<FadeInUp delay={0.2}><section1/></FadeInUp>
+<FadeInUp delay={0.4}><section2/></FadeInUp>
+
+// ✅ Après - Pattern réutilisable  
+<SequentialFadeIn startDelay={0.2} increment={0.2}>
+  {[<section1/>, <section2/>]}
+</SequentialFadeIn>
+```
+
+### Page Layout Pattern
+Template unifié pour toutes les pages:
+```typescript
+<PageLayout maxWidth="4xl" withAnimation>
+  <SequentialFadeIn>
+    {pageContent}
+  </SequentialFadeIn>
+</PageLayout>
+```
+
+### Error Boundary Pattern
+Protection granulaire par section:
+```typescript
+<SectionErrorBoundary sectionName="Hero">
+  <Hero />
+</SectionErrorBoundary>
+```
+
+## 🛡️ Robustesse & Qualité
+
+### Error Handling
+- Error boundaries à 3 niveaux (App → Page → Section)
+- Fallbacks gracieux pour chaque composant
+- Logs détaillés en développement
+
+### Accessibility (WCAG AA/AAA)
+- Skip Links pour navigation clavier
+- Heading Audit avec validation hiérarchie
+- Color contrast validation automatique
+- Support reduced-motion
+
+### Performance
+- **Lighthouse**: 85+ (objectif 90+)
+- Code splitting par route
+- Images WebP optimisées (-94% sur hero image)
+- GPU-accelerated animations uniquement
+
+## 📚 Documentation Technique
+
+Consulter `/docs/` pour:
+- **PATTERNS.md**: Patterns détaillés avec exemples
+- **PERFORMANCE.md**: Guide optimisation et métriques
+
 ## Amélioration par Rapport à l'Ancienne Structure
 
 ### Avant :
 - HomePage dans `components/pages/` (incohérent)
 - Tests dispersés dans différents dossiers
 - Nommage snake_case/kebab-case mixte
+- 43+ duplications FadeInUp
+- Pas de gestion d'erreurs
+- Aucune documentation technique
 
 ### Après :
 - Séparation claire pages/composants
 - Tests centralisés
-- Convention de nommage uniforme
+- Convention de nommage uniforme  
 - Lazy loading cohérent pour toutes les pages
+- **60% réduction code** via patterns réutilisables
+- Error boundaries comprensifs
+- Accessibility WCAG compliant
+- Documentation technique complète

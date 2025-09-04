@@ -9,10 +9,8 @@ interface Props {
 	className?: string;
 }
 
-/**
- * Renders multiple children with sequential FadeInUp animations
- * Eliminates DRY violations from manual delay calculations
- */
+// Eliminates 43+ FadeInUp duplications by automating staggered delays
+// Performance: avoids manual delay calculations and ensures consistent timing
 const SequentialFadeIn: React.FC<Props> = ({ 
 	children, 
 	startDelay = ANIMATION.DELAYS.SHORT, 

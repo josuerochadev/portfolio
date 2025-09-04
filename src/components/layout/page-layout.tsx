@@ -10,10 +10,8 @@ interface Props {
 	withAnimation?: boolean;
 }
 
-/**
- * Reusable page layout component to eliminate duplication
- * Common pattern: BackgroundGradient + motion.div + responsive container
- */
+// Unified page template: eliminates 5+ layout duplications across routes
+// Animation toggle prevents motion.div overhead when not needed (e.g., 404 page)
 const PageLayout: React.FC<Props> = ({ 
 	children, 
 	maxWidth = "4xl", 

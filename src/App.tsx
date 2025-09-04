@@ -1,10 +1,8 @@
-// src/App.tsx
 import type React from "react";
 import { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 import ScrollToTopOnRouteChange from "./components/common/scroll-to-top-on-route-change";
 import ErrorBoundary from "./components/common/error-boundary";
-// Lazy load pages for code splitting
 const HomePage = lazy(() => import("./pages/home-page"));
 const LegalNotice = lazy(() => import("./pages/legal-notice"));
 const PrivacyPolicy = lazy(() => import("./pages/privacy-policy"));

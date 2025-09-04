@@ -5,20 +5,38 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Josué Rocha — Full Stack Web Developer</title>
+  <title>Josué Rocha — Full Stack Developer | React, TypeScript, Node.js</title>
 
   <meta name="description"
-    content="Portfolio of Josué Xavier Rocha, full stack web developer, passionate about clean code and AGILE." />
+    content="Portfolio of Josué Rocha, full stack developer specializing in React, TypeScript, Node.js. Former lawyer turned developer with expertise in web applications, accessibility (WCAG), and clean code practices." />
   <meta name="author" content="Josué Xavier Rocha" />
   <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#6900FF" />
+  <meta name="keywords" content="full stack developer, React developer, TypeScript, Node.js, web development, accessibility, WCAG, portfolio, France" />
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://josuerocha.dev/" />
 
   <!-- Open Graph for social media -->
-  <meta property="og:title" content="Josué Rocha — Full Stack Web Developer" />
-  <meta property="og:description" content="Discover my work, projects, and background." />
-  <meta property="og:image" content="/assets/images/preview.png" />
+  <meta property="og:title" content="Josué Rocha — Full Stack Developer | React, TypeScript, Node.js" />
+  <meta property="og:description" content="Former lawyer turned full stack developer. Specializing in React, TypeScript, Node.js with focus on accessibility and clean code. View my projects and background." />
+  <meta property="og:image" content="https://josuerocha.dev/assets/images/preview-og.webp" />
+  <meta property="og:image:alt" content="Josué Rocha's portfolio preview showing web development projects" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://josuerocha.dev/" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="Josué Rocha Portfolio" />
+
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Josué Rocha — Full Stack Developer | React, TypeScript, Node.js" />
+  <meta name="twitter:description" content="Former lawyer turned full stack developer. Specializing in React, TypeScript, Node.js with focus on accessibility and clean code." />
+  <meta name="twitter:image" content="https://josuerocha.dev/assets/images/preview-og.webp" />
+  <meta name="twitter:image:alt" content="Josué Rocha's portfolio preview" />
+  <meta name="twitter:creator" content="@josuexrocha" />
+  <meta name="twitter:site" content="@josuexrocha" />
 
   <!-- Resource hints for performance -->
   <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
@@ -32,7 +50,8 @@
   <!-- Preload critical assets -->
   <link rel="modulepreload" href="/src/main.tsx" />
   <link rel="preload" href="/src/components/sections/hero.tsx" as="script" />
-  <link rel="preload" href="/assets/images/projects/project1-desktop.webp" as="image" fetchpriority="high" />
+  <link rel="preload" href="/assets/images/projects/optimized/project-la-lunetterie-du-coin-desktop.webp" as="image" fetchpriority="high" />
+  <link rel="preload" href="/assets/images/ui/hand-test.webp" as="image" fetchpriority="low" />
 
   <!-- Critical CSS for font fallbacks and FOUT prevention -->
   <style>
@@ -88,6 +107,52 @@
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- JSON-LD Structured Data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Josué Xavier Rocha",
+    "jobTitle": "Full Stack Web Developer",
+    "description": "Former lawyer turned full stack developer specializing in React, TypeScript, Node.js with focus on accessibility and clean code practices.",
+    "url": "https://josuerocha.dev",
+    "image": "https://josuerocha.dev/assets/images/preview-og.webp",
+    "sameAs": [
+      "https://github.com/josuexrocha",
+      "https://www.linkedin.com/in/josuexrocha/",
+      "https://twitter.com/josuexrocha"
+    ],
+    "knowsAbout": [
+      "React",
+      "TypeScript", 
+      "Node.js",
+      "JavaScript",
+      "Web Accessibility",
+      "WCAG",
+      "Full Stack Development",
+      "Frontend Development",
+      "Backend Development"
+    ],
+    "alumniOf": {
+      "@type": "Organization",
+      "name": "O'Clock School"
+    },
+    "worksFor": {
+      "@type": "Organization",
+      "name": "Freelance"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "FR",
+      "addressRegion": "Occitanie"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://josuerocha.dev"
+    }
+  }
+  </script>
 
 </head>
 

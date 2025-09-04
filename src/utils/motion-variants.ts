@@ -1,4 +1,3 @@
-// src/utils/motion-variants.ts
 
 export const navLinkHover = {
 	initial: {
@@ -18,7 +17,7 @@ export const navLinkHover = {
 export const fadeInUpTween = {
 	initial: { opacity: 0, y: 20 },
 	animate: { opacity: 1, y: 0 },
-	transition: { duration: 0.5, ease: [0.65, 0, 0.35, 1] }, // ou "easeOut"
+	transition: { duration: 0.5, ease: [0.65, 0, 0.35, 1] },
 };
 
 export const fadeInDownTween = {

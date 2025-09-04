@@ -2,13 +2,13 @@
 import type React from "react";
 import { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
-import ScrollToTopOnRouteChange from "./components/common/ScrollToTopOnRouteChange";
+import ScrollToTopOnRouteChange from "./components/common/scroll-to-top-on-route-change";
 // Lazy load pages for code splitting
-const HomePage = lazy(() => import("./pages/HomePage"));
-const LegalNotice = lazy(() => import("./pages/LegalNotice"));
-const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
-const ProjectDetail = lazy(() => import("./pages/ProjectDetail"));
-const NotFound = lazy(() => import("./pages/NotFound"));
+const HomePage = lazy(() => import("./pages/home-page"));
+const LegalNotice = lazy(() => import("./pages/legal-notice"));
+const PrivacyPolicy = lazy(() => import("./pages/privacy-policy"));
+const ProjectDetail = lazy(() => import("./pages/project-detail"));
+const NotFound = lazy(() => import("./pages/not-found"));
 
 const App: React.FC = () => {
 	return (

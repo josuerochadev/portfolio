@@ -1,0 +1,63 @@
+{
+  "heading": "Here's a glimpse into my work — a taste of what I can bring",
+  "contact": {
+    "heading": "Let's work together! Or just chat",
+    "handAlt": "Hand illustration"
+  },
+  "labels": {
+    "deliverables": "Deliverables",
+    "context": "Context",
+    "description": "Description",
+    "technologies": "Technologies",
+    "moreDetails": "More details",
+    "seeMore": "See more details about"
+  },
+  "status": {
+    "completed": "Completed",
+    "inProgress": "In Progress",
+    "concept": "Concept"
+  },
+  "actions": {
+    "backToProjects": "Back to projects",
+    "codePrivate": "Code (Private)",
+    "demoSoon": "Demo (Soon)",
+    "codeNotAvailable": "Source code not available - Private project",
+    "demoNotAvailable": "Demo not available - Coming soon"
+  },
+  "errors": {
+    "notFound": "Project not found",
+    "backToHome": "← Back to home"
+  },
+  "items": {
+    "lunetterie-du-coin": {
+      "title": "La Lunetterie du Coin",
+      "description": "Custom web application to facilitate appointment booking for a local optician.",
+      "deliverables": "Full stack architecture, Node/Express backend, React frontend, automated reminders",
+      "context": "Client project developed for an independent optician. Currently in final stages (v1)."
+    },
+    "site-vitrine-avocate": {
+      "title": "Showcase website for a lawyer",
+      "description": "Minimalist multilingual platform to increase digital presence and facilitate client contact.",
+      "deliverables": "Wireframes, Tailwind integration, secure forms, mobile-first responsive design",
+      "context": "Conceptual phase of a freelance project for a legal professional focused on local visibility and GDPR compliance."
+    },
+    "site-vitrine-poete": {
+      "title": "Showcase website for a poet",
+      "description": "Elegant artistic portfolio to present works and biography of a contemporary poet.",
+      "deliverables": "Poetic design, interactive gallery, integrated blog, SEO optimization",
+      "context": "Personal project to showcase literary art with a modern and accessible approach."
+    },
+    "ecommerce-etoiles": {
+      "title": "Fictional e-commerce - Online star purchase",
+      "description": "Conceptual online store allowing symbolic star purchases with personalized certificates.",
+      "deliverables": "Payment system, interactive catalog, certificate generator, admin dashboard",
+      "context": "Learning project to master e-commerce technologies and complex UX."
+    },
+    "parcours-titre-pro-cda": {
+      "title": "My journey towards CDA professional title",
+      "description": "Complete documentation and portfolio of my professional reconversion journey to development.",
+      "deliverables": "Technical blog, project documentation, interactive timeline, testimonials",
+      "context": "Personal project to document and share my experience transitioning from law to development."
+    }
+  }
+}

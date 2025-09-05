@@ -1,0 +1,105 @@
+{
+  "privacy": {
+    "title": "Politique de confidentialité",
+    "intro": "Cette politique de confidentialité explique comment nous collectons, utilisons et protégeons vos informations personnelles lorsque vous visitez notre site web.",
+    "sections": {
+      "dataCollection": {
+        "title": "Collecte des données",
+        "content": [
+          "Nous collectons des données de navigation anonymisées via Vercel Analytics pour améliorer l'expérience utilisateur.",
+          "Aucune donnée personnelle identifiable n'est collectée sans votre consentement explicite.",
+          "Les données de contact sont collectées uniquement si vous nous contactez directement."
+        ]
+      },
+      "dataUsage": {
+        "title": "Utilisation des données",
+        "content": [
+          "Les données analytiques sont utilisées pour optimiser les performances du site.",
+          "Les informations de contact sont utilisées exclusivement pour répondre à vos demandes.",
+          "Nous ne vendons ni ne partageons vos données avec des tiers."
+        ]
+      },
+      "cookies": {
+        "title": "Cookies et technologies similaires",
+        "content": [
+          "Ce site utilise des cookies techniques nécessaires au fonctionnement.",
+          "Vercel Analytics peut utiliser des cookies de performance anonymisés.",
+          "Vous pouvez désactiver les cookies dans les paramètres de votre navigateur."
+        ]
+      },
+      "dataSharing": {
+        "title": "Partage des données",
+        "content": [
+          "Vos données ne sont jamais vendues à des tiers.",
+          "Seuls nos prestataires techniques (Vercel) peuvent accéder aux données anonymisées.",
+          "Toute transmission respecte les standards de sécurité HTTPS."
+        ]
+      },
+      "gdprRights": {
+        "title": "Vos droits (RGPD)",
+        "content": [
+          "Droit d'accès : vous pouvez demander quelles données nous détenons sur vous.",
+          "Droit de rectification : correction des données inexactes.",
+          "Droit à l'effacement : suppression de vos données personnelles.",
+          "Droit de portabilité : récupération de vos données dans un format structuré.",
+          "Contactez-nous à josuerochadev@gmail.com pour exercer ces droits."
+        ]
+      },
+      "dataSecurity": {
+        "title": "Sécurité des données",
+        "content": [
+          "Toutes les communications sont chiffrées via HTTPS/TLS.",
+          "Les serveurs sont sécurisés par Vercel avec des standards enterprise.",
+          "Aucune donnée sensible n'est stockée localement sur votre appareil."
+        ]
+      },
+      "dataRetention": {
+        "title": "Conservation des données",
+        "content": [
+          "Les données analytiques anonymisées sont conservées 24 mois maximum.",
+          "Les emails de contact sont archivés 3 ans puis supprimés automatiquement.",
+          "Vous pouvez demander la suppression immédiate à tout moment."
+        ]
+      },
+      "contact": {
+        "title": "Contact",
+        "content": [
+          "Pour toute question concernant cette politique : josuerochadev@gmail.com",
+          "Délégué à la protection des données : Josué Xavier Rocha",
+          "Dernière mise à jour : [date]"
+        ]
+      }
+    }
+  },
+  "legalNotice": {
+    "title": "Mentions légales",
+    "publisher": {
+      "title": "Éditeur",
+      "name": "Josué Xavier Rocha",
+      "status": "Développeur web indépendant",
+      "email": "josuerochadev@gmail.com"
+    },
+    "hosting": {
+      "title": "Hébergement",
+      "provider": "Vercel Inc.",
+      "address": "440 N Baywood Dr, San Jose, CA 95128, États-Unis",
+      "website": "https://vercel.com"
+    },
+    "intellectual": {
+      "title": "Propriété intellectuelle",
+      "content": [
+        "Ce site et son contenu sont protégés par le droit d'auteur.",
+        "Toute reproduction sans autorisation est interdite.",
+        "Les logos et marques mentionnés appartiennent à leurs propriétaires respectifs."
+      ]
+    },
+    "liability": {
+      "title": "Responsabilité",
+      "content": [
+        "Les informations sont fournies à titre indicatif.",
+        "Nous nous efforçons de maintenir la précision des informations.",
+        "Notre responsabilité ne peut être engagée en cas d'erreur ou d'omission."
+      ]
+    }
+  }
+}

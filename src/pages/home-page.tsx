@@ -10,6 +10,7 @@ import ScrollToTop from "../components/common/scroll-to-top";
 import ScrollBlur from "../components/common/bottom-blur";
 import SectionErrorBoundary from "../components/common/section-error-boundary";
 import SkipLink from "../components/common/skip-link";
+import FloatingLanguageSwitcher from "../components/common/floating-language-switcher";
 
 // Conditional lazy loading - production only for LCP optimization
 const Projects = lazy(() => import("../components/sections/projects"));
@@ -37,7 +38,7 @@ const HomePage: React.FC = () => {
 				)}
 			</AnimatePresence>
 
-			<div className="relative z-100 min-h-screen font-body">
+			<div className="relative z-[100] min-h-screen font-body">
 				<header>
 					<SectionErrorBoundary sectionName="Navigation">
 						<Navbar />
@@ -62,6 +63,7 @@ const HomePage: React.FC = () => {
 				<ScrollToTop />
 				<ScrollBlur />
 				<Footer />
+				<FloatingLanguageSwitcher />
 			</div>
 		</div>
 	);

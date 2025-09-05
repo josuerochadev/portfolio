@@ -1,28 +1,23 @@
 import type React from "react";
+import { useTranslation } from "react-i18next";
 import LetterRippleEffect from "@/components/effects/letter-ripple";
 import FadeInUp from "@/components/common/animations/fade-in-up";
 import { ANIMATION, COLORS, TRANSITIONS } from "@/constants";
-
-const PHRASES = [
-	{ id: "phrase-2", text: "a brazilian former lawyer" },
-	{ id: "phrase-3", text: "based in France" },
-	{ id: "phrase-4", text: "who turned developer" },
-	{ id: "phrase-5", text: "in love with clean code" },
-	{ id: "phrase-6", text: "and AGILE methodology" },
-];
 
 interface HeroPhrasesProps {
 	setShowSmiles: (show: boolean) => void;
 }
 
 const HeroPhrases: React.FC<HeroPhrasesProps> = ({ setShowSmiles }) => {
+	const { t } = useTranslation('hero');
+	const phrases = t('phrases', { returnObjects: true }) as string[];
 	return (
 		<>
 			<div className="text-left mx-auto px-4 max-w-3xl space-y-1">
-				{PHRASES.map(({ id, text }, index) => (
-					<FadeInUp key={id} delay={ANIMATION.DELAYS.SHORT + index * ANIMATION.DELAYS.VERY_SHORT}>
+				{phrases.map((phrase, index) => (
+					<FadeInUp key={`phrase-${index}`} delay={ANIMATION.DELAYS.SHORT + index * ANIMATION.DELAYS.VERY_SHORT}>
 						<div className="text-base sm:text-lg md:text-xl font-medium leading-snug cursor-default">
-							<LetterRippleEffect text={text} />
+							<LetterRippleEffect text={phrase} />
 						</div>
 					</FadeInUp>
 				))}
@@ -35,7 +30,7 @@ const HeroPhrases: React.FC<HeroPhrasesProps> = ({ setShowSmiles }) => {
 					className={`text-2xl font-bold font-display text-left max-w-2xl pt-2 ${COLORS.ORANGE.HOVER_TEXT} ${TRANSITIONS.DEFAULT}`}
 					style={{ willChange: "color, transform" }}
 				>
-					— This is my portfolio
+					{t('tagline')}
 				</p>
 			</FadeInUp>
 		</>

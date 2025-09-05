@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import FadeInUpOnScroll from "@/components/common/animations/fade-in-up-on-scroll";
 import LetterRippleEffect from "@/components/effects/letter-ripple";
 // Use public path for Vercel deployment
@@ -5,6 +6,7 @@ const handImage = "/assets/images/ui/hand-test.webp";
 import { motion } from "framer-motion";
 
 export default function Contact() {
+	const { t } = useTranslation('projects');
 	return (
 		<section
 			id="contact"
@@ -16,7 +18,7 @@ export default function Contact() {
 			{/* HAND SVG – mover para o topo para evitar sobreposição */}
 			<motion.img
 				src={handImage}
-				alt="Hand illustration"
+				alt={t('contact.handAlt')}
 				className="absolute bottom-0 left-0 w-full max-w-[1400px] h-auto z-0 pointer-events-none select-none pb-24"
 				initial={{ opacity: 0, y: 100 }}
 				whileInView={{ opacity: 1, y: 0 }}
@@ -29,7 +31,7 @@ export default function Contact() {
 			{/* TITLE */}
 			<FadeInUpOnScroll delay={0.2}>
 				<h2 className="relative z-10 text-[clamp(2rem,6vw,5rem)] leading-tight font-display font-extrabold text-violet flex flex-wrap justify-center gap-x-2">
-					{"Let's work together! Or just chat".split(" ").map((word) => (
+					{t('contact.heading').split(" ").map((word) => (
 						<LetterRippleEffect key={word} text={`${word} `} />
 					))}
 				</h2>

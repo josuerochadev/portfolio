@@ -1,0 +1,24 @@
+{
+  "heading": "E mais sobre mim",
+  "adjectives": {
+    "creative": "criativo",
+    "curious": "curioso", 
+    "empathetic": "empático",
+    "resilient": "resiliente",
+    "bold": "ousado"
+  },
+  "sections": {
+    "approach": {
+      "title": "abordagem",
+      "text": "Meu trabalho é guiado por planejamento cuidadoso, código limpo e reutilizável, e um espírito colaborativo. Acredito que design e desenvolvimento caminham de mãos dadas."
+    },
+    "background": {
+      "title": "background",
+      "text": "Comecei minha carreira como advogado no Brasil, depois me mudei para a França, onde fiz a transição para a tecnologia. Minha experiência me ensinou pensamento analítico, empatia e adaptabilidade."
+    },
+    "beyondCode": {
+      "title": "além do código",
+      "text": "Fora do desenvolvimento, eu amo cinema, corrida, cachorros e cozinha. Estes hobbies me mantêm equilibrado e continuamente inspirado."
+    }
+  }
+}

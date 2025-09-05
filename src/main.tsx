@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
 import App from "./App";
 import "./index.css";
+import "./i18n"; // Initialize i18n
 import Lenis from "@studio-freight/lenis";
 
 const lenis = new Lenis({

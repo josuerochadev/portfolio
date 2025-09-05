@@ -1,0 +1,63 @@
+{
+  "heading": "Voici un aperçu de mon travail — un avant-goût de ce que je peux apporter",
+  "contact": {
+    "heading": "Travaillons ensemble ! Ou discutons simplement",
+    "handAlt": "Illustration de main"
+  },
+  "labels": {
+    "deliverables": "Livrables",
+    "context": "Contexte",
+    "description": "Description",
+    "technologies": "Technologies",
+    "moreDetails": "Plus de détails",
+    "seeMore": "Voir plus de détails sur"
+  },
+  "status": {
+    "completed": "Terminé",
+    "inProgress": "En cours",
+    "concept": "Concept"
+  },
+  "actions": {
+    "backToProjects": "Retour aux projets",
+    "codePrivate": "Code (Privé)",
+    "demoSoon": "Demo (Bientôt)",
+    "codeNotAvailable": "Code source non disponible - Projet privé",
+    "demoNotAvailable": "Démonstration non disponible - Bientôt disponible"
+  },
+  "errors": {
+    "notFound": "Projet non trouvé",
+    "backToHome": "← Retour à l'accueil"
+  },
+  "items": {
+    "lunetterie-du-coin": {
+      "title": "La Lunetterie du Coin",
+      "description": "Application web sur mesure pour faciliter la prise de rendez-vous chez un opticien local.",
+      "deliverables": "Architecture full stack, back-end Node/Express, front-end React, rappels automatisés",
+      "context": "Projet client développé pour un opticien indépendant. Actuellement en cours de finalisation (v1)."
+    },
+    "site-vitrine-avocate": {
+      "title": "Site vitrine pour une avocate",
+      "description": "Plateforme multilingue minimaliste pour accroître la présence numérique et faciliter le contact client.",
+      "deliverables": "Wireframes, intégration Tailwind, formulaire sécurisé, design responsive mobile-first",
+      "context": "Phase conceptuelle d'un projet freelance pour une professionnelle du droit axée sur la visibilité locale et la conformité RGPD."
+    },
+    "site-vitrine-poete": {
+      "title": "Site vitrine pour un poète",
+      "description": "Portfolio artistique élégant pour présenter les œuvres et la biographie d'un poète contemporain.",
+      "deliverables": "Design poétique, galerie interactive, blog intégré, optimisation SEO",
+      "context": "Projet personnel pour valoriser l'art littéraire avec une approche moderne et accessible."
+    },
+    "ecommerce-etoiles": {
+      "title": "E-commerce fictif - Achat d'étoiles en ligne",
+      "description": "Boutique en ligne conceptuelle permettant l'achat symbolique d'étoiles avec certificats personnalisés.",
+      "deliverables": "Système de paiement, catalogue interactif, générateur de certificats, dashboard admin",
+      "context": "Projet d'apprentissage pour maîtriser les technologies e-commerce et l'UX complexe."
+    },
+    "parcours-titre-pro-cda": {
+      "title": "Mon parcours vers le titre pro CDA",
+      "description": "Documentation complète et portfolio de mon parcours de reconversion professionnelle vers le développement.",
+      "deliverables": "Blog technique, documentation projets, timeline interactive, témoignages",
+      "context": "Projet personnel pour documenter et partager mon expérience de reconversion du droit vers le développement."
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "heading": "And more about me",
+  "adjectives": {
+    "creative": "creative",
+    "curious": "curious", 
+    "empathetic": "empathetic",
+    "resilient": "resilient",
+    "bold": "bold"
+  },
+  "sections": {
+    "approach": {
+      "title": "approach",
+      "text": "My work is guided by thoughtful planning, clean and reusable code, and a collaborative spirit. I believe that design and development walk hand in hand."
+    },
+    "background": {
+      "title": "background",
+      "text": "I started my career as a lawyer in Brazil, then moved to France, where I transitioned into tech. My experience taught me analytical thinking, empathy, and adaptability."
+    },
+    "beyondCode": {
+      "title": "beyond code",
+      "text": "Outside of development, I love cinema, running, dogs, and cooking. These hobbies keep me balanced and continuously inspired."
+    }
+  }
+}

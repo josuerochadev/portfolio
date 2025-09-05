@@ -1,0 +1,40 @@
+{
+  "navigation": {
+    "home": "Início",
+    "work": "Projetos",
+    "about": "Sobre",
+    "contact": "Contato"
+  },
+  "buttons": {
+    "resume": "Currículo",
+    "github": "Github",
+    "linkedin": "LinkedIn",
+    "moreDetails": "Mais detalhes",
+    "backToTop": "Voltar ao topo",
+    "backToHome": "Voltar ao início"
+  },
+  "footer": {
+    "craftedWith": "Criado com amor e TypeScript.",
+    "allRights": "Todos os direitos reservados.",
+    "legalNotice": "Aviso legal",
+    "privacy": "Política de privacidade"
+  },
+  "meta": {
+    "title": "Josué Rocha — Desenvolvedor Full Stack | React, TypeScript, Node.js",
+    "description": "Portfólio de Josué Rocha, desenvolvedor full stack especializado em React, TypeScript, Node.js. Ex-advogado que se tornou desenvolvedor com expertise em aplicações web, acessibilidade (WCAG) e práticas de código limpo."
+  },
+  "errors": {
+    "pageNotFound": "Página não encontrada",
+    "pageNotFoundDesc": "Desculpe, a página que você está procurando não existe ou foi movida.",
+    "somethingWrong": "Ops! Algo deu errado",
+    "somethingWrongDesc": "Nos desculpe, mas algo inesperado aconteceu. Por favor, tente atualizar a página.",
+    "refreshPage": "Atualizar página"
+  },
+  "accessibility": {
+    "skipToMain": "Pular para o conteúdo principal",
+    "closePhoto": "Fechar foto",
+    "linkToResume": "Link para currículo",
+    "linkToGithub": "Link para Github", 
+    "linkToLinkedin": "Link para LinkedIn"
+  }
+}

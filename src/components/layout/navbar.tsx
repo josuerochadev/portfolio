@@ -1,15 +1,16 @@
 import type React from "react";
 import { useRef } from "react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { navLinkHover } from "@/utils/motion-variants";
 import SmileIcon from "@/assets/images/ui/smile.svg?react";
 
 // Navigation links
 const NAV_LINKS = [
-	{ label: "Home", href: "#hero" },
-	{ label: "Work", href: "#projects" },
-	{ label: "About", href: "#bio" },
-	{ label: "Contact", href: "#contact" },
+	{ key: "home", href: "#hero" },
+	{ key: "work", href: "#projects" },
+	{ key: "about", href: "#bio" },
+	{ key: "contact", href: "#contact" },
 ];
 
 // Number of bars to display
@@ -17,6 +18,7 @@ const BAR_COUNT = 45;
 
 const Navbar: React.FC = () => {
 	const navRef = useRef<HTMLDivElement>(null);
+	const { t } = useTranslation('common');
 
 	const handleMouseMove = (e: React.MouseEvent) => {
 		const rect = navRef.current?.getBoundingClientRect();
@@ -42,7 +44,7 @@ const Navbar: React.FC = () => {
 		<nav
 			ref={navRef}
 			onMouseMove={handleMouseMove}
-			className="relative w-full bg-transparent backdrop-blur-md text-violet font-bold text-sm sm:text-lg uppercase tracking-wider font-sans overflow-hidden py-4 sm:py-6 z-10 border-b-2 border-lime"
+			className="relative w-full bg-transparent backdrop-blur-md text-violet font-bold text-sm sm:text-lg uppercase tracking-wider font-sans overflow-hidden py-4 sm:py-6 z-50 border-b-2 border-lime"
 		>
 			{/* Animated bars background */}
 			<div className="absolute inset-0 z-[1]">
@@ -65,8 +67,8 @@ const Navbar: React.FC = () => {
 			</div>
 
 			{/* Navigation links */}
-			<div className="relative z-20 flex justify-center">
-				<ul className="flex gap-3 sm:gap-6 md:gap-8 items-center">
+			<div className="relative z-20 flex justify-between items-center max-w-6xl mx-auto px-4">
+				<ul className="flex gap-3 sm:gap-6 md:gap-8 items-center mx-auto">
 					<li>
 						<a
 							href="#hero"
@@ -77,7 +79,7 @@ const Navbar: React.FC = () => {
 						</a>
 					</li>
 
-					{NAV_LINKS.slice(1).map(({ href, label }) => (
+					{NAV_LINKS.slice(1).map(({ href, key }) => (
 						<li key={href}>
 							<motion.a
 								href={href}
@@ -87,11 +89,12 @@ const Navbar: React.FC = () => {
 								whileHover="hover"
 								className="inline-block cursor-pointer focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2 rounded px-1 py-1 sm:px-2 text-xs sm:text-base"
 							>
-								{label}
+								{t(`navigation.${key}`)}
 							</motion.a>
 						</li>
 					))}
 				</ul>
+				
 			</div>
 		</nav>
 	);

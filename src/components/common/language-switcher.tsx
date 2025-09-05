@@ -49,8 +49,8 @@ const LanguageSwitcher: React.FC = () => {
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
             transition={{ duration: 0.15 }}
             className={`
-              absolute top-full right-0 mt-1 py-1 w-32
-              bg-beige/95 border border-violet/30 rounded-md shadow-2xl z-[99999]
+              fixed top-16 right-4 py-1 w-32
+              bg-beige/95 border border-violet/30 rounded-md shadow-2xl z-[999999]
               backdrop-blur-md
             `}
             role="listbox"
@@ -96,7 +96,7 @@ const LanguageSwitcher: React.FC = () => {
       {/* Click outside to close */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-[99998]"
+          className="fixed inset-0 z-[999998] bg-black/10 backdrop-blur-[1px]"
           onClick={() => setIsOpen(false)}
           aria-hidden="true"
         />

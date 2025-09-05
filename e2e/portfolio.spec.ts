@@ -52,15 +52,15 @@ test.describe('Portfolio - Core functionality', () => {
     const firstProject = projectCards.first();
     await expect(firstProject.locator('img')).toBeVisible();
     await expect(firstProject.locator('h3')).toBeVisible();
-    await expect(firstProject.locator('text=MORE DETAILS')).toBeVisible();
+    await expect(firstProject.locator('text=Plus de détails')).toBeVisible();
   });
 
   test('should navigate to project detail page', async ({ page }) => {
-    // Navigate to projects and click first "MORE DETAILS"
+    // Navigate to projects and click first "Plus de détails"
     await page.click('a[href="#projects"]');
     await page.waitForTimeout(1000);
     
-    const detailLink = page.locator('text=MORE DETAILS').first();
+    const detailLink = page.locator('text=Plus de détails').first();
     await detailLink.click();
     
     // Should navigate to project detail page

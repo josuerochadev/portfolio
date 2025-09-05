@@ -13,7 +13,9 @@ interface MockMotionProps {
 vi.mock('framer-motion', () => ({
   motion: {
     a: ({ children, ...props }: MockMotionProps) => <a {...props}>{children}</a>,
+    div: ({ children, ...props }: MockMotionProps) => <div {...props}>{children}</div>,
   },
+  AnimatePresence: ({ children }: MockMotionProps) => <>{children}</>,
 }));
 
 // Mock SVG
@@ -24,6 +26,51 @@ vi.mock('@/assets/images/ui/smile.svg?react', () => ({
 // Mock motion variants
 vi.mock('@/utils/motion-variants', () => ({
   navLinkHover: {},
+}));
+
+// Mock i18next dependencies
+vi.mock('i18next', () => ({
+  default: {
+    use: vi.fn(() => ({ use: vi.fn(() => ({ init: vi.fn() })) })),
+  },
+}));
+
+vi.mock('i18next-browser-languagedetector', () => ({
+  default: vi.fn(),
+}));
+
+// Mock the i18n configuration
+vi.mock('@/i18n', () => ({
+  default: {},
+  SUPPORTED_LANGUAGES: [
+    { code: 'fr', name: 'Français', flag: '🇫🇷' },
+    { code: 'en', name: 'English', flag: '🇺🇸' },
+    { code: 'pt', name: 'Português', flag: '🇧🇷' }
+  ],
+}));
+
+// Mock react-i18next
+vi.mock('react-i18next', () => ({
+  useTranslation: () => ({
+    t: (key: string) => {
+      // Return simple translations for testing
+      const translations: Record<string, string> = {
+        'navigation.home': 'Home',
+        'navigation.work': 'Work',  
+        'navigation.about': 'About',
+        'navigation.contact': 'Contact',
+      };
+      return translations[key] || key;
+    },
+    i18n: {
+      language: 'fr',
+      changeLanguage: vi.fn(),
+    },
+  }),
+  initReactI18next: {
+    type: '3rdParty',
+    init: vi.fn(),
+  },
 }));
 
 const renderNavbar = () => {

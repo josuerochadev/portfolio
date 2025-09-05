@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import { FaArrowLeft } from "react-icons/fa";
 import FadeInUp from "@/components/common/animations/fade-in-up";
 import BackgroundGradient from "@/components/layout/background-gradient";
 
@@ -21,10 +22,13 @@ export default function PrivacyPolicy() {
 					<FadeInUp delay={0.2}>
 						<Link 
 							to="/" 
-							className="inline-flex items-center text-orange hover:text-violet mb-8 transition-colors focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2 rounded px-2 py-1"
+							className="mb-8 px-4 py-2 rounded-full bg-orange/10 text-orange border border-orange/20 
+							hover:bg-orange hover:text-beige transition-all duration-300 
+							inline-flex items-center gap-2 font-medium text-sm
+							hover:shadow-md hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2"
 							aria-label={t('common:buttons.backToHome')}
 						>
-							{t('common:buttons.backToHome')}
+							<FaArrowLeft className="inline-block" /> {t('common:buttons.backToHome')}
 						</Link>
 					</FadeInUp>
 

@@ -1,32 +1,26 @@
 import type React from "react";
-import { FaFileAlt, FaGithub, FaLinkedin } from "react-icons/fa";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
 import FadeInUp from "@/components/common/animations/fade-in-up";
 import { ANIMATION } from "@/constants";
 
 const ACTION_LINKS = [
 	{
-		href: "/Josue_Rocha_CV_Dev2025.pdf",
-		icon: <FaFileAlt className="inline-block mr-2" />,
-		label: "RESUME",
-		delay: ANIMATION.DELAYS.LONG,
-	},
-	{
 		href: "https://github.com/josuerochadev",
 		icon: <FaGithub className="inline-block mr-2" />,
 		label: "GITHUB",
-		delay: ANIMATION.DELAYS.LONG + ANIMATION.DELAYS.VERY_SHORT,
+		delay: ANIMATION.DELAYS.LONG,
 	},
 	{
 		href: "https://www.linkedin.com/in/josuerochadev/",
 		icon: <FaLinkedin className="inline-block mr-2" />,
 		label: "LINKEDIN",
-		delay: ANIMATION.DELAYS.LONG + ANIMATION.DELAYS.VERY_SHORT * 2,
+		delay: ANIMATION.DELAYS.LONG + ANIMATION.DELAYS.VERY_SHORT,
 	},
 ];
 
 const HeroActionButtons: React.FC = () => {
 	return (
-		<div className="flex gap-4 flex-wrap justify-center pt-2">
+		<div className="flex gap-4 flex-wrap justify-center pt-8">
 			{ACTION_LINKS.map(({ href, icon, label, delay }) => (
 				<FadeInUp key={label} delay={delay}>
 					<a

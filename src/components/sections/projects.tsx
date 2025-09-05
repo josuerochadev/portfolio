@@ -49,7 +49,13 @@ i}`}
 
 				<div className="flex flex-col gap-20">
 					{PROJECTS.map((project, index) => {
-						const projectTranslations = t(`items.${project.id}`, { returnObjects: true }) as any;
+						type ProjectTranslation = {
+							title?: string;
+							description?: string;
+							deliverables?: string;
+							context?: string;
+						};
+						const projectTranslations = t(`items.${project.id}`, { returnObjects: true }) as ProjectTranslation;
 						return (
 						<FadeInUpOnScroll key={project.title} delay={0.3 + index * 0.15}>
 							<article
@@ -83,7 +89,10 @@ i}`}
 									<p className="text-base">{projectTranslations?.context || project.context}</p>
 									<Link
 										to={`/projet/${project.id}`}
-										className="button mt-4 inline-flex justify-center items-center gap-2 self-start"
+										className="mt-6 px-4 py-2 rounded-full bg-orange/10 text-orange border border-orange/20 
+										hover:bg-orange hover:text-beige transition-all duration-300 
+										inline-flex items-center gap-2 self-start font-medium text-sm
+										hover:shadow-md hover:scale-105 active:scale-95"
 										aria-label={`${t('labels.seeMore')} ${projectTranslations?.title || project.title}`}
 									>
 										<FaEye className="inline-block" /> {t('labels.moreDetails')}

@@ -12,10 +12,10 @@ body {
 
 /* === BUTTONS === */
 .button {
-  @apply border-2 border-violet text-violet px-6 py-2 rounded-full font-bold inline-flex items-center transition-all duration-300;
-}
-.button:hover {
-  @apply bg-lime text-orange;
+  @apply px-8 py-3 rounded-full font-bold inline-flex items-center transition-all duration-300;
+  @apply bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5;
+  @apply backdrop-blur-md border border-lime/30 text-violet;
+  @apply hover:bg-lime hover:text-orange font-sans uppercase tracking-wider text-sm;
 }
 .button:active {
   transform: scale(0.95);

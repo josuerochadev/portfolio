@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { SUPPORTED_LANGUAGES, type SupportedLanguage } from "@/i18n";
 import { COLORS, TRANSITIONS } from "@/constants";
 
-const LanguageSwitcher: React.FC = () => {
+const FloatingLanguageSwitcher: React.FC = () => {
   const { i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   
@@ -17,25 +17,28 @@ const LanguageSwitcher: React.FC = () => {
   };
 
   return (
-    <div className="relative">
-      {/* Current Language Button */}
+    <>
+      {/* Floating Language Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={`
-          flex items-center gap-2 px-2 py-1 rounded-md
-          bg-violet/10 hover:bg-violet/20 border border-violet/30
-          ${COLORS.VIOLET.TEXT} font-sans font-bold text-xs uppercase tracking-wider
-          ${TRANSITIONS.DEFAULT} backdrop-blur-sm
+          fixed top-4 right-4 sm:top-6 sm:right-6 z-[99999]
+          flex items-center gap-2 px-2 py-1 sm:px-3 sm:py-2 rounded-full
+          bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5
+          backdrop-blur-md border border-lime/30 text-violet
+          hover:bg-lime hover:text-orange font-sans font-bold text-xs sm:text-sm uppercase tracking-wider
+          ${TRANSITIONS.DEFAULT} shadow-lg hover:shadow-xl
+          active:scale-95 transition-transform duration-150
           focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2
         `}
         aria-label={`Current language: ${currentLanguage.name}. Click to change language`}
         aria-expanded={isOpen}
         aria-haspopup="listbox"
       >
-        <span className="text-sm" role="img" aria-hidden="true">
+        <span className="text-sm sm:text-lg" role="img" aria-hidden="true">
           {currentLanguage.flag}
         </span>
-        <span className="font-sans uppercase tracking-widest text-xs">
+        <span className="font-sans uppercase tracking-widest text-xs sm:text-sm font-bold">
           {currentLanguage.code}
         </span>
       </button>
@@ -47,11 +50,12 @@ const LanguageSwitcher: React.FC = () => {
             initial={{ opacity: 0, y: -10, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
-            transition={{ duration: 0.15 }}
+            transition={{ duration: 0.15, ease: "easeOut" }}
             className={`
-              fixed top-16 right-4 py-1 w-32
-              bg-beige/95 border border-violet/30 rounded-md shadow-2xl z-[999999]
-              backdrop-blur-md
+              fixed top-16 right-4 sm:top-20 sm:right-6 z-[99998]
+              w-32 sm:w-36 rounded-2xl shadow-2xl
+              bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5
+              backdrop-blur-md border border-lime/30
             `}
             role="listbox"
             aria-label="Language options"
@@ -64,25 +68,31 @@ const LanguageSwitcher: React.FC = () => {
                   key={language.code}
                   onClick={() => handleLanguageChange(language.code)}
                   className={`
-                    w-full px-3 py-2 text-left flex items-center gap-2
-                    ${COLORS.VIOLET.TEXT} hover:bg-violet/10 ${TRANSITIONS.DEFAULT}
-                    ${isSelected ? 'bg-orange/20 font-bold' : 'font-medium'}
-                    focus:outline-none focus:bg-orange/30 text-xs
+                    w-full px-3 py-3 sm:px-4 text-left flex items-center gap-2 sm:gap-3
+                    text-violet hover:bg-lime hover:text-orange ${TRANSITIONS.DEFAULT}
+                    ${isSelected ? 'bg-orange/10 font-bold' : 'font-medium'}
+                    focus:outline-none focus:bg-orange/20 text-xs sm:text-sm
+                    first:rounded-t-xl last:rounded-b-xl active:scale-95 transition-transform duration-150
                   `}
                   role="option"
                   aria-selected={isSelected}
                 >
-                  <span className="text-sm" role="img" aria-hidden="true">
+                  <span className="text-sm sm:text-lg" role="img" aria-hidden="true">
                     {language.flag}
                   </span>
-                  <span className="font-sans uppercase tracking-widest font-bold">
-                    {language.code}
-                  </span>
+                  <div className="flex-1">
+                    <div className="font-sans uppercase tracking-widest font-bold text-xs sm:text-sm">
+                      {language.code}
+                    </div>
+                    <div className="text-xs opacity-70 font-normal hidden sm:block">
+                      {language.name}
+                    </div>
+                  </div>
                   {isSelected && (
                     <motion.div
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
-                      className={`ml-auto w-1.5 h-1.5 rounded-full bg-orange`}
+                      className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-orange"
                       aria-hidden="true"
                     />
                   )}
@@ -96,13 +106,13 @@ const LanguageSwitcher: React.FC = () => {
       {/* Click outside to close */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-[999998] bg-black/10 backdrop-blur-[1px]"
+          className="fixed inset-0 z-[99997]"
           onClick={() => setIsOpen(false)}
           aria-hidden="true"
         />
       )}
-    </div>
+    </>
   );
 };
 
-export default LanguageSwitcher;
+export default FloatingLanguageSwitcher;

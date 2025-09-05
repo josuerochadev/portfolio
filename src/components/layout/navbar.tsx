@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { navLinkHover } from "@/utils/motion-variants";
 import SmileIcon from "@/assets/images/ui/smile.svg?react";
-import LanguageSwitcher from "@/components/common/language-switcher";
 
 // Navigation links
 const NAV_LINKS = [
@@ -96,10 +95,6 @@ const Navbar: React.FC = () => {
 					))}
 				</ul>
 				
-				{/* Language Switcher */}
-				<div className="absolute right-4">
-					<LanguageSwitcher />
-				</div>
 			</div>
 		</nav>
 	);

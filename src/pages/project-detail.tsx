@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { FaArrowLeft, FaGithub, FaExternalLinkAlt, FaCalendar, FaCog } from "react-icons/fa";
@@ -37,6 +37,7 @@ const getStatusLabel = (status: Project['status'], t: any) => {
 export default function ProjectDetail() {
 	const { t } = useTranslation(['projects', 'common']);
 	const { projectId } = useParams<{ projectId: string }>();
+	const navigate = useNavigate();
 	const project = PROJECTS.find(p => p.id === projectId);
 
 	if (!project) {
@@ -63,14 +64,18 @@ export default function ProjectDetail() {
 						transition={{ duration: 0.6 }}
 					>
 					<FadeInUp delay={0.2}>
-						<Link 
-							to="/#projects" 
-							className="inline-flex items-center text-orange hover:text-violet mb-8 transition-colors focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2 rounded px-2 py-1"
+						<button
+							onClick={() => navigate(-1)}
+							className="mb-8 px-4 py-2 rounded-full bg-orange/10 text-orange border border-orange/20 
+							hover:bg-orange hover:text-beige transition-all duration-300 
+							inline-flex items-center gap-2 font-medium text-sm
+							hover:shadow-md hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2"
 							aria-label={t('projects:actions.backToProjects')}
+							type="button"
 						>
-							<FaArrowLeft className="mr-2" aria-hidden="true" />
+							<FaArrowLeft className="inline-block" aria-hidden="true" />
 							{t('projects:actions.backToProjects')}
-						</Link>
+						</button>
 					</FadeInUp>
 
 					<div className="grid lg:grid-cols-2 gap-12 items-start">

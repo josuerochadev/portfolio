@@ -1,26 +1,14 @@
+import { useTranslation } from "react-i18next";
 import FadeInUpOnScroll from "@/components/common/animations/fade-in-up-on-scroll";
 import LetterRippleEffect from "@/components/effects/letter-ripple";
 import ProfileBackground from "@/components/effects/profile-background";
 import PhotoFrame from "@/components/layout/photo-frame";
 
-const ADJECTIVES = ["creative", "curious", "empathetic", "resilient", "bold"];
-
-const SECTIONS = [
-	{
-		title: "approach",
-		text: "My work is guided by thoughtful planning, clean and reusable code, and a collaborative spirit. I believe that design and development walk hand in hand.",
-	},
-	{
-		title: "background",
-		text: "I started my career as a lawyer in Brazil, then moved to France, where I transitioned into tech. My experience taught me analytical thinking, empathy, and adaptability.",
-	},
-	{
-		title: "beyond code",
-		text: "Outside of development, I love cinema, running, dogs, and cooking. These hobbies keep me balanced and continuously inspired.",
-	},
-];
-
 export default function Bio() {
+	const { t } = useTranslation('bio');
+	
+	const adjectives = Object.values(t('adjectives', { returnObjects: true })) as string[];
+	const sections = t('sections', { returnObjects: true }) as Record<string, { title: string; text: string }>;
 	return (
 		<section
 			id="bio"
@@ -32,7 +20,7 @@ export default function Bio() {
 			<div className="max-w-6xl mx-auto flex flex-col items-start">
 					<FadeInUpOnScroll delay={0.2}>
 					<h2 className="relative w-full px-4 text-[clamp(2rem,7vw,6rem)] leading-[1.1] font-display font-extrabold text-violet text-left flex flex-wrap gap-x-2">
-						{"And more about me".split(" ").map((word) => (
+						{t('heading').split(" ").map((word) => (
 							<LetterRippleEffect key={word} text={`${word} `} />
 						))}
 					</h2>
@@ -40,7 +28,7 @@ export default function Bio() {
 
 					<div className="w-full px-4 mt-6 mb-12">
 					<div className="max-w-6xl mx-auto flex flex-wrap gap-x-6 gap-y-2">
-						{ADJECTIVES.map((word, i) => (
+						{adjectives.map((word, i) => (
 							<FadeInUpOnScroll key={word} delay={0.6 + i * 0.1}>
 								<span className="text-lg md:text-xl font-bold">{word}</span>
 							</FadeInUpOnScroll>
@@ -49,8 +37,8 @@ export default function Bio() {
 				</div>
 
 					<div className="w-full px-4 max-w-4xl flex flex-col gap-12 text-left">
-					{SECTIONS.map((section, i) => (
-						<FadeInUpOnScroll key={section.title} delay={1 + i * 0.2}>
+					{Object.entries(sections).map(([key, section], i) => (
+						<FadeInUpOnScroll key={key} delay={1 + i * 0.2}>
 							<div>
 								<h3 className="text-2xl font-serif font-bold text-violet mb-2 capitalize">
 									{section.title}

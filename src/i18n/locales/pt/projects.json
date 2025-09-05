@@ -1,0 +1,39 @@
+{
+  "heading": "Aqui está uma visão do meu trabalho — uma amostra do que posso trazer",
+  "contact": {
+    "heading": "Vamos trabalhar juntos! Ou apenas conversar",
+    "handAlt": "Ilustração de mão"
+  },
+  "labels": {
+    "deliverables": "Entregas",
+    "context": "Contexto",
+    "description": "Descrição",
+    "technologies": "Tecnologias",
+    "moreDetails": "Mais detalhes",
+    "seeMore": "Ver mais detalhes sobre"
+  },
+  "status": {
+    "completed": "Concluído",
+    "inProgress": "Em andamento",
+    "concept": "Conceito"
+  },
+  "actions": {
+    "backToProjects": "Voltar aos projetos",
+    "codePrivate": "Código (Privado)",
+    "demoSoon": "Demo (Em breve)",
+    "codeNotAvailable": "Código fonte não disponível - Projeto privado",
+    "demoNotAvailable": "Demo não disponível - Em breve"
+  },
+  "errors": {
+    "notFound": "Projeto não encontrado",
+    "backToHome": "← Voltar ao início"
+  },
+  "items": {
+    "lunetterie-du-coin": {
+      "title": "La Lunetterie du Coin",
+      "description": "Aplicação web personalizada para facilitar o agendamento de consultas para um ótico local.",
+      "deliverables": "Arquitetura full stack, backend Node/Express, frontend React, lembretes automatizados",
+      "context": "Projeto cliente desenvolvido para um ótico independente. Atualmente em fase final (v1)."
+    }
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "privacy": {
+    "title": "Política de Privacidade",
+    "intro": "Esta política de privacidade explica como coletamos, usamos e protegemos suas informações pessoais quando você visita nosso site.",
+    "sections": {
+      "dataCollection": {
+        "title": "Coleta de Dados",
+        "content": [
+          "Coletamos dados de navegação anonimizados via Vercel Analytics para melhorar a experiência do usuário.",
+          "Nenhum dado pessoal identificável é coletado sem seu consentimento explícito.",
+          "Dados de contato são coletados apenas se você nos contatar diretamente."
+        ]
+      },
+      "dataUsage": {
+        "title": "Uso dos Dados",
+        "content": [
+          "Dados analíticos são usados para otimizar o desempenho do site.",
+          "Informações de contato são usadas exclusivamente para responder às suas solicitações.",
+          "Não vendemos nem compartilhamos seus dados com terceiros."
+        ]
+      },
+      "cookies": {
+        "title": "Cookies e Tecnologias Similares",
+        "content": [
+          "Este site usa cookies técnicos necessários para o funcionamento.",
+          "Vercel Analytics pode usar cookies de desempenho anonimizados.",
+          "Você pode desabilitar cookies nas configurações do seu navegador."
+        ]
+      },
+      "dataSharing": {
+        "title": "Compartilhamento de Dados",
+        "content": [
+          "Seus dados nunca são vendidos a terceiros.",
+          "Apenas nossos provedores técnicos (Vercel) podem acessar dados anonimizados.",
+          "Toda transmissão respeita os padrões de segurança HTTPS."
+        ]
+      },
+      "gdprRights": {
+        "title": "Seus Direitos (GDPR)",
+        "content": [
+          "Direito de acesso: você pode perguntar quais dados temos sobre você.",
+          "Direito de retificação: correção de dados imprecisos.",
+          "Direito ao apagamento: exclusão de seus dados pessoais.",
+          "Direito à portabilidade: recuperação de seus dados em formato estruturado.",
+          "Entre em contato conosco em josuerochadev@gmail.com para exercer estes direitos."
+        ]
+      },
+      "dataSecurity": {
+        "title": "Segurança dos Dados",
+        "content": [
+          "Todas as comunicações são criptografadas via HTTPS/TLS.",
+          "Os servidores são protegidos pela Vercel com padrões empresariais.",
+          "Nenhum dado sensível é armazenado localmente em seu dispositivo."
+        ]
+      },
+      "dataRetention": {
+        "title": "Retenção de Dados",
+        "content": [
+          "Dados analíticos anonimizados são mantidos por no máximo 24 meses.",
+          "E-mails de contato são arquivados por 3 anos e depois automaticamente excluídos.",
+          "Você pode solicitar exclusão imediata a qualquer momento."
+        ]
+      },
+      "contact": {
+        "title": "Contato",
+        "content": [
+          "Para qualquer dúvida sobre esta política: josuerochadev@gmail.com",
+          "Oficial de Proteção de Dados: Josué Xavier Rocha",
+          "Última atualização: [data]"
+        ]
+      }
+    }
+  },
+  "legalNotice": {
+    "title": "Aviso Legal",
+    "publisher": {
+      "title": "Editor",
+      "name": "Josué Xavier Rocha",
+      "status": "Desenvolvedor web independente",
+      "email": "josuerochadev@gmail.com"
+    },
+    "hosting": {
+      "title": "Hospedagem",
+      "provider": "Vercel Inc.",
+      "address": "440 N Baywood Dr, San Jose, CA 95128, Estados Unidos",
+      "website": "https://vercel.com"
+    },
+    "intellectual": {
+      "title": "Propriedade Intelectual",
+      "content": [
+        "Este site e seu conteúdo são protegidos por direitos autorais.",
+        "Qualquer reprodução sem autorização é proibida.",
+        "Logotipos e marcas mencionados pertencem aos seus respectivos proprietários."
+      ]
+    },
+    "liability": {
+      "title": "Responsabilidade",
+      "content": [
+        "As informações são fornecidas apenas para fins informativos.",
+        "Nos esforçamos para manter a precisão das informações.",
+        "Nossa responsabilidade não pode ser comprometida em caso de erro ou omissão."
+      ]
+    }
+  }
+}

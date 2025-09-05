@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { useScroll, useTransform, motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 import { PROJECTS } from "@/data/projects";
 
 import FadeInUpOnScroll from "@/components/common/animations/fade-in-up-on-scroll";
@@ -10,6 +11,7 @@ import ResponsiveImage from "@/components/common/responsive-image";
 import SunIcon from "@/assets/images/ui/sun.svg?react";
 
 export default function Projects() {
+	const { t } = useTranslation('projects');
 	const sectionRef = useRef(null);
 
 	const { scrollYProgress } = useScroll({ target: sectionRef });
@@ -32,7 +34,7 @@ export default function Projects() {
 			<div className="max-w-6xl mx-auto flex flex-col gap-20 relative z-10">
 				<FadeInUpOnScroll delay={0.2}>
 					<h2 className="relative max-w-6xl mx-auto px-4 text-[clamp(2rem,7vw,7rem)] leading-[1.1] font-display font-extrabold text-violet text-center flex flex-wrap justify-left gap-x-2">
-						{"Here’s a glimpse into my work — a taste of what I can bring"
+						{t('heading')
 							.split(" ")
 							.map((word, i) => (
 								<LetterRippleEffect
@@ -46,7 +48,9 @@ i}`}
 
 
 				<div className="flex flex-col gap-20">
-					{PROJECTS.map((project, index) => (
+					{PROJECTS.map((project, index) => {
+						const projectTranslations = t(`items.${project.id}`, { returnObjects: true }) as any;
+						return (
 						<FadeInUpOnScroll key={project.title} delay={0.3 + index * 0.15}>
 							<article
 								className="w-full flex flex-col lg:flex-row gap-6 items-start
@@ -69,25 +73,26 @@ i}`}
 											{index + 1}.
 										</span>
 										<h3 className="text-3xl font-extrabold font-display leading-snug">
-											{project.title}
+											{projectTranslations?.title || project.title}
 										</h3>
 									</div>
-									<p className="text-lg leading-snug">{project.description}</p>
-									<p className="text-xl font-bold mt-2">Deliverables</p>
-									<p className="text-base mb-1">{project.deliverables}</p>
-									<p className="text-xl font-bold">Context</p>
-									<p className="text-base">{project.context}</p>
+									<p className="text-lg leading-snug">{projectTranslations?.description || project.description}</p>
+									<p className="text-xl font-bold mt-2">{t('labels.deliverables')}</p>
+									<p className="text-base mb-1">{projectTranslations?.deliverables || project.deliverables}</p>
+									<p className="text-xl font-bold">{t('labels.context')}</p>
+									<p className="text-base">{projectTranslations?.context || project.context}</p>
 									<Link
 										to={`/projet/${project.id}`}
 										className="button mt-4 inline-flex justify-center items-center gap-2 self-start"
-										aria-label={`See more details about ${project.title}`}
+										aria-label={`${t('labels.seeMore')} ${projectTranslations?.title || project.title}`}
 									>
-										<FaEye className="inline-block" /> MORE DETAILS
+										<FaEye className="inline-block" /> {t('labels.moreDetails')}
 									</Link>
 								</div>
 							</article>
 						</FadeInUpOnScroll>
-					))}
+					);
+					})}
 				</div>
 			</div>
 		</section>

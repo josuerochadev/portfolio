@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import SmileIcon from "@/assets/images/ui/smile.svg?react";
 
 export default function ScrollToTop() {
+	const { t } = useTranslation('common');
 	const [visible, setVisible] = useState(false);
 
 	useEffect(() => {
@@ -21,7 +23,7 @@ export default function ScrollToTop() {
 		<button
 			type="button"
 			onClick={scrollToTop}
-			aria-label="Back to top"
+			aria-label={t('buttons.backToTop')}
 			style={{ willChange: "transform, opacity" }}
 			className={`fixed bottom-6 right-6 z-[9999] flex items-center gap-2
         px-4 py-2 sm:px-6 sm:py-3
@@ -33,7 +35,7 @@ export default function ScrollToTop() {
         ${visible ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
 		>
 			<SmileIcon className="w-6 h-6 sm:w-10 sm:h-10" />
-			<span className="text-sm sm:text-lg font-bold">BACK TO TOP</span>
+			<span className="text-sm sm:text-lg font-bold">{t('buttons.backToTop').toUpperCase()}</span>
 		</button>
 	);
 }

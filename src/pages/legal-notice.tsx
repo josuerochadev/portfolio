@@ -20,7 +20,7 @@ export default function LegalNotice() {
 					<FadeInUp delay={0.2}>
 						<Link 
 							to="/" 
-							className="mb-8 px-4 py-2 rounded-full bg-orange/10 text-orange border border-orange/20 
+							className="mb-8 px-4 py-2 rounded-full bg-orange/10 text-orange-dark border border-orange/20
 							hover:bg-orange hover:text-beige transition-all duration-300 
 							inline-flex items-center gap-2 font-medium text-sm
 							hover:shadow-md hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2"
@@ -55,7 +55,7 @@ export default function LegalNotice() {
 								<p>
 									<strong>{t('legalNotice.hosting.provider')}</strong><br />
 									{t('legalNotice.hosting.address')}<br />
-									<a href={t('legalNotice.hosting.website')} className="text-orange hover:underline" target="_blank" rel="noopener noreferrer">
+									<a href={t('legalNotice.hosting.website')} className="text-orange-dark hover:underline" target="_blank" rel="noopener noreferrer">
 										{t('legalNotice.hosting.website')}
 									</a>
 								</p>

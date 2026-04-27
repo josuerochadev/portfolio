@@ -75,7 +75,7 @@ i}`}
 								</div>
 								<div className="w-full lg:w-1/2 flex flex-col gap-2">
 									<div className="flex items-end gap-4 mb-2">
-										<span className="text-6xl font-display font-extralight text-orange leading-none">
+										<span className="text-6xl font-display font-extralight text-orange-dark leading-none">
 											{index + 1}.
 										</span>
 										<h3 className="text-3xl font-extrabold font-display leading-snug">
@@ -89,7 +89,7 @@ i}`}
 									<p className="text-base">{projectTranslations?.context || project.context}</p>
 									<Link
 										to={`/projet/${project.id}`}
-										className="mt-6 px-4 py-2 rounded-full bg-orange/10 text-orange border border-orange/20 
+										className="mt-6 px-4 py-2 rounded-full bg-orange/10 text-orange-dark border border-orange/20
 										hover:bg-orange hover:text-beige transition-all duration-300 
 										inline-flex items-center gap-2 self-start font-medium text-sm
 										hover:shadow-md hover:scale-105 active:scale-95"

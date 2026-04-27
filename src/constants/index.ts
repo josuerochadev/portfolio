@@ -35,7 +35,7 @@ export const COLORS = {
 	},
 	ORANGE: {
 		BG: "bg-orange", 
-		TEXT: "text-orange",
+		TEXT: "text-orange-dark",
 		BORDER: "border-orange",
 		HOVER_TEXT: "hover:text-orange",
 	},

@@ -7,6 +7,7 @@ import FadeInUp from "@/components/common/animations/fade-in-up";
 import BackgroundGradient from "@/components/layout/background-gradient";
 import ErrorBoundary from "@/components/common/error-boundary";
 import ResponsiveImage from "@/components/common/responsive-image";
+import SeoHead from "@/components/common/seo-head";
 
 const getStatusColor = (status: Project['status']) => {
 	switch (status) {
@@ -45,7 +46,7 @@ export default function ProjectDetail() {
 			<div className="min-h-screen flex items-center justify-center text-violet">
 				<div className="text-center">
 					<h1 className="text-4xl font-bold mb-4">{t('projects:errors.notFound')}</h1>
-					<Link to="/" className="text-orange hover:text-violet underline">
+					<Link to="/" className="text-orange-dark hover:text-violet underline">
 						{t('projects:errors.backToHome')}
 					</Link>
 				</div>
@@ -53,8 +54,17 @@ export default function ProjectDetail() {
 		);
 	}
 
+	const projectTitle = t(`projects:items.${project.id}.title`, { defaultValue: project.title });
+	const projectDescription = t(`projects:items.${project.id}.description`, { defaultValue: project.description });
+
 	return (
 		<ErrorBoundary>
+			<SeoHead
+				title={`${projectTitle} — Josué Rocha`}
+				description={projectDescription}
+				ogImage={`https://josuerocha.dev${project.image.desktop}`}
+				canonical={`https://josuerocha.dev/projet/${project.id}`}
+			/>
 			<div className="min-h-screen text-violet">
 				<BackgroundGradient />
 				<main className="relative z-10 max-w-6xl mx-auto px-6 py-20" role="main">
@@ -66,7 +76,7 @@ export default function ProjectDetail() {
 					<FadeInUp delay={0.2}>
 						<button
 							onClick={() => navigate(-1)}
-							className="mb-8 px-4 py-2 rounded-full bg-orange/10 text-orange border border-orange/20 
+							className="mb-8 px-4 py-2 rounded-full bg-orange/10 text-orange-dark border border-orange/20
 							hover:bg-orange hover:text-beige transition-all duration-300 
 							inline-flex items-center gap-2 font-medium text-sm
 							hover:shadow-md hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2"

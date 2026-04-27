@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 export default function PhotoFrame() {
 	const triggerRef = useRef(null);
@@ -12,6 +13,7 @@ export default function PhotoFrame() {
 	const [isDragged, setIsDragged] = useState(false);
 	const [isClosed, setIsClosed] = useState(false);
 	const [isDragging, setIsDragging] = useState(false);
+	const { t } = useTranslation('common');
 
 	// Parallax inverso só se não for drag
 	const { scrollYProgress } = useScroll({ target: triggerRef });
@@ -51,7 +53,7 @@ export default function PhotoFrame() {
 					onClick={() => setIsClosed(true)}
 					aria-label="Close photo"
 					title="Close photo"
-					className="absolute top-[-10px] right-[-10px] bg-beige border border-violet text-orange rounded-full w-7 h-7 text-sm font-bold shadow-md z-10"
+					className="absolute top-[-10px] right-[-10px] bg-beige border border-violet text-orange-dark rounded-full w-7 h-7 text-sm font-bold shadow-md z-10"
 				>
 					×
 				</button>
@@ -67,7 +69,7 @@ export default function PhotoFrame() {
 						// Video fallback handled by fallback text inside video tag
 					}}
 					>
-						Votre navigateur ne supporte pas les vidéos.
+						{t('videoNotSupported')}
 					</video>
 			</motion.div>
 		</div>

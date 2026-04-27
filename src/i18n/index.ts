@@ -62,7 +62,7 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    fallbackLng: 'fr', // Default language: French
+    fallbackLng: 'en', // Default fallback: English
     lng: 'fr', // Initial language
     
     // Detection options

@@ -8,6 +8,7 @@ const config: Config = {
 			beige: '#F5F0E8',
 			lime: '#B5FF00',
 			orange: '#FF7A00',
+			'orange-dark': '#C56200',
 			violet: '#6900FF',
 			'violet-dark': '#5500CC', // Better contrast for text on light backgrounds
 		  },

@@ -21,10 +21,15 @@ body {
   transform: scale(0.95);
   transition: transform 0.15s ease;
 }
+.button:disabled,
+.button[aria-disabled="true"] {
+  @apply opacity-50 cursor-not-allowed;
+  pointer-events: none;
+}
 
 /* === FOCUS VISUAL === */
 :focus-visible {
-  outline: 2px solid #FF7A00; /* Orange */
+  outline: 2px solid #C56200;
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -32,7 +37,7 @@ body {
 /* Focus states for interactive elements */
 a:focus-visible,
 button:focus-visible {
-  outline: 2px solid #FF7A00;
+  outline: 2px solid #C56200;
   outline-offset: 2px;
   border-radius: 4px;
 }

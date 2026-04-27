@@ -30,6 +30,7 @@
     "somethingWrongDesc": "Nous sommes désolés, mais quelque chose d'inattendu s'est produit. Veuillez essayer de rafraîchir la page.",
     "refreshPage": "Actualiser la page"
   },
+  "videoNotSupported": "Votre navigateur ne supporte pas les vidéos.",
   "accessibility": {
     "skipToMain": "Aller au contenu principal",
     "closePhoto": "Fermer la photo",

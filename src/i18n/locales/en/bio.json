@@ -1,24 +1,24 @@
 {
   "heading": "And more about me",
   "adjectives": {
-    "creative": "creative",
-    "curious": "curious", 
-    "empathetic": "empathetic",
+    "creative": "rigorous",
+    "curious": "curious",
+    "empathetic": "versatile",
     "resilient": "resilient",
-    "bold": "bold"
+    "bold": "trilingual"
   },
   "sections": {
     "approach": {
       "title": "approach",
-      "text": "My work is guided by thoughtful planning, clean and reusable code, and a collaborative spirit. I believe that design and development walk hand in hand."
+      "text": "I see every new programming language as an opportunity, not a barrier. From TypeScript to COBOL — every environment has its own logic, and I adapt. My work is driven by rigor, clean code, and a deep understanding of the business context."
     },
     "background": {
       "title": "background",
-      "text": "I started my career as a lawyer in Brazil, then moved to France, where I transitioned into tech. My experience taught me analytical thinking, empathy, and adaptability."
+      "text": "I practiced law in Brazil for five years, specializing in labor and business law. After moving to France, I pivoted into tech: intensive full stack training, a startup internship, then a mainframe specialization. Today I'm a COBOL consultant in Strasbourg, working on mission-critical systems in banking and insurance — while still building modern web projects on the side."
     },
     "beyondCode": {
       "title": "beyond code",
-      "text": "Outside of development, I love cinema, running, dogs, and cooking. These hobbies keep me balanced and continuously inspired."
+      "text": "Outside of development, I love cinema, running, dogs, and cooking. These passions keep me balanced and continuously inspired."
     }
   }
 }

@@ -1,24 +1,24 @@
 {
   "heading": "E mais sobre mim",
   "adjectives": {
-    "creative": "criativo",
-    "curious": "curioso", 
-    "empathetic": "empático",
+    "creative": "rigoroso",
+    "curious": "curioso",
+    "empathetic": "versátil",
     "resilient": "resiliente",
-    "bold": "ousado"
+    "bold": "trilíngue"
   },
   "sections": {
     "approach": {
       "title": "abordagem",
-      "text": "Meu trabalho é guiado por planejamento cuidadoso, código limpo e reutilizável, e um espírito colaborativo. Acredito que design e desenvolvimento caminham de mãos dadas."
+      "text": "Vejo cada nova linguagem de programação como uma oportunidade, não uma barreira. Do TypeScript ao COBOL — cada ambiente tem sua lógica, e eu me adapto. Meu trabalho é guiado pelo rigor, código limpo e a compreensão do contexto de negócio."
     },
     "background": {
-      "title": "background",
-      "text": "Comecei minha carreira como advogado no Brasil, depois me mudei para a França, onde fiz a transição para a tecnologia. Minha experiência me ensinou pensamento analítico, empatia e adaptabilidade."
+      "title": "trajetória",
+      "text": "Atuei como advogado no Brasil por cinco anos, na área trabalhista e empresarial. Após me mudar para a França, migrei para a tecnologia: formação intensiva em desenvolvimento full stack, estágio em startup, depois especialização em mainframe. Hoje sou consultor COBOL em Estrasburgo, trabalhando em sistemas de missão crítica no setor bancário e de seguros — enquanto continuo criando projetos web modernos em paralelo."
     },
     "beyondCode": {
       "title": "além do código",
-      "text": "Fora do desenvolvimento, eu amo cinema, corrida, cachorros e cozinha. Estes hobbies me mantêm equilibrado e continuamente inspirado."
+      "text": "Fora do desenvolvimento, amo cinema, corrida, cachorros e cozinha. Essas paixões me mantêm equilibrado e continuamente inspirado."
     }
   }
 }

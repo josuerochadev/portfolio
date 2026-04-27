@@ -34,6 +34,30 @@
       "description": "Aplicação web personalizada para facilitar o agendamento de consultas para um ótico local.",
       "deliverables": "Arquitetura full stack, backend Node/Express, frontend React, lembretes automatizados",
       "context": "Projeto cliente desenvolvido para um ótico independente. Atualmente em fase final (v1)."
+    },
+    "site-vitrine-avocate": {
+      "title": "Site vitrine para uma advogada",
+      "description": "Plataforma multilíngue minimalista para aumentar a presença digital e facilitar o contato com clientes.",
+      "deliverables": "Wireframes, integração Tailwind, formulários seguros, design responsivo mobile-first",
+      "context": "Fase conceitual de um projeto freelance para uma profissional do direito focada em visibilidade local e conformidade com RGPD."
+    },
+    "site-vitrine-poete": {
+      "title": "Site vitrine para um poeta",
+      "description": "Portfólio artístico elegante para apresentar obras e biografia de um poeta contemporâneo.",
+      "deliverables": "Design poético, galeria interativa, blog integrado, otimização SEO",
+      "context": "Projeto pessoal para valorizar a arte literária com uma abordagem moderna e acessível."
+    },
+    "ecommerce-etoiles": {
+      "title": "E-commerce fictício - Compra de estrelas online",
+      "description": "Loja online conceitual permitindo a compra simbólica de estrelas com certificados personalizados.",
+      "deliverables": "Sistema de pagamento, catálogo interativo, gerador de certificados, painel administrativo",
+      "context": "Projeto de aprendizado para dominar tecnologias de e-commerce e UX complexa."
+    },
+    "parcours-titre-pro-cda": {
+      "title": "Meu percurso rumo ao título profissional CDA",
+      "description": "Documentação completa e portfólio do meu percurso de reconversão profissional para o desenvolvimento.",
+      "deliverables": "Blog técnico, documentação de projetos, linha do tempo interativa, depoimentos",
+      "context": "Projeto pessoal para documentar e compartilhar minha experiência de transição do direito para o desenvolvimento."
     }
   }
 }

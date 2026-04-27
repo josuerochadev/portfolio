@@ -30,6 +30,7 @@
     "somethingWrongDesc": "We're sorry, but something unexpected happened. Please try refreshing the page.",
     "refreshPage": "Refresh page"
   },
+  "videoNotSupported": "Your browser does not support videos.",
   "accessibility": {
     "skipToMain": "Skip to main content",
     "closePhoto": "Close photo",

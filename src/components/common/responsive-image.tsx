@@ -9,15 +9,19 @@ interface Props {
 	alt: string;
 	className?: string;
 	loading?: "lazy" | "eager";
+	width?: number;
+	height?: number;
 }
 
 // Optimized responsive image with WebP format and multiple breakpoints
 // Automatically serves appropriate size based on viewport and connection speed
-const ResponsiveImage: React.FC<Props> = ({ 
-	images, 
-	alt, 
-	className = "", 
-	loading = "lazy" 
+const ResponsiveImage: React.FC<Props> = ({
+	images,
+	alt,
+	className = "",
+	loading = "lazy",
+	width,
+	height,
 }) => {
 	return (
 		<picture className={className}>
@@ -48,6 +52,8 @@ const ResponsiveImage: React.FC<Props> = ({
 				alt={alt}
 				loading={loading}
 				className="w-full h-full object-cover"
+				{...(width ? { width } : {})}
+				{...(height ? { height } : {})}
 			/>
 		</picture>
 	);

@@ -34,7 +34,7 @@ describe('Projects data', () => {
   });
 
   it('should have valid category values', () => {
-    const validCategories = ['web-app', 'showcase', 'e-commerce', 'portfolio', 'personal'];
+    const validCategories = ['web-app', 'showcase', 'e-commerce', 'ai', 'personal'];
     
     PROJECTS.forEach((project) => {
       expect(validCategories).toContain(project.category);
@@ -52,9 +52,9 @@ describe('Projects data', () => {
     const projectTitles = PROJECTS.map(p => p.title);
     
     expect(projectTitles).toContain('La Lunetterie du Coin');
-    expect(projectTitles).toContain('Site vitrine pour une avocate');
-    expect(projectTitles).toContain('Site vitrine pour un poète');
-    expect(projectTitles).toContain('E-commerce fictif - Achat d\'étoiles en ligne');
-    expect(projectTitles).toContain('Mon parcours vers le titre pro CDA');
+    expect(projectTitles).toContain('Rayssa Eskinazi — Avocate');
+    expect(projectTitles).toContain('Luciole — Agent IA');
+    expect(projectTitles).toContain('Stella — E-commerce');
+    expect(projectTitles).toContain('Tour de Contrôle');
   });
 });

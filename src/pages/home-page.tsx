@@ -15,6 +15,7 @@ import FloatingLanguageSwitcher from "../components/common/floating-language-swi
 // Conditional lazy loading - production only for LCP optimization
 const Projects = lazy(() => import("../components/sections/projects"));
 const Bio = lazy(() => import("../components/sections/bio"));
+const Skills = lazy(() => import("../components/sections/skills"));
 const Contact = lazy(() => import("../components/sections/contact"));
 
 const HomePage: React.FC = () => {
@@ -54,6 +55,9 @@ const HomePage: React.FC = () => {
 						</SectionErrorBoundary>
 						<SectionErrorBoundary sectionName="Bio">
 							<Bio />
+						</SectionErrorBoundary>
+						<SectionErrorBoundary sectionName="Skills">
+							<Skills />
 						</SectionErrorBoundary>
 						<SectionErrorBoundary sectionName="Contact">
 							<Contact />

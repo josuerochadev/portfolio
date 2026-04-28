@@ -31,33 +31,33 @@
   "items": {
     "lunetterie-du-coin": {
       "title": "La Lunetterie du Coin",
-      "description": "Application web sur mesure pour faciliter la prise de rendez-vous chez un opticien local.",
-      "deliverables": "Architecture full stack, back-end Node/Express, front-end React, rappels automatisés",
-      "context": "Projet client développé pour un opticien indépendant. Actuellement en cours de finalisation (v1)."
+      "description": "Site vitrine moderne pour un opticien indépendant, avec prise de rendez-vous et formulaire de contact intégrés.",
+      "deliverables": "Site multi-pages, design system custom, animations Framer Motion, formulaire Formspree, prise de RDV Calendly, SEO complet, pipeline CI/CD, monitoring Sentry",
+      "context": "Donner une présence web professionnelle et performante à un opticien indépendant, en misant sur l'accessibilité, la performance et un design bold maximalist."
     },
     "site-vitrine-avocate": {
-      "title": "Site vitrine pour une avocate",
-      "description": "Plateforme multilingue minimaliste pour accroître la présence numérique et faciliter le contact client.",
-      "deliverables": "Wireframes, intégration Tailwind, formulaire sécurisé, design responsive mobile-first",
-      "context": "Phase conceptuelle d'un projet freelance pour une professionnelle du droit axée sur la visibilité locale et la conformité RGPD."
+      "title": "Rayssa Eskinazi — Avocate",
+      "description": "Site vitrine professionnel pour une avocate à Strasbourg, optimisé pour le SEO local et la conversion de prospects en rendez-vous.",
+      "deliverables": "Site 13 pages, formulaire de contact Formspree, prise de RDV Calendly, SEO local avec JSON-LD, design responsive, conformité RGPD, suite de tests complète",
+      "context": "Une avocate en exercice à Strasbourg avait besoin d'un site professionnel pour se positionner sur les recherches locales et permettre à ses clients de prendre rendez-vous facilement."
     },
-    "site-vitrine-poete": {
-      "title": "Site vitrine pour un poète",
-      "description": "Portfolio artistique élégant pour présenter les œuvres et la biographie d'un poète contemporain.",
-      "deliverables": "Design poétique, galerie interactive, blog intégré, optimisation SEO",
-      "context": "Projet personnel pour valoriser l'art littéraire avec une approche moderne et accessible."
+    "luciole": {
+      "title": "Luciole — Agent IA",
+      "description": "Agent IA conversationnel qui automatise la veille technologique : collecte, analyse et synthétise 200+ articles/jour depuis 40+ sources RSS.",
+      "deliverables": "Agent ReAct avec 8 outils, pipeline d'ingestion RSS automatique, interface web avec streaming SSE, système RAG maison, sécurité anti-injection, déploiement Docker",
+      "context": "Les équipes IT passent environ 15 min par article en veille manuelle. Cet agent réduit ce temps à quelques secondes par question."
     },
-    "ecommerce-etoiles": {
-      "title": "E-commerce fictif - Achat d'étoiles en ligne",
-      "description": "Boutique en ligne conceptuelle permettant l'achat symbolique d'étoiles avec certificats personnalisés.",
-      "deliverables": "Système de paiement, catalogue interactif, générateur de certificats, dashboard admin",
-      "context": "Projet d'apprentissage pour maîtriser les technologies e-commerce et l'UX complexe."
+    "stella-ecommerce": {
+      "title": "Stella — E-commerce",
+      "description": "Application e-commerce full stack permettant de parcourir, filtrer et acheter des étoiles, avec authentification sécurisée, panier et système d'avis.",
+      "deliverables": "Catalogue interactif, authentification JWT/CSRF, panier et wishlist, système de commandes, API RESTful documentée Swagger, panel admin, module de paiement",
+      "context": "Projet personnel développé pour démontrer des compétences full stack en conditions réelles : architecture MVC, sécurité multicouche, ORM et tests automatisés."
     },
-    "parcours-titre-pro-cda": {
-      "title": "Mon parcours vers le titre pro CDA",
-      "description": "Documentation complète et portfolio de mon parcours de reconversion professionnelle vers le développement.",
-      "deliverables": "Blog technique, documentation projets, timeline interactive, témoignages",
-      "context": "Projet personnel pour documenter et partager mon expérience de reconversion du droit vers le développement."
+    "tour-de-controle": {
+      "title": "Tour de Contrôle",
+      "description": "Application web de gestion de caisse et du personnel pour la restauration, avec suivi des transactions et détection d'écarts.",
+      "deliverables": "API REST documentée Swagger, interface React complète, authentification JWT avec RBAC, détection automatique des écarts de caisse, CRUD personnel, base PostgreSQL avec migrations Sqitch, Docker Compose 6 services",
+      "context": "Répondre au besoin réel d'un restaurant : centraliser la gestion des caisses et du personnel dans un outil unique, fiable et sécurisé."
     }
   }
 }

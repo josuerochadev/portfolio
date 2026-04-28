@@ -1,0 +1,16 @@
+{
+  "heading": "Skills",
+  "categories": {
+    "mainframe": "Mainframe",
+    "frontend": "Frontend",
+    "backend": "Backend",
+    "tools": "Tools & Testing",
+    "ai": "AI & Data",
+    "languages": "Languages"
+  },
+  "languagesList": {
+    "fr": "French (native)",
+    "pt": "Portuguese (native)",
+    "en": "English (fluent)"
+  }
+}

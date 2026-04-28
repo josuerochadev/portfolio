@@ -12,7 +12,9 @@ export interface Project {
 	technologies?: string[];
 	status: 'completed' | 'in-progress' | 'concept';
 	year: string;
-	category: 'web-app' | 'showcase' | 'e-commerce' | 'portfolio' | 'personal';
+	category: 'web-app' | 'showcase' | 'e-commerce' | 'ai' | 'personal';
+	githubUrl?: string;
+	demoUrl?: string;
 }
 
 export const PROJECTS: Project[] = [
@@ -20,95 +22,102 @@ export const PROJECTS: Project[] = [
 		id: "lunetterie-du-coin",
 		title: "La Lunetterie du Coin",
 		description:
-			"Application web sur mesure pour faciliter la prise de rendez-vous chez un opticien local.",
+			"Site vitrine moderne pour un opticien indépendant, avec prise de rendez-vous et formulaire de contact intégrés.",
 		deliverables:
-			"Architecture full stack, back-end Node/Express, front-end React, rappels automatisés",
+			"Site multi-pages, design system custom, animations Framer Motion, formulaire Formspree, prise de RDV Calendly, SEO complet, pipeline CI/CD, monitoring Sentry",
 		context:
-			"Projet client développé pour un opticien indépendant. Actuellement en cours de finalisation (v1).",
+			"Donner une présence web professionnelle et performante à un opticien indépendant, en misant sur l'accessibilité, la performance et un design bold maximalist.",
 		image: {
 			desktop: "/assets/images/projects/optimized/project-la-lunetterie-du-coin-desktop.webp",
 			mobile: "/assets/images/projects/optimized/project-la-lunetterie-du-coin-mobile.webp",
 			thumbnail: "/assets/images/projects/optimized/project-la-lunetterie-du-coin-thumb.webp"
 		},
-		technologies: ["React", "Node.js", "Express", "PostgreSQL", "TypeScript"],
-		status: "in-progress",
+		technologies: ["React 19", "TypeScript", "Vite", "Tailwind CSS", "Framer Motion", "React Router v7", "Vitest", "Playwright", "Lighthouse CI", "Sentry", "Vercel"],
+		status: "completed",
 		year: "2024",
-		category: "web-app"
+		category: "showcase",
+		githubUrl: "https://github.com/josuerochadev/la-lunetterie-du-coin",
+		demoUrl: "https://lalunetterieducoin.fr/"
 	},
 	{
 		id: "site-vitrine-avocate",
-		title: "Site vitrine pour une avocate",
+		title: "Rayssa Eskinazi — Avocate",
 		description:
-			"Plateforme multilingue minimaliste pour accroître la présence numérique et faciliter le contact client.",
+			"Site vitrine professionnel pour une avocate à Strasbourg, optimisé pour le SEO local et la conversion de prospects en rendez-vous.",
 		deliverables:
-			"Wireframes, intégration Tailwind, formulaire sécurisé, design responsive mobile-first",
+			"Site 13 pages, formulaire de contact Formspree, prise de RDV Calendly, SEO local avec JSON-LD, design responsive, conformité RGPD, suite de tests complète",
 		context:
-			"Phase conceptuelle d'un projet freelance pour une professionnelle du droit axée sur la visibilité locale et la conformité RGPD.",
+			"Une avocate en exercice à Strasbourg avait besoin d'un site professionnel pour se positionner sur les recherches locales et permettre à ses clients de prendre rendez-vous facilement.",
 		image: {
 			desktop: "/assets/images/projects/optimized/project-avocate-rayssa-desktop.webp",
 			mobile: "/assets/images/projects/optimized/project-avocate-rayssa-mobile.webp",
 			thumbnail: "/assets/images/projects/optimized/project-avocate-rayssa-thumb.webp"
 		},
-		technologies: ["Next.js", "Tailwind CSS", "TypeScript", "Framer Motion"],
-		status: "concept",
+		technologies: ["Next.js 14", "TypeScript", "Tailwind CSS", "Calendly", "Formspree", "Plausible Analytics", "Vitest", "Playwright", "Vercel"],
+		status: "completed",
 		year: "2024",
-		category: "showcase"
+		category: "showcase",
+		githubUrl: "https://github.com/josuerochadev/rayssa-harmes-avocate",
+		demoUrl: "https://www.harmes-avocat.fr/"
 	},
 	{
-		id: "site-vitrine-poete",
-		title: "Site vitrine pour un poète",
+		id: "luciole",
+		title: "Luciole — Agent IA",
 		description:
-			"Portfolio artistique élégant pour présenter les œuvres et la biographie d'un poète contemporain.",
+			"Agent IA conversationnel qui automatise la veille technologique : collecte, analyse et synthétise 200+ articles/jour depuis 40+ sources RSS.",
 		deliverables:
-			"Design poétique, galerie interactive, blog intégré, optimisation SEO",
+			"Agent ReAct avec 8 outils, pipeline d'ingestion RSS automatique, interface web avec streaming SSE, système RAG maison, sécurité anti-injection, déploiement Docker",
 		context:
-			"Projet personnel pour valoriser l'art littéraire avec une approche moderne et accessible.",
+			"Les équipes IT passent environ 15 min par article en veille manuelle. Cet agent réduit ce temps à quelques secondes par question.",
 		image: {
 			desktop: "/assets/images/projects/optimized/project-poetry-desktop.webp",
 			mobile: "/assets/images/projects/optimized/project-poetry-mobile.webp",
 			thumbnail: "/assets/images/projects/optimized/project-poetry-thumb.webp"
 		},
-		technologies: ["Astro", "Vue.js", "Tailwind CSS", "Markdown"],
-		status: "concept",
-		year: "2024",
-		category: "showcase"
+		technologies: ["Python 3.12", "FastAPI", "OpenAI API", "RAG", "SQLite", "Docker", "Langfuse", "SSE"],
+		status: "completed",
+		year: "2026",
+		category: "ai",
+		githubUrl: "https://github.com/josuerochadev/formation-ia",
+		demoUrl: "https://luciole.onrender.com"
 	},
 	{
-		id: "ecommerce-etoiles",
-		title: "E-commerce fictif - Achat d'étoiles en ligne",
+		id: "stella-ecommerce",
+		title: "Stella — E-commerce",
 		description:
-			"Boutique en ligne conceptuelle permettant l'achat symbolique d'étoiles avec certificats personnalisés.",
+			"Application e-commerce full stack permettant de parcourir, filtrer et acheter des étoiles, avec authentification sécurisée, panier et système d'avis.",
 		deliverables:
-			"Système de paiement, catalogue interactif, générateur de certificats, dashboard admin",
+			"Catalogue interactif, authentification JWT/CSRF, panier et wishlist, système de commandes, API RESTful documentée Swagger, panel admin, module de paiement",
 		context:
-			"Projet d'apprentissage pour maîtriser les technologies e-commerce et l'UX complexe.",
+			"Projet personnel développé pour démontrer des compétences full stack en conditions réelles : architecture MVC, sécurité multicouche, ORM et tests automatisés.",
 		image: {
 			desktop: "/assets/images/projects/optimized/project-stella-desktop.webp",
 			mobile: "/assets/images/projects/optimized/project-stella-mobile.webp",
 			thumbnail: "/assets/images/projects/optimized/project-stella-thumb.webp"
 		},
-		technologies: ["Next.js", "Stripe", "Prisma", "PostgreSQL", "Tailwind CSS"],
-		status: "concept",
+		technologies: ["React", "TypeScript", "Tailwind CSS", "Zustand", "Node.js", "Express", "Sequelize", "PostgreSQL", "JWT", "Jest", "Swagger"],
+		status: "in-progress",
 		year: "2024",
-		category: "e-commerce"
+		category: "e-commerce",
+		githubUrl: "https://github.com/josuerochadev/stella-ecommerce"
 	},
 	{
-		id: "parcours-titre-pro-cda",
-		title: "Mon parcours vers le titre pro CDA",
+		id: "tour-de-controle",
+		title: "Tour de Contrôle",
 		description:
-			"Documentation complète et portfolio de mon parcours de reconversion professionnelle vers le développement.",
+			"Application web de gestion de caisse et du personnel pour la restauration, avec suivi des transactions et détection d'écarts.",
 		deliverables:
-			"Blog technique, documentation projets, timeline interactive, témoignages",
+			"API REST documentée Swagger, interface React complète, authentification JWT avec RBAC, détection automatique des écarts de caisse, CRUD personnel, base PostgreSQL avec migrations Sqitch, Docker Compose 6 services",
 		context:
-			"Projet personnel pour documenter et partager mon expérience de reconversion du droit vers le développement.",
+			"Répondre au besoin réel d'un restaurant : centraliser la gestion des caisses et du personnel dans un outil unique, fiable et sécurisé.",
 		image: {
 			desktop: "/assets/images/projects/optimized/project-cda-oclock-desktop.webp",
 			mobile: "/assets/images/projects/optimized/project-cda-oclock-mobile.webp",
 			thumbnail: "/assets/images/projects/optimized/project-cda-oclock-thumb.webp"
 		},
-		technologies: ["React", "Markdown", "Git", "Various APIs"],
+		technologies: ["React 18", "TypeScript", "Vite", "Tailwind CSS", "Redux Toolkit", "Node.js", "Express", "PostgreSQL", "Redis", "Docker Compose", "JWT", "Swagger", "Jest"],
 		status: "in-progress",
-		year: "2024-2025",
-		category: "personal"
+		year: "2025",
+		category: "web-app"
 	}
 ];

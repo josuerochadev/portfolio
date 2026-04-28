@@ -23,10 +23,6 @@ import legalFR from './locales/fr/legal.json';
 import legalEN from './locales/en/legal.json';
 import legalPT from './locales/pt/legal.json';
 
-import skillsFR from './locales/fr/skills.json';
-import skillsEN from './locales/en/skills.json';
-import skillsPT from './locales/pt/skills.json';
-
 // Available languages
 export const SUPPORTED_LANGUAGES = [
   { code: 'fr', name: 'Français', flag: '🇫🇷' },
@@ -43,24 +39,21 @@ const resources = {
     hero: heroFR,
     projects: projectsFR,
     bio: bioFR,
-    legal: legalFR,
-    skills: skillsFR
+    legal: legalFR
   },
   en: {
     common: commonEN,
     hero: heroEN,
     projects: projectsEN,
     bio: bioEN,
-    legal: legalEN,
-    skills: skillsEN
+    legal: legalEN
   },
   pt: {
     common: commonPT,
     hero: heroPT,
     projects: projectsPT,
     bio: bioPT,
-    legal: legalPT,
-    skills: skillsPT
+    legal: legalPT
   }
 };
 
@@ -81,7 +74,7 @@ i18n
 
     // Namespace configuration
     defaultNS: 'common',
-    ns: ['common', 'hero', 'projects', 'bio', 'legal', 'skills'],
+    ns: ['common', 'hero', 'projects', 'bio', 'legal'],
 
     interpolation: {
       escapeValue: false, // React already escapes values

@@ -3,10 +3,11 @@ import FadeInUpOnScroll from "@/components/common/animations/fade-in-up-on-scrol
 import LetterRippleEffect from "@/components/effects/letter-ripple";
 import ProfileBackground from "@/components/effects/profile-background";
 import PhotoFrame from "@/components/layout/photo-frame";
+import Timeline from "@/components/sections/bio/timeline";
 
 export default function Bio() {
 	const { t } = useTranslation('bio');
-	
+
 	const adjectives = Object.values(t('adjectives', { returnObjects: true })) as string[];
 	const sections = t('sections', { returnObjects: true }) as Record<string, { title: string; text: string }>;
 	return (
@@ -36,9 +37,11 @@ export default function Bio() {
 					</div>
 				</div>
 
-					<div className="w-full px-4 max-w-4xl flex flex-col gap-12 text-left">
+				<Timeline />
+
+					<div className="w-full px-4 max-w-4xl flex flex-col gap-12 text-left mt-12">
 					{Object.entries(sections).map(([key, section], i) => (
-						<FadeInUpOnScroll key={key} delay={1 + i * 0.2}>
+						<FadeInUpOnScroll key={key} delay={1.8 + i * 0.2}>
 							<div>
 								<h3 className="text-2xl font-serif font-bold text-violet mb-2 capitalize">
 									{section.title}

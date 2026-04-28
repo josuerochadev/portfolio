@@ -1,5 +1,5 @@
 {
-  "heading": "And more about me",
+  "heading": "Atypical path? I'd say well typed.",
   "adjectives": {
     "creative": "rigorous",
     "curious": "curious",
@@ -7,14 +7,42 @@
     "resilient": "resilient",
     "bold": "trilingual"
   },
+  "timeline": {
+    "law": {
+      "year": "2016 — 2021",
+      "title": "Lawyer in Brazil",
+      "text": "Nearly five years in labor and business law, across firms and public institutions."
+    },
+    "france": {
+      "year": "2020",
+      "title": "Moving to France",
+      "text": "Master's in Human Rights Law at the University of Strasbourg. A new chapter begins."
+    },
+    "firstCode": {
+      "year": "2022",
+      "title": "First steps in code",
+      "text": "Intensive web bootcamp. Discovering development and confirming a career pivot."
+    },
+    "cda": {
+      "year": "2024",
+      "title": "Full Stack CDA Training",
+      "text": "10 intensive months at O'Clock, then a startup internship (InnovQube). The full stack breakthrough."
+    },
+    "mainframe": {
+      "year": "2025",
+      "title": "Mainframe POEI",
+      "text": "COBOL, DB2, JCL, z/OS specialization at M2i. Entering the world of legacy systems."
+    },
+    "now": {
+      "year": "2026",
+      "title": "Mainframe Consultant & Jurema",
+      "text": "Mission-critical banking & insurance systems. In parallel, custom web projects through Jurema, my freelance practice."
+    }
+  },
   "sections": {
     "approach": {
       "title": "approach",
       "text": "I see every new programming language as an opportunity, not a barrier. From TypeScript to COBOL — every environment has its own logic, and I adapt. My work is driven by rigor, clean code, and a deep understanding of the business context."
-    },
-    "background": {
-      "title": "background",
-      "text": "I practiced law in Brazil for five years, specializing in labor and business law. After moving to France, I pivoted into tech: intensive full stack training, a startup internship, then a mainframe specialization. Today I'm a COBOL consultant in Strasbourg, working on mission-critical systems in banking and insurance — while still building modern web projects on the side."
     },
     "beyondCode": {
       "title": "beyond code",

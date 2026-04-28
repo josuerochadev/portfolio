@@ -1,5 +1,5 @@
 {
-  "heading": "E mais sobre mim",
+  "heading": "Uma trajetória atípica? Bem tipada, eu diria.",
   "adjectives": {
     "creative": "rigoroso",
     "curious": "curioso",
@@ -7,14 +7,42 @@
     "resilient": "resiliente",
     "bold": "trilíngue"
   },
+  "timeline": {
+    "law": {
+      "year": "2016 — 2021",
+      "title": "Advogado no Brasil",
+      "text": "Quase cinco anos em direito do trabalho e empresarial, entre escritórios e instituições públicas."
+    },
+    "france": {
+      "year": "2020",
+      "title": "Mudança para a França",
+      "text": "Mestrado em Direito das Liberdades na Universidade de Estrasburgo. Um novo capítulo começa."
+    },
+    "firstCode": {
+      "year": "2022",
+      "title": "Primeiros passos no código",
+      "text": "Bootcamp web intensivo. A descoberta do desenvolvimento e a confirmação de uma virada de carreira."
+    },
+    "cda": {
+      "year": "2024",
+      "title": "Formação CDA Full Stack",
+      "text": "10 meses intensivos na O'Clock, depois estágio em startup (InnovQube). O salto full stack."
+    },
+    "mainframe": {
+      "year": "2025",
+      "title": "POEI Mainframe",
+      "text": "Especialização COBOL, DB2, JCL, z/OS na M2i. A entrada no mundo dos sistemas legados."
+    },
+    "now": {
+      "year": "2026",
+      "title": "Consultor Mainframe & Jurema",
+      "text": "Sistemas críticos no setor bancário e de seguros. Em paralelo, projetos web sob medida pela Jurema, minha estrutura freelance."
+    }
+  },
   "sections": {
     "approach": {
       "title": "abordagem",
       "text": "Vejo cada nova linguagem de programação como uma oportunidade, não uma barreira. Do TypeScript ao COBOL — cada ambiente tem sua lógica, e eu me adapto. Meu trabalho é guiado pelo rigor, código limpo e a compreensão do contexto de negócio."
-    },
-    "background": {
-      "title": "trajetória",
-      "text": "Atuei como advogado no Brasil por cinco anos, na área trabalhista e empresarial. Após me mudar para a França, migrei para a tecnologia: formação intensiva em desenvolvimento full stack, estágio em startup, depois especialização em mainframe. Hoje sou consultor COBOL em Estrasburgo, trabalhando em sistemas de missão crítica no setor bancário e de seguros — enquanto continuo criando projetos web modernos em paralelo."
     },
     "beyondCode": {
       "title": "além do código",

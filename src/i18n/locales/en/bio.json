@@ -9,34 +9,34 @@
   },
   "timeline": {
     "law": {
-      "year": "2016 — 2021",
-      "title": "Lawyer in Brazil",
-      "text": "Nearly five years in labor and business law, across firms and public institutions."
+      "period": "2016 — 2020",
+      "title": "Life as a lawyer",
+      "text": "Five years of law in Brazil — labor, employment, business. Litigation, negotiation, sensitive contracts. That's where I learned rigor, argumentation, and how to hold my ground under pressure."
     },
     "france": {
-      "year": "2020",
-      "title": "Moving to France",
-      "text": "Master's in Human Rights Law at the University of Strasbourg. A new chapter begins."
+      "period": "2020 — 2022",
+      "title": "France, out of curiosity",
+      "text": "A master's in Human Rights Law in Strasbourg, then life settling in — the city, love, a language you slowly make your own. I came for a stay, I stayed for good."
     },
     "firstCode": {
-      "year": "2022",
-      "title": "First steps in code",
-      "text": "Intensive web bootcamp. Discovering development and confirming a career pivot."
+      "period": "2022 — 2023",
+      "title": "Changing everything",
+      "text": "Country, language, then career. First bootcamp, first lines of JavaScript. What I thought I'd explore out of curiosity, I never wanted to leave."
     },
     "cda": {
-      "year": "2024",
-      "title": "Full Stack CDA Training",
-      "text": "10 intensive months at O'Clock, then a startup internship (InnovQube). The full stack breakthrough."
+      "period": "2023 — 2024",
+      "title": "Finding my footing",
+      "text": "Full stack developer program: front-end, back-end, databases, security, testing. Capstone project defended before a panel, then an internship at a Parisian startup on PHP/Laravel in Agile."
     },
     "mainframe": {
-      "year": "2025",
-      "title": "Mainframe POEI",
-      "text": "COBOL, DB2, JCL, z/OS specialization at M2i. Entering the world of legacy systems."
+      "period": "2024 — 2025",
+      "title": "The mainframe",
+      "text": "COBOL, z/OS, JCL, DB2, CICS — ten intensive weeks at M2i. A strict framework where every line counts. I found something familiar from law: rigor, traceability, rules that hold over time."
     },
     "now": {
-      "year": "2026",
-      "title": "Mainframe Consultant & Jurema",
-      "text": "Mission-critical banking & insurance systems. In parallel, custom web projects through Jurema, my freelance practice."
+      "period": "2025 —",
+      "title": "And now",
+      "text": "First contract as a mainframe consultant. Between assignments, I keep learning — C#, OOP, new frameworks. Languages change, curiosity stays."
     }
   },
   "sections": {

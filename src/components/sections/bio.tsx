@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import FadeInUpOnScroll from "@/components/common/animations/fade-in-up-on-scroll";
 import LetterRippleEffect from "@/components/effects/letter-ripple";
 import ProfileBackground from "@/components/effects/profile-background";
-import PhotoFrame from "@/components/layout/photo-frame";
+// import PhotoFrame from "@/components/layout/photo-frame";
 import Timeline from "@/components/sections/bio/timeline";
 
 export default function Bio() {
@@ -13,10 +13,10 @@ export default function Bio() {
 	return (
 		<section
 			id="bio"
-			className="relative z-10 w-full px-6 py-20 text-violet overflow-hidden"
+			className="relative z-10 w-full px-6 py-20 text-violet"
 		>
 			<ProfileBackground />
-			<PhotoFrame />
+			{/* <PhotoFrame /> */}
 
 			<div className="max-w-6xl mx-auto flex flex-col items-start">
 					<FadeInUpOnScroll delay={0.2}>

@@ -70,7 +70,7 @@ export default function ProfileBackground() {
 	];
 
 	return (
-		<div className="absolute right-[30%] top-[400px] z-0 pointer-events-none">
+		<div className="absolute left-[25%] top-[600px] z-0 pointer-events-none">
 			{layers.map((layer) => (
 				<motion.div
 					key={layer.id}

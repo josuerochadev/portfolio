@@ -25,7 +25,7 @@ export default function PhotoFrame() {
 
 	if (!visible || isClosed)
 		return (
-			<div ref={triggerRef} className="absolute top-[50%] h-[1px] w-full" />
+			<div ref={triggerRef} className="absolute top-[15%] h-[1px] w-full" />
 		);
 
 	return (
@@ -39,7 +39,7 @@ export default function PhotoFrame() {
 					setIsDragging(true);
 				}}
 				onDragEnd={() => setIsDragging(false)}
-				className={`absolute left-[calc(50%-130px)] top-[38%] cursor-grab active:cursor-grabbing pointer-events-auto z-[9999] transition-shadow ${
+				className={`absolute right-[8%] top-[35%] cursor-grab active:cursor-grabbing pointer-events-auto z-[9999] transition-shadow ${
 					isDragging ? "shadow-2xl" : "shadow-lg"
 				}`}
 				initial={{ opacity: 0, scale: 0.8 }}

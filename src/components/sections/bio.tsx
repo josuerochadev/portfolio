@@ -15,9 +15,6 @@ export default function Bio() {
 			id="bio"
 			className="relative z-10 w-full px-6 py-20 text-violet"
 		>
-			<ProfileBackground />
-			{/* <PhotoFrame /> */}
-
 			<div className="max-w-6xl mx-auto flex flex-col items-start">
 					<FadeInUpOnScroll delay={0.2}>
 					<h2 className="relative w-full px-4 text-[clamp(2rem,7vw,6rem)] leading-[1.1] font-display font-extrabold text-violet text-left flex flex-wrap gap-x-2">
@@ -27,7 +24,7 @@ export default function Bio() {
 					</h2>
 				</FadeInUpOnScroll>
 
-					<div className="w-full px-4 mt-6 mb-12">
+					<div className="relative z-10 w-full px-4 mt-6 mb-12">
 					<div className="max-w-6xl mx-auto flex flex-wrap gap-x-6 gap-y-2">
 						{adjectives.map((word, i) => (
 							<FadeInUpOnScroll key={word} delay={0.6 + i * 0.1}>
@@ -54,6 +51,8 @@ export default function Bio() {
 					))}
 				</div>
 			</div>
+
+			<ProfileBackground />
 		</section>
 	);
 }

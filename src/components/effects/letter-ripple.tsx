@@ -63,10 +63,10 @@ const LetterRippleEffect = ({ text, className = "" }: Props) => {
 					key={`${letter}-${index}-${text}`}
 					onMouseEnter={() => setHoverIndex(index)}
 					onMouseLeave={() => setHoverIndex(null)}
-					animate={{ fontVariationSettings: `'wght' ${getWeight(index)}` }}
+					animate={{ fontVariationSettings: `'wght' ${getWeight(index)}, 'opsz' 144, 'SOFT' 0, 'WONK' 0` }}
 					transition={{ type: "spring", stiffness: 250, damping: 25 }}
 					style={{
-						fontVariationSettings: `'wght' ${getWeight(index)}`,
+						fontVariationSettings: `'wght' ${getWeight(index)}, 'opsz' 144, 'SOFT' 0, 'WONK' 0`,
 						display: "inline-block",
 						minWidth: "0.6em",
 						textAlign: "center",

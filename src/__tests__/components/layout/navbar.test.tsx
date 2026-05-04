@@ -59,6 +59,7 @@ vi.mock('react-i18next', () => ({
         'navigation.work': 'Work',  
         'navigation.about': 'About',
         'navigation.contact': 'Contact',
+        'navigation.blog': 'Blog',
       };
       return translations[key] || key;
     },

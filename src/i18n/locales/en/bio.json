@@ -1,5 +1,5 @@
 {
-  "heading": "And more about me",
+  "heading": "Atypical path? I'd say well typed.",
   "adjectives": {
     "creative": "rigorous",
     "curious": "curious",
@@ -7,14 +7,42 @@
     "resilient": "resilient",
     "bold": "trilingual"
   },
+  "timeline": {
+    "law": {
+      "period": "2016 — 2020",
+      "title": "Life as a lawyer",
+      "text": "Five years of law in Brazil — labor, employment, business. Litigation, negotiation, sensitive contracts. That's where I learned rigor, argumentation, and how to hold my ground under pressure."
+    },
+    "france": {
+      "period": "2020 — 2022",
+      "title": "France, out of curiosity",
+      "text": "A master's in Human Rights Law in Strasbourg, then life settling in — the city, love, a language you slowly make your own. I came for a stay, I stayed for good."
+    },
+    "firstCode": {
+      "period": "2022 — 2023",
+      "title": "Changing everything",
+      "text": "Country, language, then career. First bootcamp, first lines of JavaScript. What I thought I'd explore out of curiosity, I never wanted to leave."
+    },
+    "cda": {
+      "period": "2023 — 2024",
+      "title": "Finding my footing",
+      "text": "Full stack developer program: front-end, back-end, databases, security, testing. Capstone project defended before a panel, then an internship at a Parisian startup on PHP/Laravel in Agile."
+    },
+    "mainframe": {
+      "period": "2024 — 2025",
+      "title": "The mainframe",
+      "text": "COBOL, z/OS, JCL, DB2, CICS — ten intensive weeks at M2i. A strict framework where every line counts. I found something familiar from law: rigor, traceability, rules that hold over time."
+    },
+    "now": {
+      "period": "2025 —",
+      "title": "And now",
+      "text": "First contract as a mainframe consultant. Between assignments, I keep learning — C#, OOP, new frameworks. Languages change, curiosity stays."
+    }
+  },
   "sections": {
     "approach": {
       "title": "approach",
       "text": "I see every new programming language as an opportunity, not a barrier. From TypeScript to COBOL — every environment has its own logic, and I adapt. My work is driven by rigor, clean code, and a deep understanding of the business context."
-    },
-    "background": {
-      "title": "background",
-      "text": "I practiced law in Brazil for five years, specializing in labor and business law. After moving to France, I pivoted into tech: intensive full stack training, a startup internship, then a mainframe specialization. Today I'm a COBOL consultant in Strasbourg, working on mission-critical systems in banking and insurance — while still building modern web projects on the side."
     },
     "beyondCode": {
       "title": "beyond code",

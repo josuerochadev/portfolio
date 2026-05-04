@@ -23,16 +23,13 @@ const HeroPhrases: React.FC<HeroPhrasesProps> = ({ setShowSmiles }) => {
 				))}
 			</div>
 
-			<FadeInUp delay={ANIMATION.DELAYS.MEDIUM}>
-				<p
-					onMouseEnter={() => setShowSmiles(true)}
-					onMouseLeave={() => setShowSmiles(false)}
-					className={`text-2xl font-bold font-display text-left max-w-2xl pt-2 ${COLORS.ORANGE.HOVER_TEXT} ${TRANSITIONS.DEFAULT}`}
-					style={{ willChange: "color, transform" }}
-				>
-					{t('tagline')}
-				</p>
-			</FadeInUp>
+			<p
+				onMouseEnter={() => setShowSmiles(true)}
+				onMouseLeave={() => setShowSmiles(false)}
+				className={`text-2xl font-bold font-display text-left max-w-2xl pt-2 ${COLORS.ORANGE.HOVER_TEXT} ${TRANSITIONS.DEFAULT}`}
+			>
+				{t('tagline')}
+			</p>
 		</>
 	);
 };

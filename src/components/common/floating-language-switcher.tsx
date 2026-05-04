@@ -35,9 +35,6 @@ const FloatingLanguageSwitcher: React.FC = () => {
         aria-expanded={isOpen}
         aria-haspopup="listbox"
       >
-        <span className="text-sm sm:text-lg" role="img" aria-hidden="true">
-          {currentLanguage.flag}
-        </span>
         <span className="font-sans uppercase tracking-widest text-xs sm:text-sm font-bold">
           {currentLanguage.code}
         </span>
@@ -77,9 +74,6 @@ const FloatingLanguageSwitcher: React.FC = () => {
                   role="option"
                   aria-selected={isSelected}
                 >
-                  <span className="text-sm sm:text-lg" role="img" aria-hidden="true">
-                    {language.flag}
-                  </span>
                   <div className="flex-1">
                     <div className="font-sans uppercase tracking-widest font-bold text-xs sm:text-sm">
                       {language.code}

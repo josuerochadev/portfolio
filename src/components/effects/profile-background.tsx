@@ -8,7 +8,7 @@ export default function ProfileBackground() {
 			id: "layer1",
 			scale: 1.0,
 			delay: 0,
-			opacity: 0.02,
+			opacity: 0.06,
 			rotate: 0,
 			x: 0,
 			y: 0,
@@ -17,7 +17,7 @@ export default function ProfileBackground() {
 			id: "layer2",
 			scale: 1.1,
 			delay: 0.1,
-			opacity: 0.03,
+			opacity: 0.08,
 			rotate: 2,
 			x: 2,
 			y: -1,
@@ -26,7 +26,7 @@ export default function ProfileBackground() {
 			id: "layer3",
 			scale: 1.2,
 			delay: 0.2,
-			opacity: 0.04,
+			opacity: 0.1,
 			rotate: -3,
 			x: -2,
 			y: 1,
@@ -35,7 +35,7 @@ export default function ProfileBackground() {
 			id: "layer4",
 			scale: 1.3,
 			delay: 0.3,
-			opacity: 0.05,
+			opacity: 0.12,
 			rotate: 1,
 			x: 1,
 			y: 2,
@@ -44,7 +44,7 @@ export default function ProfileBackground() {
 			id: "layer5",
 			scale: 1.4,
 			delay: 0.4,
-			opacity: 0.06,
+			opacity: 0.14,
 			rotate: -2,
 			x: -1,
 			y: -2,
@@ -53,7 +53,7 @@ export default function ProfileBackground() {
 			id: "layer6",
 			scale: 1.5,
 			delay: 0.5,
-			opacity: 0.07,
+			opacity: 0.16,
 			rotate: 2,
 			x: 3,
 			y: -1,
@@ -62,7 +62,7 @@ export default function ProfileBackground() {
 			id: "layer7",
 			scale: 1.6,
 			delay: 0.6,
-			opacity: 0.08,
+			opacity: 0.18,
 			rotate: -1,
 			x: -3,
 			y: 2,
@@ -70,11 +70,11 @@ export default function ProfileBackground() {
 	];
 
 	return (
-		<div className="absolute right-[30%] top-[400px] z-0 pointer-events-none">
+		<div className="absolute inset-0 z-[-1] pointer-events-none flex items-center justify-start pl-[5%]">
 			{layers.map((layer) => (
 				<motion.div
 					key={layer.id}
-					className="absolute left-0 top-0 text-lime"
+					className="absolute text-lime"
 					initial={{
 						scale: layer.scale,
 						opacity: layer.opacity,
@@ -97,7 +97,7 @@ export default function ProfileBackground() {
 						delay: layer.delay,
 					}}
 				>
-					<FaUser className="w-[250px] h-[250px]" />
+					<FaUser className="w-[150px] h-[150px]" />
 				</motion.div>
 			))}
 		</div>

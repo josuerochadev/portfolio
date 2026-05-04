@@ -1,5 +1,5 @@
 {
-  "heading": "E mais sobre mim",
+  "heading": "Uma trajetória atípica? Bem tipada, eu diria.",
   "adjectives": {
     "creative": "rigoroso",
     "curious": "curioso",
@@ -7,14 +7,42 @@
     "resilient": "resiliente",
     "bold": "trilíngue"
   },
+  "timeline": {
+    "law": {
+      "period": "2016 — 2020",
+      "title": "A vida de advogado",
+      "text": "Cinco anos de direito no Brasil — trabalhista, social, empresarial. Litígios, negociações, contratos sensíveis. Foi ali que aprendi rigor, argumentação e a manter a posição sob pressão."
+    },
+    "france": {
+      "period": "2020 — 2022",
+      "title": "A França, por curiosidade",
+      "text": "Mestrado em Direito das Liberdades em Estrasburgo, e a vida que se instala — a cidade, o amor, uma língua que a gente vai domando. Vim para uma temporada, fiquei de vez."
+    },
+    "firstCode": {
+      "period": "2022 — 2023",
+      "title": "Mudar tudo",
+      "text": "País, língua, e depois profissão. Primeiro bootcamp, primeiras linhas de JavaScript. O que achei que seria só uma exploração, não quis mais largar."
+    },
+    "cda": {
+      "period": "2023 — 2024",
+      "title": "As primeiras marcas",
+      "text": "Formação full stack: front, back, banco de dados, segurança, testes. Projeto integrador defendido em banca, depois estágio em startup parisiense com PHP/Laravel em Agile."
+    },
+    "mainframe": {
+      "period": "2024 — 2025",
+      "title": "O mainframe",
+      "text": "COBOL, z/OS, JCL, DB2, CICS — dez semanas intensivas na M2i. Um framework rígido onde cada linha conta. Encontrei algo familiar do direito: rigor, rastreabilidade, regras que se sustentam no tempo."
+    },
+    "now": {
+      "period": "2025 —",
+      "title": "E agora",
+      "text": "Primeiro contrato como consultor mainframe. Entre as missões, continuo aprendendo — C#, POO, novos frameworks. As linguagens mudam, a curiosidade fica."
+    }
+  },
   "sections": {
     "approach": {
       "title": "abordagem",
       "text": "Vejo cada nova linguagem de programação como uma oportunidade, não uma barreira. Do TypeScript ao COBOL — cada ambiente tem sua lógica, e eu me adapto. Meu trabalho é guiado pelo rigor, código limpo e a compreensão do contexto de negócio."
-    },
-    "background": {
-      "title": "trajetória",
-      "text": "Atuei como advogado no Brasil por cinco anos, na área trabalhista e empresarial. Após me mudar para a França, migrei para a tecnologia: formação intensiva em desenvolvimento full stack, estágio em startup, depois especialização em mainframe. Hoje sou consultor COBOL em Estrasburgo, trabalhando em sistemas de missão crítica no setor bancário e de seguros — enquanto continuo criando projetos web modernos em paralelo."
     },
     "beyondCode": {
       "title": "além do código",

@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import SmileGrid from "@/components/effects/smile-grid";
 import HeroTitle from "./hero/hero-title";
 import HeroPhrases from "./hero/hero-phrases";
-import HeroActionButtons from "./hero/hero-action-buttons";
 
 const Hero: React.FC = () => {
 	const [showSmiles, setShowSmiles] = useState(false);
@@ -33,7 +32,6 @@ const Hero: React.FC = () => {
 
 			<div className="flex flex-col items-center justify-center gap-4 flex-1 min-h-[20vh] pb-32">
 				<HeroPhrases showSmiles={showSmiles} setShowSmiles={setShowSmiles} />
-				<HeroActionButtons />
 			</div>
 		</section>
 	);

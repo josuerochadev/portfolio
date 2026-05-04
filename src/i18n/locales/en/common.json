@@ -3,7 +3,8 @@
     "home": "Home",
     "work": "Work",
     "about": "About",
-    "contact": "Contact"
+    "contact": "Contact",
+    "blog": "Blog"
   },
   "buttons": {
     "resume": "Resume",

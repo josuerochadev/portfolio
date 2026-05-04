@@ -83,7 +83,7 @@ const SmileGrid: React.FC<SmileGridProps> = ({ active }) => {
 							setSmiles((prev) => prev.filter((s) => s.id !== smile.id))
 						}
 					>
-						<SmileIcon className="text-lime w-full h-full" />
+						<SmileIcon className="text-lime dark:text-lime/60 w-full h-full" />
 					</motion.div>
 				))}
 			</AnimatePresence>

@@ -25,7 +25,7 @@ const PageLayout: React.FC<Props> = ({
 	};
 
 	const content = (
-		<div className="min-h-screen text-violet">
+		<div className="min-h-screen text-violet dark:text-beige">
 			<BackgroundGradient />
 			<main className={`relative z-10 ${maxWidthClasses[maxWidth]} mx-auto px-6 py-20 ${className}`} role="main">
 				{children}

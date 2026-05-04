@@ -71,7 +71,8 @@ function TimelineStep({
 					transition={{ duration: 0.6, ease: [0.65, 0, 0.35, 1] }}
 					className="
 						bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5
-						backdrop-blur-md border border-lime/30 rounded-2xl shadow-md
+						dark:from-lime/10 dark:via-orange/5 dark:to-violet/10
+						backdrop-blur-md border border-lime/30 dark:border-lime/20 rounded-2xl shadow-md
 						px-5 md:px-6 py-4 md:py-5
 						flex flex-col justify-center
 						hover:shadow-lg hover:scale-[1.01]
@@ -81,10 +82,10 @@ function TimelineStep({
 					<span className="text-xs md:text-sm font-display font-semibold text-orange/70 tracking-wide uppercase mb-1">
 						{step.period}
 					</span>
-					<h3 className="text-lg md:text-xl lg:text-2xl font-extrabold font-display leading-snug text-violet">
+					<h3 className="text-lg md:text-xl lg:text-2xl font-extrabold font-display leading-snug text-violet dark:text-beige">
 						{step.title}
 					</h3>
-					<p className="text-sm md:text-base leading-relaxed text-violet/80 mt-3">
+					<p className="text-sm md:text-base leading-relaxed text-violet/80 dark:text-beige/70 mt-3">
 						{step.text}
 					</p>
 				</motion.article>
@@ -184,10 +185,10 @@ export default function Timeline() {
 	return (
 		<div className="relative z-0 w-full">
 			{/* Year picker — horizontal, sticky on scroll */}
-			<nav aria-label="Timeline navigation" className="sticky top-4 sm:top-6 z-20 ml-4 md:ml-0 w-fit rounded-full flex items-center gap-2 px-2 py-1 sm:px-3 sm:py-2 bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5 backdrop-blur-md border border-lime/30 shadow-lg hover:shadow-xl hover:bg-lime active:scale-95 transition-transform duration-150 mb-6">
+			<nav aria-label="Timeline navigation" className="sticky top-4 sm:top-6 z-20 ml-4 md:ml-0 w-fit rounded-full flex items-center gap-2 px-2 py-1 sm:px-3 sm:py-2 bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5 dark:from-lime/10 dark:via-orange/5 dark:to-violet/10 backdrop-blur-md border border-lime/30 dark:border-lime/20 shadow-lg hover:shadow-xl hover:bg-lime dark:hover:bg-lime/20 active:scale-95 transition-transform duration-150 mb-6">
 				{years.map((year, i) => (
 					<React.Fragment key={year}>
-						{i > 0 && <span className="text-violet/20 text-xs select-none" aria-hidden="true">&bull;</span>}
+						{i > 0 && <span className="text-violet/20 dark:text-beige/20 text-xs select-none" aria-hidden="true">&bull;</span>}
 						<button
 							type="button"
 							onClick={() => handleYearClick(i)}
@@ -196,7 +197,7 @@ export default function Timeline() {
 								transition-all duration-300 cursor-pointer active:scale-95
 								${i === activeIndex
 									? "text-orange"
-									: "text-violet hover:text-orange-dark"
+									: "text-violet dark:text-beige hover:text-orange-dark dark:hover:text-orange"
 								}
 							`}
 						>

@@ -25,8 +25,10 @@ const FloatingLanguageSwitcher: React.FC = () => {
           fixed top-4 right-4 sm:top-6 sm:right-6 z-[99999]
           flex items-center gap-2 px-2 py-1 sm:px-3 sm:py-2 rounded-full
           bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5
-          backdrop-blur-md border border-lime/30 text-violet
-          hover:bg-lime hover:text-orange font-sans font-bold text-xs sm:text-sm uppercase tracking-wider
+          dark:from-lime/10 dark:via-orange/5 dark:to-violet/10
+          backdrop-blur-md border border-lime/30 dark:border-lime/20 text-violet dark:text-beige
+          hover:bg-lime hover:text-orange dark:hover:bg-lime/20 dark:hover:text-lime
+          font-sans font-bold text-xs sm:text-sm uppercase tracking-wider
           ${TRANSITIONS.DEFAULT} shadow-lg hover:shadow-xl
           active:scale-95 transition-transform duration-150
           focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2
@@ -52,7 +54,8 @@ const FloatingLanguageSwitcher: React.FC = () => {
               fixed top-16 right-4 sm:top-20 sm:right-6 z-[99998]
               w-32 sm:w-36 rounded-2xl shadow-2xl
               bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5
-              backdrop-blur-md border border-lime/30
+              dark:from-lime/10 dark:via-orange/5 dark:to-violet/10
+              backdrop-blur-md border border-lime/30 dark:border-lime/20
             `}
             role="listbox"
             aria-label="Language options"
@@ -66,7 +69,7 @@ const FloatingLanguageSwitcher: React.FC = () => {
                   onClick={() => handleLanguageChange(language.code)}
                   className={`
                     w-full px-3 py-3 sm:px-4 text-left flex items-center gap-2 sm:gap-3
-                    text-violet hover:bg-lime hover:text-orange ${TRANSITIONS.DEFAULT}
+                    text-violet dark:text-beige hover:bg-lime hover:text-orange dark:hover:bg-lime/20 dark:hover:text-lime ${TRANSITIONS.DEFAULT}
                     ${isSelected ? 'bg-orange/10 font-bold' : 'font-medium'}
                     focus:outline-none focus:bg-orange/20 text-xs sm:text-sm
                     first:rounded-t-xl last:rounded-b-xl active:scale-95 transition-transform duration-150

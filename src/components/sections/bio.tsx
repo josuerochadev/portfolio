@@ -14,11 +14,11 @@ export default function Bio() {
 	return (
 		<section
 			id="bio"
-			className="relative z-10 w-full px-6 py-20 text-violet"
+			className="relative z-10 w-full px-6 py-20 text-violet dark:text-beige"
 		>
 			<div className="max-w-6xl mx-auto flex flex-col items-start">
 					<FadeInUpOnScroll delay={0.2}>
-					<h2 className="relative w-full px-4 text-[clamp(2rem,7vw,6rem)] leading-[1.1] font-display font-extrabold text-violet text-left flex flex-wrap gap-x-2">
+					<h2 className="relative w-full px-4 text-[clamp(2rem,7vw,6rem)] leading-[1.1] font-display font-extrabold text-violet dark:text-beige text-left flex flex-wrap gap-x-2">
 						{t('heading').split(" ").map((word) => (
 							<LetterRippleEffect key={word} text={`${word} `} />
 						))}
@@ -45,10 +45,10 @@ export default function Bio() {
 					{Object.entries(sections).map(([key, section], i) => (
 						<FadeInUpOnScroll key={key} delay={0.2 + i * 0.15}>
 							<div className="relative min-h-[120px]">
-								<h3 className="text-2xl font-serif font-bold text-violet mb-2 capitalize">
+								<h3 className="text-2xl font-serif font-bold text-violet dark:text-beige mb-2 capitalize">
 									{section.title}
 								</h3>
-								<p className="text-base md:text-lg leading-relaxed text-violet">
+								<p className="text-base md:text-lg leading-relaxed text-violet dark:text-beige/90">
 									{section.text}
 								</p>
 								<LayeredIconBackground

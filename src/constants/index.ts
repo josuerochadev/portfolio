@@ -29,13 +29,13 @@ export const ANIMATION = {
 export const COLORS = {
 	VIOLET: {
 		BG: "bg-violet",
-		TEXT: "text-violet",
+		TEXT: "text-violet dark:text-beige",
 		BORDER: "border-violet",
 		HOVER_TEXT: "hover:text-violet",
 	},
 	ORANGE: {
-		BG: "bg-orange", 
-		TEXT: "text-orange-dark",
+		BG: "bg-orange",
+		TEXT: "text-orange-dark dark:text-orange",
 		BORDER: "border-orange",
 		HOVER_TEXT: "hover:text-orange",
 	},
@@ -46,17 +46,17 @@ export const COLORS = {
 		HOVER_TEXT: "hover:text-lime",
 	},
 	VARIANTS: {
-		VIOLET_DARK: "text-violet-dark",
-		VIOLET_80: "text-violet/80",
-		VIOLET_70: "text-violet/70", 
-		VIOLET_90: "text-violet/90",
+		VIOLET_DARK: "text-violet-dark dark:text-beige",
+		VIOLET_80: "text-violet/80 dark:text-beige/70",
+		VIOLET_70: "text-violet/70 dark:text-beige/60",
+		VIOLET_90: "text-violet/90 dark:text-beige/80",
 		LIME_20: "bg-lime/20",
 		LIME_30: "border-lime/30",
 	},
 	HIGH_CONTRAST: {
-		VIOLET_ON_LIGHT: "text-violet-dark",
-		TEXT_MUTED: "text-gray-600",
-		TEXT_SECONDARY: "text-gray-700",
+		VIOLET_ON_LIGHT: "text-violet-dark dark:text-beige",
+		TEXT_MUTED: "text-gray-600 dark:text-gray-400",
+		TEXT_SECONDARY: "text-gray-700 dark:text-gray-300",
 	},
 } as const;
 

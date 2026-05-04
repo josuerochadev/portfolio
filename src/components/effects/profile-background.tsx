@@ -74,7 +74,7 @@ export default function ProfileBackground() {
 			{layers.map((layer) => (
 				<motion.div
 					key={layer.id}
-					className="absolute text-lime"
+					className="absolute text-lime dark:text-lime/60"
 					initial={{
 						scale: layer.scale,
 						opacity: layer.opacity,

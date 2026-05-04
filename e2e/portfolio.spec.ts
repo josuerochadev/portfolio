@@ -12,8 +12,8 @@ test.describe('Portfolio - Core functionality', () => {
     // Check main title contains "Josué Rocha" in hero section specifically
     await expect(page.locator('#hero').getByText('Josué Rocha')).toBeVisible();
     
-    // Check navigation is present
-    await expect(page.locator('nav')).toBeVisible();
+    // Check navigation is present (target main navbar specifically)
+    await expect(page.locator('header nav')).toBeVisible();
   });
 
   test('should navigate through sections', async ({ page }) => {
@@ -44,8 +44,8 @@ test.describe('Portfolio - Core functionality', () => {
     await page.waitForSelector('section#projects', { state: 'visible', timeout: 15000 });
     await page.waitForTimeout(1500); // Extra time for content to render
     
-    // Check projects are displayed
-    const projectCards = page.locator('article');
+    // Check projects are displayed (target project section specifically)
+    const projectCards = page.locator('section#projects article');
     await expect(projectCards).toHaveCount(5);
     
     // Check first project has required elements
@@ -90,8 +90,8 @@ test.describe('Portfolio - Core functionality', () => {
     await page.setViewportSize({ width: 375, height: 667 });
     await page.reload();
     
-    // Navigation should still be visible on mobile
-    await expect(page.locator('nav')).toBeVisible();
+    // Navigation should still be visible on mobile (target main navbar specifically)
+    await expect(page.locator('header nav')).toBeVisible();
     
     // Hero should adapt to mobile
     await expect(page.locator('#hero')).toBeVisible();

@@ -12,7 +12,7 @@ const FOOTER_NAV = [
 export default function Footer() {
 	const { t } = useTranslation('common');
 	return (
-		<footer className="relative w-full bg-lime text-violet-dark pt-8 pb-40 px-6 md:px-10 text-center">
+		<footer className="relative w-full bg-lime dark:bg-dark-surface text-violet-dark dark:text-beige pt-8 pb-40 px-6 md:px-10 text-center">
 			<h2 className="text-2xl font-display font-extrabold mb-6 flex flex-wrap justify-center gap-x-2" style={{ fontVariationSettings: '"opsz" 144, "SOFT" 0, "WONK" 0' }}>
 				<LetterRippleEffect text="Josué " />
 				<LetterRippleEffect text="Rocha" />
@@ -28,9 +28,9 @@ export default function Footer() {
 					</a>
 				))}
 			</nav>
-			<p className="text-sm italic text-violet-dark mb-6">{t('footer.craftedWith')}</p>
-			<div className="w-16 h-px bg-violet-dark/20 mx-auto mb-6" />
-			<div className="flex justify-center gap-4 mb-2 text-xs text-violet-dark">
+			<p className="text-sm italic text-violet-dark dark:text-beige/70 mb-6">{t('footer.craftedWith')}</p>
+			<div className="w-16 h-px bg-violet-dark/20 dark:bg-beige/20 mx-auto mb-6" />
+			<div className="flex justify-center gap-4 mb-2 text-xs text-violet-dark dark:text-beige/70">
 				<Link
 					to="/mentions-legales"
 					className="hover:text-orange transition-colors underline"
@@ -45,7 +45,7 @@ export default function Footer() {
 					{t('footer.privacy')}
 				</Link>
 			</div>
-			<p className="text-xs text-violet-dark">
+			<p className="text-xs text-violet-dark dark:text-beige/60">
 				© {new Date().getFullYear()} Josué Rocha. {t('footer.allRights')}
 			</p>
 		</footer>

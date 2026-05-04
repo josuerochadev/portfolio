@@ -18,13 +18,13 @@ const Hero: React.FC = () => {
 	return (
 		<section
 			id="hero"
-			className="relative flex flex-col min-h-[calc(100vh-6rem)] px-6 pt-12 pb-10 text-violet overflow-hidden"
+			className="relative flex flex-col min-h-[calc(100vh-6rem)] px-6 pt-12 pb-10 text-violet dark:text-beige overflow-hidden"
 		>
 			<SmileGrid active={showSmiles} />
 
 			{/* LIGHT STRIP simplified for LCP */}
 			<div
-				className="absolute top-0 left-0 w-full h-12 bg-lime blur-2xl z-0 pointer-events-none"
+				className="absolute top-0 left-0 w-full h-12 bg-lime dark:bg-lime/40 blur-2xl z-0 pointer-events-none"
 				style={{ opacity: lightOn ? 0.6 : 0, transition: lightOn ? "opacity 1s ease-out" : "none" }}
 			/>
 

@@ -32,6 +32,10 @@
     "refreshPage": "Actualiser la page"
   },
   "videoNotSupported": "Votre navigateur ne supporte pas les vidéos.",
+  "theme": {
+    "switchToDark": "Passer en mode sombre",
+    "switchToLight": "Passer en mode clair"
+  },
   "accessibility": {
     "skipToMain": "Aller au contenu principal",
     "closePhoto": "Fermer la photo",

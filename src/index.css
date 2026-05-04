@@ -10,12 +10,23 @@ body {
   overflow-x: hidden;
 }
 
+/* Dark mode base */
+.dark body {
+  @apply text-beige;
+  background-color: #0F0A1A;
+}
+
 /* === BUTTONS === */
 .button {
   @apply px-8 py-3 rounded-full font-bold inline-flex items-center transition-all duration-300;
   @apply bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5;
   @apply backdrop-blur-md border border-lime/30 text-violet;
   @apply hover:bg-lime hover:text-orange font-sans uppercase tracking-wider text-sm;
+}
+.dark .button {
+  @apply from-lime/10 via-orange/5 to-violet/10;
+  @apply border-lime/20 text-beige;
+  @apply hover:bg-lime/20 hover:text-lime;
 }
 .button:active {
   transform: scale(0.95);
@@ -49,6 +60,18 @@ button:focus-visible {
   font-weight: 700;
   color: #6900FF;
   text-align: center;
+}
+.dark .funky-title {
+  color: #F5F0E8;
+}
+
+/* === FOCUS DARK MODE === */
+.dark :focus-visible {
+  outline-color: #FF7A00;
+}
+.dark a:focus-visible,
+.dark button:focus-visible {
+  outline-color: #FF7A00;
 }
 
 /* === ANIMATIONS & PERFORMANCE === */

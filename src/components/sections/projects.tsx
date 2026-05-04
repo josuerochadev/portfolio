@@ -21,19 +21,21 @@ export default function Projects() {
 		<section
 			id="projects"
 			ref={sectionRef}
-			className="relative w-full px-6 py-20 text-violet overflow-hidden"
+			className="relative w-full px-6 py-20 text-violet dark:text-beige overflow-hidden"
 		>
 
-			<motion.div
-				className="absolute top-[100px] right-[-200px] w-[1600px] h-[1600px] z-0 pointer-events-none"
-				style={{ rotate: rotation }}
-			>
-				<SunIcon className="w-full h-full" />
-			</motion.div>
+			<div className="absolute top-[100px] right-[-200px] w-[1600px] h-[1600px] z-0 pointer-events-none dark:opacity-[0.15] transition-opacity duration-300">
+				<motion.div
+					className="w-full h-full"
+					style={{ rotate: rotation }}
+				>
+					<SunIcon className="w-full h-full" />
+				</motion.div>
+			</div>
 
 			<div className="max-w-6xl mx-auto flex flex-col gap-20 relative z-10">
 				<FadeInUpOnScroll delay={0.2}>
-					<h2 className="relative max-w-6xl mx-auto px-4 text-[clamp(2rem,7vw,7rem)] leading-[1.1] font-display font-extrabold text-violet text-center flex flex-wrap justify-left gap-x-2">
+					<h2 className="relative max-w-6xl mx-auto px-4 text-[clamp(2rem,7vw,7rem)] leading-[1.1] font-display font-extrabold text-violet dark:text-beige text-center flex flex-wrap justify-left gap-x-2">
 						{t('heading')
 							.split(" ")
 							.map((word, i) => (
@@ -61,7 +63,8 @@ i}`}
 							<article
 								className="w-full flex flex-col lg:flex-row gap-6 items-start
 								bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5
-								backdrop-blur-md border border-lime/30 rounded-2xl shadow-md p-6
+								dark:from-lime/10 dark:via-orange/5 dark:to-violet/10
+								backdrop-blur-md border border-lime/30 dark:border-lime/20 rounded-2xl shadow-md p-6
 								hover:shadow-lg hover:scale-[1.01]
 								transition-all duration-300 ease-[cubic-bezier(0.83,0,0.17,1)]"
 							>
@@ -89,8 +92,9 @@ i}`}
 									<p className="text-base">{projectTranslations?.context || project.context}</p>
 									<Link
 										to={`/projet/${project.id}`}
-										className="mt-6 px-4 py-2 rounded-full bg-orange/10 text-orange-dark border border-orange/20
-										hover:bg-orange hover:text-beige transition-all duration-300 
+										className="mt-6 px-4 py-2 rounded-full bg-orange/10 text-orange-dark dark:text-orange border border-orange/20
+										hover:bg-orange hover:text-beige dark:hover:bg-orange/20 dark:hover:text-orange
+										transition-all duration-300
 										inline-flex items-center gap-2 self-start font-medium text-sm
 										hover:shadow-md hover:scale-105 active:scale-95"
 										aria-label={`${t('labels.seeMore')} ${projectTranslations?.title || project.title}`}

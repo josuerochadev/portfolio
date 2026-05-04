@@ -12,13 +12,13 @@ import SeoHead from "@/components/common/seo-head";
 const getStatusColor = (status: Project['status']) => {
 	switch (status) {
 		case 'completed':
-			return 'bg-lime text-violet-dark';
+			return 'bg-lime text-violet-dark dark:bg-lime/20 dark:text-lime';
 		case 'in-progress':
-			return 'bg-orange text-white';
+			return 'bg-orange text-white dark:bg-orange/20 dark:text-orange';
 		case 'concept':
-			return 'bg-violet text-white';
+			return 'bg-violet text-white dark:bg-violet/40 dark:text-beige';
 		default:
-			return 'bg-violet text-white';
+			return 'bg-violet text-white dark:bg-violet/40 dark:text-beige';
 	}
 };
 
@@ -43,10 +43,10 @@ export default function ProjectDetail() {
 
 	if (!project) {
 		return (
-			<div className="min-h-screen flex items-center justify-center text-violet">
+			<div className="min-h-screen flex items-center justify-center text-violet dark:text-beige">
 				<div className="text-center">
 					<h1 className="text-4xl font-bold mb-4">{t('projects:errors.notFound')}</h1>
-					<Link to="/" className="text-orange-dark hover:text-violet underline">
+					<Link to="/" className="text-orange-dark dark:text-orange hover:text-violet dark:hover:text-lime underline">
 						{t('projects:errors.backToHome')}
 					</Link>
 				</div>
@@ -65,7 +65,7 @@ export default function ProjectDetail() {
 				ogImage={`https://josuerocha.dev${project.image.desktop}`}
 				canonical={`https://josuerocha.dev/projet/${project.id}`}
 			/>
-			<div className="min-h-screen text-violet">
+			<div className="min-h-screen text-violet dark:text-beige">
 				<BackgroundGradient />
 				<main className="relative z-10 max-w-6xl mx-auto px-6 py-20" role="main">
 					<motion.div
@@ -76,10 +76,11 @@ export default function ProjectDetail() {
 					<FadeInUp delay={0.2}>
 						<button
 							onClick={() => navigate(-1)}
-							className="mb-8 px-4 py-2 rounded-full bg-orange/10 text-orange-dark border border-orange/20
-							hover:bg-orange hover:text-beige transition-all duration-300 
+							className="mb-8 px-4 py-2 rounded-full bg-orange/10 text-orange-dark dark:text-orange border border-orange/20
+							hover:bg-orange hover:text-beige dark:hover:bg-orange/20 dark:hover:text-orange
+							transition-all duration-300
 							inline-flex items-center gap-2 font-medium text-sm
-							hover:shadow-md hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2"
+							hover:shadow-md hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2 dark:focus:ring-offset-dark-bg"
 							aria-label={t('projects:actions.backToProjects')}
 							type="button"
 						>
@@ -111,7 +112,7 @@ export default function ProjectDetail() {
 									<h1 className="text-4xl md:text-5xl font-display font-extrabold mb-4">
 										{project.title}
 									</h1>
-									<div className="flex items-center gap-4 text-violet/80 mb-6">
+									<div className="flex items-center gap-4 text-violet/80 dark:text-beige/70 mb-6">
 										<span className="flex items-center gap-2">
 											<FaCalendar />
 											{project.year}
@@ -127,7 +128,7 @@ export default function ProjectDetail() {
 							<FadeInUp delay={0.8}>
 								<div>
 									<h2 className="text-2xl font-bold mb-4">{t('projects:labels.description')}</h2>
-									<p className="text-lg leading-relaxed text-violet/90">
+									<p className="text-lg leading-relaxed text-violet/90 dark:text-beige/80">
 										{t(`projects:items.${project.id}.description`, { defaultValue: project.description })}
 									</p>
 								</div>
@@ -136,7 +137,7 @@ export default function ProjectDetail() {
 							<FadeInUp delay={1.0}>
 								<div>
 									<h2 className="text-2xl font-bold mb-4">{t('projects:labels.deliverables')}</h2>
-									<p className="text-lg leading-relaxed text-violet/90">
+									<p className="text-lg leading-relaxed text-violet/90 dark:text-beige/80">
 										{t(`projects:items.${project.id}.deliverables`, { defaultValue: project.deliverables })}
 									</p>
 								</div>
@@ -145,7 +146,7 @@ export default function ProjectDetail() {
 							<FadeInUp delay={1.2}>
 								<div>
 									<h2 className="text-2xl font-bold mb-4">{t('projects:labels.context')}</h2>
-									<p className="text-lg leading-relaxed text-violet/90">
+									<p className="text-lg leading-relaxed text-violet/90 dark:text-beige/80">
 										{t(`projects:items.${project.id}.context`, { defaultValue: project.context })}
 									</p>
 								</div>
@@ -159,7 +160,7 @@ export default function ProjectDetail() {
 											{project.technologies.map((tech, index) => (
 												<span
 													key={index}
-													className="px-3 py-1 bg-lime/20 text-violet border border-lime/30 rounded-full text-sm font-medium"
+													className="px-3 py-1 bg-lime/20 dark:bg-lime/10 text-violet dark:text-beige border border-lime/30 dark:border-lime/20 rounded-full text-sm font-medium"
 												>
 													{tech}
 												</span>

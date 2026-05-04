@@ -49,7 +49,7 @@ const HomePage: React.FC = () => {
 					<SectionErrorBoundary sectionName="Hero">
 						<Hero />
 					</SectionErrorBoundary>
-					<Suspense fallback={<div className="min-h-[50vh] flex items-center justify-center"><div className="text-violet">Loading...</div></div>}>
+					<Suspense fallback={<div className="min-h-[50vh] flex items-center justify-center"><div className="text-violet dark:text-beige">Loading...</div></div>}>
 						<SectionErrorBoundary sectionName="Bio">
 							<Bio />
 						</SectionErrorBoundary>

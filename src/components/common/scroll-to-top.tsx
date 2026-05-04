@@ -28,8 +28,10 @@ export default function ScrollToTop() {
 			className={`fixed bottom-6 right-6 z-[9999] flex items-center gap-2
         px-4 py-2 sm:px-6 sm:py-3 rounded-full font-bold
         bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5
-        backdrop-blur-md border border-lime/30 text-violet
-        hover:bg-lime hover:text-orange font-sans uppercase tracking-wider text-sm
+        dark:from-lime/10 dark:via-orange/5 dark:to-violet/10
+        backdrop-blur-md border border-lime/30 dark:border-lime/20 text-violet dark:text-beige
+        hover:bg-lime hover:text-orange dark:hover:bg-lime/20 dark:hover:text-lime
+        font-sans uppercase tracking-wider text-sm
         transition-all duration-300 ease-in-out
         focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-orange
         active:scale-95

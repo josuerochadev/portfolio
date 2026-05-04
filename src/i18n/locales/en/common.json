@@ -32,6 +32,10 @@
     "refreshPage": "Refresh page"
   },
   "videoNotSupported": "Your browser does not support videos.",
+  "theme": {
+    "switchToDark": "Switch to dark mode",
+    "switchToLight": "Switch to light mode"
+  },
   "accessibility": {
     "skipToMain": "Skip to main content",
     "closePhoto": "Close photo",

@@ -22,15 +22,16 @@ export default function ModalNotice({ show, onClose }: ModalNoticeProps) {
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					exit={{ opacity: 0 }}
-					className="fixed inset-0 bg-beige/40 backdrop-blur-sm flex items-center justify-center z-[9999]"
+					className="fixed inset-0 bg-beige/40 dark:bg-dark-bg/60 backdrop-blur-sm flex items-center justify-center z-[9999]"
 				>
 					<motion.div
 						initial={{ y: -50, opacity: 0 }}
 						animate={{ y: 0, opacity: 1 }}
 						exit={{ y: -50, opacity: 0 }}
-						className="w-full max-w-md mx-4 p-6 text-violet text-center
+						className="w-full max-w-md mx-4 p-6 text-violet dark:text-beige text-center
 						bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5
-						backdrop-blur-md border border-lime/30 rounded-2xl shadow-md
+						dark:from-lime/10 dark:via-orange/5 dark:to-violet/10
+						backdrop-blur-md border border-lime/30 dark:border-lime/20 rounded-2xl shadow-md
 						transition-all duration-300 ease-[cubic-bezier(0.83,0,0.17,1)]"
 					>
 						<h3 className="text-3xl font-display font-extrabold mb-4">

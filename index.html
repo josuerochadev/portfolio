@@ -138,6 +138,16 @@
     }
   </style>
 
+  <!-- Dark mode anti-flash: apply theme class before first paint -->
+  <script>
+    (function() {
+      var t = localStorage.getItem('theme');
+      if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
@@ -208,7 +218,7 @@
 
 </head>
 
-<body class="text-violet min-h-screen">
+<body class="text-violet dark:text-beige dark:bg-dark-bg min-h-screen transition-colors duration-300">
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
 </body>

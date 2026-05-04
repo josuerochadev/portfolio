@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+	darkMode: 'class',
 	content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
 	theme: {
 		extend: {
@@ -11,6 +12,9 @@ const config: Config = {
 			'orange-dark': '#C56200',
 			violet: '#6900FF',
 			'violet-dark': '#5500CC', // Better contrast for text on light backgrounds
+			// Dark mode surface colors
+			'dark-bg': '#0F0A1A',
+			'dark-surface': '#1A1230',
 		  },
 		  fontFamily: {
 			sans: ['Rubik', 'sans-serif'],

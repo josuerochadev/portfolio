@@ -9,7 +9,7 @@ export default function LegalNotice() {
 	const { t } = useTranslation(['legal', 'common']);
 	
 	return (
-		<div className="min-h-screen text-violet-dark">
+		<div className="min-h-screen text-violet-dark dark:text-beige">
 			<BackgroundGradient />
 			<main className="relative z-10 max-w-4xl mx-auto px-6 py-20" role="main">
 				<motion.div
@@ -20,10 +20,11 @@ export default function LegalNotice() {
 					<FadeInUp delay={0.2}>
 						<Link 
 							to="/" 
-							className="mb-8 px-4 py-2 rounded-full bg-orange/10 text-orange-dark border border-orange/20
-							hover:bg-orange hover:text-beige transition-all duration-300 
+							className="mb-8 px-4 py-2 rounded-full bg-orange/10 text-orange-dark dark:text-orange border border-orange/20
+							hover:bg-orange hover:text-beige dark:hover:bg-orange/20 dark:hover:text-orange
+							transition-all duration-300
 							inline-flex items-center gap-2 font-medium text-sm
-							hover:shadow-md hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2"
+							hover:shadow-md hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2 dark:focus:ring-offset-dark-bg"
 							aria-label={t('common:buttons.backToHome')}
 						>
 							<FaArrowLeft className="inline-block" /> {t('common:buttons.backToHome')}
@@ -31,7 +32,7 @@ export default function LegalNotice() {
 					</FadeInUp>
 
 					<FadeInUp delay={0.4}>
-						<h1 className="text-4xl md:text-5xl font-display font-extrabold mb-8 text-violet">
+						<h1 className="text-4xl md:text-5xl font-display font-extrabold mb-8 text-violet dark:text-beige">
 							{t('legalNotice.title')}
 						</h1>
 					</FadeInUp>
@@ -55,7 +56,7 @@ export default function LegalNotice() {
 								<p>
 									<strong>{t('legalNotice.hosting.provider')}</strong><br />
 									{t('legalNotice.hosting.address')}<br />
-									<a href={t('legalNotice.hosting.website')} className="text-orange-dark hover:underline" target="_blank" rel="noopener noreferrer">
+									<a href={t('legalNotice.hosting.website')} className="text-orange-dark dark:text-orange hover:underline" target="_blank" rel="noopener noreferrer">
 										{t('legalNotice.hosting.website')}
 									</a>
 								</p>

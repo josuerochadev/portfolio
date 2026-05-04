@@ -46,7 +46,7 @@ const Navbar: React.FC = () => {
 			ref={navRef}
 			onMouseMove={handleMouseMove}
 			aria-label="Main navigation"
-			className="relative w-full bg-transparent backdrop-blur-md text-violet font-bold text-sm sm:text-lg uppercase tracking-wider font-sans overflow-hidden py-4 sm:py-6 z-50 border-b-2 border-lime"
+			className="relative w-full bg-transparent backdrop-blur-md text-violet dark:text-beige font-bold text-sm sm:text-lg uppercase tracking-wider font-sans overflow-hidden py-4 sm:py-6 z-50 border-b-2 border-lime dark:border-lime/40"
 		>
 			{/* Animated bars background */}
 			<div className="absolute inset-0 z-[1]">
@@ -60,7 +60,7 @@ const Navbar: React.FC = () => {
 						return (
 							<div
 								key={`bar-${i}`}
-								className="animated-bar absolute top-0 h-full bg-lime backdrop-blur-md transition-[width,opacity] duration-100 ease-[cubic-bezier(0.83,0,0.17,1)]"
+								className="animated-bar absolute top-0 h-full bg-lime dark:bg-lime/30 backdrop-blur-md transition-[width,opacity] duration-100 ease-[cubic-bezier(0.83,0,0.17,1)]"
 								style={{ left, width: '0px', opacity: 0 }}
 							/>
 						);
@@ -74,7 +74,7 @@ const Navbar: React.FC = () => {
 					<li>
 						<a
 							href="#hero"
-							className="transition-colors duration-200 text-violet hover:text-orange focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2 rounded-lg"
+							className="transition-colors duration-200 text-violet dark:text-beige hover:text-orange focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2 dark:focus:ring-offset-dark-bg rounded-lg"
 							aria-label="Home"
 						>
 							<SmileIcon className="w-8 h-8 sm:w-10 sm:h-10" />
@@ -90,7 +90,7 @@ const Navbar: React.FC = () => {
 								initial="initial"
 								animate="initial"
 								whileHover="hover"
-								className="inline-block cursor-pointer focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2 rounded px-1 py-1 sm:px-2 text-xs sm:text-base"
+								className="inline-block cursor-pointer focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2 dark:focus:ring-offset-dark-bg rounded px-1 py-1 sm:px-2 text-xs sm:text-base"
 							>
 								{t(`navigation.${key}`)}
 							</motion.a>

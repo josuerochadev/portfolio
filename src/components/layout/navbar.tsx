@@ -45,6 +45,7 @@ const Navbar: React.FC = () => {
 		<nav
 			ref={navRef}
 			onMouseMove={handleMouseMove}
+			aria-label="Main navigation"
 			className="relative w-full bg-transparent backdrop-blur-md text-violet font-bold text-sm sm:text-lg uppercase tracking-wider font-sans overflow-hidden py-4 sm:py-6 z-50 border-b-2 border-lime"
 		>
 			{/* Animated bars background */}

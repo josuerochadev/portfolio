@@ -3,16 +3,16 @@ import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 
 const TIMELINE_KEYS = ["law", "france", "firstCode", "cda", "mainframe", "now"];
-const TIMELINE_GIFS = [
-	"/assets/videos/bio/1.gif",
-	"/assets/videos/bio/2.gif",
-	"/assets/videos/bio/3.gif",
-	"/assets/videos/bio/4.gif",
-	"/assets/videos/bio/5.gif",
-	"/assets/videos/bio/6.gif",
+const TIMELINE_IMAGES = [
+	"/assets/videos/bio/1.webp",
+	"/assets/videos/bio/2.webp",
+	"/assets/videos/bio/3.webp",
+	"/assets/videos/bio/4.webp",
+	"/assets/videos/bio/5.webp",
+	"/assets/videos/bio/6.webp",
 ];
 
-function TimelineGif({ src, className }: { src: string; className?: string }) {
+function TimelineImage({ src, className }: { src: string; className?: string }) {
 	return (
 		<img
 			src={src}
@@ -26,14 +26,14 @@ function TimelineGif({ src, className }: { src: string; className?: string }) {
 
 function TimelineStep({
 	step,
-	gifSrc,
-	gifRef,
+	imageSrc,
+	imageRef,
 	cardRef,
 	index,
 }: {
 	step: { period: string; title: string; text: string };
-	gifSrc: string;
-	gifRef: (el: HTMLDivElement | null) => void;
+	imageSrc: string;
+	imageRef: (el: HTMLDivElement | null) => void;
 	cardRef: (el: HTMLDivElement | null) => void;
 	index: number;
 }) {
@@ -43,14 +43,14 @@ function TimelineStep({
 		<div className="relative min-h-screen flex items-center justify-center">
 			{/* GIF — offset to one side, zig-zag */}
 			<div
-				ref={gifRef}
+				ref={imageRef}
 				className={`
 					absolute inset-0 flex items-center will-change-transform pointer-events-none
 					${isEven ? "justify-start md:pl-[2%]" : "justify-end md:pr-[2%]"}
 				`}
 			>
-				<TimelineGif
-					src={gifSrc}
+				<TimelineImage
+					src={imageSrc}
 					className="max-h-[95vh] md:max-h-[140vh] w-auto max-w-[70%] md:max-w-[60%] object-contain select-none"
 				/>
 			</div>
@@ -101,7 +101,7 @@ export default function Timeline() {
 	>;
 
 	const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
-	const gifRefs = useRef<(HTMLDivElement | null)[]>([]);
+	const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
 	const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 	const [activeIndex, setActiveIndex] = useState(0);
 
@@ -144,7 +144,7 @@ export default function Timeline() {
 
 			for (let i = 0; i < TIMELINE_KEYS.length; i++) {
 				const step = stepRefs.current[i];
-				const gif = gifRefs.current[i];
+				const gif = imageRefs.current[i];
 				const card = cardRefs.current[i];
 				if (!step || !gif || !card) continue;
 
@@ -184,7 +184,7 @@ export default function Timeline() {
 	return (
 		<div className="relative z-0 w-full">
 			{/* Year picker — horizontal, sticky on scroll */}
-			<nav className="sticky top-4 sm:top-6 z-20 ml-4 md:ml-0 w-fit rounded-full flex items-center gap-2 px-2 py-1 sm:px-3 sm:py-2 bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5 backdrop-blur-md border border-lime/30 shadow-lg hover:shadow-xl hover:bg-lime active:scale-95 transition-transform duration-150 mb-6">
+			<nav aria-label="Timeline navigation" className="sticky top-4 sm:top-6 z-20 ml-4 md:ml-0 w-fit rounded-full flex items-center gap-2 px-2 py-1 sm:px-3 sm:py-2 bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5 backdrop-blur-md border border-lime/30 shadow-lg hover:shadow-xl hover:bg-lime active:scale-95 transition-transform duration-150 mb-6">
 				{years.map((year, i) => (
 					<React.Fragment key={year}>
 						{i > 0 && <span className="text-violet/20 text-xs select-none" aria-hidden="true">&bull;</span>}
@@ -216,8 +216,8 @@ export default function Timeline() {
 					>
 						<TimelineStep
 							step={timeline[key]}
-							gifSrc={TIMELINE_GIFS[i]}
-							gifRef={(el) => { gifRefs.current[i] = el; }}
+							imageSrc={TIMELINE_IMAGES[i]}
+							imageRef={(el) => { imageRefs.current[i] = el; }}
 							cardRef={(el) => { cardRefs.current[i] = el; }}
 							index={i}
 						/>

@@ -17,7 +17,7 @@ export default function Footer() {
 				<LetterRippleEffect text="Josué " />
 				<LetterRippleEffect text="Rocha" />
 			</h2>
-			<nav className="flex justify-center gap-5 sm:gap-8 mb-6 text-base font-bold uppercase tracking-wider">
+			<nav aria-label="Footer navigation" className="flex justify-center gap-5 sm:gap-8 mb-6 text-base font-bold uppercase tracking-wider">
 				{FOOTER_NAV.map(({ key, href }) => (
 					<a
 						key={key}

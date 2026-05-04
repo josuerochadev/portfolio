@@ -28,9 +28,9 @@ export default function Footer() {
 					</a>
 				))}
 			</nav>
-			<p className="text-sm italic text-violet-dark/60 mb-6">{t('footer.craftedWith')}</p>
+			<p className="text-sm italic text-violet-dark mb-6">{t('footer.craftedWith')}</p>
 			<div className="w-16 h-px bg-violet-dark/20 mx-auto mb-6" />
-			<div className="flex justify-center gap-4 mb-2 text-xs text-violet-dark/50">
+			<div className="flex justify-center gap-4 mb-2 text-xs text-violet-dark">
 				<Link
 					to="/mentions-legales"
 					className="hover:text-orange transition-colors underline"
@@ -45,7 +45,7 @@ export default function Footer() {
 					{t('footer.privacy')}
 				</Link>
 			</div>
-			<p className="text-xs text-violet-dark/50">
+			<p className="text-xs text-violet-dark">
 				© {new Date().getFullYear()} Josué Rocha. {t('footer.allRights')}
 			</p>
 		</footer>

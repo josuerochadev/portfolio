@@ -1,5 +1,9 @@
 {
-  "heading": "Aqui está uma visão do meu trabalho — uma amostra do que posso trazer",
+  "heading": "Aprender, construir, recomeçar",
+  "subheadings": {
+    "formations": "O que as formações me ensinaram a construir",
+    "projects": "O que construo fora da sala de aula"
+  },
   "contact": {
     "heading": "Me manda uma mensagem",
     "description": "Eu leio todas as mensagens. Seja sobre código, mainframe, reconversão ou só trocar uma ideia — não hesite.",
@@ -30,6 +34,24 @@
     "backToHome": "← Voltar ao início"
   },
   "items": {
+    "luciole": {
+      "title": "Luciole",
+      "description": "Agente de IA conversacional que automatiza a vigilância tecnológica: coleta, analisa e sintetiza 200+ artigos/dia de 40+ fontes RSS.",
+      "deliverables": "Agente ReAct com 8 ferramentas, pipeline de ingestão RSS automático, interface web com streaming SSE, sistema RAG próprio, segurança anti-injeção, deploy Docker",
+      "context": "Equipes de TI gastam cerca de 15 min por artigo em monitoramento manual. Este agente reduz isso a segundos por pergunta."
+    },
+    "poei-mainframe-gestion-clientele": {
+      "title": "Gestor de clientes mainframe",
+      "description": "Sistema de gestão de clientes bancários desenvolvido em mainframe z/OS em três etapas: processamento batch COBOL/JCL, consultas relacionais DB2/SQL e aplicação transacional CICS em tempo real.",
+      "deliverables": "Programas COBOL batch e transacionais, scripts SQL, telas BMS, JCL de compilação e execução, arquivos VSAM, relatório de projeto completo",
+      "context": "Simular o ciclo completo de uma aplicação mainframe em torno de um mesmo domínio de negócio — do processamento batch à tela transacional em tempo real."
+    },
+    "tour-de-controle": {
+      "title": "Tour de Contrôle",
+      "description": "Aplicação web de gestão de caixa e equipe para restaurantes, com rastreamento de transações e detecção de divergências.",
+      "deliverables": "API REST documentada Swagger, interface React completa, autenticação JWT com RBAC, detecção automática de divergências de caixa, CRUD de funcionários, PostgreSQL com migrações Sqitch, Docker Compose 6 serviços",
+      "context": "Responder a uma necessidade real de um restaurante: centralizar a gestão de caixa e equipe em uma ferramenta única, confiável e segura."
+    },
     "lunetterie-du-coin": {
       "title": "La Lunetterie du Coin",
       "description": "Site vitrine moderno para uma ótica independente, com agendamento e formulário de contato integrados.",
@@ -37,28 +59,16 @@
       "context": "Oferecer a um ótico independente uma presença web profissional e performante, com foco em acessibilidade, performance e design bold maximalist."
     },
     "site-vitrine-avocate": {
-      "title": "Rayssa Eskinazi — Advogada",
+      "title": "Rayssa Harmes Advogada",
       "description": "Site profissional para uma advogada em Estrasburgo, otimizado para SEO local e conversão de visitantes em agendamentos.",
       "deliverables": "Site com 13 páginas, formulário Formspree, agendamento Calendly, SEO local com JSON-LD, design responsivo, conformidade RGPD, suíte completa de testes",
       "context": "Uma advogada atuante em Estrasburgo precisava de um site profissional para se posicionar nas buscas locais e facilitar o agendamento de consultas."
     },
-    "luciole": {
-      "title": "Luciole — Agente IA",
-      "description": "Agente de IA conversacional que automatiza a vigilância tecnológica: coleta, analisa e sintetiza 200+ artigos/dia de 40+ fontes RSS.",
-      "deliverables": "Agente ReAct com 8 ferramentas, pipeline de ingestão RSS automático, interface web com streaming SSE, sistema RAG próprio, segurança anti-injeção, deploy Docker",
-      "context": "Equipes de TI gastam cerca de 15 min por artigo em monitoramento manual. Este agente reduz isso a segundos por pergunta."
-    },
     "stella-ecommerce": {
-      "title": "Stella — E-commerce",
+      "title": "Stella",
       "description": "Aplicação e-commerce full stack para navegar, filtrar e comprar estrelas, com autenticação segura, carrinho e sistema de avaliações.",
       "deliverables": "Catálogo interativo, autenticação JWT/CSRF, carrinho e lista de desejos, sistema de pedidos, API RESTful documentada Swagger, painel admin, módulo de pagamento",
       "context": "Projeto pessoal para demonstrar competências full stack em condições reais: arquitetura MVC, segurança multicamada, ORM e testes automatizados."
-    },
-    "tour-de-controle": {
-      "title": "Tour de Contrôle",
-      "description": "Aplicação web de gestão de caixa e equipe para restaurantes, com rastreamento de transações e detecção de divergências.",
-      "deliverables": "API REST documentada Swagger, interface React completa, autenticação JWT com RBAC, detecção automática de divergências de caixa, CRUD de funcionários, PostgreSQL com migrações Sqitch, Docker Compose 6 serviços",
-      "context": "Responder a uma necessidade real de um restaurante: centralizar a gestão de caixa e equipe em uma ferramenta única, confiável e segura."
     }
   }
 }

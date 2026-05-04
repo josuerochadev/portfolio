@@ -1,5 +1,9 @@
 {
-  "heading": "Voici un aperçu de mon travail — un avant-goût de ce que je peux apporter",
+  "heading": "Apprendre, construire, recommencer",
+  "subheadings": {
+    "formations": "Ce que les formations m'ont appris à construire",
+    "projects": "Ce que je construis en dehors des salles de cours"
+  },
   "contact": {
     "heading": "Écris-moi un mot",
     "description": "Je lis chaque message. Que ce soit pour parler code, mainframe, reconversion ou juste échanger — n'hésite pas.",
@@ -30,6 +34,24 @@
     "backToHome": "← Retour à l'accueil"
   },
   "items": {
+    "luciole": {
+      "title": "Luciole",
+      "description": "Agent IA conversationnel qui automatise la veille technologique : collecte, analyse et synthétise 200+ articles/jour depuis 40+ sources RSS.",
+      "deliverables": "Agent ReAct avec 8 outils, pipeline d'ingestion RSS automatique, interface web avec streaming SSE, système RAG maison, sécurité anti-injection, déploiement Docker",
+      "context": "Les équipes IT passent environ 15 min par article en veille manuelle. Cet agent réduit ce temps à quelques secondes par question."
+    },
+    "poei-mainframe-gestion-clientele": {
+      "title": "Gestionnaire de clients mainframe",
+      "description": "Système de gestion de clientèle bancaire développé sur mainframe z/OS en trois volets : traitements batch COBOL/JCL, exploitation relationnelle DB2/SQL et application transactionnelle CICS en temps réel.",
+      "deliverables": "Programmes COBOL batch et transactionnels, scripts SQL, écrans BMS, JCL de compilation et d'exploitation, fichiers VSAM, rapport de projet complet",
+      "context": "Simuler le cycle complet d'une application mainframe autour d'un même domaine métier — de la gestion batch à l'écran transactionnel en temps réel."
+    },
+    "tour-de-controle": {
+      "title": "Tour de Contrôle",
+      "description": "Application web de gestion de caisse et du personnel pour la restauration, avec suivi des transactions et détection d'écarts.",
+      "deliverables": "API REST documentée Swagger, interface React complète, authentification JWT avec RBAC, détection automatique des écarts de caisse, CRUD personnel, base PostgreSQL avec migrations Sqitch, Docker Compose 6 services",
+      "context": "Répondre au besoin réel d'un restaurant : centraliser la gestion des caisses et du personnel dans un outil unique, fiable et sécurisé."
+    },
     "lunetterie-du-coin": {
       "title": "La Lunetterie du Coin",
       "description": "Site vitrine moderne pour un opticien indépendant, avec prise de rendez-vous et formulaire de contact intégrés.",
@@ -37,28 +59,16 @@
       "context": "Donner une présence web professionnelle et performante à un opticien indépendant, en misant sur l'accessibilité, la performance et un design bold maximalist."
     },
     "site-vitrine-avocate": {
-      "title": "Rayssa Eskinazi — Avocate",
+      "title": "Rayssa Harmes Avocate",
       "description": "Site vitrine professionnel pour une avocate à Strasbourg, optimisé pour le SEO local et la conversion de prospects en rendez-vous.",
       "deliverables": "Site 13 pages, formulaire de contact Formspree, prise de RDV Calendly, SEO local avec JSON-LD, design responsive, conformité RGPD, suite de tests complète",
       "context": "Une avocate en exercice à Strasbourg avait besoin d'un site professionnel pour se positionner sur les recherches locales et permettre à ses clients de prendre rendez-vous facilement."
     },
-    "luciole": {
-      "title": "Luciole — Agent IA",
-      "description": "Agent IA conversationnel qui automatise la veille technologique : collecte, analyse et synthétise 200+ articles/jour depuis 40+ sources RSS.",
-      "deliverables": "Agent ReAct avec 8 outils, pipeline d'ingestion RSS automatique, interface web avec streaming SSE, système RAG maison, sécurité anti-injection, déploiement Docker",
-      "context": "Les équipes IT passent environ 15 min par article en veille manuelle. Cet agent réduit ce temps à quelques secondes par question."
-    },
     "stella-ecommerce": {
-      "title": "Stella — E-commerce",
+      "title": "Stella",
       "description": "Application e-commerce full stack permettant de parcourir, filtrer et acheter des étoiles, avec authentification sécurisée, panier et système d'avis.",
       "deliverables": "Catalogue interactif, authentification JWT/CSRF, panier et wishlist, système de commandes, API RESTful documentée Swagger, panel admin, module de paiement",
       "context": "Projet personnel développé pour démontrer des compétences full stack en conditions réelles : architecture MVC, sécurité multicouche, ORM et tests automatisés."
-    },
-    "tour-de-controle": {
-      "title": "Tour de Contrôle",
-      "description": "Application web de gestion de caisse et du personnel pour la restauration, avec suivi des transactions et détection d'écarts.",
-      "deliverables": "API REST documentée Swagger, interface React complète, authentification JWT avec RBAC, détection automatique des écarts de caisse, CRUD personnel, base PostgreSQL avec migrations Sqitch, Docker Compose 6 services",
-      "context": "Répondre au besoin réel d'un restaurant : centraliser la gestion des caisses et du personnel dans un outil unique, fiable et sécurisé."
     }
   }
 }

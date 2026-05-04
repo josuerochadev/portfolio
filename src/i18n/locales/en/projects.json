@@ -1,5 +1,9 @@
 {
-  "heading": "Here's a glimpse into my work — a taste of what I can bring",
+  "heading": "Learn, build, start over",
+  "subheadings": {
+    "formations": "What training taught me to build",
+    "projects": "What I build outside the classroom"
+  },
   "contact": {
     "heading": "Drop me a line",
     "description": "I read every message. Whether it's about code, mainframe, career change or just a chat — don't hesitate.",
@@ -30,6 +34,24 @@
     "backToHome": "← Back to home"
   },
   "items": {
+    "luciole": {
+      "title": "Luciole",
+      "description": "Conversational AI agent that automates tech intelligence: collects, analyzes and summarizes 200+ articles/day from 40+ RSS sources.",
+      "deliverables": "ReAct agent with 8 tools, automated RSS ingestion pipeline, web interface with SSE streaming, custom RAG system, anti-injection security, Docker deployment",
+      "context": "IT teams spend about 15 min per article on manual monitoring. This agent reduces that to seconds per query."
+    },
+    "poei-mainframe-gestion-clientele": {
+      "title": "Mainframe customer manager",
+      "description": "Banking customer management system built on mainframe z/OS in three stages: batch COBOL/JCL processing, DB2/SQL relational queries, and a real-time CICS transactional application.",
+      "deliverables": "Batch and transactional COBOL programs, SQL scripts, BMS screens, compilation and execution JCL, VSAM files, full project report",
+      "context": "Simulate the full cycle of a mainframe application around a single business domain — from batch processing to real-time transactional screens."
+    },
+    "tour-de-controle": {
+      "title": "Tour de Contrôle",
+      "description": "Restaurant cash register and staff management web application, with transaction tracking and discrepancy detection.",
+      "deliverables": "Swagger-documented REST API, full React interface, JWT authentication with RBAC, automatic cash discrepancy detection, staff CRUD, PostgreSQL with Sqitch migrations, Docker Compose 6 services",
+      "context": "Addressing a real restaurant need: centralizing cash register and staff management into a single, reliable, and secure tool."
+    },
     "lunetterie-du-coin": {
       "title": "La Lunetterie du Coin",
       "description": "Modern showcase website for an independent optician, with integrated appointment booking and contact form.",
@@ -37,28 +59,16 @@
       "context": "Give an independent optician a professional, high-performance web presence with a focus on accessibility, performance and bold maximalist design."
     },
     "site-vitrine-avocate": {
-      "title": "Rayssa Eskinazi — Lawyer",
+      "title": "Rayssa Harmes Lawyer",
       "description": "Professional showcase website for a Strasbourg-based lawyer, optimized for local SEO and converting visitors into booked appointments.",
       "deliverables": "13-page site, Formspree contact form, Calendly booking, local SEO with JSON-LD, responsive design, GDPR compliance, full test suite",
       "context": "A practicing lawyer in Strasbourg needed a professional website to rank on local searches and make it easy for clients to book consultations."
     },
-    "luciole": {
-      "title": "Luciole — AI Agent",
-      "description": "Conversational AI agent that automates tech intelligence: collects, analyzes and summarizes 200+ articles/day from 40+ RSS sources.",
-      "deliverables": "ReAct agent with 8 tools, automated RSS ingestion pipeline, web interface with SSE streaming, custom RAG system, anti-injection security, Docker deployment",
-      "context": "IT teams spend about 15 min per article on manual monitoring. This agent reduces that to seconds per query."
-    },
     "stella-ecommerce": {
-      "title": "Stella — E-commerce",
+      "title": "Stella",
       "description": "Full stack e-commerce application for browsing, filtering, and purchasing stars, with secure authentication, cart and review system.",
       "deliverables": "Interactive catalog, JWT/CSRF authentication, cart and wishlist, order system, Swagger-documented RESTful API, admin panel, payment module",
       "context": "Personal project built to demonstrate full stack skills in real-world conditions: MVC architecture, multi-layered security, ORM and automated testing."
-    },
-    "tour-de-controle": {
-      "title": "Tour de Contrôle",
-      "description": "Restaurant cash register and staff management web application, with transaction tracking and discrepancy detection.",
-      "deliverables": "Swagger-documented REST API, full React interface, JWT authentication with RBAC, automatic cash discrepancy detection, staff CRUD, PostgreSQL with Sqitch migrations, Docker Compose 6 services",
-      "context": "Addressing a real restaurant need: centralizing cash register and staff management into a single, reliable, and secure tool."
     }
   }
 }

@@ -22,8 +22,8 @@ const FloatingLanguageSwitcher: React.FC = () => {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={`
-          fixed top-4 right-4 sm:top-6 sm:right-6 z-[99999]
-          flex items-center gap-2 px-2 py-1 sm:px-3 sm:py-2 rounded-full
+          fixed top-6 right-6 z-[99999]
+          flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3 rounded-full
           bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5
           dark:from-lime/10 dark:via-orange/5 dark:to-violet/10
           backdrop-blur-md border border-lime/30 dark:border-lime/20 text-violet dark:text-beige
@@ -51,7 +51,7 @@ const FloatingLanguageSwitcher: React.FC = () => {
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
             transition={{ duration: 0.15, ease: "easeOut" }}
             className={`
-              fixed top-16 right-4 sm:top-20 sm:right-6 z-[99998]
+              fixed top-20 right-6 z-[99998]
               w-32 sm:w-36 rounded-2xl shadow-2xl
               bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5
               dark:from-lime/10 dark:via-orange/5 dark:to-violet/10

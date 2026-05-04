@@ -185,7 +185,7 @@ export default function Timeline() {
 	return (
 		<div className="relative z-0 w-full">
 			{/* Year picker — horizontal, sticky on scroll */}
-			<nav aria-label="Timeline navigation" className="sticky top-4 sm:top-6 z-20 ml-4 md:ml-0 w-fit rounded-full flex items-center gap-2 px-2 py-1 sm:px-3 sm:py-2 bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5 dark:from-lime/10 dark:via-orange/5 dark:to-violet/10 backdrop-blur-md border border-lime/30 dark:border-lime/20 shadow-lg hover:shadow-xl hover:bg-lime dark:hover:bg-lime/20 active:scale-95 transition-transform duration-150 mb-6">
+			<nav aria-label="Timeline navigation" className="sticky top-6 z-20 ml-6 md:ml-0 w-fit rounded-full flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3 bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5 dark:from-lime/10 dark:via-orange/5 dark:to-violet/10 backdrop-blur-md border border-lime/30 dark:border-lime/20 shadow-lg hover:shadow-xl hover:bg-lime dark:hover:bg-lime/20 active:scale-95 transition-transform duration-150 mb-6">
 				{years.map((year, i) => (
 					<React.Fragment key={year}>
 						{i > 0 && <span className="text-violet/20 dark:text-beige/20 text-xs select-none" aria-hidden="true">&bull;</span>}
@@ -196,8 +196,8 @@ export default function Timeline() {
 								font-sans font-bold text-xs sm:text-sm uppercase tracking-wider
 								transition-all duration-300 cursor-pointer active:scale-95
 								${i === activeIndex
-									? "text-orange"
-									: "text-violet dark:text-beige hover:text-orange-dark dark:hover:text-orange"
+									? "text-orange-dark dark:text-orange"
+									: "text-violet dark:text-beige hover:text-orange dark:hover:text-orange"
 								}
 							`}
 						>

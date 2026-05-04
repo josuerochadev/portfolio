@@ -31,7 +31,7 @@ export default defineConfig({
           router: ["react-router-dom"],
           animation: ["framer-motion"],
           icons: ["react-icons"],
-          utils: ["@studio-freight/lenis", "react-scroll-parallax"],
+          utils: ["@studio-freight/lenis"],
         },
       },
     },

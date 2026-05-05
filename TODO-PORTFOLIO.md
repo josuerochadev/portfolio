@@ -88,7 +88,7 @@ Option D — narrative :
 - Competences integrees dans le parcours (pas une section a part)
 
 ### Taches
-- [ ] Deplacer la section bio avant projets dans home-page.tsx
+- [x] Deplacer la section bio avant projets dans home-page.tsx
 - [ ] Definir le nouveau contenu et format (session dediee)
 - [ ] Reecrire les textes bio.json (fr/en/pt)
 - [ ] Repenser la phrase d'intro de la section
@@ -97,32 +97,69 @@ Option D — narrative :
 
 ## SECTION 3 : Projets — formations + realisations
 
-### Etat actuel
-- 5 projets : Lunetterie, Rayssa, Luciole, Stella, Tour de Controle
-- Heading : "Here's a glimpse into my work — a taste of what I can bring"
-- Interface : cards avec detail
+### Etat actuel (FAIT)
+- [x] Heading : "Apprendre, construire, recommencer" (3 langues)
+- [x] 6 projets : Luciole, POEI Mainframe, Tour de Controle, Lunetterie, Rayssa, Stella
+- [x] Champ type: 'formation' | 'project' dans le modele
+- [x] Separation UI formations / projets avec sous-titres phrases
+- [x] Nouvelles images optimisees (webp, 3 tailles)
+- [x] Traductions FR/EN/PT a jour
 
-### Ce qui change
-- Ajouter les formations comme projets a part : cards dediees pour les fils rouges
-  - Fil rouge CDA (O'Clock) — projet de fin de formation
-  - Fil rouge POEI Mainframe — projet de fin de formation
-  - Formation IA (Luciole est deja la, voir si on la garde en projet ou en formation)
-- Separer visuellement formations et projets perso (2 groupes ou tabs, a definir)
-- Changer le heading (moins vendeur)
-- Repenser l'interface des cards (session dediee)
+### Pages detail projet — Refonte (EN COURS)
 
-### Pistes pour le heading (a trancher en session)
-- "Ce que je construis"
-- "Projets & formations"
-- "En pratique"
+Structure cible par page (mini case study) :
+
+```
+1. Hero projet
+   - Titre + badge statut + annee
+   - Description courte (1-2 lignes)
+   - Tags technos
+   - Boutons : Demo live | Code source (masques si non dispo)
+
+2. Visuel principal
+   - Screenshot/mockup full-width
+   - Ou video/GIF de demo embedded (si pertinent)
+
+3. Le pourquoi
+   - Contexte / probleme a resoudre
+   - Motivation, situation
+
+4. Ce que j'ai construit
+   - 3-4 blocs livrables cles (icone + description)
+   - Pas une liste a plat
+
+5. Decisions techniques
+   - 2-3 choix importants expliques ("pourquoi X plutot que Y")
+   - Section expert-friendly
+
+6. Stack technique
+   - Grille de technos avec role de chacune
+
+7. Resultats / Chiffres (si applicable)
+   - Metrics : perf Lighthouse, temps de reponse, volume traite, etc.
+
+8. Navigation
+   - Projet precedent / suivant
+   - Retour a la section projets
+```
+
+### Statut par projet
+
+| Projet | Page detail | Contenu pret | Demo/liens |
+|--------|-------------|--------------|------------|
+| La Lunetterie du Coin | [ ] | oui | oui (live + github) |
+| Rayssa Harmes Avocate | [ ] | oui | oui (live + github) |
+| Luciole | [ ] | oui | oui (live + github) |
+| Gestionnaire clients mainframe | [ ] | oui | non |
+| Tour de Controle | [ ] | a completer | non |
+| Stella | [ ] | a completer | non |
 
 ### Taches
-- [ ] Ajouter les projets fils rouges (CDA, POEI) dans projects.ts
-- [ ] Decider comment organiser formations vs projets perso (session dediee)
-- [ ] Changer le heading de la section (3 langues)
-- [ ] Repenser l'interface des cards projet (session dediee)
-- [ ] Mettre a jour projects.json (fr/en/pt)
-- [ ] Creer les images pour les nouveaux projets
+- [ ] Implementer le squelette page detail (nouveau composant)
+- [ ] Ajouter les champs manquants au modele (decisions, metrics, etc.)
+- [ ] Remplir le contenu pour chaque projet (session par projet)
+- [ ] Ajouter navigation prev/next
+- [ ] Traduire les nouvelles sections (fr/en/pt)
 
 ---
 
@@ -146,7 +183,7 @@ Option D — narrative :
 
 ---
 
-## SECTION 5 : Navbar — lien Blog
+## SECTION 5 : Navbar — lien Blog (FAIT)
 
 ### Ce qui change
 - Ajouter un lien "Blog" dans la navbar
@@ -154,41 +191,42 @@ Option D — narrative :
 - Le blog sera un projet separe (Hashnode ou autre)
 
 ### Taches
-- [ ] Ajouter l'entree Blog dans la navbar
-- [ ] Traduire le label (3 langues) — "Blog" est probablement universel
-- [ ] Pointer vers un placeholder ou l'URL quand elle existe
+- [x] Ajouter l'entree Blog dans la navbar
+- [x] Traduire le label (3 langues) — "Blog" est probablement universel
+- [x] Pointer vers un placeholder ou l'URL quand elle existe
 
 ---
 
-## SECTION 6 : Dark mode (bonus)
+## SECTION 6 : Dark mode (FAIT)
 
 ### Objectif
 Toggle dark/light mode. Priorite basse, polish.
 
 ### Taches
-- [ ] Definir la palette dark dans tailwind.config.ts
-- [ ] Composant ThemeToggle (sun/moon)
-- [ ] localStorage + prefers-color-scheme
-- [ ] Adapter les composants
+- [x] Definir la palette dark dans tailwind.config.ts
+- [x] Composant ThemeToggle (sun/moon)
+- [x] localStorage + prefers-color-scheme
+- [x] Adapter les composants
 - [ ] Tester contraste WCAG
 
 ---
 
 ## Ordre de priorite
 
-1. **Section 2** — Parcours/Bio (deplacer + refondre le contenu)
-2. **Section 3** — Projets (ajouter formations, reorg, nouveau heading)
+1. ~~**Section 2** — Parcours/Bio (deplacer + refondre le contenu)~~ deplace, contenu a affiner
+2. ~~**Section 3** — Projets (ajouter formations, reorg, nouveau heading)~~ fait, pages detail en cours
 3. **Section 1** — Hero (nouvelle tagline + phrases)
 4. **Section 4** — Contact (simplifier)
-5. **Section 5** — Navbar Blog (rapide)
-6. **Section 6** — Dark mode (bonus)
+5. ~~**Section 5** — Navbar Blog (rapide)~~ fait
+6. ~~**Section 6** — Dark mode (bonus)~~ fait
 
 ---
 
 ## Notes techniques
 
-- Branch : `feat/i18n-seo-a11y-security`
+- Branch courante : `feat/projects` (pages detail projets)
 - Deploy : Vercel (auto-deploy sur `main`)
 - Scores Lighthouse > 90
 - Accessibilite verifiee apres chaque ajout
 - Chaque section = une session de travail dediee
+- Section competences retiree de la home (sera integree dans les pages projets)

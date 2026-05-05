@@ -60,6 +60,11 @@ export default function ProjectDetail() {
 	const projectDescription = t(`projects:items.${project.id}.description`, { defaultValue: project.description });
 	const projectContext = t(`projects:items.${project.id}.context`, { defaultValue: project.context });
 
+	const detailDeliverables = t(`projects:items.${project.id}.detail.deliverables`, { returnObjects: true, defaultValue: [] }) as { title: string; description: string }[];
+	const detailDecisions = t(`projects:items.${project.id}.detail.decisions`, { returnObjects: true, defaultValue: [] }) as { title: string; description: string }[];
+	const detailStack = t(`projects:items.${project.id}.detail.stack`, { returnObjects: true, defaultValue: [] }) as { name: string; role: string }[];
+	const detailMetrics = t(`projects:items.${project.id}.detail.metrics`, { returnObjects: true, defaultValue: [] }) as { label: string; value: string }[];
+
 	return (
 		<ErrorBoundary>
 			<SeoHead
@@ -165,14 +170,14 @@ export default function ProjectDetail() {
 						</FadeInUp>
 
 						{/* Ce que j'ai construit */}
-						{project.detail?.deliverables && project.detail.deliverables.length > 0 && (
+						{Array.isArray(detailDeliverables) && detailDeliverables.length > 0 && (
 							<FadeInUp delay={0.3}>
 								<section className="mb-20">
 									<h2 className="text-2xl md:text-3xl font-display font-bold mb-8">
 										{t('projects:detail.built')}
 									</h2>
 									<div className="flex flex-col">
-										{project.detail.deliverables.map((item, i) => (
+										{detailDeliverables.map((item, i) => (
 											<div key={item.title}>
 												<div className="flex gap-4 items-start py-6">
 													<div className="w-1 min-h-full bg-lime/40 rounded-full flex-shrink-0 mt-1" />
@@ -181,7 +186,7 @@ export default function ProjectDetail() {
 														<p className="text-violet/75 dark:text-beige/75 leading-relaxed">{item.description}</p>
 													</div>
 												</div>
-												{i < project.detail!.deliverables.length - 1 && (
+												{i < detailDeliverables.length - 1 && (
 													<div className="w-24 h-px bg-gradient-to-r from-lime/40 to-transparent" />
 												)}
 											</div>
@@ -213,14 +218,14 @@ export default function ProjectDetail() {
 						</FadeInUp>
 
 						{/* Décisions techniques */}
-						{project.detail?.decisions && project.detail.decisions.length > 0 && (
+						{Array.isArray(detailDecisions) && detailDecisions.length > 0 && (
 							<FadeInUp delay={0.4}>
 								<section className="mb-20">
 									<h2 className="text-2xl md:text-3xl font-display font-bold mb-8">
 										{t('projects:detail.decisions')}
 									</h2>
 									<div className="flex flex-col gap-8">
-										{project.detail.decisions.map((decision) => (
+										{detailDecisions.map((decision) => (
 											<div key={decision.title}>
 												<h3 className="text-lg font-display font-bold italic mb-2">{decision.title}</h3>
 												<p className="text-violet/75 dark:text-beige/75 leading-relaxed max-w-3xl">{decision.description}</p>
@@ -232,14 +237,14 @@ export default function ProjectDetail() {
 						)}
 
 						{/* Stack technique */}
-						{project.detail?.stack && project.detail.stack.length > 0 && (
+						{Array.isArray(detailStack) && detailStack.length > 0 && (
 							<FadeInUp delay={0.5}>
 								<section className="mb-20">
 									<h2 className="text-2xl md:text-3xl font-display font-bold mb-8">
 										{t('projects:detail.stack')}
 									</h2>
 									<div className="flex flex-wrap gap-x-6 gap-y-4">
-										{project.detail.stack.map((tech) => (
+										{detailStack.map((tech) => (
 											<div key={tech.name} className="flex flex-col">
 												<span className="px-3 py-1 bg-lime/20 dark:bg-lime/10 border border-lime/30 dark:border-lime/20 rounded-full text-sm font-medium">
 													{tech.name}
@@ -255,14 +260,14 @@ export default function ProjectDetail() {
 						)}
 
 						{/* Résultats / Metrics */}
-						{project.detail?.metrics && project.detail.metrics.length > 0 && (
+						{Array.isArray(detailMetrics) && detailMetrics.length > 0 && (
 							<FadeInUp delay={0.6}>
 								<section className="mb-20">
 									<h2 className="text-2xl md:text-3xl font-display font-bold mb-8">
 										{t('projects:detail.results')}
 									</h2>
 									<div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-										{project.detail.metrics.map((metric) => (
+										{detailMetrics.map((metric) => (
 											<div key={metric.label} className="text-center">
 												<span className="block text-3xl font-display font-extrabold text-orange-dark dark:text-orange">
 													{metric.value}

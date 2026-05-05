@@ -129,7 +129,65 @@ export const PROJECTS: Project[] = [
 		type: "project",
 		category: "showcase",
 		githubUrl: "https://github.com/josuerochadev/la-lunetterie-du-coin",
-		demoUrl: "https://lalunetterieducoin.fr/"
+		demoUrl: "https://lalunetterieducoin.fr/",
+		detail: {
+			deliverables: [
+				{
+					title: "Site vitrine multi-pages",
+					description: "Application web de 7 pages (Accueil, Services, Offres, À propos, Contact, Mentions légales, CGV) avec routing côté client et lazy loading par route."
+				},
+				{
+					title: "Système d'animation accessible",
+					description: "Animations Framer Motion avec détection automatique de prefers-reduced-motion via un MotionProvider dédié, garantissant 0 violation d'accessibilité."
+				},
+				{
+					title: "Pipeline qualité CI/CD complet",
+					description: "Pipeline GitHub Actions intégrant linting, type checking, 632 tests unitaires/E2E, audits Lighthouse, scan de sécurité et tests axe-core automatisés."
+				},
+				{
+					title: "Design system sur-mesure",
+					description: "Système de couleurs sémantiques, typographie fluide avec clamp(), composants réutilisables (Picture responsive AVIF/WebP, Button, Cards) construits sur Tailwind CSS."
+				}
+			],
+			decisions: [
+				{
+					title: "Pourquoi Vite plutôt que Next.js",
+					description: "Site vitrine sans besoin de SSR ni de backend. Vite offre un DX ultra-rapide (HMR instantané) et un build statique optimisé, suffisant pour un déploiement statique."
+				},
+				{
+					title: "Pourquoi des imports Lucide spécifiques plutôt que le barrel export",
+					description: "Import depuis lucide-react/dist/esm/icons/[icon-name] au lieu de la racine pour garantir le tree-shaking et réduire le bundle. Règle ESLint custom pour l'enforcer."
+				},
+				{
+					title: "Pourquoi LazyMotion plutôt que le bundle Framer Motion complet",
+					description: "Chargement de domAnimation uniquement à la demande pour réduire le JavaScript initial, combiné au code splitting par route via React.lazy."
+				}
+			],
+			stack: [
+				{ name: "React 19", role: "Framework UI avec Suspense et lazy loading pour le code splitting par route" },
+				{ name: "TypeScript 5.7", role: "Typage strict sur l'ensemble du codebase, vérifié en CI via tsc --noEmit" },
+				{ name: "Vite 7", role: "Build tool et dev server avec plugin React, SVGR et rollup-plugin-visualizer" },
+				{ name: "Tailwind CSS 3", role: "Styling utility-first avec design system sémantique custom (brand, accent, etc.)" },
+				{ name: "Framer Motion", role: "Animations performantes avec LazyMotion et respect des préférences de mouvement" },
+				{ name: "React Router DOM v7", role: "Routing côté client avec lazy loading des pages non-critiques" },
+				{ name: "Vitest + Testing Library", role: "Tests unitaires et d'intégration (632 tests, couverture ~70%)" },
+				{ name: "Playwright", role: "Tests E2E cross-browser (Chromium, Firefox, WebKit)" },
+				{ name: "axe-core", role: "Tests d'accessibilité automatisés garantissant 0 violation WCAG 2.1 AA" },
+				{ name: "Lighthouse CI", role: "Audits performance automatisés en CI avec seuils mobile/desktop" },
+				{ name: "Sentry", role: "Monitoring d'erreurs en production avec source maps via plugin Vite" },
+				{ name: "Husky + lint-staged + Commitlint", role: "Git hooks enforçant le format conventional commits, linting et formatting au commit" },
+				{ name: "Sharp", role: "Optimisation d'images en AVIF/WebP via script custom" }
+			],
+			metrics: [
+				{ label: "Tests", value: "632" },
+				{ label: "Couverture", value: "~70%" },
+				{ label: "Lighthouse mobile", value: "70+" },
+				{ label: "Lighthouse desktop", value: "80+" },
+				{ label: "Violations a11y", value: "0" },
+				{ label: "ESLint warnings", value: "0" },
+				{ label: "Bundle JS", value: "~800 KB" }
+			]
+		}
 	},
 	{
 		id: "site-vitrine-avocate",

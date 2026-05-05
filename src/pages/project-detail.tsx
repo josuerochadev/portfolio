@@ -1,12 +1,10 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import { FaArrowLeft, FaArrowRight, FaGithub, FaExternalLinkAlt, FaCalendar, FaCog } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight, FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 import { PROJECTS, type Project } from "@/data/projects";
 import FadeInUp from "@/components/common/animations/fade-in-up";
-import BackgroundGradient from "@/components/layout/background-gradient";
 import ErrorBoundary from "@/components/common/error-boundary";
-import ResponsiveImage from "@/components/common/responsive-image";
 import SeoHead from "@/components/common/seo-head";
 
 const getStatusColor = (status: Project['status']) => {
@@ -71,18 +69,25 @@ export default function ProjectDetail() {
 				canonical={`https://josuerocha.dev/projet/${project.id}`}
 			/>
 			<div className="min-h-screen text-violet dark:text-beige">
-				<BackgroundGradient />
-				<main className="relative z-10 max-w-5xl mx-auto px-6 py-20" role="main">
-					<motion.div
-						initial={{ opacity: 0, y: 20 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ duration: 0.6 }}
-					>
-						{/* Back button */}
-						<FadeInUp delay={0.1}>
+				<motion.div
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					transition={{ duration: 0.6 }}
+				>
+					{/* Hero — full width, image background */}
+					<header className="relative w-full min-h-[70vh] flex items-end overflow-hidden">
+						<img
+							src={project.image.desktop}
+							alt=""
+							aria-hidden="true"
+							className="absolute inset-0 w-full h-full object-cover"
+						/>
+						<div className="absolute inset-0 bg-gradient-to-t from-beige via-beige/80 to-transparent dark:from-dark-bg dark:via-dark-bg/80 dark:to-transparent" />
+
+						<div className="relative z-10 w-full max-w-5xl mx-auto px-6 pb-12 pt-32">
 							<button
 								onClick={() => navigate(-1)}
-								className="mb-12 px-4 py-2 rounded-full bg-orange/10 text-orange-dark dark:text-orange border border-orange/20
+								className="mb-8 px-4 py-2 rounded-full bg-orange/10 text-orange-dark dark:text-orange border border-orange/20
 								hover:bg-orange hover:text-beige dark:hover:bg-orange/20 dark:hover:text-orange
 								transition-all duration-300
 								inline-flex items-center gap-2 font-medium text-sm
@@ -93,94 +98,63 @@ export default function ProjectDetail() {
 								<FaArrowLeft className="inline-block" aria-hidden="true" />
 								{t('projects:actions.backToProjects')}
 							</button>
-						</FadeInUp>
 
-						{/* 1. Hero */}
-						<FadeInUp delay={0.2}>
-							<header className="mb-12">
-								<div className="flex flex-wrap items-center gap-3 mb-4">
-									<span className={`px-3 py-1 rounded-full text-sm font-bold ${getStatusColor(project.status)}`}>
-										{getStatusLabel(project.status, t)}
-									</span>
-									<span className="flex items-center gap-1 text-violet/60 dark:text-beige/60 text-sm">
-										<FaCalendar aria-hidden="true" /> {project.year}
-									</span>
-									<span className="flex items-center gap-1 text-violet/60 dark:text-beige/60 text-sm">
-										<FaCog aria-hidden="true" /> {project.category}
-									</span>
-								</div>
-
-								<h1 className="text-4xl md:text-6xl font-display font-extrabold mb-4">
-									{projectTitle}
-								</h1>
-
-								<p className="text-xl leading-relaxed text-violet/80 dark:text-beige/80 max-w-3xl">
-									{projectDescription}
-								</p>
-
-								{/* Tech tags */}
-								{project.technologies && (
-									<div className="flex flex-wrap gap-2 mt-6">
-										{project.technologies.map((tech) => (
-											<span
-												key={tech}
-												className="px-3 py-1 bg-lime/20 dark:bg-lime/10 text-violet dark:text-beige border border-lime/30 dark:border-lime/20 rounded-full text-sm font-medium"
-											>
-												{tech}
-											</span>
-										))}
-									</div>
-								)}
-
-								{/* Action buttons */}
-								<div className="flex flex-wrap gap-4 mt-8">
-									{project.demoUrl && (
-										<a
-											href={project.demoUrl}
-											target="_blank"
-											rel="noopener noreferrer"
-											className="px-5 py-2.5 rounded-full bg-orange text-beige
-											hover:bg-orange-dark transition-all duration-300
-											inline-flex items-center gap-2 font-medium text-sm
-											hover:shadow-md hover:scale-105 active:scale-95"
-										>
-											<FaExternalLinkAlt aria-hidden="true" /> Demo live
-										</a>
-									)}
-									{project.githubUrl && (
-										<a
-											href={project.githubUrl}
-											target="_blank"
-											rel="noopener noreferrer"
-											className="px-5 py-2.5 rounded-full bg-violet/10 text-violet dark:bg-beige/10 dark:text-beige
-											border border-violet/20 dark:border-beige/20
-											hover:bg-violet hover:text-beige dark:hover:bg-beige/20
-											transition-all duration-300
-											inline-flex items-center gap-2 font-medium text-sm
-											hover:shadow-md hover:scale-105 active:scale-95"
-										>
-											<FaGithub aria-hidden="true" /> Code source
-										</a>
-									)}
-								</div>
-							</header>
-						</FadeInUp>
-
-						{/* 2. Visuel principal */}
-						<FadeInUp delay={0.3}>
-							<div className="mb-16 rounded-2xl overflow-hidden shadow-lg">
-								<ResponsiveImage
-									images={project.image}
-									alt={`${projectTitle} — screenshot`}
-									className="w-full h-auto"
-									loading="eager"
-								/>
+							<div className="flex flex-wrap items-center gap-3 mb-4">
+								<span className={`px-3 py-1 rounded-full text-sm font-bold ${getStatusColor(project.status)}`}>
+									{getStatusLabel(project.status, t)}
+								</span>
+								<span className="text-sm text-violet/70 dark:text-beige/60">
+									{project.year}
+								</span>
 							</div>
-						</FadeInUp>
 
-						{/* 3. Le pourquoi */}
-						<FadeInUp delay={0.4}>
-							<section className="mb-16">
+							<h1 className="text-4xl md:text-6xl font-display font-extrabold mb-4">
+								{projectTitle}
+							</h1>
+
+							<p className="text-xl leading-relaxed text-violet/85 dark:text-beige/85 max-w-3xl">
+								{projectDescription}
+							</p>
+
+							<div className="flex flex-wrap gap-4 mt-8">
+								{project.demoUrl && (
+									<a
+										href={project.demoUrl}
+										target="_blank"
+										rel="noopener noreferrer"
+										className="px-5 py-2.5 rounded-full bg-orange text-beige
+										hover:bg-orange-dark transition-all duration-300
+										inline-flex items-center gap-2 font-medium text-sm
+										hover:shadow-md hover:scale-105 active:scale-95"
+									>
+										<FaExternalLinkAlt aria-hidden="true" /> Demo live
+									</a>
+								)}
+								{project.githubUrl && (
+									<a
+										href={project.githubUrl}
+										target="_blank"
+										rel="noopener noreferrer"
+										className="px-5 py-2.5 rounded-full bg-violet/10 text-violet dark:bg-beige/10 dark:text-beige
+										border border-violet/20 dark:border-beige/20
+										hover:bg-violet hover:text-beige dark:hover:bg-beige/20
+										transition-all duration-300
+										inline-flex items-center gap-2 font-medium text-sm
+										hover:shadow-md hover:scale-105 active:scale-95"
+									>
+										<FaGithub aria-hidden="true" /> Code source
+									</a>
+								)}
+							</div>
+						</div>
+					</header>
+
+					{/* Body */}
+					<main className="relative z-10 max-w-5xl mx-auto px-6 py-20" role="main">
+
+						{/* Le pourquoi */}
+						<FadeInUp delay={0.2}>
+							<section className="mb-20">
 								<h2 className="text-2xl md:text-3xl font-display font-bold mb-4">
 									{t('projects:detail.why')}
 								</h2>
@@ -190,21 +164,26 @@ export default function ProjectDetail() {
 							</section>
 						</FadeInUp>
 
-						{/* 4. Ce que j'ai construit */}
+						{/* Ce que j'ai construit */}
 						{project.detail?.deliverables && project.detail.deliverables.length > 0 && (
-							<FadeInUp delay={0.5}>
-								<section className="mb-16">
-									<h2 className="text-2xl md:text-3xl font-display font-bold mb-6">
+							<FadeInUp delay={0.3}>
+								<section className="mb-20">
+									<h2 className="text-2xl md:text-3xl font-display font-bold mb-8">
 										{t('projects:detail.built')}
 									</h2>
-									<div className="grid md:grid-cols-2 gap-6">
-										{project.detail.deliverables.map((item) => (
-											<div
-												key={item.title}
-												className="p-5 rounded-xl bg-lime/10 dark:bg-lime/5 border border-lime/20 dark:border-lime/10"
-											>
-												<h3 className="font-bold text-lg mb-2">{item.title}</h3>
-												<p className="text-violet/75 dark:text-beige/75">{item.description}</p>
+									<div className="flex flex-col">
+										{project.detail.deliverables.map((item, i) => (
+											<div key={item.title}>
+												<div className="flex gap-4 items-start py-6">
+													<div className="w-1 min-h-full bg-lime/40 rounded-full flex-shrink-0 mt-1" />
+													<div>
+														<h3 className="text-lg font-display font-bold mb-1">{item.title}</h3>
+														<p className="text-violet/75 dark:text-beige/75 leading-relaxed">{item.description}</p>
+													</div>
+												</div>
+												{i < project.detail!.deliverables.length - 1 && (
+													<div className="w-24 h-px bg-gradient-to-r from-lime/40 to-transparent" />
+												)}
 											</div>
 										))}
 									</div>
@@ -212,21 +191,39 @@ export default function ProjectDetail() {
 							</FadeInUp>
 						)}
 
-						{/* 5. Decisions techniques */}
+						{/* Galerie / Illustrations */}
+						<FadeInUp delay={0.35}>
+							<section className="mb-20">
+								<h2 className="text-2xl md:text-3xl font-display font-bold mb-8">
+									{t('projects:detail.gallery')}
+								</h2>
+								<div className="grid md:grid-cols-2 gap-6">
+									{[1, 2, 3, 4].map((n) => (
+										<div
+											key={n}
+											className="aspect-video rounded-xl bg-violet/5 dark:bg-beige/5 border border-violet/10 dark:border-beige/10 flex items-center justify-center"
+										>
+											<span className="text-sm text-violet/40 dark:text-beige/40 font-medium">
+												Capture à venir
+											</span>
+										</div>
+									))}
+								</div>
+							</section>
+						</FadeInUp>
+
+						{/* Décisions techniques */}
 						{project.detail?.decisions && project.detail.decisions.length > 0 && (
-							<FadeInUp delay={0.6}>
-								<section className="mb-16">
-									<h2 className="text-2xl md:text-3xl font-display font-bold mb-6">
+							<FadeInUp delay={0.4}>
+								<section className="mb-20">
+									<h2 className="text-2xl md:text-3xl font-display font-bold mb-8">
 										{t('projects:detail.decisions')}
 									</h2>
-									<div className="flex flex-col gap-6">
+									<div className="flex flex-col gap-8">
 										{project.detail.decisions.map((decision) => (
-											<div
-												key={decision.title}
-												className="p-5 rounded-xl bg-violet/5 dark:bg-beige/5 border border-violet/10 dark:border-beige/10"
-											>
-												<h3 className="font-bold text-lg mb-2">{decision.title}</h3>
-												<p className="text-violet/75 dark:text-beige/75">{decision.description}</p>
+											<div key={decision.title}>
+												<h3 className="text-lg font-display font-bold italic mb-2">{decision.title}</h3>
+												<p className="text-violet/75 dark:text-beige/75 leading-relaxed max-w-3xl">{decision.description}</p>
 											</div>
 										))}
 									</div>
@@ -234,21 +231,22 @@ export default function ProjectDetail() {
 							</FadeInUp>
 						)}
 
-						{/* 6. Stack technique */}
+						{/* Stack technique */}
 						{project.detail?.stack && project.detail.stack.length > 0 && (
-							<FadeInUp delay={0.7}>
-								<section className="mb-16">
-									<h2 className="text-2xl md:text-3xl font-display font-bold mb-6">
+							<FadeInUp delay={0.5}>
+								<section className="mb-20">
+									<h2 className="text-2xl md:text-3xl font-display font-bold mb-8">
 										{t('projects:detail.stack')}
 									</h2>
-									<div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+									<div className="flex flex-wrap gap-x-6 gap-y-4">
 										{project.detail.stack.map((tech) => (
-											<div
-												key={tech.name}
-												className="p-4 rounded-xl bg-lime/10 dark:bg-lime/5 border border-lime/20 dark:border-lime/10"
-											>
-												<span className="font-bold text-sm">{tech.name}</span>
-												<p className="text-sm text-violet/65 dark:text-beige/65 mt-1">{tech.role}</p>
+											<div key={tech.name} className="flex flex-col">
+												<span className="px-3 py-1 bg-lime/20 dark:bg-lime/10 border border-lime/30 dark:border-lime/20 rounded-full text-sm font-medium">
+													{tech.name}
+												</span>
+												<span className="text-xs text-violet/55 dark:text-beige/55 mt-1 pl-3 max-w-[200px]">
+													{tech.role}
+												</span>
 											</div>
 										))}
 									</div>
@@ -256,23 +254,20 @@ export default function ProjectDetail() {
 							</FadeInUp>
 						)}
 
-						{/* 7. Resultats / Metrics */}
+						{/* Résultats / Metrics */}
 						{project.detail?.metrics && project.detail.metrics.length > 0 && (
-							<FadeInUp delay={0.8}>
-								<section className="mb-16">
-									<h2 className="text-2xl md:text-3xl font-display font-bold mb-6">
+							<FadeInUp delay={0.6}>
+								<section className="mb-20">
+									<h2 className="text-2xl md:text-3xl font-display font-bold mb-8">
 										{t('projects:detail.results')}
 									</h2>
-									<div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+									<div className="grid grid-cols-2 md:grid-cols-4 gap-8">
 										{project.detail.metrics.map((metric) => (
-											<div
-												key={metric.label}
-												className="p-4 rounded-xl bg-orange/10 dark:bg-orange/5 border border-orange/20 dark:border-orange/10 text-center"
-											>
-												<span className="block text-2xl font-display font-extrabold text-orange-dark dark:text-orange">
+											<div key={metric.label} className="text-center">
+												<span className="block text-3xl font-display font-extrabold text-orange-dark dark:text-orange">
 													{metric.value}
 												</span>
-												<span className="text-sm text-violet/70 dark:text-beige/70">{metric.label}</span>
+												<span className="text-sm text-violet/65 dark:text-beige/65 mt-1">{metric.label}</span>
 											</div>
 										))}
 									</div>
@@ -280,8 +275,8 @@ export default function ProjectDetail() {
 							</FadeInUp>
 						)}
 
-						{/* 8. Navigation prev/next */}
-						<FadeInUp delay={0.9}>
+						{/* Navigation prev/next */}
+						<FadeInUp delay={0.7}>
 							<nav className="flex justify-between items-center pt-12 border-t border-violet/10 dark:border-beige/10" aria-label="Project navigation">
 								{prevProject ? (
 									<Link
@@ -303,8 +298,8 @@ export default function ProjectDetail() {
 								) : <span />}
 							</nav>
 						</FadeInUp>
-					</motion.div>
-				</main>
+					</main>
+				</motion.div>
 			</div>
 		</ErrorBoundary>
 	);

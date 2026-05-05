@@ -1,17 +1,18 @@
 import type React from "react";
 import { useRef } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { navLinkHover } from "@/utils/motion-variants";
 import SmileIcon from "@/assets/images/ui/smile.svg?react";
 
 // Navigation links
-const NAV_LINKS: { key: string; href: string; external?: boolean }[] = [
-	{ key: "home", href: "#hero" },
-	{ key: "work", href: "#projects" },
-	{ key: "about", href: "#bio" },
-	{ key: "contact", href: "#contact" },
-	{ key: "blog", href: "#", external: true },
+const NAV_LINKS: { key: string; section: string; external?: boolean }[] = [
+	{ key: "home", section: "hero" },
+	{ key: "about", section: "bio" },
+	{ key: "work", section: "projects" },
+	{ key: "contact", section: "contact" },
+	{ key: "blog", section: "", external: true },
 ];
 
 // Number of bars to display
@@ -20,14 +21,29 @@ const BAR_COUNT = 45;
 const Navbar: React.FC = () => {
 	const navRef = useRef<HTMLDivElement>(null);
 	const { t } = useTranslation('common');
+	const { pathname } = useLocation();
+	const navigate = useNavigate();
+	const isHome = pathname === "/";
+
+	const handleNavClick = (e: React.MouseEvent, section: string) => {
+		e.preventDefault();
+		if (isHome) {
+			const element = document.getElementById(section);
+			if (element) {
+				element.scrollIntoView({ behavior: "smooth" });
+			}
+		} else {
+			navigate(`/#${section}`);
+		}
+	};
 
 	const handleMouseMove = (e: React.MouseEvent) => {
 		const rect = navRef.current?.getBoundingClientRect();
 		if (!rect) return;
-		
+
 		const mouseX = e.clientX - rect.left;
 		const bars = navRef.current?.querySelectorAll('.animated-bar');
-		
+
 		if (!bars) return;
 
 		bars.forEach((bar, index) => {
@@ -35,7 +51,7 @@ const Navbar: React.FC = () => {
 			const proximity = Math.max(0, 12 - distance);
 			const width = proximity > 0 ? proximity * 2.2 : 0;
 			const opacity = width > 0 ? 1 : 0;
-			
+
 			(bar as HTMLElement).style.width = `${width}px`;
 			(bar as HTMLElement).style.opacity = opacity.toString();
 		});
@@ -73,7 +89,8 @@ const Navbar: React.FC = () => {
 				<ul className="flex gap-3 sm:gap-6 md:gap-8 items-center mx-auto">
 					<li>
 						<a
-							href="#hero"
+							href="/#hero"
+							onClick={(e) => handleNavClick(e, "hero")}
 							className="transition-colors duration-200 text-violet dark:text-beige hover:text-orange focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2 dark:focus:ring-offset-dark-bg rounded-lg"
 							aria-label="Home"
 						>
@@ -81,10 +98,11 @@ const Navbar: React.FC = () => {
 						</a>
 					</li>
 
-					{NAV_LINKS.slice(1).map(({ href, key, external }) => (
+					{NAV_LINKS.slice(1).map(({ section, key, external }) => (
 						<li key={key}>
 							<motion.a
-								href={href}
+								href={external ? "#" : `/#${section}`}
+								onClick={external ? undefined : (e: React.MouseEvent) => handleNavClick(e, section)}
 								{...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
 								variants={navLinkHover}
 								initial="initial"
@@ -97,7 +115,7 @@ const Navbar: React.FC = () => {
 						</li>
 					))}
 				</ul>
-				
+
 			</div>
 		</nav>
 	);

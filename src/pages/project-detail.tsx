@@ -6,6 +6,11 @@ import { PROJECTS, type Project } from "@/data/projects";
 import FadeInUp from "@/components/common/animations/fade-in-up";
 import ErrorBoundary from "@/components/common/error-boundary";
 import SeoHead from "@/components/common/seo-head";
+import BackgroundGradient from "@/components/layout/background-gradient";
+import BottomBlur from "@/components/common/bottom-blur";
+import Navbar from "@/components/layout/navbar";
+import Footer from "@/components/layout/footer";
+import ScrollToTop from "@/components/common/scroll-to-top";
 
 const getStatusColor = (status: Project['status']) => {
 	switch (status) {
@@ -74,36 +79,26 @@ export default function ProjectDetail() {
 				canonical={`https://josuerocha.dev/projet/${project.id}`}
 			/>
 			<div className="min-h-screen text-violet dark:text-beige">
+				<BackgroundGradient />
+				<BottomBlur />
+				<Navbar />
 				<motion.div
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					transition={{ duration: 0.6 }}
 				>
 					{/* Hero — full width, image background */}
-					<header className="relative w-full min-h-[70vh] flex items-end overflow-hidden">
+					<header className="relative w-full min-h-screen flex items-end overflow-hidden">
+						<div className="absolute top-0 left-0 w-full h-12 bg-lime dark:bg-lime/40 opacity-60 dark:opacity-30 blur-2xl z-20 pointer-events-none" />
 						<img
 							src={project.image.desktop}
 							alt=""
 							aria-hidden="true"
-							className="absolute inset-0 w-full h-full object-cover"
+							className="absolute inset-0 w-full h-full object-cover brightness-[0.6]"
+							style={{ maskImage: 'linear-gradient(to bottom, black 30%, transparent 80%)', WebkitMaskImage: 'linear-gradient(to bottom, black 30%, transparent 80%)' }}
 						/>
-						<div className="absolute inset-0 bg-gradient-to-t from-beige via-beige/80 to-transparent dark:from-dark-bg dark:via-dark-bg/80 dark:to-transparent" />
 
 						<div className="relative z-10 w-full max-w-5xl mx-auto px-6 pb-12 pt-32">
-							<button
-								onClick={() => navigate(-1)}
-								className="mb-8 px-4 py-2 rounded-full bg-orange/10 text-orange-dark dark:text-orange border border-orange/20
-								hover:bg-orange hover:text-beige dark:hover:bg-orange/20 dark:hover:text-orange
-								transition-all duration-300
-								inline-flex items-center gap-2 font-medium text-sm
-								hover:shadow-md hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2 dark:focus:ring-offset-dark-bg"
-								aria-label={t('projects:actions.backToProjects')}
-								type="button"
-							>
-								<FaArrowLeft className="inline-block" aria-hidden="true" />
-								{t('projects:actions.backToProjects')}
-							</button>
-
 							<div className="flex flex-wrap items-center gap-3 mb-4">
 								<span className={`px-3 py-1 rounded-full text-sm font-bold ${getStatusColor(project.status)}`}>
 									{getStatusLabel(project.status, t)}
@@ -127,12 +122,9 @@ export default function ProjectDetail() {
 										href={project.demoUrl}
 										target="_blank"
 										rel="noopener noreferrer"
-										className="px-5 py-2.5 rounded-full bg-orange text-beige
-										hover:bg-orange-dark transition-all duration-300
-										inline-flex items-center gap-2 font-medium text-sm
-										hover:shadow-md hover:scale-105 active:scale-95"
+										className="button"
 									>
-										<FaExternalLinkAlt aria-hidden="true" /> Demo live
+										<FaExternalLinkAlt className="inline-block mr-2" aria-hidden="true" /> DEMO
 									</a>
 								)}
 								{project.githubUrl && (
@@ -140,17 +132,22 @@ export default function ProjectDetail() {
 										href={project.githubUrl}
 										target="_blank"
 										rel="noopener noreferrer"
-										className="px-5 py-2.5 rounded-full bg-violet/10 text-violet dark:bg-beige/10 dark:text-beige
-										border border-violet/20 dark:border-beige/20
-										hover:bg-violet hover:text-beige dark:hover:bg-beige/20
-										transition-all duration-300
-										inline-flex items-center gap-2 font-medium text-sm
-										hover:shadow-md hover:scale-105 active:scale-95"
+										className="button"
 									>
-										<FaGithub aria-hidden="true" /> Code source
+										<FaGithub className="inline-block mr-2" aria-hidden="true" /> CODE
 									</a>
 								)}
 							</div>
+
+							<button
+								onClick={() => navigate(-1)}
+								className="mt-8 flex items-center gap-2 text-sm font-medium text-violet/70 dark:text-beige/70 hover:text-orange-dark dark:hover:text-orange transition-colors"
+								aria-label={t('projects:actions.backToProjects')}
+								type="button"
+							>
+								<FaArrowLeft aria-hidden="true" />
+								{t('projects:actions.backToProjects')}
+							</button>
 						</div>
 					</header>
 
@@ -176,19 +173,11 @@ export default function ProjectDetail() {
 									<h2 className="text-2xl md:text-3xl font-display font-bold mb-8">
 										{t('projects:detail.built')}
 									</h2>
-									<div className="flex flex-col">
-										{detailDeliverables.map((item, i) => (
+									<div className="flex flex-col gap-8">
+										{detailDeliverables.map((item) => (
 											<div key={item.title}>
-												<div className="flex gap-4 items-start py-6">
-													<div className="w-1 min-h-full bg-lime/40 rounded-full flex-shrink-0 mt-1" />
-													<div>
-														<h3 className="text-lg font-display font-bold mb-1">{item.title}</h3>
-														<p className="text-violet/75 dark:text-beige/75 leading-relaxed">{item.description}</p>
-													</div>
-												</div>
-												{i < detailDeliverables.length - 1 && (
-													<div className="w-24 h-px bg-gradient-to-r from-lime/40 to-transparent" />
-												)}
+												<h3 className="text-lg font-display font-bold mb-1">{item.title}</h3>
+												<p className="text-violet/75 dark:text-beige/75 leading-relaxed">{item.description}</p>
 											</div>
 										))}
 									</div>
@@ -246,7 +235,7 @@ export default function ProjectDetail() {
 									<div className="flex flex-wrap gap-x-6 gap-y-4">
 										{detailStack.map((tech) => (
 											<div key={tech.name} className="flex flex-col">
-												<span className="px-3 py-1 bg-lime/20 dark:bg-lime/10 border border-lime/30 dark:border-lime/20 rounded-full text-sm font-medium">
+												<span className="px-3 py-1 bg-violet/10 dark:bg-beige/10 border border-violet/20 dark:border-beige/20 rounded-full text-sm font-medium">
 													{tech.name}
 												</span>
 												<span className="text-xs text-violet/55 dark:text-beige/55 mt-1 pl-3 max-w-[200px]">
@@ -305,6 +294,9 @@ export default function ProjectDetail() {
 						</FadeInUp>
 					</main>
 				</motion.div>
+				<ScrollToTop />
+				<div className="relative w-full h-12 bg-lime dark:bg-lime/40 opacity-60 dark:opacity-30 blur-2xl pointer-events-none -mb-12" />
+				<Footer />
 			</div>
 		</ErrorBoundary>
 	);

@@ -29,9 +29,9 @@ export const PROJECTS: Project[] = [
 		context:
 			"Les équipes IT passent environ 15 min par article en veille manuelle. Cet agent réduit ce temps à quelques secondes par question.",
 		image: {
-			desktop: "/assets/images/projects/optimized/project-poetry-desktop.webp",
-			mobile: "/assets/images/projects/optimized/project-poetry-mobile.webp",
-			thumbnail: "/assets/images/projects/optimized/project-poetry-thumb.webp"
+			desktop: "/assets/images/projects/optimized/project-luciole-desktop.webp",
+			mobile: "/assets/images/projects/optimized/project-luciole-mobile.webp",
+			thumbnail: "/assets/images/projects/optimized/project-luciole-thumb.webp"
 		},
 		technologies: ["Python 3.12", "FastAPI", "OpenAI API", "RAG", "SQLite", "Docker", "Langfuse", "SSE"],
 		status: "completed",
@@ -71,9 +71,9 @@ export const PROJECTS: Project[] = [
 		context:
 			"Répondre au besoin réel d'un restaurant : centraliser la gestion des caisses et du personnel dans un outil unique, fiable et sécurisé.",
 		image: {
-			desktop: "/assets/images/projects/optimized/project-cda-oclock-desktop.webp",
-			mobile: "/assets/images/projects/optimized/project-cda-oclock-mobile.webp",
-			thumbnail: "/assets/images/projects/optimized/project-cda-oclock-thumb.webp"
+			desktop: "/assets/images/projects/optimized/project-tour-de-controle-desktop.webp",
+			mobile: "/assets/images/projects/optimized/project-tour-de-controle-mobile.webp",
+			thumbnail: "/assets/images/projects/optimized/project-tour-de-controle-thumb.webp"
 		},
 		technologies: ["React 18", "TypeScript", "Vite", "Tailwind CSS", "Redux Toolkit", "Node.js", "Express", "PostgreSQL", "Redis", "Docker Compose", "JWT", "Swagger", "Jest"],
 		status: "in-progress",
@@ -91,9 +91,9 @@ export const PROJECTS: Project[] = [
 		context:
 			"Donner une présence web professionnelle et performante à un opticien indépendant, en misant sur l'accessibilité, la performance et un design bold maximalist.",
 		image: {
-			desktop: "/assets/images/projects/optimized/project-la-lunetterie-du-coin-desktop.webp",
-			mobile: "/assets/images/projects/optimized/project-la-lunetterie-du-coin-mobile.webp",
-			thumbnail: "/assets/images/projects/optimized/project-la-lunetterie-du-coin-thumb.webp"
+			desktop: "/assets/images/projects/optimized/project-lunetterie-desktop.webp",
+			mobile: "/assets/images/projects/optimized/project-lunetterie-mobile.webp",
+			thumbnail: "/assets/images/projects/optimized/project-lunetterie-thumb.webp"
 		},
 		technologies: ["React 19", "TypeScript", "Vite", "Tailwind CSS", "Framer Motion", "React Router v7", "Vitest", "Playwright", "Lighthouse CI", "Sentry", "Vercel"],
 		status: "completed",
@@ -113,9 +113,9 @@ export const PROJECTS: Project[] = [
 		context:
 			"Une avocate en exercice à Strasbourg avait besoin d'un site professionnel pour se positionner sur les recherches locales et permettre à ses clients de prendre rendez-vous facilement.",
 		image: {
-			desktop: "/assets/images/projects/optimized/project-avocate-rayssa-desktop.webp",
-			mobile: "/assets/images/projects/optimized/project-avocate-rayssa-mobile.webp",
-			thumbnail: "/assets/images/projects/optimized/project-avocate-rayssa-thumb.webp"
+			desktop: "/assets/images/projects/optimized/project-rayssa-desktop.webp",
+			mobile: "/assets/images/projects/optimized/project-rayssa-mobile.webp",
+			thumbnail: "/assets/images/projects/optimized/project-rayssa-thumb.webp"
 		},
 		technologies: ["Next.js 14", "TypeScript", "Tailwind CSS", "Calendly", "Formspree", "Plausible Analytics", "Vitest", "Playwright", "Vercel"],
 		status: "completed",

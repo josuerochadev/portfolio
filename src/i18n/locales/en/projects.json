@@ -29,6 +29,13 @@
     "codeNotAvailable": "Source code not available - Private project",
     "demoNotAvailable": "Demo not available - Coming soon"
   },
+  "detail": {
+    "why": "The why",
+    "built": "What I built",
+    "decisions": "Technical decisions",
+    "stack": "Tech stack",
+    "results": "Results"
+  },
   "errors": {
     "notFound": "Project not found",
     "backToHome": "← Back to home"

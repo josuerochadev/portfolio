@@ -1,3 +1,30 @@
+export interface TechDetail {
+	name: string;
+	role: string;
+}
+
+export interface Decision {
+	title: string;
+	description: string;
+}
+
+export interface Deliverable {
+	title: string;
+	description: string;
+}
+
+export interface Metric {
+	label: string;
+	value: string;
+}
+
+export interface ProjectDetail {
+	deliverables: Deliverable[];
+	decisions: Decision[];
+	stack: TechDetail[];
+	metrics?: Metric[];
+}
+
 export interface Project {
 	id: string;
 	title: string;
@@ -16,6 +43,7 @@ export interface Project {
 	category: 'web-app' | 'showcase' | 'e-commerce' | 'ai' | 'personal' | 'mainframe';
 	githubUrl?: string;
 	demoUrl?: string;
+	detail?: ProjectDetail;
 }
 
 export const PROJECTS: Project[] = [

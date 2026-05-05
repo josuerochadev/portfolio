@@ -29,6 +29,13 @@
     "codeNotAvailable": "Código fonte não disponível - Projeto privado",
     "demoNotAvailable": "Demo não disponível - Em breve"
   },
+  "detail": {
+    "why": "O porquê",
+    "built": "O que construí",
+    "decisions": "Decisões técnicas",
+    "stack": "Stack técnica",
+    "results": "Resultados"
+  },
   "errors": {
     "notFound": "Projeto não encontrado",
     "backToHome": "← Voltar ao início"

@@ -78,7 +78,7 @@ function ProjectGroup({ title, items, startIndex, t }: {
 	return (
 		<div className="flex flex-col gap-12">
 			<FadeInUpOnScroll delay={0.2}>
-				<h3 className="text-sm md:text-base font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange">
+				<h3 className="text-base md:text-lg font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange">
 					{title}
 				</h3>
 			</FadeInUpOnScroll>
@@ -120,11 +120,11 @@ function ProjectGroup({ title, items, startIndex, t }: {
 										{projectTranslations?.title || project.title}
 									</h3>
 								</div>
-								<p className="text-lg leading-snug">{projectTranslations?.description || project.description}</p>
+								<p className="text-lg leading-snug text-violet/80 dark:text-beige/80">{projectTranslations?.description || project.description}</p>
 								<p className="text-sm font-sans font-bold uppercase tracking-wider text-violet/60 dark:text-beige/60 mt-3">{t('labels.deliverables')}</p>
-								<p className="text-base mb-1">{projectTranslations?.deliverables || project.deliverables}</p>
+								<p className="text-base mb-1 text-violet/80 dark:text-beige/80">{projectTranslations?.deliverables || project.deliverables}</p>
 								<p className="text-sm font-sans font-bold uppercase tracking-wider text-violet/60 dark:text-beige/60 mt-3">{t('labels.context')}</p>
-								<p className="text-base">{projectTranslations?.context || project.context}</p>
+								<p className="text-base text-violet/80 dark:text-beige/80">{projectTranslations?.context || project.context}</p>
 								<Link
 									to={`/projet/${project.id}`}
 									className="mt-6 px-4 py-2 rounded-full bg-orange/10 text-orange-dark dark:text-orange border border-orange/20

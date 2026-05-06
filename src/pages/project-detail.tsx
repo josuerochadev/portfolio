@@ -158,7 +158,7 @@ export default function ProjectDetail() {
 						{/* Le pourquoi */}
 						<FadeInUp delay={0.2}>
 							<section className="mb-20">
-								<h2 className="text-sm md:text-base font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange mb-4">
+								<h2 className="text-base md:text-lg font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange mb-4">
 									{t('projects:detail.why')}
 								</h2>
 								<p className="text-lg leading-relaxed text-violet/85 dark:text-beige/85 max-w-3xl">
@@ -171,7 +171,7 @@ export default function ProjectDetail() {
 						{Array.isArray(detailDeliverables) && detailDeliverables.length > 0 && (
 							<FadeInUp delay={0.3}>
 								<section className="mb-20">
-									<h2 className="text-sm md:text-base font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange mb-8">
+									<h2 className="text-base md:text-lg font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange mb-8">
 										{t('projects:detail.built')}
 									</h2>
 									<div className="flex flex-col gap-8">
@@ -189,7 +189,7 @@ export default function ProjectDetail() {
 						{/* Galerie / Illustrations */}
 						<FadeInUp delay={0.35}>
 							<section className="mb-20">
-								<h2 className="text-sm md:text-base font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange mb-8">
+								<h2 className="text-base md:text-lg font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange mb-8">
 									{t('projects:detail.gallery')}
 								</h2>
 								<div className="grid md:grid-cols-2 gap-6">
@@ -211,7 +211,7 @@ export default function ProjectDetail() {
 						{Array.isArray(detailDecisions) && detailDecisions.length > 0 && (
 							<FadeInUp delay={0.4}>
 								<section className="mb-20">
-									<h2 className="text-sm md:text-base font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange mb-8">
+									<h2 className="text-base md:text-lg font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange mb-8">
 										{t('projects:detail.decisions')}
 									</h2>
 									<div className="flex flex-col gap-8">
@@ -230,7 +230,7 @@ export default function ProjectDetail() {
 						{Array.isArray(detailStack) && detailStack.length > 0 && (
 							<FadeInUp delay={0.5}>
 								<section className="mb-20">
-									<h2 className="text-sm md:text-base font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange mb-8">
+									<h2 className="text-base md:text-lg font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange mb-8">
 										{t('projects:detail.stack')}
 									</h2>
 									<div className="flex flex-wrap gap-x-6 gap-y-4">
@@ -253,13 +253,13 @@ export default function ProjectDetail() {
 						{Array.isArray(detailMetrics) && detailMetrics.length > 0 && (
 							<FadeInUp delay={0.6}>
 								<section className="mb-20">
-									<h2 className="text-sm md:text-base font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange mb-8">
+									<h2 className="text-base md:text-lg font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange mb-8">
 										{t('projects:detail.results')}
 									</h2>
 									<div className="grid grid-cols-2 md:grid-cols-4 gap-8">
 										{detailMetrics.map((metric) => (
 											<div key={metric.label} className="text-center">
-												<span className="block text-3xl font-display font-extrabold text-orange-dark dark:text-orange">
+												<span className="block text-5xl font-display font-extralight text-orange-dark dark:text-orange leading-none">
 													{metric.value}
 												</span>
 												<span className="text-xs font-sans uppercase tracking-wider text-violet/65 dark:text-beige/65 mt-1">{metric.label}</span>

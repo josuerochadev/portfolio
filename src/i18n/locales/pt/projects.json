@@ -46,19 +46,127 @@
       "title": "Luciole",
       "description": "Agente de IA conversacional que automatiza a vigilância tecnológica: coleta, analisa e sintetiza 200+ artigos/dia de 40+ fontes RSS.",
       "deliverables": "Agente ReAct com 8 ferramentas, pipeline de ingestão RSS automático, interface web com streaming SSE, sistema RAG próprio, segurança anti-injeção, deploy Docker",
-      "context": "Equipes de TI gastam cerca de 15 min por artigo em monitoramento manual. Este agente reduz isso a segundos por pergunta."
+      "context": "Equipes de TI gastam cerca de 15 min por artigo em monitoramento manual. Este agente reduz isso a segundos por pergunta.",
+      "detail": {
+        "deliverables": [
+          { "title": "Agente conversacional ReAct", "description": "Loop Reason → Act → Observe com roteamento inteligente para 7 ferramentas (busca web, RAG, SQL, transcrição de áudio, visão, digest email). Cascata de modelos gpt-4o-mini / gpt-4o conforme complexidade detectada." },
+          { "title": "Pipeline de monitoramento automatizado", "description": "Coleta diária de 38 feeds RSS, filtragem temática, scraping do conteúdo, enriquecimento LLM paralelizado (5 threads), indexação RAG com chunking e embeddings. Executável em one-shot ou via scheduler APScheduler." },
+          { "title": "Interface web Luciole", "description": "Frontend Jinja2 com design system customizado, streaming SSE das respostas, autenticação JWT com contas de usuários, histórico de conversas persistente em SQLite, upload de arquivos (imagens, áudio, PDF) com validação magic bytes." },
+          { "title": "RAG híbrido próprio", "description": "Busca semântica numpy (similaridade cosseno em text-embedding-3-small) + BM25 lexical + score de frescor + feedback do usuário. Expansão de query HyDE e re-ranking Cohere opcional. Sem framework RAG externo." }
+        ],
+        "decisions": [
+          { "title": "RAG numpy próprio em vez de LangChain/ChromaDB", "description": "Similaridade cosseno calculada diretamente com numpy em embeddings armazenados em JSON. Elimina dependência de vector store externo, reduz complexidade de infra e permite controle total sobre o scoring híbrido (semântico + BM25 + frescor + feedback)." },
+          { "title": "Cascata de modelos em vez de modelo único", "description": "Um classificador rápido (gpt-4o-mini) roteia cada requisição para o modelo adequado: gpt-4o-mini para saudações/FAQ, gpt-4o para raciocínio complexo. Reduz custos de API em requisições simples mantendo qualidade nas complexas." },
+          { "title": "Streaming SSE em vez de requisição/resposta clássica", "description": "As respostas são transmitidas via Server-Sent Events com eventos tipados (thinking, tool_result, chunk, done). O usuário vê a ferramenta selecionada e a resposta aparecendo em tempo real em vez de esperar vários segundos." }
+        ],
+        "stack": [
+          { "name": "Python 3.12", "role": "Linguagem principal do agente, pipeline e API" },
+          { "name": "FastAPI", "role": "API REST + SSE streaming + páginas HTML (templates Jinja2)" },
+          { "name": "OpenAI API (gpt-4o / gpt-4o-mini)", "role": "Raciocínio do agente, classificação, resumo de artigos, geração de respostas" },
+          { "name": "OpenAI text-embedding-3-small", "role": "Embeddings de 1536 dimensões para indexação e busca RAG" },
+          { "name": "OpenAI Whisper", "role": "Transcrição de arquivos de áudio enviados pelo usuário" },
+          { "name": "numpy", "role": "Cálculo vetorizado de similaridade cosseno para busca semântica RAG" },
+          { "name": "rank_bm25", "role": "Score lexical BM25 combinado ao score semântico para ranking híbrido" },
+          { "name": "Cohere rerank-multilingual-v3.0", "role": "Re-ranking opcional dos resultados RAG para refinar relevância" },
+          { "name": "SQLite", "role": "Persistência de conversas, mensagens, contas de usuários e feedbacks" },
+          { "name": "JWT (PyJWT + bcrypt)", "role": "Autenticação de usuário com cookies httpOnly seguros" },
+          { "name": "slowapi", "role": "Rate limiting por IP nos endpoints sensíveis (auth, ask, upload)" },
+          { "name": "Langfuse", "role": "Rastreamento e observabilidade das chamadas LLM (latência, tokens, erros)" },
+          { "name": "Tavily API", "role": "Busca web em tempo real para monitoramento externo" },
+          { "name": "Docker (multi-stage)", "role": "Imagem de produção com prebuild RSS no build, usuário non-root, healthcheck" },
+          { "name": "Render", "role": "Hospedagem da aplicação conteinerizada (região Frankfurt, plano free)" }
+        ],
+        "metrics": [
+          { "label": "Fontes RSS monitoradas", "value": "38 feeds (FR + EN)" },
+          { "label": "Ferramentas do agente", "value": "7 (SQL, busca web, RAG, transcrição, visão, preview digest, send digest)" },
+          { "label": "Arquivos de teste", "value": "18 arquivos (auth, conversas, streaming, upload, segurança, RAG, feedback, e2e…)" },
+          { "label": "Dimensões embeddings", "value": "1.536 (text-embedding-3-small)" },
+          { "label": "Scoring RAG", "value": "4 sinais combinados: cosseno (50%) + BM25 (25%) + frescor (25%) + bônus feedback" },
+          { "label": "Segurança", "value": "Detecção de prompt injection (14 padrões), validação SQL, filtragem PII na saída (IBAN, cartão, email, telefone)" },
+          { "label": "Imagem Docker", "value": "Multi-stage 3 etapas (build → prebuild RSS → runtime non-root)" }
+        ]
+      }
     },
     "poei-mainframe-gestion-clientele": {
       "title": "Gestor de clientes mainframe",
       "description": "Sistema de gestão de clientes bancários desenvolvido em mainframe z/OS em três etapas: processamento batch COBOL/JCL, consultas relacionais DB2/SQL e aplicação transacional CICS em tempo real.",
       "deliverables": "Programas COBOL batch e transacionais, scripts SQL, telas BMS, JCL de compilação e execução, arquivos VSAM, relatório de projeto completo",
-      "context": "Simular o ciclo completo de uma aplicação mainframe em torno de um mesmo domínio de negócio — do processamento batch à tela transacional em tempo real."
+      "context": "Simular o ciclo completo de uma aplicação mainframe em torno de um mesmo domínio de negócio — do processamento batch à tela transacional em tempo real.",
+      "detail": {
+        "deliverables": [
+          { "title": "Sistema de gestão financeira (projeto principal COBOL)", "description": "21 exercícios progressivos cobrindo um sistema bancário completo: gestão VSAM (KSDS/ESDS/RRDS), subprogramas CALL/CANCEL, SORT/MERGE, edição de extratos. 14 programas COBOL e 43 JCL." },
+          { "title": "Aplicação CICS transacional multicamadas", "description": "Aplicação CRUD de clientes com arquitetura 3 camadas (Apresentação/Processamento/DAO): 7 telas BMS, 7 programas COBOL, gestão de transações e otimizações FSET/DATAONLY/CURSOR." },
+          { "title": "Projeto principal DB2 — SQL embarcado em COBOL", "description": "12 exercícios DB2 com consultas SQL (DDL/DML/SELECT avançado) e 10 programas COBOL-DB2 usando cursores, SQLCA e SQL embarcado para consultar e manipular dados relacionais." },
+          { "title": "Base de cursos estruturada (40.000+ linhas)", "description": "64 arquivos Markdown cobrindo 7 domínios (z/OS, TSO/ISPF, JCL, VSAM, COBOL, DB2, CICS, algorítmica) servindo como referência técnica completa para a formação." }
+        ],
+        "decisions": [
+          { "title": "Por que GnuCOBOL + Hercules em vez de mainframe sozinho", "description": "Ambiente duplo: GnuCOBOL para desenvolvimento local rápido (compilação em segundos), Hercules/TK4- para reproduzir fielmente o comportamento z/OS (JCL, VSAM, ISPF). Permite iterar rápido validando em um alvo realista." },
+          { "title": "Por que arquitetura 3 camadas em CICS", "description": "Separação de Apresentação (BMS/SEND MAP), Processamento (lógica de negócio) e DAO (acesso a arquivos VSAM) em programas distintos. Reproduz padrões industriais mainframe e facilita a manutenção." },
+          { "title": "Por que Markdown em vez de PDF para os cursos", "description": "Versionamento Git nativo, busca full-text, diffs legíveis. Os 64 arquivos são organizados por domínio e capítulo, facilitando navegação e atualizações incrementais." }
+        ],
+        "stack": [
+          { "name": "COBOL", "role": "Linguagem principal — 117 programas cobrindo arquivos sequenciais, VSAM, subprogramas, ordenação e edição" },
+          { "name": "JCL", "role": "139 jobs para compilação, execução, ordenação (SORT/MERGE) e gestão VSAM no z/OS" },
+          { "name": "CICS", "role": "Monitor transacional — telas BMS, comandos SEND/RECEIVE MAP, gestão pseudo-conversacional" },
+          { "name": "DB2/SQL", "role": "Banco relacional — DDL, DML, consultas avançadas (joins, subconsultas, views) e SQL embarcado em COBOL" },
+          { "name": "VSAM/IDCAMS", "role": "Gestão de arquivos indexados (KSDS, ESDS, RRDS), índices alternativos (AIX) e utilitários AMS" },
+          { "name": "GnuCOBOL", "role": "Compilador open-source para desenvolvimento e testes locais no macOS" },
+          { "name": "Hercules (TK4-/TK5)", "role": "Emulador mainframe z/OS para execução JCL, ISPF e validação em ambiente realista" },
+          { "name": "Git", "role": "Versionamento de todo o projeto (234 commits, cursos e exercícios)" }
+        ],
+        "metrics": [
+          { "label": "Programas COBOL", "value": "117" },
+          { "label": "Jobs JCL", "value": "139" },
+          { "label": "Linhas de código (COBOL + JCL + SQL + BMS)", "value": "~32.400" },
+          { "label": "Arquivos de curso Markdown", "value": "64 (~40.400 linhas)" },
+          { "label": "Exercícios projeto principal COBOL", "value": "21" },
+          { "label": "Domínios cobertos", "value": "7 (z/OS, JCL, VSAM, COBOL, DB2, CICS, Algorítmica)" },
+          { "label": "Commits Git", "value": "234" }
+        ]
+      }
     },
     "tour-de-controle": {
       "title": "Tour de Contrôle",
       "description": "Aplicação web de gestão de caixa e equipe para restaurantes, com rastreamento de transações e detecção de divergências.",
       "deliverables": "API REST documentada Swagger, interface React completa, autenticação JWT com RBAC, detecção automática de divergências de caixa, CRUD de funcionários, PostgreSQL com migrações Sqitch, Docker Compose 6 serviços",
-      "context": "Responder a uma necessidade real de um restaurante: centralizar a gestão de caixa e equipe em uma ferramenta única, confiável e segura."
+      "context": "Responder a uma necessidade real de um restaurante: centralizar a gestão de caixa e equipe em uma ferramenta única, confiável e segura.",
+      "detail": {
+        "deliverables": [
+          { "title": "API REST segura", "description": "API Express.js/TypeScript com autenticação JWT via cookies httpOnly, rate limiting, validação Zod em todos os endpoints e controle de acesso por roles." },
+          { "title": "Interface de gestão de caixa", "description": "Interface React para abertura/fechamento de caixas, registro de transações por tipo de pagamento e cálculo automático de divergências entre valores físicos e teóricos." },
+          { "title": "Gestão de equipe", "description": "CRUD completo de usuários com sistema de roles (Desenvolvedor, Gerente, Responsável, Garçom), redefinição de senha e registro de ações em tabela action_logs." },
+          { "title": "Infraestrutura Docker multi-serviços", "description": "Docker Compose orquestrando 6 serviços: PostgreSQL, Sqitch (migrações automáticas), backend Node.js, frontend React, Swagger UI e pgAdmin." }
+        ],
+        "decisions": [
+          { "title": "Por que cookies httpOnly em vez de localStorage para o JWT", "description": "Migração explícita de localStorage para cookies httpOnly/Secure/SameSite para eliminar o risco de exfiltração de token via XSS. O token não é mais acessível no lado do cliente." },
+          { "title": "Por que Sqitch em vez de um ORM para migrações", "description": "Sqitch permite escrever migrações em SQL puro com sistema de deploy/revert/verify, oferecendo controle total sobre o schema PostgreSQL sem camada de abstração." },
+          { "title": "Por que Zod no backend e frontend", "description": "Zod é usado dos dois lados para validar entradas com as mesmas regras (email, senha complexa, telefone francês), garantindo consistência de validação full-stack." }
+        ],
+        "stack": [
+          { "name": "React 18", "role": "Frontend SPA com roteamento (React Router 7) e páginas protegidas via layout de autenticação" },
+          { "name": "TypeScript", "role": "Linguagem principal no backend e frontend para tipagem estática" },
+          { "name": "Express.js", "role": "Framework servidor estruturado em arquitetura MVC (controllers, models, routes, schemas)" },
+          { "name": "PostgreSQL 15", "role": "Banco de dados relacional com 6 tabelas, triggers de atualização automática e índices em datas" },
+          { "name": "Sqitch", "role": "Gestão de migrações SQL com deploy/revert/verify, executado automaticamente na inicialização Docker" },
+          { "name": "Redux Toolkit", "role": "Gerenciamento de estado no frontend para o estado global da aplicação" },
+          { "name": "TanStack React Query", "role": "Gestão de cache e fetching de dados no frontend" },
+          { "name": "Tailwind CSS", "role": "Estilização utilitária com Headless UI e Heroicons para componentes de interface" },
+          { "name": "Vite", "role": "Build tool e servidor de desenvolvimento para o frontend React" },
+          { "name": "Docker Compose", "role": "Orquestração de 6 serviços (DB, migrações, backend, frontend, Swagger, pgAdmin) em rede bridge" },
+          { "name": "JWT + bcryptjs", "role": "Autenticação por token (expiração 1h) em cookie httpOnly, senhas com hash de 12 salt rounds" },
+          { "name": "Zod", "role": "Validação de schemas de entrada (body, query params) em todos os endpoints API e formulários frontend" },
+          { "name": "Helmet + CORS + Rate Limiting", "role": "Camada de segurança: headers HTTP, restrição de origem e limite de 100 req/15min (5/h para auth)" },
+          { "name": "Jest + Supertest", "role": "Testes de integração e e2e para a API backend" },
+          { "name": "Swagger UI", "role": "Documentação interativa da API acessível via contêiner dedicado na porta 8080" }
+        ],
+        "metrics": [
+          { "label": "Tabelas PostgreSQL", "value": "6 tabelas com FKs, índices e triggers" },
+          { "label": "Endpoints API", "value": "4 recursos (auth, users, transactions, cash-registers)" },
+          { "label": "Rate limiting auth", "value": "5 tentativas / hora por IP" },
+          { "label": "Serviços Docker", "value": "6 contêineres orquestrados" },
+          { "label": "Status", "value": "Em desenvolvimento ativo" }
+        ]
+      }
     },
     "lunetterie-du-coin": {
       "title": "La Lunetterie du Coin",
@@ -147,7 +255,45 @@
       "title": "Stella",
       "description": "Aplicação e-commerce full stack para navegar, filtrar e comprar estrelas, com autenticação segura, carrinho e sistema de avaliações.",
       "deliverables": "Catálogo interativo, autenticação JWT/CSRF, carrinho e lista de desejos, sistema de pedidos, API RESTful documentada Swagger, painel admin, módulo de pagamento",
-      "context": "Projeto pessoal para demonstrar competências full stack em condições reais: arquitetura MVC, segurança multicamada, ORM e testes automatizados."
+      "context": "Projeto pessoal para demonstrar competências full stack em condições reais: arquitetura MVC, segurança multicamada, ORM e testes automatizados.",
+      "detail": {
+        "deliverables": [
+          { "title": "Catálogo de estrelas com filtragem avançada", "description": "Interface de navegação com busca, filtros por constelação e magnitude. 8 páginas incluindo catálogo, detalhe do produto, carrinho e lista de desejos." },
+          { "title": "Sistema de autenticação seguro", "description": "Auth JWT com refresh tokens, proteção CSRF customizada, rate limiting (5 tentativas/15min), hash bcrypt e limpeza automática de tokens expirados via cron." },
+          { "title": "API REST documentada (48 endpoints)", "description": "Backend Express com 13 controllers, validação Joi, sanitização DOMPurify e documentação Swagger/OpenAPI auto-gerada." },
+          { "title": "Funil de compra completo", "description": "Carrinho, lista de desejos, checkout com rastreamento de status (pending → processing → shipped → delivered), sistema de pagamento multi-métodos e gestão de reembolsos." }
+        ],
+        "decisions": [
+          { "title": "Zustand em vez de Redux", "description": "4 stores leves (cart, user, wishlist, notification) com factory functions e injeção de dependências. Evita o boilerplate Redux para uma app deste tamanho." },
+          { "title": "CSRF customizado em vez de csurf (depreciado)", "description": "Implementação própria da proteção CSRF com tokens assinados JWT, substituindo o pacote csurf abandonado. Tokens injetados automaticamente via interceptores Axios." },
+          { "title": "Repository pattern + DI container no frontend", "description": "Abstração das chamadas API via repositories (CartRepository, WishlistRepository, UserRepository) resolvidos por um container DI simples, facilitando desacoplamento e testes." }
+        ],
+        "stack": [
+          { "name": "React 18 + TypeScript", "role": "Frontend SPA com lazy loading e error boundaries" },
+          { "name": "Zustand", "role": "Gerenciamento de estado global (4 stores: cart, user, wishlist, notifications)" },
+          { "name": "Tailwind CSS", "role": "Estilização utility-first com design responsivo mobile/tablet/desktop" },
+          { "name": "Axios", "role": "Cliente HTTP com interceptores para injeção automática de tokens CSRF e JWT" },
+          { "name": "React Router v7", "role": "Roteamento client-side com code splitting via React.lazy()" },
+          { "name": "Express.js", "role": "Servidor API REST com arquitetura MVC (13 controllers, 9 arquivos de rotas)" },
+          { "name": "PostgreSQL + Sequelize", "role": "Banco relacional com ORM, 10 modelos e relações (FKs, timestamps automáticos)" },
+          { "name": "JWT + Bcrypt", "role": "Auth stateless com refresh tokens no banco, hash bcrypt 10 rounds" },
+          { "name": "Helmet + Rate Limit", "role": "Headers de segurança HTTP e limitação de requisições (100 req/15min geral)" },
+          { "name": "Joi", "role": "Validação de entradas no servidor (6 schemas cobrindo todos os endpoints principais)" },
+          { "name": "Winston + Morgan", "role": "Logging aplicativo (arquivo + console) e logging de requisições HTTP" },
+          { "name": "Swagger/OpenAPI", "role": "Documentação da API auto-gerada acessível em /api-docs" },
+          { "name": "Jest + React Testing Library", "role": "Testes unitários e de integração (frontend jsdom, backend com supertest)" },
+          { "name": "Biome", "role": "Linting e formatting unificado (substitui ESLint + Prettier)" },
+          { "name": "DOMPurify", "role": "Sanitização de inputs no cliente e servidor (proteção XSS)" }
+        ],
+        "metrics": [
+          { "label": "Endpoints API", "value": "48" },
+          { "label": "Componentes React", "value": "56+" },
+          { "label": "Modelos de dados", "value": "10" },
+          { "label": "Hooks customizados", "value": "20" },
+          { "label": "Serviços backend", "value": "15" },
+          { "label": "Schemas de validação", "value": "6" }
+        ]
+      }
     }
   }
 }

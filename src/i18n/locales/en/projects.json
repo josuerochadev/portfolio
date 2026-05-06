@@ -46,19 +46,127 @@
       "title": "Luciole",
       "description": "Conversational AI agent that automates tech intelligence: collects, analyzes and summarizes 200+ articles/day from 40+ RSS sources.",
       "deliverables": "ReAct agent with 8 tools, automated RSS ingestion pipeline, web interface with SSE streaming, custom RAG system, anti-injection security, Docker deployment",
-      "context": "IT teams spend about 15 min per article on manual monitoring. This agent reduces that to seconds per query."
+      "context": "IT teams spend about 15 min per article on manual monitoring. This agent reduces that to seconds per query.",
+      "detail": {
+        "deliverables": [
+          { "title": "ReAct conversational agent", "description": "Reason → Act → Observe loop with intelligent routing to 7 tools (web search, RAG, SQL, audio transcription, vision, email digest). Model cascade gpt-4o-mini / gpt-4o based on detected complexity." },
+          { "title": "Automated monitoring pipeline", "description": "Daily collection of 38 RSS feeds, topic filtering, content scraping, parallelized LLM enrichment (5 threads), RAG indexing with chunking and embeddings. Runnable as one-shot or via APScheduler." },
+          { "title": "Luciole web interface", "description": "Jinja2 frontend with custom design system, SSE response streaming, JWT authentication with user accounts, persistent conversation history in SQLite, file upload (images, audio, PDF) with magic bytes validation." },
+          { "title": "Custom hybrid RAG", "description": "Numpy semantic search (cosine similarity on text-embedding-3-small) + BM25 lexical + freshness score + user feedback. HyDE query expansion and optional Cohere re-ranking. No external RAG framework." }
+        ],
+        "decisions": [
+          { "title": "Custom numpy RAG over LangChain/ChromaDB", "description": "Cosine similarity computed directly with numpy on JSON-stored embeddings. Eliminates external vector store dependency, reduces infra complexity and gives full control over hybrid scoring (semantic + BM25 + freshness + feedback)." },
+          { "title": "Model cascade over a single model", "description": "A fast classifier (gpt-4o-mini) routes each query to the right model: gpt-4o-mini for greetings/FAQ, gpt-4o for complex reasoning. Reduces API costs on simple queries while maintaining quality on complex ones." },
+          { "title": "SSE streaming over classic request/response", "description": "Responses are streamed via Server-Sent Events with typed events (thinking, tool_result, chunk, done). Users see the selected tool and the response appearing in real time instead of waiting several seconds." }
+        ],
+        "stack": [
+          { "name": "Python 3.12", "role": "Main language for the agent, pipeline and API" },
+          { "name": "FastAPI", "role": "REST API + SSE streaming + HTML pages (Jinja2 templates)" },
+          { "name": "OpenAI API (gpt-4o / gpt-4o-mini)", "role": "Agent reasoning, classification, article summarization, response generation" },
+          { "name": "OpenAI text-embedding-3-small", "role": "1536-dimension embeddings for RAG indexing and search" },
+          { "name": "OpenAI Whisper", "role": "Audio file transcription uploaded by users" },
+          { "name": "numpy", "role": "Vectorized cosine similarity computation for RAG semantic search" },
+          { "name": "rank_bm25", "role": "BM25 lexical score combined with semantic score for hybrid ranking" },
+          { "name": "Cohere rerank-multilingual-v3.0", "role": "Optional RAG result re-ranking to refine relevance" },
+          { "name": "SQLite", "role": "Persistence for conversations, messages, user accounts and feedback" },
+          { "name": "JWT (PyJWT + bcrypt)", "role": "User authentication with secure httpOnly cookies" },
+          { "name": "slowapi", "role": "IP-based rate limiting on sensitive endpoints (auth, ask, upload)" },
+          { "name": "Langfuse", "role": "LLM call tracing and observability (latency, tokens, errors)" },
+          { "name": "Tavily API", "role": "Real-time web search for external monitoring" },
+          { "name": "Docker (multi-stage)", "role": "Production image with RSS prebuild at build time, non-root user, healthcheck" },
+          { "name": "Render", "role": "Containerized app hosting (Frankfurt region, free plan)" }
+        ],
+        "metrics": [
+          { "label": "Monitored RSS sources", "value": "38 feeds (FR + EN)" },
+          { "label": "Agent tools", "value": "7 (SQL, web search, RAG, transcription, vision, preview digest, send digest)" },
+          { "label": "Test files", "value": "18 files (auth, conversations, streaming, upload, security, RAG, feedback, e2e…)" },
+          { "label": "Embedding dimensions", "value": "1,536 (text-embedding-3-small)" },
+          { "label": "RAG scoring", "value": "4 combined signals: cosine (50%) + BM25 (25%) + freshness (25%) + feedback bonus" },
+          { "label": "Security", "value": "Prompt injection detection (14 patterns), SQL validation, PII output filtering (IBAN, card, email, phone)" },
+          { "label": "Docker image", "value": "3-stage multi-stage (build → RSS prebuild → non-root runtime)" }
+        ]
+      }
     },
     "poei-mainframe-gestion-clientele": {
       "title": "Mainframe customer manager",
       "description": "Banking customer management system built on mainframe z/OS in three stages: batch COBOL/JCL processing, DB2/SQL relational queries, and a real-time CICS transactional application.",
       "deliverables": "Batch and transactional COBOL programs, SQL scripts, BMS screens, compilation and execution JCL, VSAM files, full project report",
-      "context": "Simulate the full cycle of a mainframe application around a single business domain — from batch processing to real-time transactional screens."
+      "context": "Simulate the full cycle of a mainframe application around a single business domain — from batch processing to real-time transactional screens.",
+      "detail": {
+        "deliverables": [
+          { "title": "Financial management system (COBOL main project)", "description": "21 progressive exercises covering a complete banking system: VSAM management (KSDS/ESDS/RRDS), subprograms CALL/CANCEL, SORT/MERGE, statement editing. 14 COBOL programs and 43 JCL." },
+          { "title": "Multi-layer CICS transactional application", "description": "Customer CRUD application with 3-layer architecture (Presentation/Processing/DAO): 7 BMS screens, 7 COBOL programs, transaction management and FSET/DATAONLY/CURSOR optimizations." },
+          { "title": "DB2 main project — embedded SQL in COBOL", "description": "12 DB2 exercises with SQL queries (DDL/DML/advanced SELECT) and 10 COBOL-DB2 programs using cursors, SQLCA and embedded SQL to query and manipulate relational data." },
+          { "title": "Structured course base (40,000+ lines)", "description": "64 Markdown files covering 7 domains (z/OS, TSO/ISPF, JCL, VSAM, COBOL, DB2, CICS, algorithms) serving as a complete technical reference for the training." }
+        ],
+        "decisions": [
+          { "title": "Why GnuCOBOL + Hercules over mainframe only", "description": "Dual environment: GnuCOBOL for fast local development (compilation in seconds), Hercules/TK4- to faithfully reproduce z/OS behavior (JCL, VSAM, ISPF). Enables fast iteration while validating on a realistic target." },
+          { "title": "Why a 3-layer architecture in CICS", "description": "Separation of Presentation (BMS/SEND MAP), Processing (business logic) and DAO (VSAM file access) into distinct programs. Reproduces mainframe industrial patterns and eases maintenance." },
+          { "title": "Why Markdown over PDF for course material", "description": "Native Git versioning, full-text search, readable diffs. The 64 files are organized by domain and chapter, making navigation and incremental updates easy." }
+        ],
+        "stack": [
+          { "name": "COBOL", "role": "Primary language — 117 programs covering sequential files, VSAM, subprograms, sorting and editing" },
+          { "name": "JCL", "role": "139 jobs for compilation, execution, sorting (SORT/MERGE) and VSAM management on z/OS" },
+          { "name": "CICS", "role": "Transaction monitor — BMS screens, SEND/RECEIVE MAP commands, pseudo-conversational management" },
+          { "name": "DB2/SQL", "role": "Relational database — DDL, DML, advanced queries (joins, subqueries, views) and embedded SQL in COBOL" },
+          { "name": "VSAM/IDCAMS", "role": "Indexed file management (KSDS, ESDS, RRDS), alternate indexes (AIX) and AMS utilities" },
+          { "name": "GnuCOBOL", "role": "Open-source compiler for local development and testing on macOS" },
+          { "name": "Hercules (TK4-/TK5)", "role": "Mainframe z/OS emulator for JCL execution, ISPF and realistic environment validation" },
+          { "name": "Git", "role": "Version control for the entire project (234 commits, courses and exercises)" }
+        ],
+        "metrics": [
+          { "label": "COBOL programs", "value": "117" },
+          { "label": "JCL jobs", "value": "139" },
+          { "label": "Lines of code (COBOL + JCL + SQL + BMS)", "value": "~32,400" },
+          { "label": "Markdown course files", "value": "64 (~40,400 lines)" },
+          { "label": "COBOL main project exercises", "value": "21" },
+          { "label": "Domains covered", "value": "7 (z/OS, JCL, VSAM, COBOL, DB2, CICS, Algorithms)" },
+          { "label": "Git commits", "value": "234" }
+        ]
+      }
     },
     "tour-de-controle": {
       "title": "Tour de Contrôle",
       "description": "Restaurant cash register and staff management web application, with transaction tracking and discrepancy detection.",
       "deliverables": "Swagger-documented REST API, full React interface, JWT authentication with RBAC, automatic cash discrepancy detection, staff CRUD, PostgreSQL with Sqitch migrations, Docker Compose 6 services",
-      "context": "Addressing a real restaurant need: centralizing cash register and staff management into a single, reliable, and secure tool."
+      "context": "Addressing a real restaurant need: centralizing cash register and staff management into a single, reliable, and secure tool.",
+      "detail": {
+        "deliverables": [
+          { "title": "Secured REST API", "description": "Express.js/TypeScript API with JWT authentication via httpOnly cookies, rate limiting, Zod validation on all endpoints, and role-based access control." },
+          { "title": "Cash register management interface", "description": "React interface for opening/closing registers, entering transactions by payment type, and automatically calculating discrepancies between physical and theoretical amounts." },
+          { "title": "Staff management", "description": "Full user CRUD with role system (Developer, Manager, Supervisor, Waiter), password reset, and action logging in an action_logs table." },
+          { "title": "Multi-service Docker infrastructure", "description": "Docker Compose orchestrating 6 services: PostgreSQL, Sqitch (auto migrations), Node.js backend, React frontend, Swagger UI and pgAdmin." }
+        ],
+        "decisions": [
+          { "title": "Why httpOnly cookies over localStorage for JWT", "description": "Explicit migration from localStorage to httpOnly/Secure/SameSite cookies to eliminate token exfiltration risk via XSS. The token is no longer accessible client-side." },
+          { "title": "Why Sqitch over an ORM for migrations", "description": "Sqitch allows writing migrations in pure SQL with a deploy/revert/verify system, providing full control over the PostgreSQL schema without an abstraction layer." },
+          { "title": "Why Zod on both backend and frontend", "description": "Zod is used on both sides to validate inputs with the same rules (email, complex password, French phone number), ensuring full-stack validation consistency." }
+        ],
+        "stack": [
+          { "name": "React 18", "role": "Frontend SPA with routing (React Router 7) and protected pages via an auth layout" },
+          { "name": "TypeScript", "role": "Primary language for both backend and frontend static typing" },
+          { "name": "Express.js", "role": "Server framework structured in MVC architecture (controllers, models, routes, schemas)" },
+          { "name": "PostgreSQL 15", "role": "Relational database with 6 tables, auto-update triggers and date indexes" },
+          { "name": "Sqitch", "role": "SQL migration management with deploy/revert/verify, auto-executed on Docker startup" },
+          { "name": "Redux Toolkit", "role": "Frontend state management for global application state" },
+          { "name": "TanStack React Query", "role": "Frontend data caching and fetching management" },
+          { "name": "Tailwind CSS", "role": "Utility styling with Headless UI and Heroicons for interface components" },
+          { "name": "Vite", "role": "Build tool and development server for the React frontend" },
+          { "name": "Docker Compose", "role": "Orchestration of 6 services (DB, migrations, backend, frontend, Swagger, pgAdmin) on a bridge network" },
+          { "name": "JWT + bcryptjs", "role": "Token-based authentication (1h expiry) stored in httpOnly cookie, passwords hashed with 12 salt rounds" },
+          { "name": "Zod", "role": "Input schema validation (body, query params) on all API endpoints and frontend forms" },
+          { "name": "Helmet + CORS + Rate Limiting", "role": "Security layer: HTTP headers, origin restriction, and 100 req/15min limit (5/h for auth)" },
+          { "name": "Jest + Supertest", "role": "Integration and e2e tests for the backend API" },
+          { "name": "Swagger UI", "role": "Interactive API documentation accessible via a dedicated container on port 8080" }
+        ],
+        "metrics": [
+          { "label": "PostgreSQL tables", "value": "6 tables with FKs, indexes and triggers" },
+          { "label": "API endpoints", "value": "4 resources (auth, users, transactions, cash-registers)" },
+          { "label": "Auth rate limiting", "value": "5 attempts / hour per IP" },
+          { "label": "Docker services", "value": "6 orchestrated containers" },
+          { "label": "Status", "value": "Under active development" }
+        ]
+      }
     },
     "lunetterie-du-coin": {
       "title": "La Lunetterie du Coin",
@@ -147,7 +255,45 @@
       "title": "Stella",
       "description": "Full stack e-commerce application for browsing, filtering, and purchasing stars, with secure authentication, cart and review system.",
       "deliverables": "Interactive catalog, JWT/CSRF authentication, cart and wishlist, order system, Swagger-documented RESTful API, admin panel, payment module",
-      "context": "Personal project built to demonstrate full stack skills in real-world conditions: MVC architecture, multi-layered security, ORM and automated testing."
+      "context": "Personal project built to demonstrate full stack skills in real-world conditions: MVC architecture, multi-layered security, ORM and automated testing.",
+      "detail": {
+        "deliverables": [
+          { "title": "Star catalog with advanced filtering", "description": "Browse interface with search, filters by constellation and magnitude. 8 pages including catalog, product detail, cart and wishlist." },
+          { "title": "Secure authentication system", "description": "JWT auth with refresh tokens, custom CSRF protection, rate limiting (5 attempts/15min), bcrypt hashing and automatic cleanup of expired tokens via cron." },
+          { "title": "Documented REST API (48 endpoints)", "description": "Express backend with 13 controllers, Joi validation, DOMPurify sanitization and auto-generated Swagger/OpenAPI documentation." },
+          { "title": "Complete purchase funnel", "description": "Cart, wishlist, checkout with status tracking (pending → processing → shipped → delivered), multi-method payment system and refund management." }
+        ],
+        "decisions": [
+          { "title": "Zustand over Redux", "description": "4 lightweight stores (cart, user, wishlist, notification) with factory functions and dependency injection. Avoids Redux boilerplate for an app of this size." },
+          { "title": "Custom CSRF over csurf (deprecated)", "description": "Custom CSRF protection implementation with JWT-signed tokens, replacing the abandoned csurf package. Tokens auto-injected via Axios interceptors." },
+          { "title": "Repository pattern + DI container on the frontend", "description": "API call abstraction via repositories (CartRepository, WishlistRepository, UserRepository) resolved by a simple DI container, enabling decoupling and testability." }
+        ],
+        "stack": [
+          { "name": "React 18 + TypeScript", "role": "Frontend SPA with lazy loading and error boundaries" },
+          { "name": "Zustand", "role": "Global state management (4 stores: cart, user, wishlist, notifications)" },
+          { "name": "Tailwind CSS", "role": "Utility-first styling with responsive mobile/tablet/desktop design" },
+          { "name": "Axios", "role": "HTTP client with interceptors for auto CSRF and JWT token injection" },
+          { "name": "React Router v7", "role": "Client-side routing with code splitting via React.lazy()" },
+          { "name": "Express.js", "role": "REST API server with MVC architecture (13 controllers, 9 route files)" },
+          { "name": "PostgreSQL + Sequelize", "role": "Relational database with ORM, 10 models and relations (FKs, auto timestamps)" },
+          { "name": "JWT + Bcrypt", "role": "Stateless auth with DB-stored refresh tokens, bcrypt hashing with 10 rounds" },
+          { "name": "Helmet + Rate Limit", "role": "HTTP security headers and request limiting (100 req/15min general)" },
+          { "name": "Joi", "role": "Server-side input validation (6 schemas covering all main endpoints)" },
+          { "name": "Winston + Morgan", "role": "Application logging (file + console) and HTTP request logging" },
+          { "name": "Swagger/OpenAPI", "role": "Auto-generated API documentation accessible at /api-docs" },
+          { "name": "Jest + React Testing Library", "role": "Unit and integration tests (frontend jsdom, backend with supertest)" },
+          { "name": "Biome", "role": "Unified linting and formatting (replaces ESLint + Prettier)" },
+          { "name": "DOMPurify", "role": "Client and server-side input sanitization (XSS protection)" }
+        ],
+        "metrics": [
+          { "label": "API endpoints", "value": "48" },
+          { "label": "React components", "value": "56+" },
+          { "label": "Data models", "value": "10" },
+          { "label": "Custom hooks", "value": "20" },
+          { "label": "Backend services", "value": "15" },
+          { "label": "Validation schemas", "value": "6" }
+        ]
+      }
     }
   }
 }

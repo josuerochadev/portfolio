@@ -4,10 +4,11 @@ import { useTranslation } from "react-i18next";
 import LetterRippleEffect from "@/components/effects/letter-ripple";
 
 const FOOTER_NAV = [
+	{ key: "home", section: "hero" },
 	{ key: "about", section: "bio" },
 	{ key: "work", section: "projects" },
 	{ key: "contact", section: "contact" },
-	{ key: "blog", section: "" },
+	// { key: "blog", section: "" },
 ];
 
 export default function Footer() {

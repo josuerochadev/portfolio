@@ -1,4 +1,4 @@
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { FaArrowLeft, FaArrowRight, FaGithub, FaExternalLinkAlt } from "react-icons/fa";
@@ -41,7 +41,6 @@ const getStatusLabel = (status: Project['status'], t: any) => {
 export default function ProjectDetail() {
 	const { t } = useTranslation(['projects', 'common']);
 	const { projectId } = useParams<{ projectId: string }>();
-	const navigate = useNavigate();
 	const projectIndex = PROJECTS.findIndex(p => p.id === projectId);
 	const project = projectIndex >= 0 ? PROJECTS[projectIndex] : undefined;
 
@@ -138,15 +137,14 @@ export default function ProjectDetail() {
 								)}
 							</div>
 
-							<button
-								onClick={() => navigate(-1)}
+							<Link
+								to="/#projects"
 								className="mt-8 flex items-center gap-2 text-sm font-medium text-beige/70 hover:text-orange transition-colors"
 								aria-label={t('projects:actions.backToProjects')}
-								type="button"
 							>
 								<FaArrowLeft aria-hidden="true" />
 								{t('projects:actions.backToProjects')}
-							</button>
+							</Link>
 						</div>
 					</header>
 					<div className="w-full h-1 bg-lime" />

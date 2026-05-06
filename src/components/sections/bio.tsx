@@ -45,7 +45,7 @@ export default function Bio() {
 					{Object.entries(sections).map(([key, section], i) => (
 						<FadeInUpOnScroll key={key} delay={0.2 + i * 0.15}>
 							<div className="relative min-h-[120px]">
-								<h3 className="text-2xl font-serif font-bold text-violet dark:text-beige mb-2 capitalize">
+								<h3 className="text-sm md:text-base font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange mb-2">
 									{section.title}
 								</h3>
 								<p className="text-base md:text-lg leading-relaxed text-violet dark:text-beige/90">

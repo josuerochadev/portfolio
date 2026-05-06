@@ -78,7 +78,7 @@ function ProjectGroup({ title, items, startIndex, t }: {
 	return (
 		<div className="flex flex-col gap-12">
 			<FadeInUpOnScroll delay={0.2}>
-				<h3 className="text-3xl md:text-4xl font-display font-bold text-violet dark:text-beige">
+				<h3 className="text-sm md:text-base font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange">
 					{title}
 				</h3>
 			</FadeInUpOnScroll>
@@ -99,8 +99,8 @@ function ProjectGroup({ title, items, startIndex, t }: {
 							className="w-full flex flex-col lg:flex-row gap-6 items-start
 							bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5
 							dark:from-lime/10 dark:via-orange/5 dark:to-violet/10
-							backdrop-blur-md border border-lime/30 dark:border-lime/20 rounded-2xl shadow-md p-6
-							hover:shadow-lg hover:scale-[1.01]
+							backdrop-blur-md border border-lime/30 dark:border-lime/20 rounded-2xl shadow-glow-lime p-6
+							hover:shadow-glow-lime-lg hover:scale-[1.01]
 							transition-all duration-300 ease-[cubic-bezier(0.83,0,0.17,1)]"
 						>
 							<div className="w-full lg:w-1/2 aspect-[4/3]">
@@ -121,9 +121,9 @@ function ProjectGroup({ title, items, startIndex, t }: {
 									</h3>
 								</div>
 								<p className="text-lg leading-snug">{projectTranslations?.description || project.description}</p>
-								<p className="text-xl font-bold mt-2">{t('labels.deliverables')}</p>
+								<p className="text-sm font-sans font-bold uppercase tracking-wider text-violet/60 dark:text-beige/60 mt-3">{t('labels.deliverables')}</p>
 								<p className="text-base mb-1">{projectTranslations?.deliverables || project.deliverables}</p>
-								<p className="text-xl font-bold">{t('labels.context')}</p>
+								<p className="text-sm font-sans font-bold uppercase tracking-wider text-violet/60 dark:text-beige/60 mt-3">{t('labels.context')}</p>
 								<p className="text-base">{projectTranslations?.context || project.context}</p>
 								<Link
 									to={`/projet/${project.id}`}
@@ -131,7 +131,7 @@ function ProjectGroup({ title, items, startIndex, t }: {
 									hover:bg-orange hover:text-beige dark:hover:bg-orange/20 dark:hover:text-orange
 									transition-all duration-300
 									inline-flex items-center gap-2 self-start font-medium text-sm
-									hover:shadow-md hover:scale-105 active:scale-95"
+									hover:shadow-glow-orange hover:scale-105 active:scale-95"
 									aria-label={`${t('labels.seeMore')} ${projectTranslations?.title || project.title}`}
 								>
 									<FaEye className="inline-block" /> {t('labels.moreDetails')}

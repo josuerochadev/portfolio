@@ -29,7 +29,7 @@ const FloatingLanguageSwitcher: React.FC = () => {
           backdrop-blur-md border border-lime/30 dark:border-lime/20 text-violet dark:text-beige
           hover:bg-lime hover:text-orange dark:hover:bg-lime/20 dark:hover:text-lime
           font-sans font-bold text-xs sm:text-sm uppercase tracking-wider
-          ${TRANSITIONS.DEFAULT} shadow-lg hover:shadow-xl
+          ${TRANSITIONS.DEFAULT} shadow-glow-lime hover:shadow-glow-lime-lg
           active:scale-95 transition-transform duration-150
           focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2
         `}
@@ -52,7 +52,7 @@ const FloatingLanguageSwitcher: React.FC = () => {
             transition={{ duration: 0.15, ease: "easeOut" }}
             className={`
               fixed top-20 right-6 z-[99998]
-              w-32 sm:w-36 rounded-2xl shadow-2xl
+              w-32 sm:w-36 rounded-2xl shadow-glow-lime-lg
               bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5
               dark:from-lime/10 dark:via-orange/5 dark:to-violet/10
               backdrop-blur-md border border-lime/30 dark:border-lime/20

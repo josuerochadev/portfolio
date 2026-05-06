@@ -40,7 +40,7 @@ export default function PhotoFrame() {
 				}}
 				onDragEnd={() => setIsDragging(false)}
 				className={`absolute right-[8%] top-[35%] cursor-grab active:cursor-grabbing pointer-events-auto z-[9999] transition-shadow ${
-					isDragging ? "shadow-2xl" : "shadow-lg"
+					isDragging ? "shadow-glow-violet-lg" : "shadow-glow-violet"
 				}`}
 				initial={{ opacity: 0, scale: 0.8 }}
 				animate={{ opacity: 1, scale: 1 }}
@@ -53,7 +53,7 @@ export default function PhotoFrame() {
 					onClick={() => setIsClosed(true)}
 					aria-label="Close photo"
 					title="Close photo"
-					className="absolute top-[-10px] right-[-10px] bg-beige border border-violet text-orange-dark rounded-full w-7 h-7 text-sm font-bold shadow-md z-10"
+					className="absolute top-[-10px] right-[-10px] bg-beige border border-violet text-orange-dark rounded-full w-7 h-7 text-sm font-bold shadow-glow-violet z-10"
 				>
 					×
 				</button>

@@ -24,7 +24,7 @@ export default function LegalNotice() {
 							hover:bg-orange hover:text-beige dark:hover:bg-orange/20 dark:hover:text-orange
 							transition-all duration-300
 							inline-flex items-center gap-2 font-medium text-sm
-							hover:shadow-md hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2 dark:focus:ring-offset-dark-bg"
+							hover:shadow-glow-orange hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2 dark:focus:ring-offset-dark-bg"
 							aria-label={t('common:buttons.backToHome')}
 						>
 							<FaArrowLeft className="inline-block" /> {t('common:buttons.backToHome')}

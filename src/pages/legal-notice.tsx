@@ -9,9 +9,9 @@ export default function LegalNotice() {
 	const { t } = useTranslation(['legal', 'common']);
 	
 	return (
-		<div className="min-h-screen text-violet-dark dark:text-beige">
+		<div className="min-h-screen text-violet dark:text-beige">
 			<BackgroundGradient />
-			<main className="relative z-10 max-w-4xl mx-auto px-6 py-20" role="main">
+			<main className="relative z-10 max-w-5xl mx-auto px-6 py-20" role="main">
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
@@ -40,7 +40,7 @@ export default function LegalNotice() {
 					<div className="prose prose-lg max-w-none">
 						<FadeInUp delay={0.6}>
 							<section className="mb-8">
-								<h2 className="text-2xl font-bold mb-4">{t('legalNotice.publisher.title')}</h2>
+								<h2 className="text-base md:text-lg font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange mb-4">{t('legalNotice.publisher.title')}</h2>
 								<p>
 									<strong>{t('legalNotice.publisher.name')}</strong><br />
 									{t('legalNotice.publisher.status')}<br />
@@ -52,7 +52,7 @@ export default function LegalNotice() {
 
 						<FadeInUp delay={0.7}>
 							<section className="mb-8">
-								<h2 className="text-2xl font-bold mb-4">{t('legalNotice.hosting.title')}</h2>
+								<h2 className="text-base md:text-lg font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange mb-4">{t('legalNotice.hosting.title')}</h2>
 								<p>
 									<strong>{t('legalNotice.hosting.provider')}</strong><br />
 									{t('legalNotice.hosting.address')}<br />
@@ -65,7 +65,7 @@ export default function LegalNotice() {
 
 						<FadeInUp delay={0.8}>
 							<section className="mb-8">
-								<h2 className="text-2xl font-bold mb-4">{t('legalNotice.intellectual.title')}</h2>
+								<h2 className="text-base md:text-lg font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange mb-4">{t('legalNotice.intellectual.title')}</h2>
 								<ul className="list-disc ml-6">
 									{t('legalNotice.intellectual.content', { returnObjects: true }).map((item: string, index: number) => (
 										<li key={index} className="mb-2">{item}</li>
@@ -76,7 +76,7 @@ export default function LegalNotice() {
 
 						<FadeInUp delay={0.9}>
 							<section className="mb-8">
-								<h2 className="text-2xl font-bold mb-4">{t('legalNotice.liability.title')}</h2>
+								<h2 className="text-base md:text-lg font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange mb-4">{t('legalNotice.liability.title')}</h2>
 								<ul className="list-disc ml-6">
 									{t('legalNotice.liability.content', { returnObjects: true }).map((item: string, index: number) => (
 										<li key={index} className="mb-2">{item}</li>

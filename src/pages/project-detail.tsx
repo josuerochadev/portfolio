@@ -161,7 +161,7 @@ export default function ProjectDetail() {
 								<h2 className="text-base md:text-lg font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange mb-4">
 									{t('projects:detail.why')}
 								</h2>
-								<p className="text-lg leading-relaxed text-violet/85 dark:text-beige/85 max-w-3xl">
+								<p className="text-lg leading-relaxed text-violet/80 dark:text-beige/80 max-w-3xl">
 									{projectContext}
 								</p>
 							</section>
@@ -178,7 +178,7 @@ export default function ProjectDetail() {
 										{detailDeliverables.map((item) => (
 											<div key={item.title}>
 												<h3 className="text-lg font-display font-semibold italic mb-1">{item.title}</h3>
-												<p className="text-violet/75 dark:text-beige/75 leading-relaxed">{item.description}</p>
+												<p className="text-violet/80 dark:text-beige/80 leading-relaxed">{item.description}</p>
 											</div>
 										))}
 									</div>
@@ -218,7 +218,7 @@ export default function ProjectDetail() {
 										{detailDecisions.map((decision) => (
 											<div key={decision.title}>
 												<h3 className="text-lg font-display font-semibold italic mb-2">{decision.title}</h3>
-												<p className="text-violet/75 dark:text-beige/75 leading-relaxed max-w-3xl">{decision.description}</p>
+												<p className="text-violet/80 dark:text-beige/80 leading-relaxed max-w-3xl">{decision.description}</p>
 											</div>
 										))}
 									</div>

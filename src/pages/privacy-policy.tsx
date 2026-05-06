@@ -11,9 +11,9 @@ export default function PrivacyPolicy() {
 	const sections = t('privacy.sections', { returnObjects: true }) as Record<string, { title: string; content: string[] }>;
 
 	return (
-		<div className="min-h-screen text-violet-dark dark:text-beige">
+		<div className="min-h-screen text-violet dark:text-beige">
 			<BackgroundGradient />
-			<main className="relative z-10 max-w-4xl mx-auto px-6 py-20" role="main">
+			<main className="relative z-10 max-w-5xl mx-auto px-6 py-20" role="main">
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
@@ -51,7 +51,7 @@ export default function PrivacyPolicy() {
 						{Object.entries(sections).map(([key, section], index) => (
 							<FadeInUp key={key} delay={0.8 + index * 0.1}>
 								<section className="mb-8">
-									<h2 className="text-2xl font-bold mb-4">{section.title}</h2>
+									<h2 className="text-base md:text-lg font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange mb-4">{section.title}</h2>
 									<ul className="list-disc ml-6">
 										{section.content.map((item: string, itemIndex: number) => (
 											<li key={itemIndex} className="mb-2">{item}</li>

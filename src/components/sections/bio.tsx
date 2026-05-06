@@ -44,7 +44,7 @@ export default function Bio() {
 								<h3 className="text-base md:text-lg font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange mb-2">
 									{section.title}
 								</h3>
-								<p className="text-base md:text-lg leading-relaxed text-violet dark:text-beige/90">
+								<p className="text-base md:text-lg leading-relaxed text-violet/80 dark:text-beige/80">
 									{section.text}
 								</p>
 								<LayeredIconBackground

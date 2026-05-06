@@ -89,30 +89,29 @@ export default function ProjectDetail() {
 				>
 					{/* Hero — full width, image background */}
 					<header className="relative w-full min-h-screen flex items-end overflow-hidden">
-						<div className="absolute top-0 left-0 w-full h-12 bg-lime dark:bg-lime/40 opacity-60 dark:opacity-30 blur-2xl z-20 pointer-events-none" />
 						<img
 							src={project.image.desktop}
 							alt=""
 							aria-hidden="true"
 							className="absolute inset-0 w-full h-full object-cover brightness-[0.6]"
-							style={{ maskImage: 'linear-gradient(to bottom, black 30%, transparent 80%)', WebkitMaskImage: 'linear-gradient(to bottom, black 30%, transparent 80%)' }}
 						/>
+						<div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
 
 						<div className="relative z-10 w-full max-w-5xl mx-auto px-6 pb-12 pt-32">
 							<div className="flex flex-wrap items-center gap-3 mb-4">
 								<span className={`px-3 py-1 rounded-full text-sm font-bold ${getStatusColor(project.status)}`}>
 									{getStatusLabel(project.status, t)}
 								</span>
-								<span className="text-sm text-violet/70 dark:text-beige/60">
+								<span className="text-sm text-beige/70">
 									{project.year}
 								</span>
 							</div>
 
-							<h1 className="text-4xl md:text-6xl font-display font-extrabold mb-4">
+							<h1 className="text-4xl md:text-6xl font-display font-extrabold mb-4 text-beige">
 								{projectTitle}
 							</h1>
 
-							<p className="text-xl leading-relaxed text-violet/85 dark:text-beige/85 max-w-3xl">
+							<p className="text-xl font-bold leading-relaxed text-beige/80 max-w-3xl">
 								{projectDescription}
 							</p>
 
@@ -141,7 +140,7 @@ export default function ProjectDetail() {
 
 							<button
 								onClick={() => navigate(-1)}
-								className="mt-8 flex items-center gap-2 text-sm font-medium text-violet/70 dark:text-beige/70 hover:text-orange-dark dark:hover:text-orange transition-colors"
+								className="mt-8 flex items-center gap-2 text-sm font-medium text-beige/70 hover:text-orange transition-colors"
 								aria-label={t('projects:actions.backToProjects')}
 								type="button"
 							>
@@ -150,6 +149,8 @@ export default function ProjectDetail() {
 							</button>
 						</div>
 					</header>
+					<div className="w-full h-1 bg-lime" />
+					<div className="w-full h-12 bg-lime dark:bg-lime/40 opacity-60 dark:opacity-30 blur-2xl pointer-events-none" />
 
 					{/* Body */}
 					<main className="relative z-10 max-w-5xl mx-auto px-6 py-20" role="main">

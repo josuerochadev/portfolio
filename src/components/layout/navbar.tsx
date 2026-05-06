@@ -12,7 +12,7 @@ const NAV_LINKS: { key: string; section: string; external?: boolean }[] = [
 	{ key: "about", section: "bio" },
 	{ key: "work", section: "projects" },
 	{ key: "contact", section: "contact" },
-	{ key: "blog", section: "", external: true },
+	// { key: "blog", section: "", external: true },
 ];
 
 // Number of bars to display
@@ -62,7 +62,7 @@ const Navbar: React.FC = () => {
 			ref={navRef}
 			onMouseMove={handleMouseMove}
 			aria-label="Main navigation"
-			className="relative w-full bg-transparent backdrop-blur-md text-violet dark:text-beige font-bold text-sm sm:text-lg uppercase tracking-wider font-sans overflow-hidden py-4 sm:py-6 z-50 border-b-2 border-lime dark:border-lime/40"
+			className="relative w-full bg-transparent backdrop-blur-md transform-gpu text-violet dark:text-beige font-bold text-sm sm:text-lg uppercase tracking-wider font-sans overflow-hidden py-4 sm:py-6 z-50 border-b-2 border-lime dark:border-lime/40"
 		>
 			{/* Animated bars background */}
 			<div className="absolute inset-0 z-[1]">
@@ -76,7 +76,7 @@ const Navbar: React.FC = () => {
 						return (
 							<div
 								key={`bar-${i}`}
-								className="animated-bar absolute top-0 h-full bg-lime dark:bg-lime/30 backdrop-blur-md transition-[width,opacity] duration-100 ease-[cubic-bezier(0.83,0,0.17,1)]"
+								className="animated-bar absolute top-0 h-full bg-lime dark:bg-lime/30 transition-[width,opacity] duration-100 ease-[cubic-bezier(0.83,0,0.17,1)]"
 								style={{ left, width: '0px', opacity: 0 }}
 							/>
 						);

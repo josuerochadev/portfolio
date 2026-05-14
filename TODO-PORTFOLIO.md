@@ -60,9 +60,9 @@ Option D — narrative :
 > "Du droit au mainframe, en passant par le web."
 
 ### Taches
-- [ ] Choisir la tagline (3 langues)
-- [ ] Revoir les phrases rotatives (ton moins consultant, plus parcours)
-- [ ] Mettre a jour hero.json (fr/en/pt)
+- [x] Choisir la tagline (3 langues) — Option A retenue : "— Un peu de contexte."
+- [x] Revoir les phrases rotatives (ton moins consultant, plus parcours)
+- [x] Mettre a jour hero.json (fr/en/pt)
 
 ---
 
@@ -89,9 +89,9 @@ Option D — narrative :
 
 ### Taches
 - [x] Deplacer la section bio avant projets dans home-page.tsx
-- [ ] Definir le nouveau contenu et format (session dediee)
-- [ ] Reecrire les textes bio.json (fr/en/pt)
-- [ ] Repenser la phrase d'intro de la section
+- [x] Definir le nouveau contenu et format — timeline zig-zag avec 6 etapes + cards parallax
+- [x] Reecrire les textes bio.json (fr/en/pt)
+- [x] Repenser la phrase d'intro — "Un parcours atypique ? Plutot bien type, je dirais."
 
 ---
 
@@ -105,40 +105,37 @@ Option D — narrative :
 - [x] Nouvelles images optimisees (webp, 3 tailles)
 - [x] Traductions FR/EN/PT a jour
 
-### Pages detail projet — Refonte (EN COURS)
+### Pages detail projet — Refonte (FAIT)
 
 Structure cible par page (mini case study) :
 
 ```
-1. Hero projet
+1. Hero projet                    [x]
    - Titre + badge statut + annee
    - Description courte (1-2 lignes)
    - Tags technos
    - Boutons : Demo live | Code source (masques si non dispo)
 
-2. Visuel principal
+2. Visuel principal               [ ] placeholders "Capture a venir" en place
    - Screenshot/mockup full-width
    - Ou video/GIF de demo embedded (si pertinent)
 
-3. Le pourquoi
+3. Le pourquoi                    [x]
    - Contexte / probleme a resoudre
-   - Motivation, situation
 
-4. Ce que j'ai construit
-   - 3-4 blocs livrables cles (icone + description)
-   - Pas une liste a plat
+4. Ce que j'ai construit          [x]
+   - 3-4 blocs livrables cles
 
-5. Decisions techniques
-   - 2-3 choix importants expliques ("pourquoi X plutot que Y")
-   - Section expert-friendly
+5. Decisions techniques           [x]
+   - 2-3 choix importants expliques
 
-6. Stack technique
+6. Stack technique                [x]
    - Grille de technos avec role de chacune
 
-7. Resultats / Chiffres (si applicable)
-   - Metrics : perf Lighthouse, temps de reponse, volume traite, etc.
+7. Resultats / Chiffres           [x]
+   - Metrics par projet
 
-8. Navigation
+8. Navigation                     [x]
    - Projet precedent / suivant
    - Retour a la section projets
 ```
@@ -147,19 +144,20 @@ Structure cible par page (mini case study) :
 
 | Projet | Page detail | Contenu pret | Demo/liens |
 |--------|-------------|--------------|------------|
-| La Lunetterie du Coin | [ ] | oui | oui (live + github) |
-| Rayssa Harmes Avocate | [ ] | oui | oui (live + github) |
-| Luciole | [ ] | oui | oui (live + github) |
-| Gestionnaire clients mainframe | [ ] | oui | non |
-| Tour de Controle | [ ] | a completer | non |
-| Stella | [ ] | a completer | non |
+| La Lunetterie du Coin | [x] | oui | oui (live + github) |
+| Rayssa Harmes Avocate | [x] | oui | oui (live + github) |
+| Luciole | [x] | oui | oui (live + github) |
+| Gestionnaire clients mainframe | [x] | oui | non |
+| Tour de Controle | [x] | oui (verifie depuis repo) | non |
+| Stella | [x] | oui (verifie depuis repo) | non |
 
 ### Taches
-- [ ] Implementer le squelette page detail (nouveau composant)
-- [ ] Ajouter les champs manquants au modele (decisions, metrics, etc.)
-- [ ] Remplir le contenu pour chaque projet (session par projet)
-- [ ] Ajouter navigation prev/next
-- [ ] Traduire les nouvelles sections (fr/en/pt)
+- [x] Implementer le squelette page detail (project-detail.tsx)
+- [x] Ajouter les champs manquants au modele (decisions, metrics, stack, deliverables)
+- [x] Remplir le contenu pour chaque projet
+- [x] Ajouter navigation prev/next
+- [x] Traduire les nouvelles sections (fr/en/pt)
+- [ ] Remplacer les placeholders galerie par de vraies captures
 
 ---
 
@@ -177,9 +175,9 @@ Structure cible par page (mini case study) :
 - Garder l'illustration si elle colle
 
 ### Taches
-- [ ] Reecrire le heading contact (3 langues)
-- [ ] Ajouter les liens sociaux + email dans la section
-- [ ] Retirer toute reference a des missions/travail ensemble
+- [x] Reecrire le heading contact — "Ecris-moi un mot" (3 langues)
+- [x] Ajouter les liens sociaux + email dans la section (GitHub, LinkedIn, email)
+- [x] Retirer toute reference a des missions/travail ensemble
 
 ---
 
@@ -213,12 +211,18 @@ Toggle dark/light mode. Priorite basse, polish.
 
 ## Ordre de priorite
 
-1. ~~**Section 2** — Parcours/Bio (deplacer + refondre le contenu)~~ deplace, contenu a affiner
-2. ~~**Section 3** — Projets (ajouter formations, reorg, nouveau heading)~~ fait, pages detail en cours
-3. **Section 1** — Hero (nouvelle tagline + phrases)
-4. **Section 4** — Contact (simplifier)
+1. ~~**Section 1** — Hero (nouvelle tagline + phrases)~~ fait
+2. ~~**Section 2** — Parcours/Bio (deplacer + refondre le contenu)~~ fait
+3. ~~**Section 3** — Projets (ajouter formations, reorg, pages detail)~~ fait
+4. ~~**Section 4** — Contact (simplifier)~~ fait
 5. ~~**Section 5** — Navbar Blog (rapide)~~ fait
 6. ~~**Section 6** — Dark mode (bonus)~~ fait
+
+## Ce qui reste
+
+- [ ] Galerie projets — remplacer les placeholders "Capture a venir" par de vraies captures
+- [ ] Dark mode — tester contraste WCAG
+- [ ] Merger feat/projects sur main + deploy Vercel
 
 ---
 

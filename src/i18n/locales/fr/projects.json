@@ -132,39 +132,39 @@
       "context": "Répondre au besoin réel d'un restaurant : centraliser la gestion des caisses et du personnel dans un outil unique, fiable et sécurisé.",
       "detail": {
         "deliverables": [
-          { "title": "API REST sécurisée", "description": "API Express.js/TypeScript avec authentification JWT via cookies httpOnly, rate limiting, validation Zod sur tous les endpoints, et contrôle d'accès par rôles." },
-          { "title": "Interface de gestion de caisse", "description": "Interface React permettant l'ouverture/fermeture de caisses, la saisie de transactions par type de paiement, et le calcul automatique des écarts entre montants physiques et théoriques." },
-          { "title": "Gestion du personnel", "description": "CRUD complet des utilisateurs avec système de rôles (Développeur, Gérant, Responsable, Serveur), réinitialisation de mot de passe, et journalisation des actions dans une table action_logs." },
-          { "title": "Infrastructure Docker multi-services", "description": "Docker Compose orchestrant 6 services : PostgreSQL, Sqitch (migrations auto), backend Node.js, frontend React, Swagger UI et pgAdmin." }
+          { "title": "Gestion des caisses (La Caisse)", "description": "Ouverture et fermeture de caisse avec saisie du fond physique et détection automatique des écarts. Historique complet des sessions par caissier." },
+          { "title": "Suivi des transactions (Le Flux)", "description": "Enregistrement des transactions par type de paiement (CB, espèces, ticket-restaurant, etc.), avec filtres avancés et pagination." },
+          { "title": "Gestion du personnel (L'Équipage)", "description": "CRUD complet des membres d'équipe avec 4 niveaux de rôle (Développeur, Gérant, Responsable, Serveur) et reset de mot de passe par email." },
+          { "title": "Dashboard KPIs & Journaux d'actions", "description": "Vue synthétique des indicateurs clés en temps réel et traçabilité complète de toutes les actions (qui, quoi, quand), filtrable par date et utilisateur." }
         ],
         "decisions": [
-          { "title": "Pourquoi des cookies httpOnly plutôt que localStorage pour le JWT", "description": "Migration explicite de localStorage vers des cookies httpOnly/Secure/SameSite pour éliminer le risque d'exfiltration de token via XSS. Le token n'est plus accessible côté client." },
-          { "title": "Pourquoi Sqitch plutôt qu'un ORM pour les migrations", "description": "Sqitch permet d'écrire les migrations en SQL pur avec un système de deploy/revert/verify, offrant un contrôle total sur le schéma PostgreSQL sans couche d'abstraction." },
-          { "title": "Pourquoi Zod côté backend et frontend", "description": "Zod est utilisé des deux côtés pour valider les entrées avec les mêmes règles (email, mot de passe complexe, numéro de téléphone français), garantissant une cohérence de validation full-stack." }
+          { "title": "JWT via cookies httpOnly plutôt que localStorage", "description": "Les tokens d'authentification sont stockés dans des cookies httpOnly pour éliminer le risque de vol via XSS. Le flag sameSite=none est activé en production pour gérer le cross-domain entre Railway et Vercel." },
+          { "title": "Sqitch plutôt qu'un ORM pour les migrations", "description": "Les migrations de base de données sont gérées avec Sqitch (SQL pur), ce qui garantit un contrôle total sur le schéma et évite les abstractions d'un ORM pour un projet orienté requêtes métier précises." },
+          { "title": "Monorepo avec Docker Compose plutôt qu'une architecture découplée dès le départ", "description": "Frontend, backend et base de données sont orchestrés via Docker Compose pour simplifier le démarrage local et la cohérence des environnements, tout en restant déployables séparément (Vercel + Railway + Neon)." }
         ],
         "stack": [
-          { "name": "React 18", "role": "Frontend SPA avec routing (React Router 7) et pages protégées via un layout d'authentification" },
-          { "name": "TypeScript", "role": "Langage principal côté backend et frontend pour le typage statique" },
-          { "name": "Express.js", "role": "Framework serveur structuré en architecture MVC (controllers, models, routes, schemas)" },
-          { "name": "PostgreSQL 15", "role": "Base de données relationnelle avec 6 tables, triggers de mise à jour automatique et index sur les dates" },
-          { "name": "Sqitch", "role": "Gestion des migrations SQL avec deploy/revert/verify, exécuté automatiquement au démarrage Docker" },
-          { "name": "Redux Toolkit", "role": "State management côté frontend pour la gestion de l'état global de l'application" },
-          { "name": "TanStack React Query", "role": "Gestion du cache et du fetching de données côté frontend" },
-          { "name": "Tailwind CSS", "role": "Styling utilitaire avec Headless UI et Heroicons pour les composants d'interface" },
-          { "name": "Vite", "role": "Build tool et serveur de développement pour le frontend React" },
-          { "name": "Docker Compose", "role": "Orchestration de 6 services (DB, migrations, backend, frontend, Swagger, pgAdmin) sur un réseau bridge" },
-          { "name": "JWT + bcryptjs", "role": "Authentification par token (expiration 1h) stocké en cookie httpOnly, mots de passe hashés avec 12 salt rounds" },
-          { "name": "Zod", "role": "Validation des schémas d'entrée (body, query params) sur tous les endpoints API et formulaires frontend" },
-          { "name": "Helmet + CORS + Rate Limiting", "role": "Couche sécurité : headers HTTP, restriction d'origine, et limitation à 100 req/15min (5/h pour l'auth)" },
-          { "name": "Jest + Supertest", "role": "Tests d'intégration et e2e pour l'API backend" },
-          { "name": "Swagger UI", "role": "Documentation interactive de l'API accessible via un conteneur dédié sur le port 8080" }
+          { "name": "React 18 + TypeScript", "role": "Interface utilisateur avec typage strict, lazy loading des routes et gestion d'état via Context API" },
+          { "name": "Vite", "role": "Bundler et serveur de développement frontend" },
+          { "name": "Tailwind CSS", "role": "Stylisation utilitaire de l'interface" },
+          { "name": "Express.js + TypeScript", "role": "API REST backend organisée en MVC (controllers, models, routes)" },
+          { "name": "Zod", "role": "Validation et typage des données entrantes côté API" },
+          { "name": "JWT + cookies httpOnly", "role": "Authentification stateless sécurisée contre le XSS" },
+          { "name": "PostgreSQL 15 (Neon)", "role": "Base de données relationnelle hébergée, accédée via requêtes SQL directes (pg)" },
+          { "name": "Sqitch", "role": "Gestion des migrations de schéma en SQL pur avec rollback" },
+          { "name": "Redis", "role": "Cache de sessions et rate limiting en environnement Docker" },
+          { "name": "Docker Compose", "role": "Orchestration des services en local (frontend, backend, PostgreSQL, Redis)" },
+          { "name": "Railway", "role": "Hébergement du backend Express en production" },
+          { "name": "Vercel", "role": "Déploiement du frontend React en production" },
+          { "name": "Jest + Supertest", "role": "Tests d'intégration de l'API (78 tests)" },
+          { "name": "Vitest", "role": "Tests unitaires frontend (18 tests)" },
+          { "name": "Playwright", "role": "Tests end-to-end du parcours utilisateur" },
+          { "name": "Swagger / OpenAPI", "role": "Documentation interactive de l'API, disponible en environnement de développement" }
         ],
         "metrics": [
-          { "label": "Tables PostgreSQL", "value": "6 tables avec FK, indexes et triggers" },
-          { "label": "Endpoints API", "value": "4 ressources (auth, users, transactions, cash-registers)" },
-          { "label": "Rate limiting auth", "value": "5 tentatives / heure par IP" },
-          { "label": "Services Docker", "value": "6 conteneurs orchestrés" },
-          { "label": "Statut", "value": "En cours de développement" }
+          { "label": "Tests d'intégration backend", "value": "78" },
+          { "label": "Tests unitaires frontend", "value": "18" },
+          { "label": "Niveaux de rôle", "value": "4 (Développeur, Gérant, Responsable, Serveur)" },
+          { "label": "Déploiement", "value": "Demo live (Vercel + Railway + Neon)" }
         ]
       }
     },
@@ -258,40 +258,42 @@
       "context": "Projet personnel développé pour démontrer des compétences full stack en conditions réelles : architecture MVC, sécurité multicouche, ORM et tests automatisés.",
       "detail": {
         "deliverables": [
-          { "title": "Catalogue d'étoiles avec filtrage avancé", "description": "Interface de navigation avec recherche, filtres par constellation et magnitude. 8 pages dont catalogue, détail produit, panier et wishlist." },
-          { "title": "Système d'authentification sécurisé", "description": "Auth JWT avec refresh tokens, protection CSRF custom, rate limiting (5 tentatives/15min), hashage bcrypt et nettoyage automatique des tokens expirés via cron." },
-          { "title": "API REST documentée (48 endpoints)", "description": "Backend Express avec 13 controllers, validation Joi, sanitization DOMPurify et documentation Swagger/OpenAPI auto-générée." },
-          { "title": "Tunnel d'achat complet", "description": "Panier, wishlist, passage de commande avec suivi de statut (pending → processing → shipped → delivered), système de paiement multi-méthodes et gestion des remboursements." }
+          { "title": "Catalogue d'étoiles avec recherche et filtres", "description": "Parcourez un catalogue d'étoiles avec recherche textuelle, filtres avancés et pages de détail. Les données sont paginées côté serveur et mises en cache via node-cache." },
+          { "title": "Authentification sécurisée JWT + CSRF", "description": "Inscription, connexion et déconnexion avec tokens JWT stockés en cookies httpOnly. Chaque requête mutante est protégée par un token CSRF synchronisé via intercepteur Axios." },
+          { "title": "Flux d'achat complet", "description": "Panier avec contrôle des quantités, liste de souhaits persistante, formulaire de commande avec simulation de paiement et historique des commandes avec suivi de statut." },
+          { "title": "Dashboard admin", "description": "Interface réservée aux administrateurs exposant des statistiques système (utilisateurs, commandes, revenus) et la gestion des utilisateurs via des endpoints dédiés." }
         ],
         "decisions": [
-          { "title": "Zustand plutôt que Redux", "description": "4 stores légers (cart, user, wishlist, notification) avec factory functions et injection de dépendances. Évite le boilerplate Redux pour une app de cette taille." },
-          { "title": "CSRF custom plutôt que csurf (déprécié)", "description": "Implémentation maison de la protection CSRF avec tokens signés JWT, remplaçant le package csurf abandonné. Tokens injectés automatiquement via intercepteurs Axios." },
-          { "title": "Repository pattern + DI container côté frontend", "description": "Abstraction des appels API via des repositories (CartRepository, WishlistRepository, UserRepository) résolus par un conteneur DI simple, facilitant le découplage et les tests." }
+          { "title": "Zustand plutôt que Redux", "description": "Redux Toolkit est surdimensionné pour 5 stores : le boilerplate slices/thunks n'apporte pas de valeur. Zustand pèse ~1 KB gzippé, ne nécessite pas de Provider, et offre des re-renders granulaires nativement." },
+          { "title": "Conteneur DI custom plutôt que Awilix ou InversifyJS", "description": "Le conteneur custom (~220 lignes, zéro dépendance) couvre exactement les besoins du projet : register, resolve, singleton. InversifyJS requiert TypeScript et décorateurs, incompatible avec un backend JavaScript pur." },
+          { "title": "Repository pattern côté frontend", "description": "Les appels HTTP (Axios) sont encapsulés dans des repositories typés, séparés des stores Zustand et des composants. Cela symétrise l'architecture avec le backend et permet de mocker les appels API dans les tests sans toucher à Axios." }
         ],
         "stack": [
-          { "name": "React 18 + TypeScript", "role": "Frontend SPA avec lazy loading et error boundaries" },
-          { "name": "Zustand", "role": "State management global (4 stores : cart, user, wishlist, notifications)" },
-          { "name": "Tailwind CSS", "role": "Styling utility-first avec design responsive mobile/tablet/desktop" },
-          { "name": "Axios", "role": "Client HTTP avec intercepteurs pour injection auto des tokens CSRF et JWT" },
-          { "name": "React Router v7", "role": "Routing client-side avec code splitting via React.lazy()" },
-          { "name": "Express.js", "role": "Serveur API REST avec architecture MVC (13 controllers, 9 fichiers de routes)" },
-          { "name": "PostgreSQL + Sequelize", "role": "Base relationnelle avec ORM, 10 modèles et relations (FK, timestamps auto)" },
-          { "name": "JWT + Bcrypt", "role": "Auth stateless avec refresh tokens en base, hashage bcrypt 10 rounds" },
-          { "name": "Helmet + Rate Limit", "role": "Headers de sécurité HTTP et limitation de requêtes (100 req/15min général)" },
-          { "name": "Joi", "role": "Validation des entrées côté serveur (6 schémas couvrant tous les endpoints principaux)" },
-          { "name": "Winston + Morgan", "role": "Logging applicatif (fichier + console) et logging des requêtes HTTP" },
-          { "name": "Swagger/OpenAPI", "role": "Documentation API auto-générée accessible sur /api-docs" },
-          { "name": "Jest + React Testing Library", "role": "Tests unitaires et d'intégration (frontend jsdom, backend avec supertest)" },
-          { "name": "Biome", "role": "Linting et formatting unifié (remplace ESLint + Prettier)" },
-          { "name": "DOMPurify", "role": "Sanitization des inputs côté client et serveur (protection XSS)" }
+          { "name": "React 18 + TypeScript 5", "role": "Framework UI avec typage statique complet côté client" },
+          { "name": "Zustand", "role": "State management global (panier, wishlist, auth) — 5 stores" },
+          { "name": "React Router v7", "role": "Routing client-side avec routes protégées" },
+          { "name": "Tailwind CSS", "role": "Styling utility-first avec design system personnalisé (tokens, palettes, élévations)" },
+          { "name": "Axios", "role": "Client HTTP avec intercepteurs pour l'injection automatique du token CSRF et du header Authorization" },
+          { "name": "Node.js + Express", "role": "Serveur API RESTful organisé en couches MVC avec conteneur DI" },
+          { "name": "Sequelize + PostgreSQL 15", "role": "ORM relationnel avec 8 modèles (User, Star, Cart, CartItem, Order, OrderStar, Review, Wishlist)" },
+          { "name": "JWT + tokens CSRF", "role": "Authentification stateless via cookies httpOnly et protection CSRF sur toutes les routes mutantes" },
+          { "name": "Joi + DOMPurify", "role": "Validation de schéma côté serveur (Joi) et sanitisation HTML côté client (DOMPurify)" },
+          { "name": "Helmet + express-rate-limit", "role": "Headers de sécurité HTTP (CSP, HSTS) et limitation de débit par IP" },
+          { "name": "Winston", "role": "Logging structuré avec transports fichier et console, niveaux error/warn/info" },
+          { "name": "Sentry", "role": "Monitoring d'erreurs en production — intégré côté frontend (React) et backend (Express)" },
+          { "name": "Jest + Supertest", "role": "Tests unitaires des services backend et tests frontend avec jsdom" },
+          { "name": "Swagger / OpenAPI", "role": "Documentation interactive de l'API exposée sur /api-docs, 9 groupes de routes documentés" },
+          { "name": "Docker + docker-compose", "role": "Orchestration locale des 3 services (client, serveur, PostgreSQL) en un seul docker-compose up" },
+          { "name": "GitHub Actions", "role": "Pipeline CI : lint, typecheck et tests déclenchés à chaque push" },
+          { "name": "Biome", "role": "Linter et formateur unifié partagé entre client et serveur (remplace ESLint + Prettier)" }
         ],
         "metrics": [
-          { "label": "Endpoints API", "value": "48" },
-          { "label": "Composants React", "value": "56+" },
-          { "label": "Modèles de données", "value": "10" },
-          { "label": "Hooks custom", "value": "20" },
-          { "label": "Services backend", "value": "15" },
-          { "label": "Schémas de validation", "value": "6" }
+          { "label": "Groupes de routes API", "value": "9 (stars, auth, users, orders, cart, wishlist, reviews, payments, admin)" },
+          { "label": "Fichiers de tests unitaires backend", "value": "4 (cartService, orderService, paymentValidator, bcryptHashingService)" },
+          { "label": "Assertions / blocs de test backend", "value": "101 occurrences describe/it/test sur 4 fichiers" },
+          { "label": "Fichiers de tests frontend", "value": "4 (passwordValidation, cartCalculations, orderTypes, AuthContainer)" },
+          { "label": "Modèles Sequelize", "value": "8" },
+          { "label": "ADRs documentés", "value": "5 (zustand, DI container, JS backend, sequelize sync, repository pattern)" }
         ]
       }
     }

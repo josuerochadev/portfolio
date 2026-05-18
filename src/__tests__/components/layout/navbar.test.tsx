@@ -112,6 +112,6 @@ describe('Navbar', () => {
     renderNavbar();
     
     const homeLink = screen.getByRole('link', { name: /home/i });
-    expect(homeLink).toHaveAttribute('href', '#hero');
+    expect(homeLink).toHaveAttribute('href', '/#hero');
   });
 });

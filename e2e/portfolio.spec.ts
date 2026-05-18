@@ -18,18 +18,18 @@ test.describe('Portfolio - Core functionality', () => {
 
   test('should navigate through sections', async ({ page }) => {
     // Click on About link
-    await page.click('a[href="#bio"]');
-    
+    await page.click('a[href="/#bio"]');
+
     // Wait for lazy loading to complete and content to be actually rendered
     await page.waitForSelector('section#bio', { state: 'visible', timeout: 15000 });
     await page.waitForTimeout(2000); // Extra time for scroll and render
-    
+
     // Check bio section content is visible
     await expect(page.locator('section#bio')).toBeVisible();
     await expect(page.locator('section#bio h2').first()).toBeVisible();
-    
+
     // Click on Work link
-    await page.click('a[href="#projects"]');
+    await page.click('a[href="/#projects"]');
     await page.waitForTimeout(1000);
     
     // Check projects section is visible
@@ -38,15 +38,15 @@ test.describe('Portfolio - Core functionality', () => {
 
   test('should display project cards', async ({ page }) => {
     // Navigate to projects section
-    await page.click('a[href="#projects"]');
-    
+    await page.click('a[href="/#projects"]');
+
     // Wait for lazy loading to complete
     await page.waitForSelector('section#projects', { state: 'visible', timeout: 15000 });
     await page.waitForTimeout(1500); // Extra time for content to render
-    
+
     // Check projects are displayed (target project section specifically)
     const projectCards = page.locator('section#projects article');
-    await expect(projectCards).toHaveCount(5);
+    await expect(projectCards).toHaveCount(6);
     
     // Check first project has required elements
     const firstProject = projectCards.first();
@@ -57,9 +57,9 @@ test.describe('Portfolio - Core functionality', () => {
 
   test('should navigate to project detail page', async ({ page }) => {
     // Navigate to projects and click first "Plus de détails"
-    await page.click('a[href="#projects"]');
+    await page.click('a[href="/#projects"]');
     await page.waitForTimeout(1000);
-    
+
     const detailLink = page.locator('text=Plus de détails').first();
     await detailLink.click();
     
@@ -72,7 +72,7 @@ test.describe('Portfolio - Core functionality', () => {
 
   test('should have working contact section', async ({ page }) => {
     // Navigate to contact section
-    await page.click('a[href="#contact"]');
+    await page.click('a[href="/#contact"]');
     
     // Wait for lazy loading to complete
     await page.waitForSelector('section#contact', { state: 'visible', timeout: 15000 });

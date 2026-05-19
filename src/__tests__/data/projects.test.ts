@@ -2,8 +2,8 @@ import { describe, it, expect } from 'vitest';
 import { PROJECTS } from '../../data/projects';
 
 describe('Projects data', () => {
-  it('should have 6 projects', () => {
-    expect(PROJECTS).toHaveLength(6);
+  it('should have 4 projects', () => {
+    expect(PROJECTS).toHaveLength(4);
   });
 
   it('should have required fields for each project', () => {
@@ -51,8 +51,6 @@ describe('Projects data', () => {
   it('should include expected projects', () => {
     const projectTitles = PROJECTS.map(p => p.title);
     
-    expect(projectTitles).toContain('La Lunetterie du Coin');
-    expect(projectTitles).toContain('Rayssa Harmes Avocate');
     expect(projectTitles).toContain('Luciole');
     expect(projectTitles).toContain('Stella');
     expect(projectTitles).toContain('Tour de Contrôle');

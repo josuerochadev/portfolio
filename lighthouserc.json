@@ -5,7 +5,7 @@
         "http://localhost:3000",
         "http://localhost:3000/mentions-legales",
         "http://localhost:3000/politique-confidentialite",
-        "http://localhost:3000/projet/lunetterie-du-coin"
+        "http://localhost:3000/projet/luciole"
       ],
       "startServerCommand": "serve -s dist -l 3000",
       "numberOfRuns": 3

@@ -168,6 +168,42 @@
         ]
       }
     },
+    "oklm-drag-club": {
+      "title": "OKLM Drag Club",
+      "description": "Static showcase website for a drag podcast that automatically aggregates episodes from the RSS feed and generates multi-platform listening links at build time.",
+      "deliverables": "Static Next.js site, RSS + Apple/Deezer API aggregation at build, dynamic SEO with JSON-LD and generated OG images, secured rebuild endpoint",
+      "context": "Give an independent podcast a web showcase by automating episode publishing without a database or CMS.",
+      "detail": {
+        "deliverables": [
+          { "title": "Static showcase site with RSS data", "description": "Fully static Next.js site that aggregates episodes from the Anchor.fm RSS feed at build time, with manual data merge (overrides.json) for missing links." },
+          { "title": "Automatic multi-platform aggregation", "description": "Parallel fetch of Apple Podcasts (iTunes Lookup) and Deezer APIs at build time to automatically generate listening links per episode, with graceful fallback if an API fails." },
+          { "title": "Dynamic SEO and Open Graph", "description": "Dynamically generated sitemap, JSON-LD PodcastSeries, and server-side generated Open Graph images for the home page, each show and each episode." },
+          { "title": "Secured rebuild endpoint", "description": "POST /api/rebuild route protected by timing-safe comparison that triggers a Vercel deploy hook, allowing site republishing without a git push when a new episode drops." }
+        ],
+        "decisions": [
+          { "title": "100% static site without a DB rather than a CMS", "description": "The Anchor.fm RSS feed is the source of truth. A local overrides.json file fills in the gaps (Deezer links, Amazon links, show classification). No database to maintain, fast builds, zero cost." },
+          { "title": "Automatic show detection by title rather than manual tagging", "description": "The detectShow() function classifies each episode into its series (Drag Race France, Dragula, Les Traitres...) via pattern matching on the RSS title, with override support in overrides.json." },
+          { "title": "External links only, no embedded audio player", "description": "Deliberate choice to redirect to Spotify/Apple/Deezer/Amazon rather than embedding a player. Simplifies the site, respects the podcaster's analytics, and avoids rights issues." }
+        ],
+        "stack": [
+          { "name": "Next.js 16 (App Router)", "role": "Fullstack framework — static rendering at build, dynamic routes for episodes and shows, API route for the rebuild hook" },
+          { "name": "React 19", "role": "Server Components by default, Client Components only for interactivity (filters, mobile menu, share button)" },
+          { "name": "TypeScript (strict)", "role": "Strict typing with no any — dedicated types for episodes, shows (ShowId union type), and external API responses" },
+          { "name": "Tailwind CSS v4", "role": "Utility styling via @tailwindcss/postcss, combined with custom CSS variables for the design system" },
+          { "name": "fast-xml-parser", "role": "Anchor.fm RSS feed parsing (XML to JSON) at build with iTunes attributes and media:content support" },
+          { "name": "Sentry (@sentry/nextjs)", "role": "Production error monitoring" },
+          { "name": "Vitest", "role": "Unit tests for RSS parsing, show detection and utilities" },
+          { "name": "Husky + lint-staged + commitlint", "role": "Code quality: ESLint on pre-commit, overrides.json validation, and commit conventions (Conventional Commits)" },
+          { "name": "Vercel", "role": "Deployment with deploy hooks for on-demand rebuild, custom domain oklmdragclub.com" }
+        ],
+        "metrics": [
+          { "label": "Test files", "value": "3 suites (rss, shows, utils)" },
+          { "label": "Supported shows", "value": "6 series" },
+          { "label": "Listening platforms", "value": "4 (Spotify, Apple Podcasts, Deezer, Amazon Music)" },
+          { "label": "Generated OG images", "value": "3 levels (home, show, episode)" }
+        ]
+      }
+    },
     "stella-ecommerce": {
       "title": "Stella",
       "description": "Full stack e-commerce application for browsing, filtering, and purchasing stars, with secure authentication, cart and review system.",

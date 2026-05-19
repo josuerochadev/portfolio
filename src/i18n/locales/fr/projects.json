@@ -168,6 +168,42 @@
         ]
       }
     },
+    "oklm-drag-club": {
+      "title": "OKLM Drag Club",
+      "description": "Site vitrine statique pour un podcast drag, qui agrège automatiquement les épisodes depuis le flux RSS et génère les liens d'écoute multi-plateformes au build.",
+      "deliverables": "Site Next.js statique, agrégation RSS + APIs Apple/Deezer au build, SEO dynamique avec JSON-LD et OG générées, endpoint de redéploiement sécurisé",
+      "context": "Donner une vitrine web à un podcast indépendant en automatisant la publication des épisodes sans base de données ni CMS.",
+      "detail": {
+        "deliverables": [
+          { "title": "Site vitrine statique avec données RSS", "description": "Site Next.js entièrement statique qui agrège les épisodes depuis le flux RSS Anchor.fm au build, avec merge de données manuelles (overrides.json) pour les liens manquants." },
+          { "title": "Agrégation multi-plateformes automatique", "description": "Fetch parallèle des APIs Apple Podcasts (iTunes Lookup) et Deezer au build pour générer automatiquement les liens d'écoute par épisode, avec fallback gracieux si une API échoue." },
+          { "title": "SEO dynamique et Open Graph", "description": "Sitemap générée dynamiquement, JSON-LD PodcastSeries, et images Open Graph générées côté serveur pour la home, chaque émission et chaque épisode." },
+          { "title": "Endpoint de redéploiement sécurisé", "description": "Route API POST /api/rebuild protégée par comparaison timing-safe qui déclenche un deploy hook Vercel, permettant de republier le site sans push git quand un nouvel épisode sort." }
+        ],
+        "decisions": [
+          { "title": "Site 100% statique sans BDD plutôt qu'un CMS", "description": "Le RSS Anchor.fm est la source de vérité. Un fichier overrides.json local corrige les manques (liens Deezer, Amazon, classification par émission). Aucune base de données à maintenir, build rapide, coût zéro." },
+          { "title": "Détection automatique des émissions par titre plutôt que tagging manuel", "description": "La fonction detectShow() classifie chaque épisode dans sa série (Drag Race France, Dragula, Les Traîtres…) via pattern matching sur le titre RSS, avec override possible dans overrides.json." },
+          { "title": "Liens externes uniquement, pas de player audio embarqué", "description": "Choix délibéré de rediriger vers Spotify/Apple/Deezer/Amazon plutôt que d'embarquer un lecteur. Simplifie le site, respecte les analytics du podcaster, et évite les problèmes de droits." }
+        ],
+        "stack": [
+          { "name": "Next.js 16 (App Router)", "role": "Framework fullstack — rendu statique au build, routes dynamiques pour épisodes et émissions, route API pour le rebuild hook" },
+          { "name": "React 19", "role": "Server Components par défaut, Client Components uniquement pour l'interactivité (filtres, menu mobile, bouton partage)" },
+          { "name": "TypeScript (strict)", "role": "Typage strict sans any — types dédiés pour les épisodes, émissions (ShowId union type), et les réponses API externes" },
+          { "name": "Tailwind CSS v4", "role": "Styling utilitaire via @tailwindcss/postcss, combiné à des CSS variables custom pour le design system" },
+          { "name": "fast-xml-parser", "role": "Parsing du flux RSS Anchor.fm (XML → JSON) au build avec support des attributs iTunes et media:content" },
+          { "name": "Sentry (@sentry/nextjs)", "role": "Monitoring d'erreurs en production" },
+          { "name": "Vitest", "role": "Tests unitaires pour le parsing RSS, la détection d'émissions et les utilitaires" },
+          { "name": "Husky + lint-staged + commitlint", "role": "Qualité du code : ESLint au pre-commit, validation du overrides.json, et conventions de commit" },
+          { "name": "Vercel", "role": "Déploiement avec deploy hooks pour rebuild à la demande, domaine custom oklmdragclub.com" }
+        ],
+        "metrics": [
+          { "label": "Fichiers de test", "value": "3 suites (rss, shows, utils)" },
+          { "label": "Émissions supportées", "value": "6 séries" },
+          { "label": "Plateformes d'écoute", "value": "4 (Spotify, Apple Podcasts, Deezer, Amazon Music)" },
+          { "label": "Images OG générées", "value": "3 niveaux (home, émission, épisode)" }
+        ]
+      }
+    },
     "stella-ecommerce": {
       "title": "Stella",
       "description": "Application e-commerce full stack permettant de parcourir, filtrer et acheter des étoiles, avec authentification sécurisée, panier et système d'avis.",

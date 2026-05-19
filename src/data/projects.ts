@@ -143,7 +143,7 @@ export const PROJECTS: Project[] = [
 			mobile: "/assets/images/projects/optimized/project-poei-mainframe-mobile.webp",
 			thumbnail: "/assets/images/projects/optimized/project-poei-mainframe-thumb.webp"
 		},
-		technologies: ["COBOL", "JCL", "VSAM", "DB2/SQL", "CICS", "BMS", "SORT", "IDCAMS", "TSO/ISPF", "SPUFI", "CEDA/CEMT/CEDF", "z/OS"],
+		technologies: ["COBOL 85", "JCL", "VSAM KSDS", "DB2/SQL", "CICS TS", "BMS", "z/OS (Hercules TK5)", "GnuCOBOL", "Docker", "Flask", "SQLite", "GitHub Actions"],
 		status: "completed",
 		year: "2025",
 		type: "formation",
@@ -151,54 +151,56 @@ export const PROJECTS: Project[] = [
 		detail: {
 			deliverables: [
 				{
-					title: "Système de gestion financière (fil rouge COBOL)",
-					description: "21 exercices progressifs couvrant un système bancaire complet : gestion VSAM (KSDS/ESDS/RRDS), sous-programmes CALL/CANCEL, tri/fusion SORT/MERGE, édition de relevés. 14 programmes COBOL et 43 JCL."
+					title: "14 programmes batch COBOL avec 43 JCL",
+					description: "Traitements séquentiels complets : création VSAM KSDS, tri/fusion SORT/MERGE, sous-programmes CALL, édition de relevés de compte avec ruptures et totaux."
 				},
 				{
-					title: "Application CICS transactionnelle multicouches",
-					description: "Application CRUD clients avec architecture 3 couches (Présentation/Traitement/DAO) : 7 écrans BMS, 7 programmes COBOL, gestion des transactions et optimisations FSET/DATAONLY/CURSOR."
+					title: "Système DB2 avec SQL embarqué",
+					description: "11 programmes COBOL-SQL sur un schéma à 5 tables (CLIENT, REGION, PROFESSI, NATCOMPT, MOUVEMENT). Curseurs paramétrés, gestion transactionnelle COMMIT/ROLLBACK, vues et index."
 				},
 				{
-					title: "Fil rouge DB2 — SQL embarqué en COBOL",
-					description: "12 exercices DB2 avec requêtes SQL (DDL/DML/SELECT avancé) et 10 programmes COBOL-DB2 utilisant curseurs, SQLCA et SQL embarqué pour interroger et manipuler des données relationnelles."
+					title: "Application CICS interactive — 7 transactions",
+					description: "CRUD complet de gestion clients en pseudo-conversationnel : pagination générique, navigation VSAM temps réel via index alternatifs (AIX/PATH), statistiques par région. 7 maps BMS avec optimisations FSET/DATAONLY/CURSOR dynamique."
 				},
 				{
-					title: "Base de cours structurée (40 000+ lignes)",
-					description: "64 fichiers Markdown couvrant 7 domaines (z/OS, TSO/ISPF, JCL, VSAM, COBOL, DB2, CICS, algorithmique) servant de référence technique complète pour la formation."
+					title: "Conteneur Docker avec API web et CI/CD",
+					description: "Image Docker compilant les 15 programmes batch, simulant DB2 via SQLite et rejouant les écrans CICS. Pipeline GitHub Actions compilant et exécutant des smoke tests à chaque push."
 				}
 			],
 			decisions: [
 				{
-					title: "Pourquoi GnuCOBOL + Hercules plutôt que mainframe seul",
-					description: "Double environnement : GnuCOBOL pour le développement local rapide (compilation en secondes), Hercules/TK4- pour reproduire fidèlement le comportement z/OS (JCL, VSAM, ISPF). Permet d'itérer vite tout en validant sur une cible réaliste."
+					title: "GnuCOBOL + Docker plutôt que z/OS seul",
+					description: "Les programmes ont été écrits pour z/OS mais adaptés pour GnuCOBOL (ASSIGN TO fichier au lieu de DD names, LINE SEQUENTIAL) afin de permettre compilation locale, CI et démo web sans mainframe."
 				},
 				{
-					title: "Pourquoi une architecture 3 couches en CICS",
-					description: "Séparation Présentation (BMS/SEND MAP), Traitement (logique métier) et DAO (accès fichiers VSAM) dans des programmes distincts. Reproduit les patterns industriels mainframe et facilite la maintenance."
+					title: "SQLite pour simuler DB2 hors z/OS",
+					description: "Les programmes DB2 utilisent EXEC SQL non compilable par GnuCOBOL. Un module Python (db2_sim.py) réplique le schéma sur SQLite pour rendre les requêtes exécutables dans le conteneur Docker."
 				},
 				{
-					title: "Pourquoi Markdown plutôt que PDF pour les cours",
-					description: "Versionnement Git natif, recherche plein texte, diffs lisibles. Les 64 fichiers sont organisés par domaine et chapitre, facilitant la navigation et les mises à jour incrémentales."
+					title: "Pseudo-conversationnel CICS avec COMMAREA",
+					description: "Choix du pattern pseudo-conversationnel standard z/OS pour les 7 transactions CICS : chaque interaction SEND MAP libère la tâche, le contexte est préservé via COMMAREA au RETURN TRANSID."
 				}
 			],
 			stack: [
-				{ name: "COBOL", role: "Langage principal — 117 programmes couvrant fichiers séquentiels, VSAM, sous-programmes, tri et édition" },
-				{ name: "JCL", role: "139 jobs pour la compilation, l'exécution, le tri (SORT/MERGE) et la gestion VSAM sur z/OS" },
-				{ name: "CICS", role: "Moniteur transactionnel — écrans BMS, commandes SEND/RECEIVE MAP, gestion pseudo-conversationnelle" },
-				{ name: "DB2/SQL", role: "Base relationnelle — DDL, DML, requêtes avancées (jointures, sous-requêtes, vues) et SQL embarqué en COBOL" },
-				{ name: "VSAM/IDCAMS", role: "Gestion de fichiers indexés (KSDS, ESDS, RRDS), index alternatifs (AIX) et utilitaires AMS" },
-				{ name: "GnuCOBOL", role: "Compilateur open-source pour développement et tests locaux sur macOS" },
-				{ name: "Hercules (TK4-/TK5)", role: "Émulateur mainframe z/OS pour exécution JCL, ISPF et validation en environnement réaliste" },
-				{ name: "Git", role: "Versionnement de l'ensemble du projet (234 commits, cours et exercices)" }
+				{ name: "COBOL 85", role: "Langage principal — 32 programmes couvrant batch, DB2 et CICS" },
+				{ name: "JCL", role: "60 jobs de contrôle : création VSAM, tri SORT, compilation, assemblage BMS" },
+				{ name: "z/OS (Hercules TK5)", role: "Environnement d'exécution mainframe émulé pour développement et tests" },
+				{ name: "VSAM KSDS", role: "Stockage indexé des fichiers clients/comptes avec index alternatifs (AIX)" },
+				{ name: "DB2/SQL", role: "Base relationnelle à 5 tables, 14 scripts SQL (DDL, DML, vues, index)" },
+				{ name: "CICS TS", role: "Moniteur transactionnel pour les 7 écrans interactifs pseudo-conversationnels" },
+				{ name: "BMS", role: "7 maps d'écran définissant les interfaces utilisateur des transactions CICS" },
+				{ name: "GnuCOBOL", role: "Compilateur open source pour exécution hors z/OS (CI et conteneur Docker)" },
+				{ name: "Docker", role: "Conteneurisation de l'API web avec compilation automatique des programmes batch" },
+				{ name: "Flask + Gunicorn", role: "API REST servant l'interface web, la simulation DB2 et le replay d'écrans CICS" },
+				{ name: "SQLite", role: "Simulation du schéma DB2 dans le conteneur Docker" },
+				{ name: "GitHub Actions", role: "CI compilant les 15 programmes batch et exécutant des smoke tests à chaque push" }
 			],
 			metrics: [
-				{ label: "Programmes COBOL", value: "117" },
-				{ label: "Jobs JCL", value: "139" },
-				{ label: "Lignes de code (COBOL + JCL + SQL + BMS)", value: "~32 400" },
-				{ label: "Fichiers de cours Markdown", value: "64 (~40 400 lignes)" },
-				{ label: "Exercices fil rouge COBOL", value: "21" },
-				{ label: "Domaines couverts", value: "7 (z/OS, JCL, VSAM, COBOL, DB2, CICS, Algorithmique)" },
-				{ label: "Commits Git", value: "234" }
+				{ label: "Programmes COBOL", value: "32 (14 batch + 11 DB2 + 7 CICS)" },
+				{ label: "Total fichiers sources", value: "118 (COBOL, JCL, SQL, BMS)" },
+				{ label: "Compilation CI", value: "15/15 programmes batch passent" },
+				{ label: "Transactions CICS", value: "7 (AFFI, AJOU, MAJU, SUPP, DELG, LIST, STAT)" },
+				{ label: "Tables DB2", value: "5 tables, 14 scripts SQL" }
 			]
 		}
 	},
@@ -277,6 +279,79 @@ export const PROJECTS: Project[] = [
 				{ label: "Tests unitaires frontend", value: "18" },
 				{ label: "Niveaux de rôle", value: "4 (Développeur, Gérant, Responsable, Serveur)" },
 				{ label: "Déploiement", value: "Demo live (Vercel + Railway + Neon)" }
+			]
+		}
+	},
+	{
+		id: "oklm-drag-club",
+		title: "OKLM Drag Club",
+		description:
+			"Site vitrine statique pour un podcast drag, qui agrège automatiquement les épisodes depuis le flux RSS et génère les liens d'écoute multi-plateformes au build.",
+		deliverables:
+			"Site Next.js statique, agrégation RSS + APIs Apple/Deezer au build, SEO dynamique avec JSON-LD et OG générées, endpoint de redéploiement sécurisé",
+		context:
+			"Donner une vitrine web à un podcast indépendant en automatisant la publication des épisodes sans base de données ni CMS.",
+		image: {
+			desktop: "/assets/images/projects/optimized/project-oklm-drag-club-desktop.webp",
+			mobile: "/assets/images/projects/optimized/project-oklm-drag-club-mobile.webp",
+			thumbnail: "/assets/images/projects/optimized/project-oklm-drag-club-thumb.webp"
+		},
+		technologies: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS v4", "Vitest", "Sentry", "Vercel"],
+		status: "completed",
+		year: "2025",
+		type: "project",
+		category: "showcase",
+		githubUrl: "https://github.com/josuerochadev/oklm-drag-club",
+		demoUrl: "https://oklmdragclub.com",
+		detail: {
+			deliverables: [
+				{
+					title: "Site vitrine statique avec données RSS",
+					description: "Site Next.js entièrement statique qui agrège les épisodes depuis le flux RSS Anchor.fm au build, avec merge de données manuelles (overrides.json) pour les liens manquants."
+				},
+				{
+					title: "Agrégation multi-plateformes automatique",
+					description: "Fetch parallèle des APIs Apple Podcasts (iTunes Lookup) et Deezer au build pour générer automatiquement les liens d'écoute par épisode, avec fallback gracieux si une API échoue."
+				},
+				{
+					title: "SEO dynamique et Open Graph",
+					description: "Sitemap générée dynamiquement, JSON-LD PodcastSeries, et images Open Graph générées côté serveur pour la home, chaque émission et chaque épisode."
+				},
+				{
+					title: "Endpoint de redéploiement sécurisé",
+					description: "Route API POST /api/rebuild protégée par comparaison timing-safe qui déclenche un deploy hook Vercel, permettant de republier le site sans push git quand un nouvel épisode sort."
+				}
+			],
+			decisions: [
+				{
+					title: "Site 100% statique sans BDD plutôt qu'un CMS",
+					description: "Le RSS Anchor.fm est la source de vérité. Un fichier overrides.json local corrige les manques (liens Deezer, Amazon, classification par émission). Aucune base de données à maintenir, build rapide, coût zéro."
+				},
+				{
+					title: "Détection automatique des émissions par titre plutôt que tagging manuel",
+					description: "La fonction detectShow() classifie chaque épisode dans sa série (Drag Race France, Dragula, Les Traîtres…) via pattern matching sur le titre RSS, avec override possible dans overrides.json."
+				},
+				{
+					title: "Liens externes uniquement, pas de player audio embarqué",
+					description: "Choix délibéré de rediriger vers Spotify/Apple/Deezer/Amazon plutôt que d'embarquer un lecteur. Simplifie le site, respecte les analytics du podcaster, et évite les problèmes de droits."
+				}
+			],
+			stack: [
+				{ name: "Next.js 16 (App Router)", role: "Framework fullstack — rendu statique au build, routes dynamiques pour épisodes et émissions, route API pour le rebuild hook" },
+				{ name: "React 19", role: "Server Components par défaut, Client Components uniquement pour l'interactivité (filtres, menu mobile, bouton partage)" },
+				{ name: "TypeScript (strict)", role: "Typage strict sans any — types dédiés pour les épisodes, émissions (ShowId union type), et les réponses API externes" },
+				{ name: "Tailwind CSS v4", role: "Styling utilitaire via @tailwindcss/postcss, combiné à des CSS variables custom (--lime, --forest, --font-display) pour le design system" },
+				{ name: "fast-xml-parser", role: "Parsing du flux RSS Anchor.fm (XML → JSON) au build avec support des attributs iTunes et media:content" },
+				{ name: "Sentry (@sentry/nextjs)", role: "Monitoring d'erreurs en production" },
+				{ name: "Vitest", role: "Tests unitaires pour le parsing RSS, la détection d'émissions et les utilitaires (slugify, formatDuration, toRoman)" },
+				{ name: "Husky + lint-staged + commitlint", role: "Qualité du code : ESLint au pre-commit, validation du overrides.json, et conventions de commit (Conventional Commits)" },
+				{ name: "Vercel", role: "Déploiement avec deploy hooks pour rebuild à la demande, domaine custom oklmdragclub.com" }
+			],
+			metrics: [
+				{ label: "Fichiers de test", value: "3 suites (rss, shows, utils)" },
+				{ label: "Émissions supportées", value: "6 séries" },
+				{ label: "Plateformes d'écoute", value: "4 (Spotify, Apple Podcasts, Deezer, Amazon Music)" },
+				{ label: "Images OG générées", value: "3 niveaux (home, émission, épisode)" }
 			]
 		}
 	},

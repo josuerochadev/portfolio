@@ -46,7 +46,7 @@ test.describe('Portfolio - Core functionality', () => {
 
     // Check projects are displayed (target project section specifically)
     const projectCards = page.locator('section#projects article');
-    await expect(projectCards).toHaveCount(4);
+    await expect(projectCards).toHaveCount(5);
     
     // Check first project has required elements
     const firstProject = projectCards.first();

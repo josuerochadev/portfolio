@@ -94,34 +94,36 @@
       "context": "Simulate the full cycle of a mainframe application around a single business domain — from batch processing to real-time transactional screens.",
       "detail": {
         "deliverables": [
-          { "title": "Financial management system (COBOL main project)", "description": "21 progressive exercises covering a complete banking system: VSAM management (KSDS/ESDS/RRDS), subprograms CALL/CANCEL, SORT/MERGE, statement editing. 14 COBOL programs and 43 JCL." },
-          { "title": "Multi-layer CICS transactional application", "description": "Customer CRUD application with 3-layer architecture (Presentation/Processing/DAO): 7 BMS screens, 7 COBOL programs, transaction management and FSET/DATAONLY/CURSOR optimizations." },
-          { "title": "DB2 main project — embedded SQL in COBOL", "description": "12 DB2 exercises with SQL queries (DDL/DML/advanced SELECT) and 10 COBOL-DB2 programs using cursors, SQLCA and embedded SQL to query and manipulate relational data." },
-          { "title": "Structured course base (40,000+ lines)", "description": "64 Markdown files covering 7 domains (z/OS, TSO/ISPF, JCL, VSAM, COBOL, DB2, CICS, algorithms) serving as a complete technical reference for the training." }
+          { "title": "14 batch COBOL programs with 43 JCL", "description": "Complete sequential processing: VSAM KSDS creation, SORT/MERGE, CALL subprograms, account statement editing with control breaks and totals." },
+          { "title": "DB2 system with embedded SQL", "description": "11 COBOL-SQL programs on a 5-table schema (CLIENT, REGION, PROFESSI, NATCOMPT, MOUVEMENT). Parameterized cursors, COMMIT/ROLLBACK transaction management, views and indexes." },
+          { "title": "Interactive CICS application — 7 transactions", "description": "Full customer management CRUD in pseudo-conversational mode: generic pagination, real-time VSAM navigation via alternate indexes (AIX/PATH), regional statistics. 7 BMS maps with FSET/DATAONLY/dynamic CURSOR optimizations." },
+          { "title": "Docker container with web API and CI/CD", "description": "Docker image compiling the 15 batch programs, simulating DB2 via SQLite and replaying CICS screens. GitHub Actions pipeline compiling and running smoke tests on every push." }
         ],
         "decisions": [
-          { "title": "Why GnuCOBOL + Hercules over mainframe only", "description": "Dual environment: GnuCOBOL for fast local development (compilation in seconds), Hercules/TK4- to faithfully reproduce z/OS behavior (JCL, VSAM, ISPF). Enables fast iteration while validating on a realistic target." },
-          { "title": "Why a 3-layer architecture in CICS", "description": "Separation of Presentation (BMS/SEND MAP), Processing (business logic) and DAO (VSAM file access) into distinct programs. Reproduces mainframe industrial patterns and eases maintenance." },
-          { "title": "Why Markdown over PDF for course material", "description": "Native Git versioning, full-text search, readable diffs. The 64 files are organized by domain and chapter, making navigation and incremental updates easy." }
+          { "title": "GnuCOBOL + Docker rather than z/OS alone", "description": "Programs were written for z/OS but adapted for GnuCOBOL (ASSIGN TO file instead of DD names, LINE SEQUENTIAL) to enable local compilation, CI and web demo without a mainframe." },
+          { "title": "SQLite to simulate DB2 off z/OS", "description": "DB2 programs use EXEC SQL which GnuCOBOL cannot compile. A Python module (db2_sim.py) replicates the schema on SQLite to make queries executable in the Docker container." },
+          { "title": "Pseudo-conversational CICS with COMMAREA", "description": "Standard z/OS pseudo-conversational pattern for the 7 CICS transactions: each SEND MAP interaction frees the task, context is preserved via COMMAREA on RETURN TRANSID." }
         ],
         "stack": [
-          { "name": "COBOL", "role": "Primary language — 117 programs covering sequential files, VSAM, subprograms, sorting and editing" },
-          { "name": "JCL", "role": "139 jobs for compilation, execution, sorting (SORT/MERGE) and VSAM management on z/OS" },
-          { "name": "CICS", "role": "Transaction monitor — BMS screens, SEND/RECEIVE MAP commands, pseudo-conversational management" },
-          { "name": "DB2/SQL", "role": "Relational database — DDL, DML, advanced queries (joins, subqueries, views) and embedded SQL in COBOL" },
-          { "name": "VSAM/IDCAMS", "role": "Indexed file management (KSDS, ESDS, RRDS), alternate indexes (AIX) and AMS utilities" },
-          { "name": "GnuCOBOL", "role": "Open-source compiler for local development and testing on macOS" },
-          { "name": "Hercules (TK4-/TK5)", "role": "Mainframe z/OS emulator for JCL execution, ISPF and realistic environment validation" },
-          { "name": "Git", "role": "Version control for the entire project (234 commits, courses and exercises)" }
+          { "name": "COBOL 85", "role": "Primary language — 32 programs covering batch, DB2 and CICS" },
+          { "name": "JCL", "role": "60 control jobs: VSAM creation, SORT, compilation, BMS assembly" },
+          { "name": "z/OS (Hercules TK5)", "role": "Emulated mainframe execution environment for development and testing" },
+          { "name": "VSAM KSDS", "role": "Indexed storage for customer/account files with alternate indexes (AIX)" },
+          { "name": "DB2/SQL", "role": "Relational database with 5 tables, 14 SQL scripts (DDL, DML, views, indexes)" },
+          { "name": "CICS TS", "role": "Transaction monitor for the 7 pseudo-conversational interactive screens" },
+          { "name": "BMS", "role": "7 screen maps defining the user interfaces for CICS transactions" },
+          { "name": "GnuCOBOL", "role": "Open-source compiler for off-z/OS execution (CI and Docker container)" },
+          { "name": "Docker", "role": "Web API containerization with automatic batch program compilation" },
+          { "name": "Flask + Gunicorn", "role": "REST API serving the web interface, DB2 simulation and CICS screen replay" },
+          { "name": "SQLite", "role": "DB2 schema simulation in the Docker container" },
+          { "name": "GitHub Actions", "role": "CI compiling the 15 batch programs and running smoke tests on every push" }
         ],
         "metrics": [
-          { "label": "COBOL programs", "value": "117" },
-          { "label": "JCL jobs", "value": "139" },
-          { "label": "Lines of code (COBOL + JCL + SQL + BMS)", "value": "~32,400" },
-          { "label": "Markdown course files", "value": "64 (~40,400 lines)" },
-          { "label": "COBOL main project exercises", "value": "21" },
-          { "label": "Domains covered", "value": "7 (z/OS, JCL, VSAM, COBOL, DB2, CICS, Algorithms)" },
-          { "label": "Git commits", "value": "234" }
+          { "label": "COBOL programs", "value": "32 (14 batch + 11 DB2 + 7 CICS)" },
+          { "label": "Total source files", "value": "118 (COBOL, JCL, SQL, BMS)" },
+          { "label": "CI compilation", "value": "15/15 batch programs pass" },
+          { "label": "CICS transactions", "value": "7 (AFFI, AJOU, MAJU, SUPP, DELG, LIST, STAT)" },
+          { "label": "DB2 tables", "value": "5 tables, 14 SQL scripts" }
         ]
       }
     },
@@ -165,6 +167,42 @@
           { "label": "Frontend unit tests", "value": "18" },
           { "label": "Role levels", "value": "4 (Developer, Manager, Supervisor, Waiter)" },
           { "label": "Deployment", "value": "Live demo (Vercel + Railway + Neon)" }
+        ]
+      }
+    },
+    "oklm-drag-club": {
+      "title": "OKLM Drag Club",
+      "description": "Static showcase website for a drag podcast that automatically aggregates episodes from the RSS feed and generates multi-platform listening links at build time.",
+      "deliverables": "Static Next.js site, RSS + Apple/Deezer API aggregation at build, dynamic SEO with JSON-LD and generated OG images, secured rebuild endpoint",
+      "context": "Give an independent podcast a web showcase by automating episode publishing without a database or CMS.",
+      "detail": {
+        "deliverables": [
+          { "title": "Static showcase site with RSS data", "description": "Fully static Next.js site that aggregates episodes from the Anchor.fm RSS feed at build time, with manual data merge (overrides.json) for missing links." },
+          { "title": "Automatic multi-platform aggregation", "description": "Parallel fetch of Apple Podcasts (iTunes Lookup) and Deezer APIs at build time to automatically generate listening links per episode, with graceful fallback if an API fails." },
+          { "title": "Dynamic SEO and Open Graph", "description": "Dynamically generated sitemap, JSON-LD PodcastSeries, and server-side generated Open Graph images for the home page, each show and each episode." },
+          { "title": "Secured rebuild endpoint", "description": "POST /api/rebuild route protected by timing-safe comparison that triggers a Vercel deploy hook, allowing site republishing without a git push when a new episode drops." }
+        ],
+        "decisions": [
+          { "title": "100% static site without a DB rather than a CMS", "description": "The Anchor.fm RSS feed is the source of truth. A local overrides.json file fills in the gaps (Deezer links, Amazon links, show classification). No database to maintain, fast builds, zero cost." },
+          { "title": "Automatic show detection by title rather than manual tagging", "description": "The detectShow() function classifies each episode into its series (Drag Race France, Dragula, Les Traitres...) via pattern matching on the RSS title, with override support in overrides.json." },
+          { "title": "External links only, no embedded audio player", "description": "Deliberate choice to redirect to Spotify/Apple/Deezer/Amazon rather than embedding a player. Simplifies the site, respects the podcaster's analytics, and avoids rights issues." }
+        ],
+        "stack": [
+          { "name": "Next.js 16 (App Router)", "role": "Fullstack framework — static rendering at build, dynamic routes for episodes and shows, API route for the rebuild hook" },
+          { "name": "React 19", "role": "Server Components by default, Client Components only for interactivity (filters, mobile menu, share button)" },
+          { "name": "TypeScript (strict)", "role": "Strict typing with no any — dedicated types for episodes, shows (ShowId union type), and external API responses" },
+          { "name": "Tailwind CSS v4", "role": "Utility styling via @tailwindcss/postcss, combined with custom CSS variables for the design system" },
+          { "name": "fast-xml-parser", "role": "Anchor.fm RSS feed parsing (XML to JSON) at build with iTunes attributes and media:content support" },
+          { "name": "Sentry (@sentry/nextjs)", "role": "Production error monitoring" },
+          { "name": "Vitest", "role": "Unit tests for RSS parsing, show detection and utilities" },
+          { "name": "Husky + lint-staged + commitlint", "role": "Code quality: ESLint on pre-commit, overrides.json validation, and commit conventions (Conventional Commits)" },
+          { "name": "Vercel", "role": "Deployment with deploy hooks for on-demand rebuild, custom domain oklmdragclub.com" }
+        ],
+        "metrics": [
+          { "label": "Test files", "value": "3 suites (rss, shows, utils)" },
+          { "label": "Supported shows", "value": "6 series" },
+          { "label": "Listening platforms", "value": "4 (Spotify, Apple Podcasts, Deezer, Amazon Music)" },
+          { "label": "Generated OG images", "value": "3 levels (home, show, episode)" }
         ]
       }
     },

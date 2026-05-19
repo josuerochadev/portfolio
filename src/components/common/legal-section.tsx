@@ -12,7 +12,7 @@ interface Props {
 const LegalSection: React.FC<Props> = ({ title, children, className = "" }) => {
 	return (
 		<section className={`mb-8 ${className}`}>
-			<h2 className="text-2xl font-bold mb-4">{title}</h2>
+			<h2 className="text-base md:text-lg font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange mb-4">{title}</h2>
 			{children}
 		</section>
 	);

@@ -1,5 +1,9 @@
 {
-  "heading": "Aqui está uma visão do meu trabalho — uma amostra do que posso trazer",
+  "heading": "Aprender, construir, recomeçar",
+  "subheadings": {
+    "formations": "O que as formações me ensinaram a construir",
+    "projects": "O que construo fora da sala de aula"
+  },
   "contact": {
     "heading": "Me manda uma mensagem",
     "description": "Eu leio todas as mensagens. Seja sobre código, mainframe, reconversão ou só trocar uma ideia — não hesite.",
@@ -25,40 +29,273 @@
     "codeNotAvailable": "Código fonte não disponível - Projeto privado",
     "demoNotAvailable": "Demo não disponível - Em breve"
   },
+  "detail": {
+    "why": "O porquê",
+    "built": "O que construí",
+    "decisions": "Decisões técnicas",
+    "stack": "Stack técnica",
+    "gallery": "Em imagens",
+    "results": "Resultados"
+  },
   "errors": {
     "notFound": "Projeto não encontrado",
     "backToHome": "← Voltar ao início"
   },
   "items": {
-    "lunetterie-du-coin": {
-      "title": "La Lunetterie du Coin",
-      "description": "Site vitrine moderno para uma ótica independente, com agendamento e formulário de contato integrados.",
-      "deliverables": "Site multi-páginas, design system personalizado, animações Framer Motion, formulário Formspree, agendamento Calendly, SEO completo, pipeline CI/CD, monitoramento Sentry",
-      "context": "Oferecer a um ótico independente uma presença web profissional e performante, com foco em acessibilidade, performance e design bold maximalist."
-    },
-    "site-vitrine-avocate": {
-      "title": "Rayssa Eskinazi — Advogada",
-      "description": "Site profissional para uma advogada em Estrasburgo, otimizado para SEO local e conversão de visitantes em agendamentos.",
-      "deliverables": "Site com 13 páginas, formulário Formspree, agendamento Calendly, SEO local com JSON-LD, design responsivo, conformidade RGPD, suíte completa de testes",
-      "context": "Uma advogada atuante em Estrasburgo precisava de um site profissional para se posicionar nas buscas locais e facilitar o agendamento de consultas."
-    },
     "luciole": {
-      "title": "Luciole — Agente IA",
+      "title": "Luciole",
       "description": "Agente de IA conversacional que automatiza a vigilância tecnológica: coleta, analisa e sintetiza 200+ artigos/dia de 40+ fontes RSS.",
       "deliverables": "Agente ReAct com 8 ferramentas, pipeline de ingestão RSS automático, interface web com streaming SSE, sistema RAG próprio, segurança anti-injeção, deploy Docker",
-      "context": "Equipes de TI gastam cerca de 15 min por artigo em monitoramento manual. Este agente reduz isso a segundos por pergunta."
+      "context": "Equipes de TI gastam cerca de 15 min por artigo em monitoramento manual. Este agente reduz isso a segundos por pergunta.",
+      "detail": {
+        "deliverables": [
+          { "title": "Agente conversacional ReAct", "description": "Loop Reason → Act → Observe com roteamento inteligente para 7 ferramentas (busca web, RAG, SQL, transcrição de áudio, visão, digest email). Cascata de modelos gpt-4o-mini / gpt-4o conforme complexidade detectada." },
+          { "title": "Pipeline de monitoramento automatizado", "description": "Coleta diária de 38 feeds RSS, filtragem temática, scraping do conteúdo, enriquecimento LLM paralelizado (5 threads), indexação RAG com chunking e embeddings. Executável em one-shot ou via scheduler APScheduler." },
+          { "title": "Interface web Luciole", "description": "Frontend Jinja2 com design system customizado, streaming SSE das respostas, autenticação JWT com contas de usuários, histórico de conversas persistente em SQLite, upload de arquivos (imagens, áudio, PDF) com validação magic bytes." },
+          { "title": "RAG híbrido próprio", "description": "Busca semântica numpy (similaridade cosseno em text-embedding-3-small) + BM25 lexical + score de frescor + feedback do usuário. Expansão de query HyDE e re-ranking Cohere opcional. Sem framework RAG externo." }
+        ],
+        "decisions": [
+          { "title": "RAG numpy próprio em vez de LangChain/ChromaDB", "description": "Similaridade cosseno calculada diretamente com numpy em embeddings armazenados em JSON. Elimina dependência de vector store externo, reduz complexidade de infra e permite controle total sobre o scoring híbrido (semântico + BM25 + frescor + feedback)." },
+          { "title": "Cascata de modelos em vez de modelo único", "description": "Um classificador rápido (gpt-4o-mini) roteia cada requisição para o modelo adequado: gpt-4o-mini para saudações/FAQ, gpt-4o para raciocínio complexo. Reduz custos de API em requisições simples mantendo qualidade nas complexas." },
+          { "title": "Streaming SSE em vez de requisição/resposta clássica", "description": "As respostas são transmitidas via Server-Sent Events com eventos tipados (thinking, tool_result, chunk, done). O usuário vê a ferramenta selecionada e a resposta aparecendo em tempo real em vez de esperar vários segundos." }
+        ],
+        "stack": [
+          { "name": "Python 3.12", "role": "Linguagem principal do agente, pipeline e API" },
+          { "name": "FastAPI", "role": "API REST + SSE streaming + páginas HTML (templates Jinja2)" },
+          { "name": "OpenAI API (gpt-4o / gpt-4o-mini)", "role": "Raciocínio do agente, classificação, resumo de artigos, geração de respostas" },
+          { "name": "OpenAI text-embedding-3-small", "role": "Embeddings de 1536 dimensões para indexação e busca RAG" },
+          { "name": "OpenAI Whisper", "role": "Transcrição de arquivos de áudio enviados pelo usuário" },
+          { "name": "numpy", "role": "Cálculo vetorizado de similaridade cosseno para busca semântica RAG" },
+          { "name": "rank_bm25", "role": "Score lexical BM25 combinado ao score semântico para ranking híbrido" },
+          { "name": "Cohere rerank-multilingual-v3.0", "role": "Re-ranking opcional dos resultados RAG para refinar relevância" },
+          { "name": "SQLite", "role": "Persistência de conversas, mensagens, contas de usuários e feedbacks" },
+          { "name": "JWT (PyJWT + bcrypt)", "role": "Autenticação de usuário com cookies httpOnly seguros" },
+          { "name": "slowapi", "role": "Rate limiting por IP nos endpoints sensíveis (auth, ask, upload)" },
+          { "name": "Langfuse", "role": "Rastreamento e observabilidade das chamadas LLM (latência, tokens, erros)" },
+          { "name": "Tavily API", "role": "Busca web em tempo real para monitoramento externo" },
+          { "name": "Docker (multi-stage)", "role": "Imagem de produção com prebuild RSS no build, usuário non-root, healthcheck" },
+          { "name": "Render", "role": "Hospedagem da aplicação conteinerizada (região Frankfurt, plano free)" }
+        ],
+        "metrics": [
+          { "label": "Fontes RSS monitoradas", "value": "38 feeds (FR + EN)" },
+          { "label": "Ferramentas do agente", "value": "7 (SQL, busca web, RAG, transcrição, visão, preview digest, send digest)" },
+          { "label": "Arquivos de teste", "value": "18 arquivos (auth, conversas, streaming, upload, segurança, RAG, feedback, e2e…)" },
+          { "label": "Dimensões embeddings", "value": "1.536 (text-embedding-3-small)" },
+          { "label": "Scoring RAG", "value": "4 sinais combinados: cosseno (50%) + BM25 (25%) + frescor (25%) + bônus feedback" },
+          { "label": "Segurança", "value": "Detecção de prompt injection (14 padrões), validação SQL, filtragem PII na saída (IBAN, cartão, email, telefone)" },
+          { "label": "Imagem Docker", "value": "Multi-stage 3 etapas (build → prebuild RSS → runtime non-root)" }
+        ]
+      }
     },
-    "stella-ecommerce": {
-      "title": "Stella — E-commerce",
-      "description": "Aplicação e-commerce full stack para navegar, filtrar e comprar estrelas, com autenticação segura, carrinho e sistema de avaliações.",
-      "deliverables": "Catálogo interativo, autenticação JWT/CSRF, carrinho e lista de desejos, sistema de pedidos, API RESTful documentada Swagger, painel admin, módulo de pagamento",
-      "context": "Projeto pessoal para demonstrar competências full stack em condições reais: arquitetura MVC, segurança multicamada, ORM e testes automatizados."
+    "poei-mainframe-gestion-clientele": {
+      "title": "Gestor de clientes mainframe",
+      "description": "Sistema de gestão de clientes bancários desenvolvido em mainframe z/OS em três etapas: processamento batch COBOL/JCL, consultas relacionais DB2/SQL e aplicação transacional CICS em tempo real.",
+      "deliverables": "Programas COBOL batch e transacionais, scripts SQL, telas BMS, JCL de compilação e execução, arquivos VSAM, relatório de projeto completo",
+      "context": "Simular o ciclo completo de uma aplicação mainframe em torno de um mesmo domínio de negócio — do processamento batch à tela transacional em tempo real.",
+      "detail": {
+        "deliverables": [
+          { "title": "Sistema de gestão financeira (projeto principal COBOL)", "description": "21 exercícios progressivos cobrindo um sistema bancário completo: gestão VSAM (KSDS/ESDS/RRDS), subprogramas CALL/CANCEL, SORT/MERGE, edição de extratos. 14 programas COBOL e 43 JCL." },
+          { "title": "Aplicação CICS transacional multicamadas", "description": "Aplicação CRUD de clientes com arquitetura 3 camadas (Apresentação/Processamento/DAO): 7 telas BMS, 7 programas COBOL, gestão de transações e otimizações FSET/DATAONLY/CURSOR." },
+          { "title": "Projeto principal DB2 — SQL embarcado em COBOL", "description": "12 exercícios DB2 com consultas SQL (DDL/DML/SELECT avançado) e 10 programas COBOL-DB2 usando cursores, SQLCA e SQL embarcado para consultar e manipular dados relacionais." },
+          { "title": "Base de cursos estruturada (40.000+ linhas)", "description": "64 arquivos Markdown cobrindo 7 domínios (z/OS, TSO/ISPF, JCL, VSAM, COBOL, DB2, CICS, algorítmica) servindo como referência técnica completa para a formação." }
+        ],
+        "decisions": [
+          { "title": "Por que GnuCOBOL + Hercules em vez de mainframe sozinho", "description": "Ambiente duplo: GnuCOBOL para desenvolvimento local rápido (compilação em segundos), Hercules/TK4- para reproduzir fielmente o comportamento z/OS (JCL, VSAM, ISPF). Permite iterar rápido validando em um alvo realista." },
+          { "title": "Por que arquitetura 3 camadas em CICS", "description": "Separação de Apresentação (BMS/SEND MAP), Processamento (lógica de negócio) e DAO (acesso a arquivos VSAM) em programas distintos. Reproduz padrões industriais mainframe e facilita a manutenção." },
+          { "title": "Por que Markdown em vez de PDF para os cursos", "description": "Versionamento Git nativo, busca full-text, diffs legíveis. Os 64 arquivos são organizados por domínio e capítulo, facilitando navegação e atualizações incrementais." }
+        ],
+        "stack": [
+          { "name": "COBOL", "role": "Linguagem principal — 117 programas cobrindo arquivos sequenciais, VSAM, subprogramas, ordenação e edição" },
+          { "name": "JCL", "role": "139 jobs para compilação, execução, ordenação (SORT/MERGE) e gestão VSAM no z/OS" },
+          { "name": "CICS", "role": "Monitor transacional — telas BMS, comandos SEND/RECEIVE MAP, gestão pseudo-conversacional" },
+          { "name": "DB2/SQL", "role": "Banco relacional — DDL, DML, consultas avançadas (joins, subconsultas, views) e SQL embarcado em COBOL" },
+          { "name": "VSAM/IDCAMS", "role": "Gestão de arquivos indexados (KSDS, ESDS, RRDS), índices alternativos (AIX) e utilitários AMS" },
+          { "name": "GnuCOBOL", "role": "Compilador open-source para desenvolvimento e testes locais no macOS" },
+          { "name": "Hercules (TK4-/TK5)", "role": "Emulador mainframe z/OS para execução JCL, ISPF e validação em ambiente realista" },
+          { "name": "Git", "role": "Versionamento de todo o projeto (234 commits, cursos e exercícios)" }
+        ],
+        "metrics": [
+          { "label": "Programas COBOL", "value": "117" },
+          { "label": "Jobs JCL", "value": "139" },
+          { "label": "Linhas de código (COBOL + JCL + SQL + BMS)", "value": "~32.400" },
+          { "label": "Arquivos de curso Markdown", "value": "64 (~40.400 linhas)" },
+          { "label": "Exercícios projeto principal COBOL", "value": "21" },
+          { "label": "Domínios cobertos", "value": "7 (z/OS, JCL, VSAM, COBOL, DB2, CICS, Algorítmica)" },
+          { "label": "Commits Git", "value": "234" }
+        ]
+      }
     },
     "tour-de-controle": {
       "title": "Tour de Contrôle",
       "description": "Aplicação web de gestão de caixa e equipe para restaurantes, com rastreamento de transações e detecção de divergências.",
       "deliverables": "API REST documentada Swagger, interface React completa, autenticação JWT com RBAC, detecção automática de divergências de caixa, CRUD de funcionários, PostgreSQL com migrações Sqitch, Docker Compose 6 serviços",
-      "context": "Responder a uma necessidade real de um restaurante: centralizar a gestão de caixa e equipe em uma ferramenta única, confiável e segura."
+      "context": "Responder a uma necessidade real de um restaurante: centralizar a gestão de caixa e equipe em uma ferramenta única, confiável e segura.",
+      "detail": {
+        "deliverables": [
+          { "title": "Gestão de caixa (La Caisse)", "description": "Abertura e fechamento de caixa com entrada do fundo físico e detecção automática de divergências. Histórico completo de sessões por caixa." },
+          { "title": "Rastreamento de transações (Le Flux)", "description": "Registro de transações por tipo de pagamento (cartão, dinheiro, ticket-refeição, etc.), com filtros avançados e paginação." },
+          { "title": "Gestão de equipe (L'Équipage)", "description": "CRUD completo dos membros da equipe com 4 níveis de role (Desenvolvedor, Gerente, Responsável, Garçom) e redefinição de senha por email." },
+          { "title": "Dashboard de KPIs & Registro de ações", "description": "Visão sintética dos indicadores-chave em tempo real e rastreabilidade completa de todas as ações (quem, o quê, quando), filtrável por data e usuário." }
+        ],
+        "decisions": [
+          { "title": "JWT via cookies httpOnly em vez de localStorage", "description": "Os tokens de autenticação são armazenados em cookies httpOnly para eliminar o risco de roubo via XSS. O flag sameSite=none é ativado em produção para gerenciar o cross-domain entre Railway e Vercel." },
+          { "title": "Sqitch em vez de um ORM para migrações", "description": "As migrações de banco de dados são gerenciadas com Sqitch (SQL puro), garantindo controle total sobre o schema e evitando abstrações de ORM para um projeto focado em consultas de negócio precisas." },
+          { "title": "Monorepo com Docker Compose em vez de arquitetura desacoplada desde o início", "description": "Frontend, backend e banco de dados são orquestrados via Docker Compose para simplificar a inicialização local e consistência dos ambientes, permanecendo deployáveis separadamente (Vercel + Railway + Neon)." }
+        ],
+        "stack": [
+          { "name": "React 18 + TypeScript", "role": "Interface com tipagem estrita, lazy loading de rotas e gerenciamento de estado via Context API" },
+          { "name": "Vite", "role": "Bundler e servidor de desenvolvimento frontend" },
+          { "name": "Tailwind CSS", "role": "Estilização utilitária da interface" },
+          { "name": "Express.js + TypeScript", "role": "API REST backend organizada em MVC (controllers, models, routes)" },
+          { "name": "Zod", "role": "Validação e tipagem dos dados recebidos na API" },
+          { "name": "JWT + cookies httpOnly", "role": "Autenticação stateless segura contra XSS" },
+          { "name": "PostgreSQL 15 (Neon)", "role": "Banco de dados relacional hospedado, acessado via queries SQL diretas (pg)" },
+          { "name": "Sqitch", "role": "Gestão de migrações de schema em SQL puro com rollback" },
+          { "name": "Redis", "role": "Cache de sessões e rate limiting no ambiente Docker" },
+          { "name": "Docker Compose", "role": "Orquestração dos serviços localmente (frontend, backend, PostgreSQL, Redis)" },
+          { "name": "Railway", "role": "Hospedagem do backend Express em produção" },
+          { "name": "Vercel", "role": "Deploy do frontend React em produção" },
+          { "name": "Jest + Supertest", "role": "Testes de integração da API (78 testes)" },
+          { "name": "Vitest", "role": "Testes unitários frontend (18 testes)" },
+          { "name": "Playwright", "role": "Testes end-to-end do percurso do usuário" },
+          { "name": "Swagger / OpenAPI", "role": "Documentação interativa da API, disponível em ambiente de desenvolvimento" }
+        ],
+        "metrics": [
+          { "label": "Testes de integração backend", "value": "78" },
+          { "label": "Testes unitários frontend", "value": "18" },
+          { "label": "Níveis de role", "value": "4 (Desenvolvedor, Gerente, Responsável, Garçom)" },
+          { "label": "Deploy", "value": "Demo ao vivo (Vercel + Railway + Neon)" }
+        ]
+      }
+    },
+    "lunetterie-du-coin": {
+      "title": "La Lunetterie du Coin",
+      "description": "Site vitrine moderno para uma ótica independente, com agendamento e formulário de contato integrados.",
+      "deliverables": "Site multi-páginas, design system personalizado, animações Framer Motion, formulário Formspree, agendamento Calendly, SEO completo, pipeline CI/CD, monitoramento Sentry",
+      "context": "Oferecer a um ótico independente uma presença web profissional e performante, com foco em acessibilidade, performance e design bold maximalist.",
+      "detail": {
+        "deliverables": [
+          { "title": "Site vitrine multi-páginas", "description": "Aplicação web de 7 páginas (Home, Serviços, Ofertas, Sobre, Contato, Avisos legais, CGV) com roteamento client-side e lazy loading por rota." },
+          { "title": "Sistema de animação acessível", "description": "Animações Framer Motion com detecção automática de prefers-reduced-motion via MotionProvider dedicado, garantindo 0 violações de acessibilidade." },
+          { "title": "Pipeline CI/CD completo", "description": "Pipeline GitHub Actions com linting, verificação de tipos, 632 testes unitários/E2E, auditorias Lighthouse, scan de segurança e testes axe-core automatizados." },
+          { "title": "Design system personalizado", "description": "Sistema de cores semânticas, tipografia fluida com clamp(), componentes reutilizáveis (Picture responsivo AVIF/WebP, Button, Cards) construídos com Tailwind CSS." }
+        ],
+        "decisions": [
+          { "title": "Por que Vite em vez de Next.js", "description": "Site vitrine sem necessidade de SSR nem backend. O Vite oferece DX ultra-rápida (HMR instantâneo) e um build estático otimizado, suficiente para deploy estático." },
+          { "title": "Por que imports Lucide específicos em vez do barrel export", "description": "Import de lucide-react/dist/esm/icons/[icon-name] ao invés da raiz para garantir tree-shaking e reduzir o bundle. Regra ESLint customizada para enforcement." },
+          { "title": "Por que LazyMotion em vez do bundle completo do Framer Motion", "description": "Carregamento de domAnimation apenas sob demanda para reduzir o JavaScript inicial, combinado com code splitting por rota via React.lazy." }
+        ],
+        "stack": [
+          { "name": "React 19", "role": "Framework UI com Suspense e lazy loading para code splitting por rota" },
+          { "name": "TypeScript 5.7", "role": "Tipagem estrita em todo o codebase, verificada em CI via tsc --noEmit" },
+          { "name": "Vite 7", "role": "Build tool e dev server com plugin React, SVGR e rollup-plugin-visualizer" },
+          { "name": "Tailwind CSS 3", "role": "Estilização utility-first com design system semântico customizado (brand, accent, etc.)" },
+          { "name": "Framer Motion", "role": "Animações performantes com LazyMotion e respeito às preferências de movimento" },
+          { "name": "React Router DOM v7", "role": "Roteamento client-side com lazy loading para páginas não-críticas" },
+          { "name": "Vitest + Testing Library", "role": "Testes unitários e de integração (632 testes, cobertura ~70%)" },
+          { "name": "Playwright", "role": "Testes E2E cross-browser (Chromium, Firefox, WebKit)" },
+          { "name": "axe-core", "role": "Testes de acessibilidade automatizados garantindo 0 violações WCAG 2.1 AA" },
+          { "name": "Lighthouse CI", "role": "Auditorias de performance automatizadas em CI com limites mobile/desktop" },
+          { "name": "Sentry", "role": "Monitoramento de erros em produção com source maps via plugin Vite" },
+          { "name": "Husky + lint-staged + Commitlint", "role": "Git hooks enforçando formato conventional commits, linting e formatting no commit" },
+          { "name": "Sharp", "role": "Otimização de imagens em AVIF/WebP via script customizado" }
+        ],
+        "metrics": [
+          { "label": "Testes", "value": "632" },
+          { "label": "Cobertura", "value": "~70%" },
+          { "label": "Lighthouse mobile", "value": "70+" },
+          { "label": "Lighthouse desktop", "value": "80+" },
+          { "label": "Violações a11y", "value": "0" },
+          { "label": "ESLint warnings", "value": "0" },
+          { "label": "Bundle JS", "value": "~800 KB" }
+        ]
+      }
+    },
+    "site-vitrine-avocate": {
+      "title": "Rayssa Harmes Advogada",
+      "description": "Site profissional para uma advogada em Estrasburgo, otimizado para SEO local e conversão de visitantes em agendamentos.",
+      "deliverables": "Site com 13 páginas, formulário Formspree, agendamento Calendly, SEO local com JSON-LD, design responsivo, conformidade RGPD, suíte completa de testes",
+      "context": "Uma advogada atuante em Estrasburgo precisava de um site profissional para se posicionar nas buscas locais e facilitar o agendamento de consultas.",
+      "detail": {
+        "deliverables": [
+          { "title": "Site vitrine multi-páginas otimizado para SEO", "description": "13 páginas estáticas com App Router (home, 5 áreas jurídicas, sobre, depoimentos, honorários, contato, avisos legais, política de privacidade). Dados estruturados JSON-LD tipo LegalService para SEO local." },
+          { "title": "Sistema de formulário de contato acessível", "description": "Formulário multi-campos com validação client-side, integração Formspree, componentes reutilizáveis (FormInput, FormSelect, FormTextarea, FormCheckbox) e conformidade WCAG 2.1 AA verificada por testes axe-core." },
+          { "title": "Pipeline de testes automatizados", "description": "9 testes unitários/acessibilidade (Vitest + Testing Library + jest-axe) e 3 suítes E2E (Playwright) cobrindo navegação, páginas e formulário de contato. Pre-commit hooks via Husky + lint-staged." },
+          { "title": "Integração Calendly para agendamento", "description": "Widget de reserva integrado permitindo aos clientes agendar consultas diretamente pelo site sem fricção adicional." }
+        ],
+        "decisions": [
+          { "title": "Next.js App Router em vez de CMS headless", "description": "O conteúdo é estável (páginas jurídicas raramente mudam). O App Router permite renderização estática nativa, metadados por rota e dados estruturados sem a complexidade de um CMS externo." },
+          { "title": "Vitest + Playwright em vez de Jest sozinho", "description": "Vitest oferece compatibilidade nativa com o tooling Vite e execução mais rápida. Playwright cobre caminhos críticos (navegação, envio de formulário) em navegadores reais." },
+          { "title": "Analytics sem cookies (Vercel Analytics) em vez de Google Analytics", "description": "Conformidade RGPD sem banner de consentimento: Vercel Analytics e Speed Insights não usam cookies de terceiros, eliminando a necessidade de um CMP." }
+        ],
+        "stack": [
+          { "name": "Next.js 14", "role": "Framework fullstack com App Router, geração estática e otimização de imagens (AVIF/WebP)" },
+          { "name": "TypeScript", "role": "Tipagem estática em todo o codebase (componentes, config, testes)" },
+          { "name": "Tailwind CSS", "role": "Sistema de design customizado com paleta terracotta, tipografia responsiva e animações" },
+          { "name": "Vitest + Testing Library", "role": "Testes unitários e de acessibilidade dos componentes UI (9 arquivos de teste)" },
+          { "name": "Playwright", "role": "Testes E2E multi-navegadores para navegação, renderização de páginas e formulário de contato" },
+          { "name": "Husky + lint-staged", "role": "Pre-commit hooks executando ESLint automaticamente nos arquivos modificados" },
+          { "name": "Vercel Analytics + Speed Insights", "role": "Monitoramento de performance e analytics sem cookies (RGPD-compliant)" },
+          { "name": "Formspree", "role": "Backend do formulário de contato sem servidor customizado para manter" },
+          { "name": "Lucide React", "role": "Ícones SVG tree-shakable com otimização via optimizePackageImports" },
+          { "name": "focus-trap-react", "role": "Gerenciamento de focus trap para o menu mobile (acessibilidade de teclado)" }
+        ],
+        "metrics": [
+          { "label": "Lighthouse Performance", "value": "85/100" },
+          { "label": "Lighthouse Acessibilidade", "value": "96/100" },
+          { "label": "Lighthouse SEO", "value": "100/100" },
+          { "label": "Lighthouse Boas Práticas", "value": "93/100" },
+          { "label": "Páginas", "value": "13 rotas" },
+          { "label": "Testes unitários/a11y", "value": "9 arquivos (Vitest)" },
+          { "label": "Testes E2E", "value": "3 suítes (Playwright)" }
+        ]
+      }
+    },
+    "stella-ecommerce": {
+      "title": "Stella",
+      "description": "Aplicação e-commerce full stack para navegar, filtrar e comprar estrelas, com autenticação segura, carrinho e sistema de avaliações.",
+      "deliverables": "Catálogo interativo, autenticação JWT/CSRF, carrinho e lista de desejos, sistema de pedidos, API RESTful documentada Swagger, painel admin, módulo de pagamento",
+      "context": "Projeto pessoal para demonstrar competências full stack em condições reais: arquitetura MVC, segurança multicamada, ORM e testes automatizados.",
+      "detail": {
+        "deliverables": [
+          { "title": "Catálogo de estrelas com busca e filtros", "description": "Navegue por um catálogo de estrelas com busca textual, filtros avançados e páginas de detalhe. Os dados são paginados no servidor e cacheados via node-cache." },
+          { "title": "Autenticação segura JWT + CSRF", "description": "Cadastro, login e logout com tokens JWT armazenados em cookies httpOnly. Cada requisição mutante é protegida por um token CSRF sincronizado via interceptor Axios." },
+          { "title": "Fluxo de compra completo", "description": "Carrinho com controle de quantidades, lista de desejos persistente, formulário de pedido com simulação de pagamento e histórico de pedidos com rastreamento de status." },
+          { "title": "Dashboard admin", "description": "Interface exclusiva para administradores expondo estatísticas do sistema (usuários, pedidos, receita) e gerenciamento de usuários via endpoints dedicados." }
+        ],
+        "decisions": [
+          { "title": "Zustand em vez de Redux", "description": "Redux Toolkit é superdimensionado para 5 stores: o boilerplate slices/thunks não agrega valor. Zustand pesa ~1 KB gzipped, não requer Provider e oferece re-renders granulares nativamente." },
+          { "title": "Container DI customizado em vez de Awilix ou InversifyJS", "description": "O container customizado (~220 linhas, zero dependências) cobre exatamente o necessário: register, resolve, singleton. InversifyJS requer TypeScript e decorators, incompatível com um backend JavaScript puro." },
+          { "title": "Repository pattern no frontend", "description": "As chamadas HTTP (Axios) são encapsuladas em repositories tipados, separados dos stores Zustand e dos componentes. Isso espelha a arquitetura do backend e permite mockar chamadas de API nos testes sem tocar no Axios." }
+        ],
+        "stack": [
+          { "name": "React 18 + TypeScript 5", "role": "Framework UI com tipagem estática completa no cliente" },
+          { "name": "Zustand", "role": "Gerenciamento de estado global (carrinho, wishlist, auth) — 5 stores" },
+          { "name": "React Router v7", "role": "Roteamento client-side com rotas protegidas" },
+          { "name": "Tailwind CSS", "role": "Estilização utility-first com design system personalizado (tokens, paletas, elevações)" },
+          { "name": "Axios", "role": "Cliente HTTP com interceptores para injeção automática do token CSRF e do header Authorization" },
+          { "name": "Node.js + Express", "role": "Servidor API RESTful organizado em camadas MVC com container DI" },
+          { "name": "Sequelize + PostgreSQL 15", "role": "ORM relacional com 8 modelos (User, Star, Cart, CartItem, Order, OrderStar, Review, Wishlist)" },
+          { "name": "JWT + tokens CSRF", "role": "Autenticação stateless via cookies httpOnly e proteção CSRF em todas as rotas mutantes" },
+          { "name": "Joi + DOMPurify", "role": "Validação de schema no servidor (Joi) e sanitização HTML no cliente (DOMPurify)" },
+          { "name": "Helmet + express-rate-limit", "role": "Headers de segurança HTTP (CSP, HSTS) e limitação de taxa por IP" },
+          { "name": "Winston", "role": "Logging estruturado com transports arquivo e console, níveis error/warn/info" },
+          { "name": "Sentry", "role": "Monitoramento de erros em produção — integrado no frontend (React) e backend (Express)" },
+          { "name": "Jest + Supertest", "role": "Testes unitários dos serviços backend e testes frontend com jsdom" },
+          { "name": "Swagger / OpenAPI", "role": "Documentação interativa da API exposta em /api-docs, 9 grupos de rotas documentados" },
+          { "name": "Docker + docker-compose", "role": "Orquestração local dos 3 serviços (client, server, PostgreSQL) com um único docker-compose up" },
+          { "name": "GitHub Actions", "role": "Pipeline CI: lint, typecheck e testes disparados a cada push" },
+          { "name": "Biome", "role": "Linter e formatador unificado compartilhado entre client e server (substitui ESLint + Prettier)" }
+        ],
+        "metrics": [
+          { "label": "Grupos de rotas API", "value": "9 (stars, auth, users, orders, cart, wishlist, reviews, payments, admin)" },
+          { "label": "Arquivos de testes unitários backend", "value": "4 (cartService, orderService, paymentValidator, bcryptHashingService)" },
+          { "label": "Assertions / blocos de teste backend", "value": "101 ocorrências describe/it/test em 4 arquivos" },
+          { "label": "Arquivos de testes frontend", "value": "4 (passwordValidation, cartCalculations, orderTypes, AuthContainer)" },
+          { "label": "Modelos Sequelize", "value": "8" },
+          { "label": "ADRs documentados", "value": "5 (zustand, DI container, JS backend, sequelize sync, repository pattern)" }
+        ]
+      }
     }
   }
 }

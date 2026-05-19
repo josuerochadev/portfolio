@@ -72,10 +72,10 @@ function TimelineStep({
 					className="
 						bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5
 						dark:from-lime/10 dark:via-orange/5 dark:to-violet/10
-						backdrop-blur-md border border-lime/30 dark:border-lime/20 rounded-2xl shadow-md
+						backdrop-blur-md border border-lime/30 dark:border-lime/20 rounded-2xl shadow-glow-lime
 						px-5 md:px-6 py-4 md:py-5
 						flex flex-col justify-center
-						hover:shadow-lg hover:scale-[1.01]
+						hover:shadow-glow-lime-lg hover:scale-[1.01]
 						transition-shadow duration-300 ease-[cubic-bezier(0.83,0,0.17,1)]
 					"
 				>
@@ -159,8 +159,8 @@ export default function Timeline() {
 				currentGifY[i] = lerp(currentGifY[i], targetGifY, 0.08);
 				currentCardY[i] = lerp(currentCardY[i], targetCardY, 0.08);
 
-				gif.style.transform = `translateY(${currentGifY[i]}px)`;
-				card.style.transform = `translateY(${currentCardY[i]}px)`;
+				gif.style.transform = `translate3d(0,${currentGifY[i]}px,0)`;
+				card.style.transform = `translate3d(0,${currentCardY[i]}px,0)`;
 			}
 
 			rafId = requestAnimationFrame(animate);
@@ -185,7 +185,7 @@ export default function Timeline() {
 	return (
 		<div className="relative z-0 w-full">
 			{/* Year picker — horizontal, sticky on scroll */}
-			<nav aria-label="Timeline navigation" className="sticky top-6 z-20 ml-6 md:ml-0 w-fit rounded-full flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3 bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5 dark:from-lime/10 dark:via-orange/5 dark:to-violet/10 backdrop-blur-md border border-lime/30 dark:border-lime/20 shadow-lg hover:shadow-xl hover:bg-lime dark:hover:bg-lime/20 active:scale-95 transition-transform duration-150 mb-6">
+			<nav aria-label="Timeline navigation" className="sticky top-6 z-20 ml-6 md:ml-0 w-fit rounded-full flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3 bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5 dark:from-lime/10 dark:via-orange/5 dark:to-violet/10 backdrop-blur-md transform-gpu border border-lime/30 dark:border-lime/20 shadow-glow-lime hover:shadow-glow-lime-lg hover:bg-lime dark:hover:bg-lime/20 active:scale-95 transition-transform duration-150 mb-6">
 				{years.map((year, i) => (
 					<React.Fragment key={year}>
 						{i > 0 && <span className="text-violet/20 dark:text-beige/20 text-xs select-none" aria-hidden="true">&bull;</span>}

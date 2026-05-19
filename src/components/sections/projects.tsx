@@ -10,6 +10,9 @@ import LetterRippleEffect from "@/components/effects/letter-ripple";
 import ResponsiveImage from "@/components/common/responsive-image";
 import SunIcon from "@/assets/images/ui/sun.svg?react";
 
+const formations = PROJECTS.filter(p => p.type === 'formation');
+const projects = PROJECTS.filter(p => p.type === 'project');
+
 export default function Projects() {
 	const { t } = useTranslation('projects');
 	const sectionRef = useRef(null);
@@ -48,66 +51,97 @@ i}`}
 					</h2>
 				</FadeInUpOnScroll>
 
+				<ProjectGroup
+					title={t('subheadings.formations')}
+					items={formations}
+					startIndex={0}
+					t={t}
+				/>
 
-				<div className="flex flex-col gap-20">
-					{PROJECTS.map((project, index) => {
-						type ProjectTranslation = {
-							title?: string;
-							description?: string;
-							deliverables?: string;
-							context?: string;
-						};
-						const projectTranslations = t(`items.${project.id}`, { returnObjects: true }) as ProjectTranslation;
-						return (
-						<FadeInUpOnScroll key={project.title} delay={0.3 + index * 0.15}>
-							<article
-								className="w-full flex flex-col lg:flex-row gap-6 items-start
-								bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5
-								dark:from-lime/10 dark:via-orange/5 dark:to-violet/10
-								backdrop-blur-md border border-lime/30 dark:border-lime/20 rounded-2xl shadow-md p-6
-								hover:shadow-lg hover:scale-[1.01]
-								transition-all duration-300 ease-[cubic-bezier(0.83,0,0.17,1)]"
-							>
-								<div className="w-full lg:w-1/2 aspect-[4/3]">
-									<ResponsiveImage
-										images={project.image}
-										alt={`Preview of ${project.title}`}
-										className="w-full h-full rounded-xl shadow-sm"
-										loading="lazy"
-									/>
-								</div>
-								<div className="w-full lg:w-1/2 flex flex-col gap-2">
-									<div className="flex items-end gap-4 mb-2">
-										<span className="text-6xl font-display font-extralight text-orange-dark leading-none">
-											{index + 1}.
-										</span>
-										<h3 className="text-3xl font-extrabold font-display leading-snug">
-											{projectTranslations?.title || project.title}
-										</h3>
-									</div>
-									<p className="text-lg leading-snug">{projectTranslations?.description || project.description}</p>
-									<p className="text-xl font-bold mt-2">{t('labels.deliverables')}</p>
-									<p className="text-base mb-1">{projectTranslations?.deliverables || project.deliverables}</p>
-									<p className="text-xl font-bold">{t('labels.context')}</p>
-									<p className="text-base">{projectTranslations?.context || project.context}</p>
-									<Link
-										to={`/projet/${project.id}`}
-										className="mt-6 px-4 py-2 rounded-full bg-orange/10 text-orange-dark dark:text-orange border border-orange/20
-										hover:bg-orange hover:text-beige dark:hover:bg-orange/20 dark:hover:text-orange
-										transition-all duration-300
-										inline-flex items-center gap-2 self-start font-medium text-sm
-										hover:shadow-md hover:scale-105 active:scale-95"
-										aria-label={`${t('labels.seeMore')} ${projectTranslations?.title || project.title}`}
-									>
-										<FaEye className="inline-block" /> {t('labels.moreDetails')}
-									</Link>
-								</div>
-							</article>
-						</FadeInUpOnScroll>
-					);
-					})}
-				</div>
+				<ProjectGroup
+					title={t('subheadings.projects')}
+					items={projects}
+					startIndex={formations.length}
+					t={t}
+				/>
 			</div>
 		</section>
+	);
+}
+
+function ProjectGroup({ title, items, startIndex, t }: {
+	title: string;
+	items: typeof PROJECTS;
+	startIndex: number;
+	t: (key: string, options?: Record<string, unknown>) => string;
+}) {
+	return (
+		<div className="flex flex-col gap-12">
+			<FadeInUpOnScroll delay={0.2}>
+				<h3 className="text-base md:text-lg font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange">
+					{title}
+				</h3>
+			</FadeInUpOnScroll>
+
+			<div className="flex flex-col gap-20">
+				{items.map((project, index) => {
+					type ProjectTranslation = {
+						title?: string;
+						description?: string;
+						deliverables?: string;
+						context?: string;
+					};
+					const projectTranslations = t(`items.${project.id}`, { returnObjects: true }) as unknown as ProjectTranslation;
+					const globalIndex = startIndex + index;
+					return (
+					<FadeInUpOnScroll key={project.id} delay={0.3 + index * 0.15}>
+						<article
+							className="w-full flex flex-col lg:flex-row gap-6 items-start
+							bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5
+							dark:from-lime/10 dark:via-orange/5 dark:to-violet/10
+							backdrop-blur-md border border-lime/30 dark:border-lime/20 rounded-2xl shadow-glow-lime p-6
+							hover:shadow-glow-lime-lg hover:scale-[1.01]
+							transition-all duration-300 ease-[cubic-bezier(0.83,0,0.17,1)]"
+						>
+							<div className="w-full lg:w-1/2 aspect-[4/3]">
+								<ResponsiveImage
+									images={project.image}
+									alt={`Preview of ${project.title}`}
+									className="w-full h-full rounded-xl shadow-sm"
+									loading="lazy"
+								/>
+							</div>
+							<div className="w-full lg:w-1/2 flex flex-col gap-2">
+								<div className="flex items-end gap-4 mb-2">
+									<span className="text-6xl font-display font-extralight text-orange-dark leading-none">
+										{globalIndex + 1}.
+									</span>
+									<h3 className="text-3xl font-extrabold font-display leading-snug">
+										{projectTranslations?.title || project.title}
+									</h3>
+								</div>
+								<p className="text-lg leading-snug text-violet/80 dark:text-beige/80">{projectTranslations?.description || project.description}</p>
+								<p className="text-sm font-sans font-bold uppercase tracking-wider text-violet/60 dark:text-beige/60 mt-3">{t('labels.deliverables')}</p>
+								<p className="text-base mb-1 text-violet/80 dark:text-beige/80">{projectTranslations?.deliverables || project.deliverables}</p>
+								<p className="text-sm font-sans font-bold uppercase tracking-wider text-violet/60 dark:text-beige/60 mt-3">{t('labels.context')}</p>
+								<p className="text-base text-violet/80 dark:text-beige/80">{projectTranslations?.context || project.context}</p>
+								<Link
+									to={`/projet/${project.id}`}
+									className="mt-6 px-4 py-2 rounded-full bg-orange/10 text-orange-dark dark:text-orange border border-orange/20
+									hover:bg-orange hover:text-beige dark:hover:bg-orange/20 dark:hover:text-orange
+									transition-all duration-300
+									inline-flex items-center gap-2 self-start font-medium text-sm
+									hover:shadow-glow-orange hover:scale-105 active:scale-95"
+									aria-label={`${t('labels.seeMore')} ${projectTranslations?.title || project.title}`}
+								>
+									<FaEye className="inline-block" /> {t('labels.moreDetails')}
+								</Link>
+							</div>
+						</article>
+					</FadeInUpOnScroll>
+				);
+				})}
+			</div>
+		</div>
 	);
 }

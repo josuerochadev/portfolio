@@ -31,7 +31,7 @@ export default function ModalNotice({ show, onClose }: ModalNoticeProps) {
 						className="w-full max-w-md mx-4 p-6 text-violet dark:text-beige text-center
 						bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5
 						dark:from-lime/10 dark:via-orange/5 dark:to-violet/10
-						backdrop-blur-md border border-lime/30 dark:border-lime/20 rounded-2xl shadow-md
+						backdrop-blur-md border border-lime/30 dark:border-lime/20 rounded-2xl shadow-glow-lime
 						transition-all duration-300 ease-[cubic-bezier(0.83,0,0.17,1)]"
 					>
 						<h3 className="text-3xl font-display font-extrabold mb-4">

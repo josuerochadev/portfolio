@@ -24,8 +24,7 @@ export default function ScrollToTop() {
 			type="button"
 			onClick={scrollToTop}
 			aria-label={t('buttons.backToTop')}
-			style={{ willChange: "transform, opacity" }}
-			className={`fixed bottom-6 right-6 z-[9999] flex items-center gap-2
+			className={`fixed bottom-6 right-6 z-[9999] transform-gpu flex items-center gap-2
         px-4 py-2 sm:px-6 sm:py-3 rounded-full font-bold
         bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5
         dark:from-lime/10 dark:via-orange/5 dark:to-violet/10

@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: CI
 
 on:
   push:
@@ -78,11 +78,3 @@ jobs:
         configPath: './lighthouserc.json'
         uploadArtifacts: true
         temporaryPublicStorage: true
-
-  deploy:
-    needs: [test, lighthouse]
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    steps:
-    - name: Deploy to Vercel
-      run: echo "Deployment handled by Vercel automatically"

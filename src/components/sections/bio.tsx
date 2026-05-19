@@ -29,7 +29,7 @@ export default function Bio() {
 					<div className="max-w-6xl mx-auto flex flex-wrap gap-x-6 gap-y-2">
 						{adjectives.map((word, i) => (
 							<FadeInUpOnScroll key={word} delay={0.6 + i * 0.1}>
-								<span className="text-lg md:text-xl font-bold">{word}</span>
+								<span className="text-xl font-bold text-violet/80 dark:text-beige/80">{word}</span>
 							</FadeInUpOnScroll>
 						))}
 					</div>
@@ -37,18 +37,14 @@ export default function Bio() {
 
 				<Timeline />
 
-				<div className="w-full px-4 mt-24 md:mt-32 flex justify-start">
-					<div className="w-24 h-px bg-gradient-to-r from-lime/60 to-transparent" />
-				</div>
-
-				<div className="w-full px-4 mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 text-left">
+				<div className="w-full px-4 mt-24 md:mt-32 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 text-left">
 					{Object.entries(sections).map(([key, section], i) => (
 						<FadeInUpOnScroll key={key} delay={0.2 + i * 0.15}>
 							<div className="relative min-h-[120px]">
-								<h3 className="text-2xl font-serif font-bold text-violet dark:text-beige mb-2 capitalize">
+								<h3 className="text-base md:text-lg font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange mb-2">
 									{section.title}
 								</h3>
-								<p className="text-base md:text-lg leading-relaxed text-violet dark:text-beige/90">
+								<p className="text-base md:text-lg leading-relaxed text-violet/80 dark:text-beige/80">
 									{section.text}
 								</p>
 								<LayeredIconBackground

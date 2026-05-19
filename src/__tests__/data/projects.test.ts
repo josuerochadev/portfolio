@@ -2,8 +2,8 @@ import { describe, it, expect } from 'vitest';
 import { PROJECTS } from '../../data/projects';
 
 describe('Projects data', () => {
-  it('should have 5 projects', () => {
-    expect(PROJECTS).toHaveLength(5);
+  it('should have 6 projects', () => {
+    expect(PROJECTS).toHaveLength(6);
   });
 
   it('should have required fields for each project', () => {
@@ -34,7 +34,7 @@ describe('Projects data', () => {
   });
 
   it('should have valid category values', () => {
-    const validCategories = ['web-app', 'showcase', 'e-commerce', 'ai', 'personal'];
+    const validCategories = ['web-app', 'showcase', 'e-commerce', 'ai', 'personal', 'mainframe'];
     
     PROJECTS.forEach((project) => {
       expect(validCategories).toContain(project.category);
@@ -52,9 +52,10 @@ describe('Projects data', () => {
     const projectTitles = PROJECTS.map(p => p.title);
     
     expect(projectTitles).toContain('La Lunetterie du Coin');
-    expect(projectTitles).toContain('Rayssa Eskinazi — Avocate');
-    expect(projectTitles).toContain('Luciole — Agent IA');
-    expect(projectTitles).toContain('Stella — E-commerce');
+    expect(projectTitles).toContain('Rayssa Harmes Avocate');
+    expect(projectTitles).toContain('Luciole');
+    expect(projectTitles).toContain('Stella');
     expect(projectTitles).toContain('Tour de Contrôle');
+    expect(projectTitles).toContain('Gestionnaire de clients mainframe');
   });
 });

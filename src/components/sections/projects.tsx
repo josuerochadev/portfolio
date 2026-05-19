@@ -113,14 +113,14 @@ function ProjectGroup({ title, items, startIndex, t }: {
 							</div>
 							<div className="w-full lg:w-1/2 flex flex-col gap-2">
 								<div className="flex items-end gap-4 mb-2">
-									<span className="text-6xl font-display font-thin text-orange-dark leading-none tracking-[-0.03em]" style={{ fontVariationSettings: 'var(--fv-ghost)' }}>
+									<span className="text-7xl md:text-8xl font-display font-thin text-orange-dark leading-none tracking-[-0.03em]" style={{ fontVariationSettings: 'var(--fv-ghost)' }}>
 										{globalIndex + 1}.
 									</span>
 									<h3 className="text-3xl font-extrabold font-display leading-snug">
 										{projectTranslations?.title || project.title}
 									</h3>
 								</div>
-								<p className="text-lg leading-snug text-violet/80 dark:text-beige/80">{projectTranslations?.description || project.description}</p>
+								<p className="text-lg font-display font-light leading-snug text-violet/80 dark:text-beige/80">{projectTranslations?.description || project.description}</p>
 								<p className="text-sm font-sans font-bold uppercase tracking-wider text-violet/60 dark:text-beige/60 mt-3">{t('labels.deliverables')}</p>
 								<p className="text-base mb-1 text-violet/80 dark:text-beige/80">{projectTranslations?.deliverables || project.deliverables}</p>
 								<p className="text-sm font-sans font-bold uppercase tracking-wider text-violet/60 dark:text-beige/60 mt-3">{t('labels.context')}</p>

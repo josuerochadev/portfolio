@@ -94,34 +94,36 @@
       "context": "Simular o ciclo completo de uma aplicação mainframe em torno de um mesmo domínio de negócio — do processamento batch à tela transacional em tempo real.",
       "detail": {
         "deliverables": [
-          { "title": "Sistema de gestão financeira (projeto principal COBOL)", "description": "21 exercícios progressivos cobrindo um sistema bancário completo: gestão VSAM (KSDS/ESDS/RRDS), subprogramas CALL/CANCEL, SORT/MERGE, edição de extratos. 14 programas COBOL e 43 JCL." },
-          { "title": "Aplicação CICS transacional multicamadas", "description": "Aplicação CRUD de clientes com arquitetura 3 camadas (Apresentação/Processamento/DAO): 7 telas BMS, 7 programas COBOL, gestão de transações e otimizações FSET/DATAONLY/CURSOR." },
-          { "title": "Projeto principal DB2 — SQL embarcado em COBOL", "description": "12 exercícios DB2 com consultas SQL (DDL/DML/SELECT avançado) e 10 programas COBOL-DB2 usando cursores, SQLCA e SQL embarcado para consultar e manipular dados relacionais." },
-          { "title": "Base de cursos estruturada (40.000+ linhas)", "description": "64 arquivos Markdown cobrindo 7 domínios (z/OS, TSO/ISPF, JCL, VSAM, COBOL, DB2, CICS, algorítmica) servindo como referência técnica completa para a formação." }
+          { "title": "14 programas batch COBOL com 43 JCL", "description": "Processamentos sequenciais completos: criação VSAM KSDS, SORT/MERGE, subprogramas CALL, edição de extratos de conta com rupturas e totais." },
+          { "title": "Sistema DB2 com SQL embarcado", "description": "11 programas COBOL-SQL sobre um esquema de 5 tabelas (CLIENT, REGION, PROFESSI, NATCOMPT, MOUVEMENT). Cursores parametrizados, gestão transacional COMMIT/ROLLBACK, views e índices." },
+          { "title": "Aplicação CICS interativa — 7 transações", "description": "CRUD completo de gestão de clientes em pseudo-conversacional: paginação genérica, navegação VSAM em tempo real via índices alternativos (AIX/PATH), estatísticas por região. 7 maps BMS com otimizações FSET/DATAONLY/CURSOR dinâmico." },
+          { "title": "Contêiner Docker com API web e CI/CD", "description": "Imagem Docker compilando os 15 programas batch, simulando DB2 via SQLite e reproduzindo as telas CICS. Pipeline GitHub Actions compilando e executando smoke tests a cada push." }
         ],
         "decisions": [
-          { "title": "Por que GnuCOBOL + Hercules em vez de mainframe sozinho", "description": "Ambiente duplo: GnuCOBOL para desenvolvimento local rápido (compilação em segundos), Hercules/TK4- para reproduzir fielmente o comportamento z/OS (JCL, VSAM, ISPF). Permite iterar rápido validando em um alvo realista." },
-          { "title": "Por que arquitetura 3 camadas em CICS", "description": "Separação de Apresentação (BMS/SEND MAP), Processamento (lógica de negócio) e DAO (acesso a arquivos VSAM) em programas distintos. Reproduz padrões industriais mainframe e facilita a manutenção." },
-          { "title": "Por que Markdown em vez de PDF para os cursos", "description": "Versionamento Git nativo, busca full-text, diffs legíveis. Os 64 arquivos são organizados por domínio e capítulo, facilitando navegação e atualizações incrementais." }
+          { "title": "GnuCOBOL + Docker em vez de z/OS sozinho", "description": "Os programas foram escritos para z/OS mas adaptados para GnuCOBOL (ASSIGN TO arquivo em vez de DD names, LINE SEQUENTIAL) para permitir compilação local, CI e demo web sem mainframe." },
+          { "title": "SQLite para simular DB2 fora do z/OS", "description": "Os programas DB2 usam EXEC SQL não compilável pelo GnuCOBOL. Um módulo Python (db2_sim.py) replica o esquema em SQLite para tornar as consultas executáveis no contêiner Docker." },
+          { "title": "Pseudo-conversacional CICS com COMMAREA", "description": "Padrão pseudo-conversacional standard z/OS para as 7 transações CICS: cada interação SEND MAP libera a tarefa, o contexto é preservado via COMMAREA no RETURN TRANSID." }
         ],
         "stack": [
-          { "name": "COBOL", "role": "Linguagem principal — 117 programas cobrindo arquivos sequenciais, VSAM, subprogramas, ordenação e edição" },
-          { "name": "JCL", "role": "139 jobs para compilação, execução, ordenação (SORT/MERGE) e gestão VSAM no z/OS" },
-          { "name": "CICS", "role": "Monitor transacional — telas BMS, comandos SEND/RECEIVE MAP, gestão pseudo-conversacional" },
-          { "name": "DB2/SQL", "role": "Banco relacional — DDL, DML, consultas avançadas (joins, subconsultas, views) e SQL embarcado em COBOL" },
-          { "name": "VSAM/IDCAMS", "role": "Gestão de arquivos indexados (KSDS, ESDS, RRDS), índices alternativos (AIX) e utilitários AMS" },
-          { "name": "GnuCOBOL", "role": "Compilador open-source para desenvolvimento e testes locais no macOS" },
-          { "name": "Hercules (TK4-/TK5)", "role": "Emulador mainframe z/OS para execução JCL, ISPF e validação em ambiente realista" },
-          { "name": "Git", "role": "Versionamento de todo o projeto (234 commits, cursos e exercícios)" }
+          { "name": "COBOL 85", "role": "Linguagem principal — 32 programas cobrindo batch, DB2 e CICS" },
+          { "name": "JCL", "role": "60 jobs de controle: criação VSAM, SORT, compilação, montagem BMS" },
+          { "name": "z/OS (Hercules TK5)", "role": "Ambiente de execução mainframe emulado para desenvolvimento e testes" },
+          { "name": "VSAM KSDS", "role": "Armazenamento indexado dos arquivos clientes/contas com índices alternativos (AIX)" },
+          { "name": "DB2/SQL", "role": "Banco relacional com 5 tabelas, 14 scripts SQL (DDL, DML, views, índices)" },
+          { "name": "CICS TS", "role": "Monitor transacional para as 7 telas interativas pseudo-conversacionais" },
+          { "name": "BMS", "role": "7 maps de tela definindo as interfaces de usuário das transações CICS" },
+          { "name": "GnuCOBOL", "role": "Compilador open source para execução fora do z/OS (CI e contêiner Docker)" },
+          { "name": "Docker", "role": "Conteinerização da API web com compilação automática dos programas batch" },
+          { "name": "Flask + Gunicorn", "role": "API REST servindo a interface web, a simulação DB2 e o replay de telas CICS" },
+          { "name": "SQLite", "role": "Simulação do esquema DB2 no contêiner Docker" },
+          { "name": "GitHub Actions", "role": "CI compilando os 15 programas batch e executando smoke tests a cada push" }
         ],
         "metrics": [
-          { "label": "Programas COBOL", "value": "117" },
-          { "label": "Jobs JCL", "value": "139" },
-          { "label": "Linhas de código (COBOL + JCL + SQL + BMS)", "value": "~32.400" },
-          { "label": "Arquivos de curso Markdown", "value": "64 (~40.400 linhas)" },
-          { "label": "Exercícios projeto principal COBOL", "value": "21" },
-          { "label": "Domínios cobertos", "value": "7 (z/OS, JCL, VSAM, COBOL, DB2, CICS, Algorítmica)" },
-          { "label": "Commits Git", "value": "234" }
+          { "label": "Programas COBOL", "value": "32 (14 batch + 11 DB2 + 7 CICS)" },
+          { "label": "Total arquivos fonte", "value": "118 (COBOL, JCL, SQL, BMS)" },
+          { "label": "Compilação CI", "value": "15/15 programas batch passam" },
+          { "label": "Transações CICS", "value": "7 (AFFI, AJOU, MAJU, SUPP, DELG, LIST, STAT)" },
+          { "label": "Tabelas DB2", "value": "5 tabelas, 14 scripts SQL" }
         ]
       }
     },

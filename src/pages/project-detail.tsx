@@ -227,17 +227,20 @@ export default function ProjectDetail() {
 						{/* Stack technique */}
 						{Array.isArray(detailStack) && detailStack.length > 0 && (
 							<FadeInUp delay={0.5}>
-								<section className="mb-20">
-									<h2 className="text-base md:text-lg font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange mb-8">
+								<section className="mb-20 -mx-6 px-6 py-12 bg-lime dark:bg-dark-surface rounded-2xl grain grain-citron">
+									<h2 className="text-base md:text-lg font-sans font-bold uppercase tracking-widest text-violet-dark dark:text-orange mb-8">
 										{t('projects:detail.stack')}
 									</h2>
-									<div className="flex flex-wrap gap-x-6 gap-y-4">
+									<div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-0">
 										{detailStack.map((tech) => (
-											<div key={tech.name} className="flex flex-col">
-												<span className="px-3 py-1 bg-violet/10 dark:bg-beige/10 border border-violet/20 dark:border-beige/20 rounded-full text-sm font-medium">
+											<div
+												key={tech.name}
+												className="flex items-baseline gap-4 py-3 border-b border-surface-citron-border dark:border-beige/8"
+											>
+												<span className="text-sm font-bold font-display whitespace-nowrap text-surface-citron-fg dark:text-beige">
 													{tech.name}
 												</span>
-												<span className="text-xs text-violet/55 dark:text-beige/55 mt-1 pl-3 max-w-[200px]">
+												<span className="text-sm text-surface-citron-muted dark:text-beige/55 leading-snug">
 													{tech.role}
 												</span>
 											</div>
@@ -250,17 +253,22 @@ export default function ProjectDetail() {
 						{/* Résultats / Metrics */}
 						{Array.isArray(detailMetrics) && detailMetrics.length > 0 && (
 							<FadeInUp delay={0.6}>
-								<section className="mb-20">
-									<h2 className="text-base md:text-lg font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange mb-8">
+								<section className="mb-20 -mx-6 px-6 py-12 bg-violet dark:bg-dark-surface rounded-2xl">
+									<h2 className="text-base md:text-lg font-sans font-bold uppercase tracking-widest text-orange dark:text-orange mb-8">
 										{t('projects:detail.results')}
 									</h2>
-									<div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+									<div className="flex flex-col gap-0">
 										{detailMetrics.map((metric) => (
-											<div key={metric.label} className="text-center">
-												<span className="block text-5xl font-display font-extralight text-orange-dark dark:text-orange leading-none">
+											<div
+												key={metric.label}
+												className="flex items-baseline gap-6 py-4 border-b border-surface-nuit-border dark:border-beige/8"
+											>
+												<span className="text-3xl md:text-4xl font-display font-bold text-beige dark:text-beige leading-none shrink-0">
 													{metric.value}
 												</span>
-												<span className="text-xs font-sans uppercase tracking-wider text-violet/65 dark:text-beige/65 mt-1">{metric.label}</span>
+												<span className="text-base text-surface-nuit-muted dark:text-beige/60 leading-snug">
+													{metric.label}
+												</span>
 											</div>
 										))}
 									</div>

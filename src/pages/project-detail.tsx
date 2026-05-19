@@ -159,7 +159,7 @@ export default function ProjectDetail() {
 								<h2 className="text-base md:text-lg font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange mb-4">
 									{t('projects:detail.why')}
 								</h2>
-								<p className="text-lg leading-relaxed text-violet/80 dark:text-beige/80 max-w-3xl">
+								<p className="text-lg font-display font-light leading-relaxed text-violet/80 dark:text-beige/80 max-w-3xl">
 									{projectContext}
 								</p>
 							</section>

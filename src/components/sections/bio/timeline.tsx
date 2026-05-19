@@ -82,7 +82,7 @@ function TimelineStep({
 					<span className="text-xs md:text-sm font-display font-semibold text-orange/70 tracking-wide uppercase mb-1">
 						{step.period}
 					</span>
-					<h3 className="text-lg md:text-xl lg:text-2xl font-extrabold font-display leading-snug text-violet dark:text-beige">
+					<h3 className="text-lg md:text-xl lg:text-2xl font-extrabold font-display leading-snug text-violet dark:text-beige hover-playful">
 						{step.title}
 					</h3>
 					<p className="text-sm md:text-base leading-relaxed text-violet/80 dark:text-beige/70 mt-3">

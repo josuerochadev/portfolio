@@ -106,7 +106,7 @@ export default function ProjectDetail() {
 								</span>
 							</div>
 
-							<h1 className="text-4xl md:text-6xl font-display font-extrabold mb-4 text-beige">
+							<h1 className="text-4xl md:text-6xl font-display font-extrabold mb-4 text-beige hover-playful">
 								{projectTitle}
 							</h1>
 

@@ -81,6 +81,15 @@ button:focus-visible {
   --fv-ghost: "opsz" 144, "SOFT" 0, "WONK" 0;
 }
 
+/* === HOVER PLAYFUL (fv-playful on hover) === */
+.hover-playful {
+  font-variation-settings: var(--fv-editorial);
+  transition: font-variation-settings 0.3s ease;
+}
+.hover-playful:hover {
+  font-variation-settings: var(--fv-playful);
+}
+
 /* === GRAIN TEXTURE (D04) === */
 .grain { position: relative; }
 .grain::after {

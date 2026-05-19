@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stack & Résultats — 3 directions</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,600&family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; width: 100%; height: 100%; }
+  </style>
+</head>
+<body>
+  <script type="text/babel" src="design-canvas.jsx"></script>
+  <div id="root"></div>
+
+  <script type="text/babel">
+
+  // ─── DONNÉES ──────────────────────────────────────────────────────────────
+  const stackData = [
+    { name: "COBOL 85",          role: "Langage principal — 32 programmes couvrant batch, DB2 et CICS" },
+    { name: "JCL",               role: "60 jobs de contrôle : création VSAM, tri SORT, compilation, assemblage BMS" },
+    { name: "z/OS (Hercules TK5)", role: "Environnement d'exécution mainframe émulé pour développement et tests" },
+    { name: "DB2/SQL",           role: "Base relationnelle à 5 tables, 14 scripts SQL (DDL, DML, vues, index)" },
+    { name: "BMS",               role: "7 maps d'écran définissant les interfaces utilisateur des transactions CICS" },
+    { name: "Docker",            role: "Conteneurisation de l'application web avec compilation automatique des programmes batch" },
+    { name: "SQLite",            role: "Simulation du schéma DB2 dans le conteneur Docker" },
+    { name: "VSAM KSDS",         role: "Stockage indexé des fichiers clients/comptes avec index alternatifs (AIX)" },
+    { name: "CICS TS",           role: "Moniteur transactionnel pour les 7 écrans interactifs pseudo-conversationnels" },
+    { name: "GnuCOBOL",          role: "Compilateur open source pour exécution hors z/OS (CI et conteneur Docker)" },
+    { name: "Flask + Gunicorn",  role: "API REST servant l'interface web, la simulation DB2 et le replay d'écrans CICS" },
+    { name: "GitHub Actions",    role: "CI compilant les 15 programmes batch et exécutant des smoke tests à chaque push" },
+  ];
+
+  const resultsData = [
+    { value: "32 (14 batch + 11 DB2 + 7 CICS)", label: "Programmes COBOL" },
+    { value: "118 (COBOL, JCL, SQL, BMS)",       label: "Total fichiers sources" },
+    { value: "15/15 programmes batch passent",   label: "Compilation CI" },
+    { value: "7 (AFFI, AJOU, MAJU, SUPP, DELG, LIST, STAT)", label: "Transactions CICS" },
+    { value: "5 tables, 14 scripts SQL",         label: "Tables DB2" },
+  ];
+
+  const stackGrouped = [
+    { cat: "Langages mainframe",        items: ["COBOL 85", "JCL", "BMS"] },
+    { cat: "Environnement d'exécution", items: ["z/OS (Hercules TK5)", "GnuCOBOL"] },
+    { cat: "Données & stockage",        items: ["DB2/SQL", "VSAM KSDS", "SQLite"] },
+    { cat: "Interface transactionnelle",items: ["CICS TS", "Flask + Gunicorn"] },
+    { cat: "Infrastructure & CI",       items: ["Docker", "GitHub Actions"] },
+  ].map(g => ({ ...g, items: g.items.map(n => stackData.find(s => s.name === n)).filter(Boolean) }));
+
+  // ─── THÈME ────────────────────────────────────────────────────────────────
+  const THEMES = {
+    light: {
+      bg:         '#F5F0E8',
+      text:       '#6900FF',
+      muted:      'rgba(105,0,255,0.52)',
+      faint:      'rgba(105,0,255,0.26)',
+      border:     'rgba(105,0,255,0.10)',
+      h2:         '#E06800',
+      toggleBg:   'rgba(105,0,255,0.06)',
+      toggleText: 'rgba(105,0,255,0.35)',
+    },
+    dark: {
+      bg:         '#0F0A1A',
+      text:       '#8844EE',
+      muted:      'rgba(180,130,255,0.68)',
+      faint:      'rgba(180,130,255,0.30)',
+      border:     'rgba(105,0,255,0.22)',
+      h2:         '#FF7A00',
+      toggleBg:   'rgba(105,0,255,0.12)',
+      toggleText: 'rgba(180,130,255,0.45)',
+    },
+  };
+
+  const ThemeCtx = React.createContext(THEMES.light);
+
+  // ─── WRAPPERS ─────────────────────────────────────────────────────────────
+  const ThemeWrapper = ({ children }) => {
+    const [mode, setMode] = React.useState('light');
+    const t = THEMES[mode];
+    return (
+      <ThemeCtx.Provider value={t}>
+        <div style={{
+          background: t.bg,
+          padding: '52px 52px 64px',
+          minHeight: '100%',
+          position: 'relative',
+          fontFamily: "'Rubik', sans-serif",
+          transition: 'background 0.2s',
+        }}>
+          <button onClick={() => setMode(m => m === 'light' ? 'dark' : 'light')} style={{
+            position: 'absolute', top: 16, right: 16,
+            background: t.toggleBg, border: 'none',
+            color: t.toggleText,
+            padding: '5px 11px', cursor: 'pointer',
+            fontSize: '9px', fontFamily: "'Rubik', sans-serif",
+            letterSpacing: '0.18em', textTransform: 'uppercase',
+            borderRadius: '2px', transition: 'all 0.15s',
+          }}>
+            {mode === 'light' ? '◐ Dark' : '◑ Light'}
+          </button>
+          {children}
+        </div>
+      </ThemeCtx.Provider>
+    );
+  };
+
+  const H2 = ({ children }) => {
+    const t = React.useContext(ThemeCtx);
+    return (
+      <h2 style={{
+        fontFamily: "'Rubik', sans-serif",
+        fontSize: '11px', fontWeight: 700,
+        letterSpacing: '0.22em', textTransform: 'uppercase',
+        color: t.h2, margin: '0 0 28px',
+      }}>{children}</h2>
+    );
+  };
+
+  const Divider = ({ mb = 56 }) => {
+    const t = React.useContext(ThemeCtx);
+    return <div style={{ height: 1, background: t.border, margin: `0 0 ${mb}px` }}></div>;
+  };
+
+  // ════════════════════════════════════════════════════════════════════════
+  //  OPTION A — REGISTRE NUMÉROTÉ
+  // ════════════════════════════════════════════════════════════════════════
+
+  const StackA = () => {
+    const t = React.useContext(ThemeCtx);
+    const cols = { display: 'grid', gridTemplateColumns: '26px 168px 1fr', gap: '0 18px', alignItems: 'start' };
+    return (
+      <section style={{ marginBottom: 56 }}>
+        <H2>Stack Technique</H2>
+
+        {/* En-tête colonnes */}
+        <div style={{ ...cols, paddingBottom: 10, borderBottom: `1px solid ${t.border}`, marginBottom: 0 }}>
+          {['#', 'Technologie', 'Rôle'].map((h, i) => (
+            <span key={i} style={{ fontSize: 9, fontWeight: 600, letterSpacing: '0.15em', textTransform: 'uppercase', color: t.faint }}>{h}</span>
+          ))}
+        </div>
+
+        {stackData.map((item, i) => (
+          <div key={i} style={{ ...cols, padding: '13px 0', borderBottom: `1px solid ${t.border}` }}>
+            <span style={{ fontSize: 11, color: t.faint, paddingTop: 2, fontVariantNumeric: 'tabular-nums' }}>
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <span style={{ fontSize: 14, fontWeight: 600, color: t.text, lineHeight: 1.45 }}>
+              {item.name}
+            </span>
+            <span style={{ fontSize: 13, color: t.muted, lineHeight: 1.6 }}>
+              {item.role}
+            </span>
+          </div>
+        ))}
+      </section>
+    );
+  };
+
+  const ResultsA = () => {
+    const t = React.useContext(ThemeCtx);
+    return (
+      <section>
+        <H2>Résultats</H2>
+        {resultsData.map((item, i) => (
+          <div key={i} style={{
+            borderTop: `1px solid ${t.border}`,
+            borderBottom: i === resultsData.length - 1 ? `1px solid ${t.border}` : 'none',
+            padding: '17px 0',
+          }}>
+            <div style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.2em', textTransform: 'uppercase', color: t.faint, marginBottom: 7 }}>
+              {item.label}
+            </div>
+            <div style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: 26, fontWeight: 600, color: t.text, lineHeight: 1.2 }}>
+              {item.value}
+            </div>
+          </div>
+        ))}
+      </section>
+    );
+  };
+
+  // ════════════════════════════════════════════════════════════════════════
+  //  OPTION B — MANIFESTE TYPOGRAPHIQUE
+  // ════════════════════════════════════════════════════════════════════════
+
+  const StackB = () => {
+    const t = React.useContext(ThemeCtx);
+    return (
+      <section style={{ marginBottom: 56 }}>
+        <H2>Stack Technique</H2>
+
+        {/* Déclaration italique — tous les noms d'un souffle */}
+        <p style={{
+          fontFamily: "'Fraunces', Georgia, serif",
+          fontSize: 22, fontWeight: 300, fontStyle: 'italic',
+          color: t.text, lineHeight: 1.7,
+          margin: '0 0 28px', textWrap: 'pretty',
+        }}>
+          {stackData.map(s => s.name).join(', ')}
+        </p>
+
+        <Divider mb={20} />
+
+        {/* Liste détaillée inline */}
+        {stackData.map((item, i) => (
+          <div key={i} style={{
+            padding: '9px 0',
+            borderBottom: `1px solid ${t.border}`,
+            display: 'flex', gap: 0, alignItems: 'baseline', flexWrap: 'wrap',
+          }}>
+            <span style={{ fontSize: 13, fontWeight: 600, color: t.text, marginRight: 9, flexShrink: 0 }}>
+              {item.name}
+            </span>
+            <span style={{ fontSize: 12, color: t.faint, marginRight: 9, flexShrink: 0, userSelect: 'none' }}>—</span>
+            <span style={{ fontSize: 13, color: t.muted, lineHeight: 1.5 }}>
+              {item.role}
+            </span>
+          </div>
+        ))}
+      </section>
+    );
+  };
+
+  const ResultsB = () => {
+    const t = React.useContext(ThemeCtx);
+    return (
+      <section>
+        <H2>Résultats</H2>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 30 }}>
+          {resultsData.map((item, i) => (
+            <div key={i}>
+              <div style={{
+                fontFamily: "'Fraunces', Georgia, serif",
+                fontSize: 28, fontWeight: 400,
+                color: t.text, lineHeight: 1.25, marginBottom: 6,
+                textWrap: 'pretty',
+              }}>
+                {item.value}
+              </div>
+              <div style={{ fontSize: 12, color: t.muted, letterSpacing: '0.04em' }}>
+                {item.label}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+  };
+
+  // ════════════════════════════════════════════════════════════════════════
+  //  OPTION C — TABLEAU ÉDITORIAL GROUPÉ
+  // ════════════════════════════════════════════════════════════════════════
+
+  const StackC = () => {
+    const t = React.useContext(ThemeCtx);
+    return (
+      <section style={{ marginBottom: 56 }}>
+        <H2>Stack Technique</H2>
+        {stackGrouped.map((group, gi) => (
+          <div key={gi} style={{ marginBottom: gi < stackGrouped.length - 1 ? 24 : 0 }}>
+            {/* Catégorie */}
+            <div style={{
+              fontSize: 9, fontWeight: 600, letterSpacing: '0.22em',
+              textTransform: 'uppercase', color: t.faint,
+              paddingBottom: 9,
+            }}>
+              {group.cat}
+            </div>
+            {/* Items */}
+            {group.items.map((item, ii) => (
+              <div key={ii} style={{
+                display: 'grid', gridTemplateColumns: '168px 1fr', gap: '0 20px',
+                padding: '11px 0',
+                borderTop: `1px solid ${t.border}`,
+                borderBottom: ii === group.items.length - 1 ? `1px solid ${t.border}` : 'none',
+                alignItems: 'start',
+              }}>
+                <span style={{ fontSize: 13, fontWeight: 600, color: t.text, lineHeight: 1.45 }}>
+                  {item.name}
+                </span>
+                <span style={{ fontSize: 13, color: t.muted, lineHeight: 1.55 }}>
+                  {item.role}
+                </span>
+              </div>
+            ))}
+          </div>
+        ))}
+      </section>
+    );
+  };
+
+  const ResultsC = () => {
+    const t = React.useContext(ThemeCtx);
+    return (
+      <section>
+        <H2>Résultats</H2>
+        {resultsData.map((item, i) => (
+          <div key={i} style={{
+            display: 'grid', gridTemplateColumns: '154px 1fr', gap: '0 24px',
+            padding: '15px 0',
+            borderBottom: `1px solid ${t.border}`,
+            borderTop: i === 0 ? `1px solid ${t.border}` : 'none',
+            alignItems: 'start',
+          }}>
+            <span style={{
+              fontSize: 10, fontWeight: 600,
+              letterSpacing: '0.14em', textTransform: 'uppercase',
+              color: t.faint, paddingTop: 4, lineHeight: 1.5,
+            }}>
+              {item.label}
+            </span>
+            <span style={{
+              fontFamily: "'Fraunces', Georgia, serif",
+              fontSize: 20, fontStyle: 'italic', fontWeight: 400,
+              color: t.text, lineHeight: 1.35,
+            }}>
+              {item.value}
+            </span>
+          </div>
+        ))}
+      </section>
+    );
+  };
+
+  // ─── APP ──────────────────────────────────────────────────────────────────
+  function App() {
+    return (
+      <design-canvas>
+        <DCSection id="s1" title="Stack &amp; Résultats — 3 directions">
+
+          <DCArtboard id="a" label="A — Registre numéroté" width={860} height={1440}>
+            <ThemeWrapper>
+              <StackA />
+              <ResultsA />
+            </ThemeWrapper>
+          </DCArtboard>
+
+          <DCArtboard id="b" label="B — Manifeste typographique" width={860} height={1560}>
+            <ThemeWrapper>
+              <StackB />
+              <ResultsB />
+            </ThemeWrapper>
+          </DCArtboard>
+
+          <DCArtboard id="c" label="C — Tableau éditorial groupé" width={860} height={1460}>
+            <ThemeWrapper>
+              <StackC />
+              <ResultsC />
+            </ThemeWrapper>
+          </DCArtboard>
+
+        </DCSection>
+      </design-canvas>
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

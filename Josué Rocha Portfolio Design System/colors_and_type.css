@@ -1,0 +1,371 @@
+/* ============================================================
+   Josué Rocha Portfolio — Colors & Type
+   Source of truth for tokens. Import this in any prototype.
+   ============================================================ */
+
+/* ---------- Self-hosted fonts ---------- */
+@font-face {
+  font-family: 'Fraunces';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('fonts/fraunces-latin.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Fraunces';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('fonts/fraunces-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF;
+}
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('fonts/rubik-latin.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('fonts/rubik-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7;
+}
+
+:root {
+  /* ---------- Base palette ---------- */
+  --beige:        #F5F0E8;  /* warm cream — light bg, dark text on lime */
+  --lime:         #B5FF00;  /* electric lime — accents, footer, navbar bars */
+  --orange:       #FF7A00;  /* hot orange — CTAs, hover, focus dark */
+  --orange-dark:  #C56200;  /* AA-contrast orange for text on light */
+  --violet:       #6900FF;  /* signature violet — primary fg on light */
+  --violet-dark:  #5500CC;  /* deeper violet for text on lime */
+  --dark-bg:      #0F0A1A;  /* near-black violet — dark mode page bg */
+  --dark-surface: #1A1230;  /* lifted surface — dark footer/cards */
+
+  /* ---------- Semantic — light mode (default) ---------- */
+  --fg-1: var(--violet);              /* primary text, headings */
+  --fg-2: rgba(105, 0, 255, 0.80);    /* secondary text */
+  --fg-3: rgba(105, 0, 255, 0.60);    /* tertiary / muted */
+  --bg-1: var(--beige);               /* page background base */
+  --bg-2: #FFFFFF;
+  --accent: var(--orange);
+  --accent-text: var(--orange-dark); /* AA-safe orange for body copy */
+  --highlight: var(--lime);
+  --link: var(--violet);
+  --link-hover: var(--orange);
+  --focus-ring: var(--orange-dark);
+  --border: rgba(181, 255, 0, 0.30);  /* lime/30 */
+
+  /* ---------- Capsule / glass card gradient (signature) ---------- */
+  --card-bg: linear-gradient(135deg,
+              rgba(181, 255, 0, 0.20),
+              rgba(255, 122, 0, 0.10),
+              rgba(105, 0, 255, 0.05));
+  --card-border: rgba(181, 255, 0, 0.30);
+  --card-radius: 1rem;        /* 16px — rounded-2xl */
+
+  /* ---------- Chromatic shadows (D03) — replaces neutral black ---------- */
+  --card-shadow:       0 8px 32px rgba(105, 0, 255, 0.15), 0 2px 8px rgba(105, 0, 255, 0.06);
+  --card-shadow-hover: 0 16px 48px rgba(105, 0, 255, 0.22), 0 4px 12px rgba(105, 0, 255, 0.10);
+  --shadow-cta:        0 4px 24px rgba(255, 122, 0, 0.35), 0 1px 4px rgba(255, 122, 0, 0.20);
+  --shadow-lime-glow:  0 0 40px rgba(181, 255, 0, 0.30);  /* navbar · focus · citron surfaces */
+
+  /* ---------- Page-level animated gradient (light) ---------- */
+  --bg-gradient-light:
+    radial-gradient(at 20% 30%, #ffefc1 0%, transparent 60%),
+    radial-gradient(at 80% 80%, #e2a788 0%, transparent 60%),
+    linear-gradient(135deg, #c4817f, #fef3c7, #b28d6e);
+
+  /* ---------- Page-level animated gradient (dark) ---------- */
+  --bg-gradient-dark:
+    radial-gradient(at 20% 30%, rgba(105,0,255,0.15) 0%, transparent 60%),
+    radial-gradient(at 80% 80%, rgba(181,255,0,0.08) 0%, transparent 60%),
+    linear-gradient(135deg, #0F0A1A, #1A1230, #0F0A1A);
+
+  /* ---------- Named surfaces (D02) ---------- */
+  /* Surface Papier — default light */
+  --surface-papier-bg:     var(--beige);
+  --surface-papier-fg:     var(--violet);
+  --surface-papier-muted:  rgba(105, 0, 255, 0.60);
+  --surface-papier-border: rgba(181, 255, 0, 0.30);
+  --surface-papier-card:   linear-gradient(135deg, rgba(181,255,0,0.20), rgba(255,122,0,0.10), rgba(105,0,255,0.05));
+
+  /* Surface Citron — lime ground */
+  --surface-citron-bg:     var(--lime);
+  --surface-citron-fg:     var(--violet-dark);
+  --surface-citron-muted:  rgba(85, 0, 204, 0.60);
+  --surface-citron-border: rgba(85, 0, 204, 0.15);
+  --surface-citron-card:   rgba(255, 255, 255, 0.28);
+
+  /* Surface Nuit — violet mid-dark (between beige and dark-bg) */
+  --surface-nuit-bg:       var(--violet);
+  --surface-nuit-fg:       var(--beige);
+  --surface-nuit-muted:    rgba(245, 240, 232, 0.55);
+  --surface-nuit-border:   rgba(181, 255, 0, 0.22);
+  --surface-nuit-card:     linear-gradient(135deg, rgba(181,255,0,0.12), rgba(245,240,232,0.06));
+
+  /* ---------- Type families ---------- */
+  --font-sans:    'Rubik', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-serif:   'Fraunces', Georgia, serif;
+
+  /* ---------- Font variation presets (D01) ---------- */
+  --fv-editorial: "opsz" 144, "SOFT" 0, "WONK" 0;  /* h1–h3, display — net, serré */
+  --fv-playful:   "opsz" 72, "SOFT" 100, "WONK" 1; /* hero tagline, hover states */
+  --fv-ghost:     "opsz" 144, "SOFT" 0, "WONK" 0;  /* utilisé sur .ghost-num (weight 100) */
+
+  /* ---------- Type scale ---------- */
+  --fs-display-xl: clamp(4rem, 12vw, 12rem);   /* hero name */
+  --fs-display-lg: clamp(2rem, 7vw, 7rem);     /* section h2 */
+  --fs-display-md: clamp(2rem, 6vw, 5rem);     /* contact h2 */
+  --fs-h3: 1.875rem;   /* 30px */
+  --fs-h4: 1.5rem;     /* 24px */
+  --fs-lg: 1.25rem;    /* 20px */
+  --fs-body: 1rem;     /* 16px */
+  --fs-sm: 0.875rem;   /* 14px */
+  --fs-xs: 0.75rem;    /* 12px */
+
+  /* ---------- Tracking / leading ---------- */
+  --tracking-display: -0.02em;
+  --tracking-uppercase: 0.05em;   /* tracking-wider */
+  --leading-tight: 1.1;
+  --leading-snug: 1.375;
+  --leading-relaxed: 1.625;
+
+  /* ---------- Radii ---------- */
+  --r-sm: 0.25rem;
+  --r-md: 0.5rem;
+  --r-lg: 0.75rem;
+  --r-xl: 1rem;
+  --r-2xl: 1rem;       /* used everywhere on cards */
+  --r-full: 9999px;    /* buttons, pills, navbar */
+
+  /* ---------- Spacing (Tailwind echo) ---------- */
+  --space-1: 0.25rem;  --space-2: 0.5rem;  --space-3: 0.75rem;
+  --space-4: 1rem;     --space-6: 1.5rem;  --space-8: 2rem;
+  --space-12: 3rem;    --space-16: 4rem;   --space-20: 5rem;
+
+  /* ---------- Motion ---------- */
+  --easing-smooth: cubic-bezier(0.65, 0, 0.35, 1);
+  --easing-bounce: cubic-bezier(0.6, 0.05, 0.01, 0.99);
+  --easing-cubic:  cubic-bezier(0.83, 0, 0.17, 1);
+  --d-fast: 0.3s;
+  --d-medium: 0.6s;
+  --d-slow: 0.8s;
+}
+
+/* ---------- Dark mode overrides ---------- */
+.dark, [data-theme="dark"] {
+  --fg-1: var(--beige);
+  --fg-2: rgba(245, 240, 232, 0.80);
+  --fg-3: rgba(245, 240, 232, 0.60);
+  --bg-1: var(--dark-bg);
+  --bg-2: var(--dark-surface);
+  --accent-text: var(--orange);
+  --link: var(--beige);
+  --focus-ring: var(--orange);
+  --border: rgba(181, 255, 0, 0.20);
+  --card-bg: linear-gradient(135deg,
+              rgba(181, 255, 0, 0.10),
+              rgba(255, 122, 0, 0.05),
+              rgba(105, 0, 255, 0.10));
+  --card-border: rgba(181, 255, 0, 0.20);
+  --card-shadow:       0 8px 32px rgba(105, 0, 255, 0.30), 0 2px 8px rgba(105, 0, 255, 0.15);
+  --card-shadow-hover: 0 16px 48px rgba(105, 0, 255, 0.40), 0 4px 12px rgba(105, 0, 255, 0.20);
+  --shadow-lime-glow:  0 0 48px rgba(181, 255, 0, 0.20);
+}
+
+/* ============================================================
+   Semantic element styles
+   ============================================================ */
+
+body {
+  font-family: var(--font-sans);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--fg-1);
+  background: var(--bg-1);
+}
+
+h1, .h1 {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: var(--fs-display-xl);
+  line-height: 0.9;
+  letter-spacing: var(--tracking-display);
+  font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0;
+  color: var(--fg-1);
+}
+
+h2, .h2 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--fs-display-lg);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-display);
+  color: var(--fg-1);
+}
+
+h3, .h3 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--fs-h3);
+  line-height: var(--leading-snug);
+  color: var(--fg-1);
+}
+
+h4, .h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-h4);
+  line-height: var(--leading-snug);
+}
+
+p, .body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--leading-relaxed);
+  color: var(--fg-1);
+}
+
+.eyebrow, .uppercase-label {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-uppercase);
+}
+
+a {
+  color: var(--link);
+  text-decoration: none;
+  transition: color var(--d-fast) ease;
+}
+a:hover { color: var(--link-hover); }
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ---------- Signature button (capsule + glass gradient) ---------- */
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.75rem 2rem;
+  border-radius: var(--r-full);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-uppercase);
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
+  color: var(--fg-1);
+  cursor: pointer;
+  transition: all var(--d-fast) ease;
+}
+.button:hover { background: var(--lime); color: var(--orange); }
+.button:active { transform: scale(0.95); }
+
+/* ---------- Pill button (orange, smaller) ---------- */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.5rem 1rem;
+  border-radius: var(--r-full);
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: var(--fs-sm);
+  background: rgba(255, 122, 0, 0.10);
+  color: var(--accent-text);
+  border: 1px solid rgba(255, 122, 0, 0.20);
+  cursor: pointer;
+  transition: all var(--d-fast) ease;
+}
+.pill:hover {
+  background: var(--orange);
+  color: var(--beige);
+  transform: scale(1.05);
+  box-shadow: var(--card-shadow);
+}
+.pill:active { transform: scale(0.95); }
+
+/* ---------- Card (signature glass capsule) ---------- */
+.card {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
+  border-radius: var(--r-2xl);
+  box-shadow: var(--card-shadow);
+  padding: var(--space-6);
+  transition: all var(--d-fast) var(--easing-cubic);
+}
+.card:hover {
+  box-shadow: var(--card-shadow-hover);
+  transform: scale(1.01);
+}
+
+/* ---------- Ghost number (D01 — project numbering) ---------- */
+/* Usage: <span class="ghost-num">01.</span> beside a project title */
+.ghost-num {
+  font-family: var(--font-display);
+  font-weight: 100;
+  font-size: clamp(3rem, 6vw, 5rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variation-settings: var(--fv-ghost);
+  color: var(--orange-dark);
+}
+
+/* ---------- Italic aside (D01 — citations, footer tagline) ---------- */
+/* Usage: <blockquote class="italic-aside"> or <p class="italic-aside"> */
+.italic-aside {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--fs-body);
+  line-height: var(--leading-relaxed);
+  color: var(--fg-2);
+  border-left: 2.5px solid var(--lime);
+  padding-left: var(--space-4);
+  margin: 0;
+}
+
+/* ---------- Grain utility (D04 — texture overlay) ---------- */
+/* Add .grain to any surface wrapper (body, section, footer). */
+/* Do NOT apply to .card — grain is for page-level surfaces only. */
+.grain { position: relative; overflow: hidden; }
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.80' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+/* Stronger grain for high-chroma surfaces (lime footer, skills section) */
+.grain-citron::after { opacity: 0.07; }
+/* Softer grain for dark surfaces */
+.grain-dark::after   { opacity: 0.05; }
+
+/* ---------- Opacity scale (the ONLY values used) ---------- */
+/* /5  = rgba(..., 0.05)  — barely-there, page bg hints              */
+/* /10 = rgba(..., 0.10)  — card gradient endpoints                  */
+/* /20 = rgba(..., 0.20)  — card gradient mid, dark borders          */
+/* /30 = rgba(..., 0.30)  — card borders light, gradient start       */
+/* /60 = rgba(..., 0.60)  — fg-2 approx, muted labels               */
+/* /80 = rgba(..., 0.80)  — fg-2 (secondary text)                   */

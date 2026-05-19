@@ -1,0 +1,47 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="_card.css"></head>
+<body>
+<div class="col" style="gap:20px;">
+
+  <div class="label-xs">Ombres chromatiques — comparaison</div>
+  <div style="display:flex;gap:14px;flex-wrap:wrap;">
+
+    <div style="flex:1;min-width:200px;">
+      <div class="muted" style="margin-bottom:10px;font-size:10px;">Avant — noir neutre</div>
+      <div style="background:linear-gradient(135deg,rgba(181,255,0,.20),rgba(255,122,0,.10),rgba(105,0,255,.05));backdrop-filter:blur(8px);border:1px solid var(--card-border);border-radius:14px;padding:18px;
+        box-shadow:0 8px 16px rgba(0,0,0,.10),0 2px 4px rgba(0,0,0,.06);">
+        <div style="font-family:var(--font-display);font-weight:800;font-size:1rem;color:var(--violet);">Selected Work</div>
+        <div class="mono" style="margin-top:4px;font-size:10px;">rgba(0,0,0,.10)</div>
+      </div>
+    </div>
+
+    <div style="flex:1;min-width:200px;">
+      <div class="muted" style="margin-bottom:10px;font-size:10px;">Après — --card-shadow</div>
+      <div style="background:linear-gradient(135deg,rgba(181,255,0,.20),rgba(255,122,0,.10),rgba(105,0,255,.05));backdrop-filter:blur(8px);border:1px solid var(--card-border);border-radius:14px;padding:18px;
+        box-shadow:var(--card-shadow);">
+        <div style="font-family:var(--font-display);font-weight:800;font-size:1rem;color:var(--violet);">Selected Work</div>
+        <div class="mono" style="margin-top:4px;font-size:10px;">rgba(105,0,255,.15)</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="label-xs" style="margin-top:4px;">CTA — --shadow-cta (orange)</div>
+  <div>
+    <a style="display:inline-flex;align-items:center;gap:8px;padding:.7rem 1.8rem;border-radius:9999px;
+      font-family:var(--font-sans);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.06em;
+      text-decoration:none;background:var(--lime);color:var(--orange-dark);
+      box-shadow:var(--shadow-cta);">Contact →</a>
+    <div class="muted" style="margin-top:8px;font-size:10px;">0 4px 24px rgba(255,122,0,.35)</div>
+  </div>
+
+  <div class="label-xs" style="margin-top:4px;">Focus / navbar — --shadow-lime-glow</div>
+  <div style="display:flex;gap:12px;align-items:center;">
+    <div style="width:120px;height:36px;background:var(--beige);backdrop-filter:blur(12px);
+      border:1px solid var(--card-border);border-radius:9999px;
+      box-shadow:var(--shadow-lime-glow);"></div>
+    <div class="mono" style="font-size:10px;">0 0 40px rgba(181,255,0,.30)</div>
+  </div>
+
+</div>
+<script src="_theme.js"></script>
+</body></html>

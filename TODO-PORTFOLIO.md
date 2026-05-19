@@ -99,7 +99,7 @@ Option D — narrative :
 
 ### Etat actuel (FAIT)
 - [x] Heading : "Apprendre, construire, recommencer" (3 langues)
-- [x] 6 projets : Luciole, POEI Mainframe, Tour de Controle, Lunetterie, Rayssa, Stella
+- [x] 4 projets : Luciole, POEI Mainframe, Tour de Controle, Stella
 - [x] Champ type: 'formation' | 'project' dans le modele
 - [x] Separation UI formations / projets avec sous-titres phrases
 - [x] Nouvelles images optimisees (webp, 3 tailles)
@@ -144,8 +144,6 @@ Structure cible par page (mini case study) :
 
 | Projet | Page detail | Contenu pret | Demo/liens |
 |--------|-------------|--------------|------------|
-| La Lunetterie du Coin | [x] | oui | oui (live + github) |
-| Rayssa Harmes Avocate | [x] | oui | oui (live + github) |
 | Luciole | [x] | oui | oui (live + github) |
 | Gestionnaire clients mainframe | [x] | oui | non |
 | Tour de Controle | [x] | oui (verifie depuis repo) | non |

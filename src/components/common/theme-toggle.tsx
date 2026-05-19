@@ -25,7 +25,7 @@ const ThemeToggle: React.FC<ThemeToggleProps> = ({ theme, toggleTheme }) => {
 				text-violet dark:text-beige
 				hover:bg-lime hover:text-orange dark:hover:bg-lime/20 dark:hover:text-lime
 				font-sans font-bold text-sm
-				transition-all duration-300 shadow-glow-lime hover:shadow-glow-lime-lg
+				transition-all duration-300 shadow-card hover:shadow-card-hover
 				active:scale-95
 				focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2
 				dark:focus:ring-offset-dark-bg

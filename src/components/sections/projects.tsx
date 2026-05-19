@@ -131,7 +131,7 @@ function ProjectGroup({ title, items, startIndex, t }: {
 									hover:bg-orange hover:text-beige dark:hover:bg-orange/20 dark:hover:text-orange
 									transition-all duration-300
 									inline-flex items-center gap-2 self-start font-medium text-sm
-									hover:shadow-glow-orange hover:scale-105 active:scale-95"
+									hover:shadow-cta hover:scale-105 active:scale-95"
 									aria-label={`${t('labels.seeMore')} ${projectTranslations?.title || project.title}`}
 								>
 									<FaEye className="inline-block" /> {t('labels.moreDetails')}

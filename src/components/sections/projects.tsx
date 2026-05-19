@@ -113,7 +113,7 @@ function ProjectGroup({ title, items, startIndex, t }: {
 							</div>
 							<div className="w-full lg:w-1/2 flex flex-col gap-2">
 								<div className="flex items-end gap-4 mb-2">
-									<span className="text-6xl font-display font-extralight text-orange-dark leading-none">
+									<span className="text-6xl font-display font-thin text-orange-dark leading-none tracking-[-0.03em]" style={{ fontVariationSettings: 'var(--fv-ghost)' }}>
 										{globalIndex + 1}.
 									</span>
 									<h3 className="text-3xl font-extrabold font-display leading-snug">

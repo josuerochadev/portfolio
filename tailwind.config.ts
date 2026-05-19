@@ -23,6 +23,10 @@ const config: Config = {
 			'glow-orange-lg': '0 8px 30px -3px rgba(255, 122, 0, 0.55)',
 			'glow-violet': '0 4px 18px -2px rgba(105, 0, 255, 0.35)',
 			'glow-violet-lg': '0 8px 30px -3px rgba(105, 0, 255, 0.5)',
+			'card': '0 8px 32px rgba(105, 0, 255, 0.15), 0 2px 8px rgba(105, 0, 255, 0.06)',
+			'card-hover': '0 16px 48px rgba(105, 0, 255, 0.22), 0 4px 12px rgba(105, 0, 255, 0.10)',
+			'cta': '0 4px 24px rgba(255, 122, 0, 0.35), 0 1px 4px rgba(255, 122, 0, 0.20)',
+			'lime-glow': '0 0 40px rgba(181, 255, 0, 0.30)',
 		  },
 		  fontFamily: {
 			sans: ['Rubik', 'sans-serif'],

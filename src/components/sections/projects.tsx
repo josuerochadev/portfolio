@@ -99,8 +99,8 @@ function ProjectGroup({ title, items, startIndex, t }: {
 							className="w-full flex flex-col lg:flex-row gap-6 items-start
 							bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5
 							dark:from-lime/10 dark:via-orange/5 dark:to-violet/10
-							backdrop-blur-md border border-lime/30 dark:border-lime/20 rounded-2xl shadow-glow-lime p-6
-							hover:shadow-glow-lime-lg hover:scale-[1.01]
+							backdrop-blur-md border border-lime/30 dark:border-lime/20 rounded-2xl shadow-card p-6
+							hover:shadow-card-hover hover:scale-[1.01]
 							transition-all duration-300 ease-[cubic-bezier(0.83,0,0.17,1)]"
 						>
 							<div className="w-full lg:w-1/2 aspect-[4/3]">

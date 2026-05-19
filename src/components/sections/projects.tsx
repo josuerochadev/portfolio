@@ -120,7 +120,7 @@ function ProjectGroup({ title, items, startIndex, t }: {
 										{projectTranslations?.title || project.title}
 									</h3>
 								</div>
-								<p className="text-lg font-display font-light leading-snug text-violet/80 dark:text-beige/80">{projectTranslations?.description || project.description}</p>
+								<p className="text-xl font-display font-light leading-snug text-violet/80 dark:text-beige/80">{projectTranslations?.description || project.description}</p>
 								<p className="text-sm font-sans font-bold uppercase tracking-wider text-violet/60 dark:text-beige/60 mt-3">{t('labels.deliverables')}</p>
 								<p className="text-base mb-1 text-violet/80 dark:text-beige/80">{projectTranslations?.deliverables || project.deliverables}</p>
 								<p className="text-sm font-sans font-bold uppercase tracking-wider text-violet/60 dark:text-beige/60 mt-3">{t('labels.context')}</p>

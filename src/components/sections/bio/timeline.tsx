@@ -85,7 +85,7 @@ function TimelineStep({
 					<h3 className="text-lg md:text-xl lg:text-2xl font-extrabold font-display leading-snug text-violet dark:text-beige">
 						{step.title}
 					</h3>
-					<p className="text-sm md:text-base font-display font-light leading-relaxed text-violet/80 dark:text-beige/70 mt-3">
+					<p className="text-base md:text-lg font-display font-light leading-relaxed text-violet/80 dark:text-beige/70 mt-3">
 						{step.text}
 					</p>
 				</motion.article>

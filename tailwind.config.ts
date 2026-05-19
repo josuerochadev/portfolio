@@ -15,6 +15,14 @@ const config: Config = {
 			// Dark mode surface colors
 			'dark-bg': '#0F0A1A',
 			'dark-surface': '#1A1230',
+			// Surface Citron tokens (D02)
+			'surface-citron-fg': '#5500CC',
+			'surface-citron-muted': 'rgba(85, 0, 204, 0.60)',
+			'surface-citron-border': 'rgba(85, 0, 204, 0.15)',
+			// Surface Nuit tokens (D02)
+			'surface-nuit-fg': '#F5F0E8',
+			'surface-nuit-muted': 'rgba(245, 240, 232, 0.55)',
+			'surface-nuit-border': 'rgba(181, 255, 0, 0.22)',
 		  },
 		  boxShadow: {
 			'glow-lime': '0 4px 18px -2px rgba(181, 255, 0, 0.35)',

@@ -7,12 +7,12 @@ import { navLinkHover } from "@/utils/motion-variants";
 import SmileIcon from "@/assets/images/ui/smile.svg?react";
 
 // Navigation links
-const NAV_LINKS: { key: string; section: string; external?: boolean }[] = [
+const NAV_LINKS: { key: string; section: string; href?: string }[] = [
 	{ key: "home", section: "hero" },
 	{ key: "about", section: "bio" },
 	{ key: "work", section: "projects" },
+	{ key: "blog", section: "", href: "https://blog.josuerocha.dev" },
 	{ key: "contact", section: "contact" },
-	// { key: "blog", section: "", external: true },
 ];
 
 // Number of bars to display
@@ -98,12 +98,11 @@ const Navbar: React.FC = () => {
 						</a>
 					</li>
 
-					{NAV_LINKS.slice(1).map(({ section, key, external }) => (
+					{NAV_LINKS.slice(1).map(({ section, key, href }) => (
 						<li key={key}>
 							<motion.a
-								href={external ? "#" : `/#${section}`}
-								onClick={external ? undefined : (e: React.MouseEvent) => handleNavClick(e, section)}
-								{...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+								href={href || `/#${section}`}
+								onClick={href ? undefined : (e: React.MouseEvent) => handleNavClick(e, section)}
 								variants={navLinkHover}
 								initial="initial"
 								animate="initial"

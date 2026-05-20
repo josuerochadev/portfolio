@@ -3,12 +3,12 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import LetterRippleEffect from "@/components/effects/letter-ripple";
 
-const FOOTER_NAV = [
+const FOOTER_NAV: { key: string; section: string; href?: string }[] = [
 	{ key: "home", section: "hero" },
 	{ key: "about", section: "bio" },
 	{ key: "work", section: "projects" },
+	{ key: "blog", section: "", href: "https://blog.josuerocha.dev" },
 	{ key: "contact", section: "contact" },
-	// { key: "blog", section: "" },
 ];
 
 export default function Footer() {
@@ -36,11 +36,11 @@ export default function Footer() {
 				<LetterRippleEffect text="Rocha" />
 			</h2>
 			<nav aria-label="Footer navigation" className="flex justify-center gap-5 sm:gap-8 mb-6 text-base font-bold uppercase tracking-wider">
-				{FOOTER_NAV.map(({ key, section }) => (
+				{FOOTER_NAV.map(({ key, section, href }) => (
 					<a
 						key={key}
-						href={`/#${section}`}
-						onClick={(e) => handleNavClick(e, section)}
+						href={href || `/#${section}`}
+						onClick={href ? undefined : (e) => handleNavClick(e, section)}
 						className="transition-colors duration-300 hover:text-orange"
 					>
 						{t(`navigation.${key}`)}

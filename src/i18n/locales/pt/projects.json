@@ -45,45 +45,44 @@
     "luciole": {
       "title": "Luciole",
       "description": "Agente de IA conversacional que automatiza a vigilância tecnológica: coleta, analisa e sintetiza 200+ artigos/dia de 40+ fontes RSS.",
-      "deliverables": "Agente ReAct com 8 ferramentas, pipeline de ingestão RSS automático, interface web com streaming SSE, sistema RAG próprio, segurança anti-injeção, deploy Docker",
-      "context": "Equipes de TI gastam cerca de 15 min por artigo em monitoramento manual. Este agente reduz isso a segundos por pergunta.",
+      "deliverables": "Agente ReAct com 6 ferramentas, pipeline de ingestão RSS automático, interface web com streaming SSE, sistema RAG próprio, segurança anti-injeção, deploy Docker",
+      "context": "Realizado por uma equipe de 4 no âmbito de uma formação IA de 70h. Equipes de TI gastam cerca de 15 min por artigo em monitoramento manual — este agente reduz isso a segundos por pergunta.",
       "detail": {
         "deliverables": [
-          { "title": "Agente conversacional ReAct", "description": "Loop Reason → Act → Observe com roteamento inteligente para 7 ferramentas (busca web, RAG, SQL, transcrição de áudio, visão, digest email). Cascata de modelos gpt-4o-mini / gpt-4o conforme complexidade detectada." },
+          { "title": "Agente conversacional ReAct", "description": "Loop Reason → Act → Observe com roteamento inteligente para 6 ferramentas (busca web, RAG, SQL, visão, preview digest, send digest). Cascata de modelos Gemini flash / flash-lite / pro conforme complexidade detectada." },
           { "title": "Pipeline de monitoramento automatizado", "description": "Coleta diária de 38 feeds RSS, filtragem temática, scraping do conteúdo, enriquecimento LLM paralelizado (5 threads), indexação RAG com chunking e embeddings. Executável em one-shot ou via scheduler APScheduler." },
-          { "title": "Interface web Luciole", "description": "Frontend Jinja2 com design system customizado, streaming SSE das respostas, autenticação JWT com contas de usuários, histórico de conversas persistente em SQLite, upload de arquivos (imagens, áudio, PDF) com validação magic bytes." },
-          { "title": "RAG híbrido próprio", "description": "Busca semântica numpy (similaridade cosseno em text-embedding-3-small) + BM25 lexical + score de frescor + feedback do usuário. Expansão de query HyDE e re-ranking Cohere opcional. Sem framework RAG externo." }
+          { "title": "Interface web Luciole", "description": "Frontend Jinja2 com design system customizado, streaming SSE das respostas, autenticação JWT com contas de usuários, histórico de conversas persistente em PostgreSQL (Neon), upload de arquivos (imagens, PDF) com validação magic bytes." },
+          { "title": "RAG híbrido próprio", "description": "Busca semântica numpy (similaridade cosseno em gemini-embedding-001) + BM25 lexical + score de frescor + feedback do usuário. Expansão de query HyDE e re-ranking Cohere opcional. Sem framework RAG externo." }
         ],
         "decisions": [
           { "title": "RAG numpy próprio em vez de LangChain/ChromaDB", "description": "Similaridade cosseno calculada diretamente com numpy em embeddings armazenados em JSON. Elimina dependência de vector store externo, reduz complexidade de infra e permite controle total sobre o scoring híbrido (semântico + BM25 + frescor + feedback)." },
-          { "title": "Cascata de modelos em vez de modelo único", "description": "Um classificador rápido (gpt-4o-mini) roteia cada requisição para o modelo adequado: gpt-4o-mini para saudações/FAQ, gpt-4o para raciocínio complexo. Reduz custos de API em requisições simples mantendo qualidade nas complexas." },
+          { "title": "Cascata de modelos em vez de modelo único", "description": "Um classificador rápido (gemini-2.5-flash-lite) roteia cada requisição para o modelo adequado: flash-lite para saudações/FAQ, flash para raciocínio padrão, pro para requisições complexas. Reduz custos de API mantendo qualidade." },
           { "title": "Streaming SSE em vez de requisição/resposta clássica", "description": "As respostas são transmitidas via Server-Sent Events com eventos tipados (thinking, tool_result, chunk, done). O usuário vê a ferramenta selecionada e a resposta aparecendo em tempo real em vez de esperar vários segundos." }
         ],
         "stack": [
           { "name": "Python 3.12", "role": "Linguagem principal do agente, pipeline e API" },
           { "name": "FastAPI", "role": "API REST + SSE streaming + páginas HTML (templates Jinja2)" },
-          { "name": "OpenAI API (gpt-4o / gpt-4o-mini)", "role": "Raciocínio do agente, classificação, resumo de artigos, geração de respostas" },
-          { "name": "OpenAI text-embedding-3-small", "role": "Embeddings de 1536 dimensões para indexação e busca RAG" },
-          { "name": "OpenAI Whisper", "role": "Transcrição de arquivos de áudio enviados pelo usuário" },
+          { "name": "Gemini (via SDK OpenAI)", "role": "Raciocínio do agente (gemini-2.5-flash / flash-lite / pro), classificação, resumo de artigos, geração de respostas" },
+          { "name": "gemini-embedding-001", "role": "Embeddings de 768 dimensões para indexação e busca RAG" },
           { "name": "numpy", "role": "Cálculo vetorizado de similaridade cosseno para busca semântica RAG" },
           { "name": "rank_bm25", "role": "Score lexical BM25 combinado ao score semântico para ranking híbrido" },
           { "name": "Cohere rerank-multilingual-v3.0", "role": "Re-ranking opcional dos resultados RAG para refinar relevância" },
-          { "name": "SQLite", "role": "Persistência de conversas, mensagens, contas de usuários e feedbacks" },
+          { "name": "PostgreSQL (Neon)", "role": "Persistência de conversas, mensagens, contas de usuários, artigos e feedbacks (connection pooling)" },
           { "name": "JWT (PyJWT + bcrypt)", "role": "Autenticação de usuário com cookies httpOnly seguros" },
           { "name": "slowapi", "role": "Rate limiting por IP nos endpoints sensíveis (auth, ask, upload)" },
           { "name": "Langfuse", "role": "Rastreamento e observabilidade das chamadas LLM (latência, tokens, erros)" },
           { "name": "Tavily API", "role": "Busca web em tempo real para monitoramento externo" },
           { "name": "Docker (multi-stage)", "role": "Imagem de produção com prebuild RSS no build, usuário non-root, healthcheck" },
-          { "name": "Render", "role": "Hospedagem da aplicação conteinerizada (região Frankfurt, plano free)" }
+          { "name": "Railway", "role": "Hospedagem da aplicação conteinerizada (nixpacks)" }
         ],
         "metrics": [
           { "label": "Fontes RSS monitoradas", "value": "38 feeds (FR + EN)" },
-          { "label": "Ferramentas do agente", "value": "7 (SQL, busca web, RAG, transcrição, visão, preview digest, send digest)" },
+          { "label": "Ferramentas do agente", "value": "6 (SQL, busca web, RAG, visão, preview digest, send digest)" },
           { "label": "Arquivos de teste", "value": "18 arquivos (auth, conversas, streaming, upload, segurança, RAG, feedback, e2e…)" },
-          { "label": "Dimensões embeddings", "value": "1.536 (text-embedding-3-small)" },
+          { "label": "Dimensões embeddings", "value": "768 (gemini-embedding-001)" },
           { "label": "Scoring RAG", "value": "4 sinais combinados: cosseno (50%) + BM25 (25%) + frescor (25%) + bônus feedback" },
           { "label": "Segurança", "value": "Detecção de prompt injection (14 padrões), validação SQL, filtragem PII na saída (IBAN, cartão, email, telefone)" },
-          { "label": "Imagem Docker", "value": "Multi-stage 3 etapas (build → prebuild RSS → runtime non-root)" }
+          { "label": "ADRs documentados", "value": "3 (OpenAI→Gemini, SQLite→PostgreSQL, Render→Railway)" }
         ]
       }
     },
@@ -179,11 +178,12 @@
         "deliverables": [
           { "title": "Site vitrine estático com dados RSS", "description": "Site Next.js totalmente estático que agrega os episódios do feed RSS Anchor.fm no build, com merge de dados manuais (overrides.json) para links faltantes." },
           { "title": "Agregação multiplataforma automática", "description": "Fetch paralelo das APIs Apple Podcasts (iTunes Lookup) e Deezer no build para gerar automaticamente os links de escuta por episódio, com fallback gracioso se uma API falhar." },
-          { "title": "SEO dinâmico e Open Graph", "description": "Sitemap gerado dinamicamente, JSON-LD PodcastSeries, e imagens Open Graph geradas no servidor para a home, cada programa e cada episódio." },
-          { "title": "Endpoint de redeploy seguro", "description": "Rota API POST /api/rebuild protegida por comparação timing-safe que aciona um deploy hook Vercel, permitindo republicar o site sem push git quando um novo episódio sai." }
+          { "title": "SEO dinâmico e Open Graph", "description": "Sitemap gerado dinamicamente, JSON-LD estruturado por página (PodcastSeries e PodcastEpisode), e imagens Open Graph geradas no servidor para a home, cada programa e cada episódio." },
+          { "title": "Endpoint de redeploy seguro", "description": "Rota API POST /api/rebuild protegida por comparação timing-safe que aciona um deploy hook Vercel, permitindo republicar o site sem push git quando um novo episódio sai." },
+          { "title": "Acessibilidade e endurecimento de segurança", "description": "Skip links, ARIA labels em todos os componentes interativos, gerenciamento do foco de teclado no menu mobile, suporte a prefers-reduced-motion. Sanitização HTML das descrições RSS (anti-XSS), headers CSP e permissions policy restritiva, função safeJsonLd() que escapa as tags </script>." }
         ],
         "decisions": [
-          { "title": "Site 100% estático sem BD em vez de um CMS", "description": "O RSS Anchor.fm é a fonte de verdade. Um arquivo overrides.json local corrige as lacunas (links Deezer, Amazon, classificação por programa). Nenhum banco de dados para manter, build rápido, custo zero." },
+          { "title": "Pipeline RSS → APIs de terceiros → overrides locais em vez de um CMS", "description": "O RSS Anchor.fm é a fonte de verdade, enriquecido por merge automático com as APIs Apple Podcasts e Deezer. Um arquivo overrides.json local corrige as lacunas (links faltantes, classificação por programa). Três fontes fundidas em um único modelo de dados, com detecção automática do programa e da temporada por regex. Nenhum banco de dados para manter, build rápido, custo zero." },
           { "title": "Detecção automática dos programas por título em vez de tagging manual", "description": "A função detectShow() classifica cada episódio na sua série (Drag Race France, Dragula, Les Traîtres…) via pattern matching no título RSS, com override possível no overrides.json." },
           { "title": "Links externos apenas, sem player de áudio embutido", "description": "Escolha deliberada de redirecionar para Spotify/Apple/Deezer/Amazon em vez de embutir um player. Simplifica o site, respeita as analytics do podcaster e evita problemas de direitos." }
         ],
@@ -191,7 +191,7 @@
           { "name": "Next.js 16 (App Router)", "role": "Framework fullstack — renderização estática no build, rotas dinâmicas para episódios e programas, rota API para o rebuild hook" },
           { "name": "React 19", "role": "Server Components por padrão, Client Components apenas para interatividade (filtros, menu mobile, botão compartilhar)" },
           { "name": "TypeScript (strict)", "role": "Tipagem estrita sem any — tipos dedicados para episódios, programas (ShowId union type) e respostas de APIs externas" },
-          { "name": "Tailwind CSS v4", "role": "Estilização utilitária via @tailwindcss/postcss, combinada com CSS variables custom para o design system" },
+          { "name": "Tailwind CSS v4", "role": "Design system neo-brutalista: paleta OKLCH (--lime, --forest, --violet…), tipografia Archivo Black, sombras offset, badges coloridos por programa. Implementado via @tailwindcss/postcss + CSS variables custom" },
           { "name": "fast-xml-parser", "role": "Parsing do feed RSS Anchor.fm (XML → JSON) no build com suporte aos atributos iTunes e media:content" },
           { "name": "Sentry (@sentry/nextjs)", "role": "Monitoramento de erros em produção" },
           { "name": "Vitest", "role": "Testes unitários para parsing RSS, detecção de programas e utilitários" },
@@ -199,10 +199,13 @@
           { "name": "Vercel", "role": "Deploy com deploy hooks para rebuild sob demanda, domínio custom oklmdragclub.com" }
         ],
         "metrics": [
+          { "label": "Fontes de dados", "value": "3 (RSS Anchor.fm, Apple Podcasts API, Deezer API)" },
           { "label": "Arquivos de teste", "value": "3 suítes (rss, shows, utils)" },
           { "label": "Programas suportados", "value": "6 séries" },
           { "label": "Plataformas de escuta", "value": "4 (Spotify, Apple Podcasts, Deezer, Amazon Music)" },
-          { "label": "Imagens OG geradas", "value": "3 níveis (home, programa, episódio)" }
+          { "label": "Imagens OG geradas", "value": "3 níveis (home, programa, episódio)" },
+          { "label": "Acessibilidade", "value": "Skip links, ARIA labels, foco de teclado, prefers-reduced-motion" },
+          { "label": "Segurança", "value": "Sanitização HTML, CSP headers, safeJsonLd(), permissions policy" }
         ]
       }
     },

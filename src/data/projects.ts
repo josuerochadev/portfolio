@@ -53,26 +53,26 @@ export const PROJECTS: Project[] = [
 		description:
 			"Agent IA conversationnel qui automatise la veille technologique : collecte, analyse et synthétise 200+ articles/jour depuis 40+ sources RSS.",
 		deliverables:
-			"Agent ReAct avec 8 outils, pipeline d'ingestion RSS automatique, interface web avec streaming SSE, système RAG maison, sécurité anti-injection, déploiement Docker",
+			"Agent ReAct avec 6 outils, pipeline d'ingestion RSS automatique, interface web avec streaming SSE, système RAG maison, sécurité anti-injection, déploiement Docker",
 		context:
-			"Les équipes IT passent environ 15 min par article en veille manuelle. Cet agent réduit ce temps à quelques secondes par question.",
+			"Projet réalisé en équipe de 4 dans le cadre d'une formation IA de 70h. Les équipes IT passent environ 15 min par article en veille manuelle — cet agent réduit ce temps à quelques secondes par question.",
 		image: {
 			desktop: "/assets/images/projects/optimized/project-luciole-desktop.webp",
 			mobile: "/assets/images/projects/optimized/project-luciole-mobile.webp",
 			thumbnail: "/assets/images/projects/optimized/project-luciole-thumb.webp"
 		},
-		technologies: ["Python 3.12", "FastAPI", "OpenAI API", "RAG", "SQLite", "Docker", "Langfuse", "SSE"],
+		technologies: ["Python 3.12", "FastAPI", "Gemini API", "RAG", "PostgreSQL", "Docker", "Langfuse", "SSE"],
 		status: "completed",
 		year: "2026",
 		type: "formation",
 		category: "ai",
 		githubUrl: "https://github.com/josuerochadev/formation-ia",
-		demoUrl: "https://luciole.onrender.com",
+		demoUrl: "https://luciole-production.up.railway.app",
 		detail: {
 			deliverables: [
 				{
 					title: "Agent conversationnel ReAct",
-					description: "Boucle Reason → Act → Observe avec routing intelligent vers 7 outils (search web, RAG, SQL, transcription audio, vision, digest email). Cascade de modèles gpt-4o-mini / gpt-4o selon la complexité détectée."
+					description: "Boucle Reason → Act → Observe avec routing intelligent vers 6 outils (search web, RAG, SQL, vision, preview digest, send digest). Cascade de modèles Gemini flash / flash-lite / pro selon la complexité détectée."
 				},
 				{
 					title: "Pipeline de veille automatisé",
@@ -80,11 +80,11 @@ export const PROJECTS: Project[] = [
 				},
 				{
 					title: "Interface web Luciole",
-					description: "Frontend Jinja2 avec design system custom, streaming SSE des réponses, authentification JWT avec comptes utilisateurs, historique de conversations persistant en SQLite, upload de fichiers (images, audio, PDF) avec validation magic bytes."
+					description: "Frontend Jinja2 avec design system custom, streaming SSE des réponses, authentification JWT avec comptes utilisateurs, historique de conversations persistant en PostgreSQL (Neon), upload de fichiers (images, PDF) avec validation magic bytes."
 				},
 				{
 					title: "RAG hybride maison",
-					description: "Recherche sémantique numpy (similarité cosine sur text-embedding-3-small) + BM25 lexical + score de fraîcheur + feedback utilisateur. Query expansion HyDE et re-ranking Cohere optionnel. Pas de framework RAG externe."
+					description: "Recherche sémantique numpy (similarité cosine sur gemini-embedding-001) + BM25 lexical + score de fraîcheur + feedback utilisateur. Query expansion HyDE et re-ranking Cohere optionnel. Pas de framework RAG externe."
 				}
 			],
 			decisions: [
@@ -94,7 +94,7 @@ export const PROJECTS: Project[] = [
 				},
 				{
 					title: "Cascade de modèles plutôt qu'un modèle unique",
-					description: "Un classifier rapide (gpt-4o-mini) route chaque requête vers le modèle adapté : gpt-4o-mini pour les salutations/FAQ, gpt-4o pour le raisonnement complexe. Réduit les coûts API sur les requêtes simples tout en gardant la qualité sur les requêtes complexes."
+					description: "Un classifier rapide (gemini-2.5-flash-lite) route chaque requête vers le modèle adapté : flash-lite pour les salutations/FAQ, flash pour le raisonnement standard, pro pour les requêtes complexes. Réduit les coûts API tout en gardant la qualité."
 				},
 				{
 					title: "Streaming SSE plutôt que requête/réponse classique",
@@ -104,28 +104,27 @@ export const PROJECTS: Project[] = [
 			stack: [
 				{ name: "Python 3.12", role: "Langage principal de l'agent, du pipeline et de l'API" },
 				{ name: "FastAPI", role: "API REST + SSE streaming + pages HTML (Jinja2 templates)" },
-				{ name: "OpenAI API (gpt-4o / gpt-4o-mini)", role: "Raisonnement agent, classification, résumé d'articles, génération de réponses" },
-				{ name: "OpenAI text-embedding-3-small", role: "Embeddings 1536 dimensions pour l'indexation et la recherche RAG" },
-				{ name: "OpenAI Whisper", role: "Transcription de fichiers audio uploadés par l'utilisateur" },
+				{ name: "Gemini (via SDK OpenAI)", role: "Raisonnement agent (gemini-2.5-flash / flash-lite / pro), classification, résumé d'articles, génération de réponses" },
+				{ name: "gemini-embedding-001", role: "Embeddings 768 dimensions pour l'indexation et la recherche RAG" },
 				{ name: "numpy", role: "Calcul vectorisé de similarité cosine pour la recherche sémantique RAG" },
 				{ name: "rank_bm25", role: "Score lexical BM25 combiné au score sémantique pour le ranking hybride" },
 				{ name: "Cohere rerank-multilingual-v3.0", role: "Re-ranking optionnel des résultats RAG pour affiner la pertinence" },
-				{ name: "SQLite", role: "Persistance des conversations, messages, comptes utilisateurs et feedbacks" },
+				{ name: "PostgreSQL (Neon)", role: "Persistance des conversations, messages, comptes utilisateurs, articles et feedbacks (connection pooling)" },
 				{ name: "JWT (PyJWT + bcrypt)", role: "Authentification utilisateur avec cookies httpOnly sécurisés" },
 				{ name: "slowapi", role: "Rate limiting par IP sur les endpoints sensibles (auth, ask, upload)" },
 				{ name: "Langfuse", role: "Tracing et observabilité des appels LLM (latence, tokens, erreurs)" },
 				{ name: "Tavily API", role: "Recherche web en temps réel pour la veille externe" },
 				{ name: "Docker (multi-stage)", role: "Image de production avec prebuild RSS au build, utilisateur non-root, healthcheck" },
-				{ name: "Render", role: "Hébergement de l'application conteneurisée (région Frankfurt, plan free)" }
+				{ name: "Railway", role: "Hébergement de l'application conteneurisée (nixpacks)" }
 			],
 			metrics: [
 				{ label: "Sources RSS surveillées", value: "38 flux (FR + EN)" },
-				{ label: "Outils agent", value: "7 (SQL, search web, RAG, transcription, vision, preview digest, send digest)" },
+				{ label: "Outils agent", value: "6 (SQL, search web, RAG, vision, preview digest, send digest)" },
 				{ label: "Fichiers de tests", value: "18 fichiers (auth, conversations, streaming, upload, security, RAG, feedback, e2e…)" },
-				{ label: "Dimensions embeddings", value: "1 536 (text-embedding-3-small)" },
+				{ label: "Dimensions embeddings", value: "768 (gemini-embedding-001)" },
 				{ label: "Scoring RAG", value: "4 signaux combinés : cosine (50%) + BM25 (25%) + fraîcheur (25%) + bonus feedback" },
 				{ label: "Sécurité", value: "Détection prompt injection (14 patterns), validation SQL, filtrage PII en sortie (IBAN, CB, email, téléphone)" },
-				{ label: "Docker image", value: "Multi-stage 3 étapes (build → prebuild RSS → runtime non-root)" }
+				{ label: "ADRs documentés", value: "3 (OpenAI→Gemini, SQLite→PostgreSQL, Render→Railway)" }
 			]
 		}
 	},
@@ -315,17 +314,21 @@ export const PROJECTS: Project[] = [
 				},
 				{
 					title: "SEO dynamique et Open Graph",
-					description: "Sitemap générée dynamiquement, JSON-LD PodcastSeries, et images Open Graph générées côté serveur pour la home, chaque émission et chaque épisode."
+					description: "Sitemap générée dynamiquement, JSON-LD structuré par page (PodcastSeries et PodcastEpisode), et images Open Graph générées côté serveur pour la home, chaque émission et chaque épisode."
 				},
 				{
 					title: "Endpoint de redéploiement sécurisé",
 					description: "Route API POST /api/rebuild protégée par comparaison timing-safe qui déclenche un deploy hook Vercel, permettant de republier le site sans push git quand un nouvel épisode sort."
+				},
+				{
+					title: "Accessibilité et durcissement sécurité",
+					description: "Skip links, ARIA labels sur tous les composants interactifs, gestion du focus clavier sur le menu mobile, respect de prefers-reduced-motion. Sanitisation HTML des descriptions RSS (anti-XSS), headers CSP et permissions policy restrictive, fonction safeJsonLd() qui échappe les balises </script>."
 				}
 			],
 			decisions: [
 				{
-					title: "Site 100% statique sans BDD plutôt qu'un CMS",
-					description: "Le RSS Anchor.fm est la source de vérité. Un fichier overrides.json local corrige les manques (liens Deezer, Amazon, classification par émission). Aucune base de données à maintenir, build rapide, coût zéro."
+					title: "Pipeline RSS → APIs tierces → overrides locaux plutôt qu'un CMS",
+					description: "Le RSS Anchor.fm est la source de vérité, enrichi par merge automatique avec les APIs Apple Podcasts et Deezer. Un fichier overrides.json local corrige les manques (liens manquants, classification par émission). Trois sources fusionnées en un seul modèle de données, avec détection automatique de l'émission et de la saison par regex. Aucune base de données à maintenir, build rapide, coût zéro."
 				},
 				{
 					title: "Détection automatique des émissions par titre plutôt que tagging manuel",
@@ -340,7 +343,7 @@ export const PROJECTS: Project[] = [
 				{ name: "Next.js 16 (App Router)", role: "Framework fullstack — rendu statique au build, routes dynamiques pour épisodes et émissions, route API pour le rebuild hook" },
 				{ name: "React 19", role: "Server Components par défaut, Client Components uniquement pour l'interactivité (filtres, menu mobile, bouton partage)" },
 				{ name: "TypeScript (strict)", role: "Typage strict sans any — types dédiés pour les épisodes, émissions (ShowId union type), et les réponses API externes" },
-				{ name: "Tailwind CSS v4", role: "Styling utilitaire via @tailwindcss/postcss, combiné à des CSS variables custom (--lime, --forest, --font-display) pour le design system" },
+				{ name: "Tailwind CSS v4", role: "Design system néo-brutaliste : palette OKLCH (--lime, --forest, --violet…), typographie Archivo Black, ombres offset, badges colorés par émission. Implémenté via @tailwindcss/postcss + CSS variables custom" },
 				{ name: "fast-xml-parser", role: "Parsing du flux RSS Anchor.fm (XML → JSON) au build avec support des attributs iTunes et media:content" },
 				{ name: "Sentry (@sentry/nextjs)", role: "Monitoring d'erreurs en production" },
 				{ name: "Vitest", role: "Tests unitaires pour le parsing RSS, la détection d'émissions et les utilitaires (slugify, formatDuration, toRoman)" },
@@ -348,10 +351,13 @@ export const PROJECTS: Project[] = [
 				{ name: "Vercel", role: "Déploiement avec deploy hooks pour rebuild à la demande, domaine custom oklmdragclub.com" }
 			],
 			metrics: [
+				{ label: "Sources de données", value: "3 (RSS Anchor.fm, Apple Podcasts API, Deezer API)" },
 				{ label: "Fichiers de test", value: "3 suites (rss, shows, utils)" },
 				{ label: "Émissions supportées", value: "6 séries" },
 				{ label: "Plateformes d'écoute", value: "4 (Spotify, Apple Podcasts, Deezer, Amazon Music)" },
-				{ label: "Images OG générées", value: "3 niveaux (home, émission, épisode)" }
+				{ label: "Images OG générées", value: "3 niveaux (home, émission, épisode)" },
+				{ label: "Accessibilité", value: "Skip links, ARIA labels, focus clavier, prefers-reduced-motion" },
+				{ label: "Sécurité", value: "Sanitisation HTML, CSP headers, safeJsonLd(), permissions policy" }
 			]
 		}
 	},

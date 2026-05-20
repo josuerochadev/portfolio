@@ -45,45 +45,44 @@
     "luciole": {
       "title": "Luciole",
       "description": "Conversational AI agent that automates tech intelligence: collects, analyzes and summarizes 200+ articles/day from 40+ RSS sources.",
-      "deliverables": "ReAct agent with 8 tools, automated RSS ingestion pipeline, web interface with SSE streaming, custom RAG system, anti-injection security, Docker deployment",
-      "context": "IT teams spend about 15 min per article on manual monitoring. This agent reduces that to seconds per query.",
+      "deliverables": "ReAct agent with 6 tools, automated RSS ingestion pipeline, web interface with SSE streaming, custom RAG system, anti-injection security, Docker deployment",
+      "context": "Built by a team of 4 during a 70-hour AI training program. IT teams spend about 15 min per article on manual monitoring — this agent reduces that to seconds per query.",
       "detail": {
         "deliverables": [
-          { "title": "ReAct conversational agent", "description": "Reason → Act → Observe loop with intelligent routing to 7 tools (web search, RAG, SQL, audio transcription, vision, email digest). Model cascade gpt-4o-mini / gpt-4o based on detected complexity." },
+          { "title": "ReAct conversational agent", "description": "Reason → Act → Observe loop with intelligent routing to 6 tools (web search, RAG, SQL, vision, preview digest, send digest). Model cascade Gemini flash / flash-lite / pro based on detected complexity." },
           { "title": "Automated monitoring pipeline", "description": "Daily collection of 38 RSS feeds, topic filtering, content scraping, parallelized LLM enrichment (5 threads), RAG indexing with chunking and embeddings. Runnable as one-shot or via APScheduler." },
-          { "title": "Luciole web interface", "description": "Jinja2 frontend with custom design system, SSE response streaming, JWT authentication with user accounts, persistent conversation history in SQLite, file upload (images, audio, PDF) with magic bytes validation." },
-          { "title": "Custom hybrid RAG", "description": "Numpy semantic search (cosine similarity on text-embedding-3-small) + BM25 lexical + freshness score + user feedback. HyDE query expansion and optional Cohere re-ranking. No external RAG framework." }
+          { "title": "Luciole web interface", "description": "Jinja2 frontend with custom design system, SSE response streaming, JWT authentication with user accounts, persistent conversation history in PostgreSQL (Neon), file upload (images, PDF) with magic bytes validation." },
+          { "title": "Custom hybrid RAG", "description": "Numpy semantic search (cosine similarity on gemini-embedding-001) + BM25 lexical + freshness score + user feedback. HyDE query expansion and optional Cohere re-ranking. No external RAG framework." }
         ],
         "decisions": [
           { "title": "Custom numpy RAG over LangChain/ChromaDB", "description": "Cosine similarity computed directly with numpy on JSON-stored embeddings. Eliminates external vector store dependency, reduces infra complexity and gives full control over hybrid scoring (semantic + BM25 + freshness + feedback)." },
-          { "title": "Model cascade over a single model", "description": "A fast classifier (gpt-4o-mini) routes each query to the right model: gpt-4o-mini for greetings/FAQ, gpt-4o for complex reasoning. Reduces API costs on simple queries while maintaining quality on complex ones." },
+          { "title": "Model cascade over a single model", "description": "A fast classifier (gemini-2.5-flash-lite) routes each query to the right model: flash-lite for greetings/FAQ, flash for standard reasoning, pro for complex queries. Reduces API costs while maintaining quality." },
           { "title": "SSE streaming over classic request/response", "description": "Responses are streamed via Server-Sent Events with typed events (thinking, tool_result, chunk, done). Users see the selected tool and the response appearing in real time instead of waiting several seconds." }
         ],
         "stack": [
           { "name": "Python 3.12", "role": "Main language for the agent, pipeline and API" },
           { "name": "FastAPI", "role": "REST API + SSE streaming + HTML pages (Jinja2 templates)" },
-          { "name": "OpenAI API (gpt-4o / gpt-4o-mini)", "role": "Agent reasoning, classification, article summarization, response generation" },
-          { "name": "OpenAI text-embedding-3-small", "role": "1536-dimension embeddings for RAG indexing and search" },
-          { "name": "OpenAI Whisper", "role": "Audio file transcription uploaded by users" },
+          { "name": "Gemini (via OpenAI SDK)", "role": "Agent reasoning (gemini-2.5-flash / flash-lite / pro), classification, article summarization, response generation" },
+          { "name": "gemini-embedding-001", "role": "768-dimension embeddings for RAG indexing and search" },
           { "name": "numpy", "role": "Vectorized cosine similarity computation for RAG semantic search" },
           { "name": "rank_bm25", "role": "BM25 lexical score combined with semantic score for hybrid ranking" },
           { "name": "Cohere rerank-multilingual-v3.0", "role": "Optional RAG result re-ranking to refine relevance" },
-          { "name": "SQLite", "role": "Persistence for conversations, messages, user accounts and feedback" },
+          { "name": "PostgreSQL (Neon)", "role": "Persistence for conversations, messages, user accounts, articles and feedback (connection pooling)" },
           { "name": "JWT (PyJWT + bcrypt)", "role": "User authentication with secure httpOnly cookies" },
           { "name": "slowapi", "role": "IP-based rate limiting on sensitive endpoints (auth, ask, upload)" },
           { "name": "Langfuse", "role": "LLM call tracing and observability (latency, tokens, errors)" },
           { "name": "Tavily API", "role": "Real-time web search for external monitoring" },
           { "name": "Docker (multi-stage)", "role": "Production image with RSS prebuild at build time, non-root user, healthcheck" },
-          { "name": "Render", "role": "Containerized app hosting (Frankfurt region, free plan)" }
+          { "name": "Railway", "role": "Containerized app hosting (nixpacks)" }
         ],
         "metrics": [
           { "label": "Monitored RSS sources", "value": "38 feeds (FR + EN)" },
-          { "label": "Agent tools", "value": "7 (SQL, web search, RAG, transcription, vision, preview digest, send digest)" },
+          { "label": "Agent tools", "value": "6 (SQL, web search, RAG, vision, preview digest, send digest)" },
           { "label": "Test files", "value": "18 files (auth, conversations, streaming, upload, security, RAG, feedback, e2e…)" },
-          { "label": "Embedding dimensions", "value": "1,536 (text-embedding-3-small)" },
+          { "label": "Embedding dimensions", "value": "768 (gemini-embedding-001)" },
           { "label": "RAG scoring", "value": "4 combined signals: cosine (50%) + BM25 (25%) + freshness (25%) + feedback bonus" },
           { "label": "Security", "value": "Prompt injection detection (14 patterns), SQL validation, PII output filtering (IBAN, card, email, phone)" },
-          { "label": "Docker image", "value": "3-stage multi-stage (build → RSS prebuild → non-root runtime)" }
+          { "label": "Documented ADRs", "value": "3 (OpenAI→Gemini, SQLite→PostgreSQL, Render→Railway)" }
         ]
       }
     },
@@ -179,11 +178,12 @@
         "deliverables": [
           { "title": "Static showcase site with RSS data", "description": "Fully static Next.js site that aggregates episodes from the Anchor.fm RSS feed at build time, with manual data merge (overrides.json) for missing links." },
           { "title": "Automatic multi-platform aggregation", "description": "Parallel fetch of Apple Podcasts (iTunes Lookup) and Deezer APIs at build time to automatically generate listening links per episode, with graceful fallback if an API fails." },
-          { "title": "Dynamic SEO and Open Graph", "description": "Dynamically generated sitemap, JSON-LD PodcastSeries, and server-side generated Open Graph images for the home page, each show and each episode." },
-          { "title": "Secured rebuild endpoint", "description": "POST /api/rebuild route protected by timing-safe comparison that triggers a Vercel deploy hook, allowing site republishing without a git push when a new episode drops." }
+          { "title": "Dynamic SEO and Open Graph", "description": "Dynamically generated sitemap, structured JSON-LD per page (PodcastSeries and PodcastEpisode), and server-side generated Open Graph images for the home page, each show and each episode." },
+          { "title": "Secured rebuild endpoint", "description": "POST /api/rebuild route protected by timing-safe comparison that triggers a Vercel deploy hook, allowing site republishing without a git push when a new episode drops." },
+          { "title": "Accessibility and security hardening", "description": "Skip links, ARIA labels on all interactive components, keyboard focus management on the mobile menu, prefers-reduced-motion support. HTML sanitization of RSS descriptions (anti-XSS), CSP headers and restrictive permissions policy, safeJsonLd() function that escapes </script> tags." }
         ],
         "decisions": [
-          { "title": "100% static site without a DB rather than a CMS", "description": "The Anchor.fm RSS feed is the source of truth. A local overrides.json file fills in the gaps (Deezer links, Amazon links, show classification). No database to maintain, fast builds, zero cost." },
+          { "title": "RSS → third-party APIs → local overrides pipeline rather than a CMS", "description": "The Anchor.fm RSS feed is the source of truth, enriched by automatic merging with the Apple Podcasts and Deezer APIs. A local overrides.json file fills in the gaps (missing links, show classification). Three sources merged into a single data model, with automatic show and season detection via regex. No database to maintain, fast builds, zero cost." },
           { "title": "Automatic show detection by title rather than manual tagging", "description": "The detectShow() function classifies each episode into its series (Drag Race France, Dragula, Les Traitres...) via pattern matching on the RSS title, with override support in overrides.json." },
           { "title": "External links only, no embedded audio player", "description": "Deliberate choice to redirect to Spotify/Apple/Deezer/Amazon rather than embedding a player. Simplifies the site, respects the podcaster's analytics, and avoids rights issues." }
         ],
@@ -191,7 +191,7 @@
           { "name": "Next.js 16 (App Router)", "role": "Fullstack framework — static rendering at build, dynamic routes for episodes and shows, API route for the rebuild hook" },
           { "name": "React 19", "role": "Server Components by default, Client Components only for interactivity (filters, mobile menu, share button)" },
           { "name": "TypeScript (strict)", "role": "Strict typing with no any — dedicated types for episodes, shows (ShowId union type), and external API responses" },
-          { "name": "Tailwind CSS v4", "role": "Utility styling via @tailwindcss/postcss, combined with custom CSS variables for the design system" },
+          { "name": "Tailwind CSS v4", "role": "Neo-brutalist design system: OKLCH palette (--lime, --forest, --violet…), Archivo Black typography, offset shadows, color-coded badges per show. Built with @tailwindcss/postcss + custom CSS variables" },
           { "name": "fast-xml-parser", "role": "Anchor.fm RSS feed parsing (XML to JSON) at build with iTunes attributes and media:content support" },
           { "name": "Sentry (@sentry/nextjs)", "role": "Production error monitoring" },
           { "name": "Vitest", "role": "Unit tests for RSS parsing, show detection and utilities" },
@@ -199,10 +199,13 @@
           { "name": "Vercel", "role": "Deployment with deploy hooks for on-demand rebuild, custom domain oklmdragclub.com" }
         ],
         "metrics": [
+          { "label": "Data sources", "value": "3 (Anchor.fm RSS, Apple Podcasts API, Deezer API)" },
           { "label": "Test files", "value": "3 suites (rss, shows, utils)" },
           { "label": "Supported shows", "value": "6 series" },
           { "label": "Listening platforms", "value": "4 (Spotify, Apple Podcasts, Deezer, Amazon Music)" },
-          { "label": "Generated OG images", "value": "3 levels (home, show, episode)" }
+          { "label": "Generated OG images", "value": "3 levels (home, show, episode)" },
+          { "label": "Accessibility", "value": "Skip links, ARIA labels, keyboard focus, prefers-reduced-motion" },
+          { "label": "Security", "value": "HTML sanitization, CSP headers, safeJsonLd(), permissions policy" }
         ]
       }
     },

@@ -13,6 +13,14 @@ import Footer from "@/components/layout/footer";
 import ScrollToTop from "@/components/common/scroll-to-top";
 import FloatingLanguageSwitcher from "@/components/common/floating-language-switcher";
 
+const parseMetricValue = (value: string): { number: string | null; detail: string | null } => {
+	const match = value.match(/^(\d+[\d.,]*)\s*(?:\((.+)\)|(.+))?$/);
+	if (!match) return { number: null, detail: null };
+	const number = match[1];
+	const detail = (match[2] || match[3] || '').trim() || null;
+	return { number, detail };
+};
+
 const getStatusColor = (status: Project['status']) => {
 	switch (status) {
 		case 'completed':
@@ -436,27 +444,55 @@ export default function ProjectDetail() {
 							</FadeInUp>
 						)}
 
-						{/* Résultats / Metrics */}
+						{/* Résultats / Metrics — bento lime + nuit */}
 						{hasMetrics && (
 							<FadeInUp delay={0.6}>
-								<section id="results" className="mb-24 px-6 py-12 bg-violet dark:bg-dark-surface rounded-2xl overflow-hidden scroll-mt-24">
-									<h2 className="text-base md:text-lg font-sans font-bold uppercase tracking-widest text-orange dark:text-orange mb-8">
+								<section id="results" className="mb-24 scroll-mt-24">
+									<h2 className="text-base md:text-lg font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange mb-8">
 										{t('projects:detail.results')}
 									</h2>
-									<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-										{detailMetrics.map((metric) => (
-											<div
-												key={metric.label}
-												className="flex flex-col gap-2"
-											>
-												<span className="text-3xl md:text-4xl font-display font-bold text-beige dark:text-beige leading-none break-words">
-													{metric.value}
-												</span>
-												<span className="text-sm text-surface-nuit-muted dark:text-beige/60 leading-snug">
-													{metric.label}
-												</span>
-											</div>
-										))}
+									<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+										{detailMetrics.map((metric, index) => {
+											const isLong = metric.value.length > 20;
+											const isNuit = index === 0 || index === 3;
+											const isShortNumber = /^\d{1,3}$/.test(metric.value.trim());
+											return (
+												<div
+													key={metric.label}
+													className={`flex flex-col justify-between p-6 rounded-2xl min-h-[180px]
+														border shadow-card
+														hover:shadow-card-hover hover:scale-[1.01]
+														transition-all duration-300 ease-[cubic-bezier(0.83,0,0.17,1)]
+														${isLong ? 'sm:col-span-2' : ''}
+														${isNuit
+															? 'bg-violet dark:bg-dark-surface border-violet/20 dark:border-beige/10'
+															: 'bg-lime dark:bg-dark-surface border-lime/30 dark:border-lime/20 grain grain-citron'
+														}`}
+												>
+													<span className={`text-xs font-sans font-bold uppercase tracking-[0.2em]
+														${isNuit
+															? 'text-beige/50 dark:text-beige/50'
+															: 'text-surface-citron-muted dark:text-beige/55'
+														}`}>
+														{metric.label}
+													</span>
+													{isShortNumber ? (
+														<span
+															className={`text-5xl md:text-6xl font-display font-thin leading-none
+																${isNuit ? 'text-beige dark:text-beige' : 'text-surface-citron-fg dark:text-beige'}`}
+															style={{ fontVariationSettings: 'var(--fv-ghost)' }}
+														>
+															{metric.value}
+														</span>
+													) : (
+														<span className={`text-xl md:text-2xl font-display font-semibold italic leading-snug break-words
+															${isNuit ? 'text-beige dark:text-beige' : 'text-surface-citron-fg dark:text-beige'}`}>
+															{metric.value}
+														</span>
+													)}
+												</div>
+											);
+										})}
 									</div>
 								</section>
 							</FadeInUp>

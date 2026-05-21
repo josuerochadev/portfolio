@@ -1,8 +1,8 @@
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import { FaArrowLeft, FaArrowRight, FaGithub, FaExternalLinkAlt } from "react-icons/fa";
-import { PROJECTS, type Project } from "@/data/projects";
+import { FaArrowLeft, FaArrowRight, FaArrowUp, FaGithub, FaExternalLinkAlt } from "react-icons/fa";
+import { PROJECTS, type Project, type MediaItem } from "@/data/projects";
 import FadeInUp from "@/components/common/animations/fade-in-up";
 import ErrorBoundary from "@/components/common/error-boundary";
 import SeoHead from "@/components/common/seo-head";
@@ -11,6 +11,7 @@ import BottomBlur from "@/components/common/bottom-blur";
 import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
 import ScrollToTop from "@/components/common/scroll-to-top";
+import FloatingLanguageSwitcher from "@/components/common/floating-language-switcher";
 
 const getStatusColor = (status: Project['status']) => {
 	switch (status) {
@@ -66,8 +67,16 @@ export default function ProjectDetail() {
 
 	const detailDeliverables = t(`projects:items.${project.id}.detail.deliverables`, { returnObjects: true, defaultValue: [] }) as { title: string; description: string }[];
 	const detailDecisions = t(`projects:items.${project.id}.detail.decisions`, { returnObjects: true, defaultValue: [] }) as { title: string; description: string }[];
-	const detailStack = t(`projects:items.${project.id}.detail.stack`, { returnObjects: true, defaultValue: [] }) as { name: string; role: string }[];
+	const detailStack = t(`projects:items.${project.id}.detail.stack`, { returnObjects: true, defaultValue: [] }) as { name: string; role: string; group?: string }[];
 	const detailMetrics = t(`projects:items.${project.id}.detail.metrics`, { returnObjects: true, defaultValue: [] }) as { label: string; value: string }[];
+	const detailMedia = t(`projects:items.${project.id}.detail.media`, { returnObjects: true, defaultValue: [] }) as { caption: string }[];
+	const mediaItems = project.detail?.media ?? [];
+
+	const hasDeliverables = Array.isArray(detailDeliverables) && detailDeliverables.length > 0;
+	const hasDecisions = Array.isArray(detailDecisions) && detailDecisions.length > 0;
+	const hasStack = Array.isArray(detailStack) && detailStack.length > 0;
+	const hasMedia = mediaItems.length > 0;
+	const hasMetrics = Array.isArray(detailMetrics) && detailMetrics.length > 0;
 
 	return (
 		<ErrorBoundary>
@@ -81,22 +90,23 @@ export default function ProjectDetail() {
 				<BackgroundGradient />
 				<BottomBlur />
 				<Navbar />
+				<FloatingLanguageSwitcher />
 				<motion.div
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					transition={{ duration: 0.6 }}
 				>
-					{/* Hero — full width, image background */}
-					<header className="relative w-full min-h-screen flex items-end overflow-hidden">
+					{/* Hero */}
+					<header className="relative w-full h-screen flex items-center overflow-hidden">
 						<img
 							src={project.image.desktop}
 							alt=""
 							aria-hidden="true"
 							className="absolute inset-0 w-full h-full object-cover brightness-[0.6]"
 						/>
-						<div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
+						<div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-black/10" />
 
-						<div className="relative z-10 w-full max-w-5xl mx-auto px-6 pb-12 pt-32">
+						<div className="relative z-10 w-full max-w-5xl mx-auto px-6">
 							<div className="flex flex-wrap items-center gap-3 mb-4">
 								<span className={`px-3 py-1 rounded-full text-sm font-bold ${getStatusColor(project.status)}`}>
 									{getStatusLabel(project.status, t)}
@@ -120,7 +130,7 @@ export default function ProjectDetail() {
 										href={project.demoUrl}
 										target="_blank"
 										rel="noopener noreferrer"
-										className="button"
+										className="button !text-beige hover:!text-violet"
 									>
 										<FaExternalLinkAlt className="inline-block mr-2" aria-hidden="true" /> DEMO
 									</a>
@@ -130,53 +140,101 @@ export default function ProjectDetail() {
 										href={project.githubUrl}
 										target="_blank"
 										rel="noopener noreferrer"
-										className="button"
+										className="button !text-beige hover:!text-violet"
 									>
 										<FaGithub className="inline-block mr-2" aria-hidden="true" /> CODE
 									</a>
 								)}
 							</div>
-
-							<Link
-								to="/#projects"
-								className="mt-8 flex items-center gap-2 text-sm font-medium text-beige/70 hover:text-orange transition-colors"
-								aria-label={t('projects:actions.backToProjects')}
-							>
-								<FaArrowLeft aria-hidden="true" />
-								{t('projects:actions.backToProjects')}
-							</Link>
 						</div>
 					</header>
-					<div className="w-full h-1 bg-lime" />
+					<div className="w-full h-0.5 bg-lime dark:bg-lime/40" />
 					<div className="w-full h-12 bg-lime dark:bg-lime/40 opacity-60 dark:opacity-30 blur-2xl pointer-events-none" />
 
+					{/* Project nav — non sticky */}
+					<nav className="max-w-5xl mx-auto px-6 pt-10 pb-4 flex flex-wrap gap-3" aria-label="Project navigation">
+						{prevProject && (
+							<Link
+								to={`/projet/${prevProject.id}`}
+								className="px-4 py-2 rounded-full bg-orange/10 text-orange-dark dark:text-orange border border-orange/20
+								hover:bg-orange hover:text-beige dark:hover:bg-orange/20 dark:hover:text-orange
+								transition-all duration-300
+								inline-flex items-center gap-2 font-medium text-sm
+								hover:shadow-cta hover:scale-105 active:scale-95"
+							>
+								<FaArrowLeft className="inline-block" aria-hidden="true" />
+								{t(`projects:items.${prevProject.id}.title`, { defaultValue: prevProject.title })}
+							</Link>
+						)}
+						<Link
+							to="/#projects"
+							className="px-4 py-2 rounded-full bg-orange/10 text-orange-dark dark:text-orange border border-orange/20
+							hover:bg-orange hover:text-beige dark:hover:bg-orange/20 dark:hover:text-orange
+							transition-all duration-300
+							inline-flex items-center gap-2 font-medium text-sm
+							hover:shadow-cta hover:scale-105 active:scale-95"
+						>
+							<FaArrowUp className="inline-block" aria-hidden="true" />
+							{t('projects:actions.backToProjects')}
+						</Link>
+						{nextProject && (
+							<Link
+								to={`/projet/${nextProject.id}`}
+								className="px-4 py-2 rounded-full bg-orange/10 text-orange-dark dark:text-orange border border-orange/20
+								hover:bg-orange hover:text-beige dark:hover:bg-orange/20 dark:hover:text-orange
+								transition-all duration-300
+								inline-flex items-center gap-2 font-medium text-sm
+								hover:shadow-cta hover:scale-105 active:scale-95"
+							>
+								{t(`projects:items.${nextProject.id}.title`, { defaultValue: nextProject.title })}
+								<FaArrowRight className="inline-block" aria-hidden="true" />
+							</Link>
+						)}
+					</nav>
+
 					{/* Body */}
-					<main className="relative z-10 max-w-5xl mx-auto px-6 py-20" role="main">
+					<main className="relative z-10 max-w-5xl mx-auto px-6 pt-12 pb-20" role="main">
 
 						{/* Le pourquoi */}
 						<FadeInUp delay={0.2}>
-							<section className="mb-20">
-								<h2 className="text-base md:text-lg font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange mb-4">
+							<section id="why" className="mb-24 scroll-mt-24">
+								<h2 className="text-base md:text-lg font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange mb-6">
 									{t('projects:detail.why')}
 								</h2>
-								<p className="text-xl font-display font-light leading-relaxed text-violet/80 dark:text-beige/80 max-w-3xl">
+								<p className="text-2xl md:text-3xl font-display font-light leading-relaxed text-violet/80 dark:text-beige/80">
 									{projectContext}
 								</p>
 							</section>
 						</FadeInUp>
 
-						{/* Ce que j'ai construit */}
-						{Array.isArray(detailDeliverables) && detailDeliverables.length > 0 && (
+						{/* Ce que j'ai construit — bento cards */}
+						{hasDeliverables && (
 							<FadeInUp delay={0.3}>
-								<section className="mb-20">
+								<section id="built" className="mb-24 scroll-mt-24">
 									<h2 className="text-base md:text-lg font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange mb-8">
 										{t('projects:detail.built')}
 									</h2>
-									<div className="flex flex-col gap-8">
-										{detailDeliverables.map((item) => (
-											<div key={item.title}>
-												<h3 className="text-lg font-display font-semibold italic mb-1">{item.title}</h3>
-												<p className="text-violet/80 dark:text-beige/80 leading-relaxed">{item.description}</p>
+									<div className="grid grid-cols-1 sm:grid-cols-2 gap-4 auto-rows-fr">
+										{detailDeliverables.map((item, index) => (
+											<div
+												key={item.title}
+												className="flex flex-col justify-between gap-4 p-6 rounded-2xl
+													bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5
+													dark:from-lime/10 dark:via-orange/5 dark:to-violet/10
+													backdrop-blur-md border border-lime/30 dark:border-lime/20 shadow-card
+													hover:shadow-card-hover hover:scale-[1.01]
+													transition-all duration-300 ease-[cubic-bezier(0.83,0,0.17,1)]"
+											>
+												<div className="flex flex-col gap-2">
+													<h3 className="text-lg font-display font-semibold italic leading-snug">{item.title}</h3>
+													<p className="text-sm text-violet/70 dark:text-beige/70 leading-relaxed [overflow-wrap:anywhere]">{item.description}</p>
+												</div>
+												<span
+													className="text-4xl font-display font-thin text-orange-dark dark:text-orange leading-none tracking-[-0.03em] self-end"
+													style={{ fontVariationSettings: 'var(--fv-ghost)' }}
+												>
+													{index + 1}.
+												</span>
 											</div>
 										))}
 									</div>
@@ -184,39 +242,21 @@ export default function ProjectDetail() {
 							</FadeInUp>
 						)}
 
-						{/* Galerie / Illustrations */}
-						<FadeInUp delay={0.35}>
-							<section className="mb-20">
-								<h2 className="text-base md:text-lg font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange mb-8">
-									{t('projects:detail.gallery')}
-								</h2>
-								<div className="grid md:grid-cols-2 gap-6">
-									{[1, 2, 3, 4].map((n) => (
-										<div
-											key={n}
-											className="aspect-video rounded-xl bg-violet/5 dark:bg-beige/5 border border-violet/10 dark:border-beige/10 flex items-center justify-center"
-										>
-											<span className="text-sm text-violet/40 dark:text-beige/40 font-medium">
-												Capture à venir
-											</span>
-										</div>
-									))}
-								</div>
-							</section>
-						</FadeInUp>
-
-						{/* Décisions techniques */}
-						{Array.isArray(detailDecisions) && detailDecisions.length > 0 && (
+						{/* Décisions techniques — cards */}
+						{hasDecisions && (
 							<FadeInUp delay={0.4}>
-								<section className="mb-20">
+								<section id="decisions" className="mb-24 scroll-mt-24">
 									<h2 className="text-base md:text-lg font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange mb-8">
 										{t('projects:detail.decisions')}
 									</h2>
-									<div className="flex flex-col gap-8">
+									<div className="flex flex-col">
 										{detailDecisions.map((decision) => (
-											<div key={decision.title}>
-												<h3 className="text-lg font-display font-semibold italic mb-2">{decision.title}</h3>
-												<p className="text-violet/80 dark:text-beige/80 leading-relaxed max-w-3xl">{decision.description}</p>
+											<div
+												key={decision.title}
+												className="py-6 border-b border-violet/10 dark:border-beige/10 first:pt-0 last:border-b-0"
+											>
+												<h3 className="text-xl md:text-2xl font-display font-semibold italic leading-snug mb-2">{decision.title}</h3>
+												<p className="text-violet/70 dark:text-beige/70 leading-relaxed [overflow-wrap:anywhere]">{decision.description}</p>
 											</div>
 										))}
 									</div>
@@ -224,49 +264,195 @@ export default function ProjectDetail() {
 							</FadeInUp>
 						)}
 
-						{/* Stack technique */}
-						{Array.isArray(detailStack) && detailStack.length > 0 && (
+						{/* Stack technique — bento grid */}
+						{hasStack && (
 							<FadeInUp delay={0.5}>
-								<section className="mb-20 -mx-6 px-6 py-12 bg-lime dark:bg-dark-surface rounded-2xl grain grain-citron">
-									<h2 className="text-base md:text-lg font-sans font-bold uppercase tracking-widest text-violet-dark dark:text-orange mb-8">
+								<section id="stack" className="mb-24 scroll-mt-24">
+									<h2 className="text-base md:text-lg font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange mb-8">
 										{t('projects:detail.stack')}
 									</h2>
-									<div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-0">
-										{detailStack.map((tech) => (
-											<div
-												key={tech.name}
-												className="flex items-baseline gap-4 py-3 border-b border-surface-citron-border dark:border-beige/8"
-											>
-												<span className="text-sm font-bold font-display whitespace-nowrap text-surface-citron-fg dark:text-beige">
-													{tech.name}
-												</span>
-												<span className="text-sm text-surface-citron-muted dark:text-beige/55 leading-snug">
-													{tech.role}
-												</span>
+									{detailStack.some((tech) => tech.group) ? (() => {
+										const groups = Object.entries(
+											detailStack.reduce<Record<string, typeof detailStack>>((acc, tech) => {
+												const g = tech.group || 'Autres';
+												(acc[g] ??= []).push(tech);
+												return acc;
+											}, {})
+										);
+										const maxTechs = Math.max(...groups.map(([, t]) => t.length));
+										const heroIndex = groups.findIndex(([, t]) => t.length === maxTechs);
+
+										const crops = ['0% 0%', '100% 100%', '0% 90%', '95% 10%', '50% 0%', '100% 50%'];
+										const scales = [1.8, 2.0, 1.6, 2.2, 1.5, 1.9];
+
+										return (
+											<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+												{groups.map(([group, techs], groupIndex) => {
+													const isHero = groupIndex === heroIndex;
+													return (
+														<div
+															key={group}
+															className={`relative rounded-2xl overflow-hidden
+																bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5
+																dark:from-lime/10 dark:via-orange/5 dark:to-violet/10
+																backdrop-blur-md border border-lime/30 dark:border-lime/20 shadow-card
+																hover:shadow-card-hover hover:scale-[1.01]
+																transition-all duration-300 ease-[cubic-bezier(0.83,0,0.17,1)]
+																${isHero ? 'sm:col-span-2 min-h-[360px]' : 'min-h-[300px]'}`}
+														>
+															<img
+																src={project.image.desktop}
+																alt=""
+																aria-hidden="true"
+																className="absolute inset-0 w-full h-full object-cover opacity-[0.08] mix-blend-multiply dark:mix-blend-soft-light dark:opacity-[0.10]"
+																style={{
+																	objectPosition: crops[groupIndex % crops.length],
+																	transform: `scale(${scales[groupIndex % scales.length]})`,
+																}}
+															/>
+
+															<div className="relative z-10 p-8 flex flex-col h-full">
+																<h3 className="text-xs font-sans font-bold uppercase tracking-[0.2em] text-orange-dark dark:text-orange mb-8">
+																	{group}
+																</h3>
+																<div className={`flex flex-col gap-5 flex-1 ${isHero ? 'sm:grid sm:grid-cols-2 sm:gap-x-10 sm:gap-y-5' : ''}`}>
+																	{techs.map((tech) => (
+																		<div key={tech.name} className="pb-3">
+																			<span className="text-base font-bold font-display text-violet dark:text-beige block mb-1">
+																				{tech.name}
+																			</span>
+																			<span className={`text-sm text-violet/70 dark:text-beige/60 leading-relaxed block ${isHero ? '' : 'line-clamp-2'}`}>
+																				{tech.role}
+																			</span>
+																		</div>
+																	))}
+																</div>
+															</div>
+														</div>
+													);
+												})}
 											</div>
-										))}
+										);
+									})() : (
+										<div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-0 px-6 py-12 bg-lime dark:bg-dark-surface rounded-2xl grain grain-citron overflow-hidden">
+											{detailStack.map((tech) => (
+												<div
+													key={tech.name}
+													className="flex items-baseline gap-4 py-3 border-b border-surface-citron-border dark:border-beige/8 min-w-0"
+												>
+													<span className="text-sm font-bold font-display whitespace-nowrap text-surface-citron-fg dark:text-beige shrink-0">
+														{tech.name}
+													</span>
+													<span className="text-sm text-surface-citron-muted dark:text-beige/55 leading-snug min-w-0 break-words">
+														{tech.role}
+													</span>
+												</div>
+											))}
+										</div>
+									)}
+								</section>
+							</FadeInUp>
+						)}
+
+						{/* Galerie / Media */}
+						{hasMedia && (
+							<FadeInUp delay={0.55}>
+								<section id="gallery" className="mb-24 scroll-mt-24">
+									<h2 className="text-base md:text-lg font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange mb-8">
+										{t('projects:detail.gallery')}
+									</h2>
+
+									{/* Embeds + Videos — full width */}
+									<div className="flex flex-col gap-8 mb-8">
+										{mediaItems.map((item, index) => {
+											if (item.type !== 'embed' && item.type !== 'video') return null;
+											const caption = Array.isArray(detailMedia) && detailMedia[index]?.caption
+												? detailMedia[index].caption
+												: item.caption;
+
+											return (
+												<figure key={item.src} className="flex flex-col gap-3">
+													{item.type === 'embed' && (
+														<div className="w-full rounded-2xl overflow-hidden border border-violet/10 dark:border-beige/10 shadow-card">
+															<iframe
+																src={item.src}
+																title={caption}
+																className="w-full border-0"
+																style={{ height: '480px' }}
+																loading="lazy"
+															/>
+														</div>
+													)}
+													{item.type === 'video' && (
+														<div className="w-full rounded-2xl overflow-hidden border border-violet/10 dark:border-beige/10 shadow-card">
+															<video
+																src={item.src}
+																poster={item.poster}
+																controls
+																preload="metadata"
+																className="w-full"
+															>
+																<track kind="captions" />
+															</video>
+														</div>
+													)}
+													<figcaption className="text-sm text-violet/60 dark:text-beige/60 text-center">
+														{caption}
+													</figcaption>
+												</figure>
+											);
+										})}
 									</div>
+
+									{/* Images — grid compact */}
+									{mediaItems.some((item) => item.type === 'image') && (
+										<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+											{mediaItems.map((item, index) => {
+												if (item.type !== 'image') return null;
+												const caption = Array.isArray(detailMedia) && detailMedia[index]?.caption
+													? detailMedia[index].caption
+													: item.caption;
+
+												return (
+													<figure key={item.src} className="flex flex-col gap-2">
+														<div className="rounded-xl overflow-hidden border border-violet/10 dark:border-beige/10 shadow-card
+															hover:shadow-card-hover hover:scale-[1.01] transition-all duration-300">
+															<img
+																src={item.src}
+																alt={caption}
+																className="w-full h-auto"
+																loading="lazy"
+															/>
+														</div>
+														<figcaption className="text-xs text-violet/50 dark:text-beige/50 text-center">
+															{caption}
+														</figcaption>
+													</figure>
+												);
+											})}
+										</div>
+									)}
 								</section>
 							</FadeInUp>
 						)}
 
 						{/* Résultats / Metrics */}
-						{Array.isArray(detailMetrics) && detailMetrics.length > 0 && (
+						{hasMetrics && (
 							<FadeInUp delay={0.6}>
-								<section className="mb-20 -mx-6 px-6 py-12 bg-violet dark:bg-dark-surface rounded-2xl">
+								<section id="results" className="mb-24 px-6 py-12 bg-violet dark:bg-dark-surface rounded-2xl overflow-hidden scroll-mt-24">
 									<h2 className="text-base md:text-lg font-sans font-bold uppercase tracking-widest text-orange dark:text-orange mb-8">
 										{t('projects:detail.results')}
 									</h2>
-									<div className="flex flex-col gap-0">
+									<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
 										{detailMetrics.map((metric) => (
 											<div
 												key={metric.label}
-												className="flex items-baseline gap-6 py-4 border-b border-surface-nuit-border dark:border-beige/8"
+												className="flex flex-col gap-2"
 											>
-												<span className="text-3xl md:text-4xl font-display font-bold text-beige dark:text-beige leading-none shrink-0">
+												<span className="text-3xl md:text-4xl font-display font-bold text-beige dark:text-beige leading-none break-words">
 													{metric.value}
 												</span>
-												<span className="text-base text-surface-nuit-muted dark:text-beige/60 leading-snug">
+												<span className="text-sm text-surface-nuit-muted dark:text-beige/60 leading-snug">
 													{metric.label}
 												</span>
 											</div>
@@ -275,34 +461,9 @@ export default function ProjectDetail() {
 								</section>
 							</FadeInUp>
 						)}
-
-						{/* Navigation prev/next */}
-						<FadeInUp delay={0.7}>
-							<nav className="flex justify-between items-center pt-12 border-t border-violet/10 dark:border-beige/10" aria-label="Project navigation">
-								{prevProject ? (
-									<Link
-										to={`/projet/${prevProject.id}`}
-										className="flex items-center gap-2 text-sm font-medium text-violet/70 dark:text-beige/70 hover:text-orange-dark dark:hover:text-orange transition-colors"
-									>
-										<FaArrowLeft aria-hidden="true" />
-										<span>{t(`projects:items.${prevProject.id}.title`, { defaultValue: prevProject.title })}</span>
-									</Link>
-								) : <span />}
-								{nextProject ? (
-									<Link
-										to={`/projet/${nextProject.id}`}
-										className="flex items-center gap-2 text-sm font-medium text-violet/70 dark:text-beige/70 hover:text-orange-dark dark:hover:text-orange transition-colors"
-									>
-										<span>{t(`projects:items.${nextProject.id}.title`, { defaultValue: nextProject.title })}</span>
-										<FaArrowRight aria-hidden="true" />
-									</Link>
-								) : <span />}
-							</nav>
-						</FadeInUp>
 					</main>
 				</motion.div>
 				<ScrollToTop />
-				<div className="relative w-full h-12 bg-lime dark:bg-lime/40 opacity-60 dark:opacity-30 blur-2xl pointer-events-none -mb-12" />
 				<Footer />
 			</div>
 		</ErrorBoundary>

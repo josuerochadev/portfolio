@@ -14,7 +14,7 @@ import ScrollToTop from "@/components/common/scroll-to-top";
 import FloatingLanguageSwitcher from "@/components/common/floating-language-switcher";
 
 const parseMetricValue = (value: string): { number: string | null; detail: string | null } => {
-	const match = value.match(/^(\d+[\d.,]*)\s*(?:\((.+)\)|(.+))?$/);
+	const match = value.match(/^(\d+[\d.,/]*)\s*(?:\((.+)\)|(.+))?$/);
 	if (!match) return { number: null, detail: null };
 	const number = match[1];
 	const detail = (match[2] || match[3] || '').trim() || null;
@@ -479,10 +479,6 @@ export default function ProjectDetail() {
 											const detailClass = isNuit
 												? 'text-beige/70 dark:text-beige/70'
 												: 'text-surface-citron-muted dark:text-beige/60';
-											const textClass = isNuit
-												? 'text-beige dark:text-beige'
-												: 'text-surface-citron-fg dark:text-beige';
-
 											return (
 												<div
 													key={metric.label}
@@ -551,7 +547,7 @@ export default function ProjectDetail() {
 
 													{/* Full-text card — no extractable number */}
 													{isFullText && (
-														<span className={`text-xl md:text-2xl font-display font-semibold italic leading-snug break-words ${textClass}`}>
+														<span className={`text-xl md:text-2xl font-display font-semibold italic leading-snug break-words ${numberClass}`}>
 															{metric.value}
 														</span>
 													)}

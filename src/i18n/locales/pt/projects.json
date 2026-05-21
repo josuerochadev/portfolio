@@ -35,6 +35,7 @@
     "decisions": "Decisões técnicas",
     "stack": "Stack técnica",
     "gallery": "Em imagens",
+    "openPdf": "Abrir documento",
     "results": "Resultados"
   },
   "errors": {
@@ -128,15 +129,15 @@
     },
     "tour-de-controle": {
       "title": "Tour de Contrôle",
-      "description": "Aplicação web de gestão de caixa e equipe para restaurantes, com rastreamento de transações e detecção de divergências.",
-      "deliverables": "API REST documentada Swagger, interface React completa, autenticação JWT com RBAC, detecção automática de divergências de caixa, CRUD de funcionários, PostgreSQL com migrações Sqitch, Docker Compose 6 serviços",
+      "description": "Aplicação full-stack de gestão de caixa para restaurantes, com dashboard em tempo real, gestão de equipe por funções, jornal de transações filtrável e audit trail completo.",
+      "deliverables": "API REST documentada Swagger, interface React completa, autenticação JWT com RBAC, detecção automática de divergências de caixa, CRUD de funcionários, PostgreSQL com migrações Sqitch, Docker Compose 5 serviços",
       "context": "Responder a uma necessidade real de um restaurante: centralizar a gestão de caixa e equipe em uma ferramenta única, confiável e segura.",
       "detail": {
         "deliverables": [
           { "title": "Gestão de caixa (La Caisse)", "description": "Abertura e fechamento de caixa com entrada do fundo físico e detecção automática de divergências. Histórico completo de sessões por caixa." },
           { "title": "Rastreamento de transações (Le Flux)", "description": "Registro de transações por tipo de pagamento (cartão, dinheiro, ticket-refeição, etc.), com filtros avançados e paginação." },
           { "title": "Gestão de equipe (L'Équipage)", "description": "CRUD completo dos membros da equipe com 4 níveis de role (Desenvolvedor, Gerente, Responsável, Garçom) e redefinição de senha por email." },
-          { "title": "Dashboard de KPIs & Registro de ações", "description": "Visão sintética dos indicadores-chave em tempo real e rastreabilidade completa de todas as ações (quem, o quê, quando), filtrável por data e usuário." }
+          { "title": "Dashboard em tempo real (La Vigie)", "description": "Visão sintética dos KPIs em tempo real com gráfico de distribuição dos pagamentos, e audit trail completo de todas as ações (quem, o quê, quando) armazenado em JSONB, filtrável por data e usuário." }
         ],
         "decisions": [
           { "title": "JWT via cookies httpOnly em vez de localStorage", "description": "Os tokens de autenticação são armazenados em cookies httpOnly para eliminar o risco de roubo via XSS. O flag sameSite=none é ativado em produção para gerenciar o cross-domain entre Railway e Vercel." },
@@ -144,27 +145,36 @@
           { "title": "Monorepo com Docker Compose em vez de arquitetura desacoplada desde o início", "description": "Frontend, backend e banco de dados são orquestrados via Docker Compose para simplificar a inicialização local e consistência dos ambientes, permanecendo deployáveis separadamente (Vercel + Railway + Neon)." }
         ],
         "stack": [
-          { "name": "React 18 + TypeScript", "role": "Interface com tipagem estrita, lazy loading de rotas e gerenciamento de estado via Context API" },
+          { "name": "React 18 + TypeScript", "role": "Interface com tipagem estrita, lazy loading de rotas, 13 páginas, 13 componentes reutilizáveis, gerenciamento de estado via Context API + hooks custom" },
           { "name": "Vite", "role": "Bundler e servidor de desenvolvimento frontend" },
-          { "name": "Tailwind CSS", "role": "Estilização utilitária da interface" },
-          { "name": "Express.js + TypeScript", "role": "API REST backend organizada em MVC (controllers, models, routes)" },
-          { "name": "Zod", "role": "Validação e tipagem dos dados recebidos na API" },
-          { "name": "JWT + cookies httpOnly", "role": "Autenticação stateless segura contra XSS" },
-          { "name": "PostgreSQL 15 (Neon)", "role": "Banco de dados relacional hospedado, acessado via queries SQL diretas (pg)" },
-          { "name": "Sqitch", "role": "Gestão de migrações de schema em SQL puro com rollback" },
-          { "name": "Redis", "role": "Cache de sessões e rate limiting no ambiente Docker" },
-          { "name": "Docker Compose", "role": "Orquestração dos serviços localmente (frontend, backend, PostgreSQL, Redis)" },
+          { "name": "Tailwind CSS", "role": "Design system customizado (tokens de cor, tipografia, componentes reutilizáveis)" },
+          { "name": "Express.js + TypeScript", "role": "API REST com 6 módulos de rotas, validação Zod ponta a ponta, organizada em MVC" },
+          { "name": "Zod", "role": "Validação e tipagem dos dados recebidos no cliente e servidor" },
+          { "name": "JWT + cookies httpOnly", "role": "Autenticação stateless com SameSite + Secure, blacklist Redis para logout instantâneo" },
+          { "name": "Bcrypt (12 rounds)", "role": "Hash de senhas, tokens de reset com TTL 15 min" },
+          { "name": "PostgreSQL 15 (Neon)", "role": "Banco de dados relacional hospedado, SQL puro sem ORM, audit trail em JSONB (action_logs)" },
+          { "name": "Sqitch", "role": "Migrações SQL versionadas com deploy/verify/revert" },
+          { "name": "Redis", "role": "Blacklist JWT para logout instantâneo, cache de sessões e rate limiting" },
+          { "name": "Helmet", "role": "Headers de segurança HTTP (CSP, HSTS, X-Content-Type-Options)" },
+          { "name": "Sentry", "role": "Monitoramento de erros em produção" },
+          { "name": "Docker Compose", "role": "Orquestração de 5 containers (PostgreSQL, Redis, Backend, Frontend, Sqitch)" },
           { "name": "Railway", "role": "Hospedagem do backend Express em produção" },
           { "name": "Vercel", "role": "Deploy do frontend React em produção" },
           { "name": "Jest + Supertest", "role": "Testes de integração da API (78 testes)" },
           { "name": "Vitest", "role": "Testes unitários frontend (18 testes)" },
           { "name": "Playwright", "role": "Testes end-to-end do percurso do usuário" },
+          { "name": "Husky + lint-staged", "role": "Qualidade do código no pre-commit, conventional commits" },
           { "name": "Swagger / OpenAPI", "role": "Documentação interativa da API, disponível em ambiente de desenvolvimento" }
         ],
         "metrics": [
+          { "label": "Módulos de rotas API", "value": "6" },
+          { "label": "Páginas frontend", "value": "13" },
+          { "label": "Componentes reutilizáveis", "value": "13" },
           { "label": "Testes de integração backend", "value": "78" },
           { "label": "Testes unitários frontend", "value": "18" },
-          { "label": "Níveis de role", "value": "4 (Desenvolvedor, Gerente, Responsável, Garçom)" },
+          { "label": "Níveis de role RBAC", "value": "4 (Developer, Manager, Supervisor, Server)" },
+          { "label": "ADRs documentados", "value": "5 (decisões arquiteturais)" },
+          { "label": "Segurança", "value": "JWT httpOnly + SameSite, bcrypt 12 rounds, Zod cliente+servidor, CSRF, Helmet, audit trail JSONB" },
           { "label": "Deploy", "value": "Demo ao vivo (Vercel + Railway + Neon)" }
         ]
       }
@@ -188,15 +198,15 @@
           { "title": "Links externos apenas, sem player de áudio embutido", "description": "Escolha deliberada de redirecionar para Spotify/Apple/Deezer/Amazon em vez de embutir um player. Simplifica o site, respeita as analytics do podcaster e evita problemas de direitos." }
         ],
         "stack": [
-          { "name": "Next.js 16 (App Router)", "role": "Framework fullstack — renderização estática no build, rotas dinâmicas para episódios e programas, rota API para o rebuild hook" },
-          { "name": "React 19", "role": "Server Components por padrão, Client Components apenas para interatividade (filtros, menu mobile, botão compartilhar)" },
-          { "name": "TypeScript (strict)", "role": "Tipagem estrita sem any — tipos dedicados para episódios, programas (ShowId union type) e respostas de APIs externas" },
-          { "name": "Tailwind CSS v4", "role": "Design system neo-brutalista: paleta OKLCH (--lime, --forest, --violet…), tipografia Archivo Black, sombras offset, badges coloridos por programa. Implementado via @tailwindcss/postcss + CSS variables custom" },
-          { "name": "fast-xml-parser", "role": "Parsing do feed RSS Anchor.fm (XML → JSON) no build com suporte aos atributos iTunes e media:content" },
-          { "name": "Sentry (@sentry/nextjs)", "role": "Monitoramento de erros em produção" },
-          { "name": "Vitest", "role": "Testes unitários para parsing RSS, detecção de programas e utilitários" },
-          { "name": "Husky + lint-staged + commitlint", "role": "Qualidade do código: ESLint no pre-commit, validação do overrides.json e convenções de commit" },
-          { "name": "Vercel", "role": "Deploy com deploy hooks para rebuild sob demanda, domínio custom oklmdragclub.com" }
+          { "name": "Next.js 16 (App Router)", "role": "Framework fullstack — renderização estática no build, rotas dinâmicas para episódios e programas, rota API para o rebuild hook", "group": "Framework & UI" },
+          { "name": "React 19", "role": "Server Components por padrão, Client Components apenas para interatividade (filtros, menu mobile, botão compartilhar)", "group": "Framework & UI" },
+          { "name": "TypeScript (strict)", "role": "Tipagem estrita sem any — tipos dedicados para episódios, programas (ShowId union type) e respostas de APIs externas", "group": "Framework & UI" },
+          { "name": "Tailwind CSS v4", "role": "Design system neo-brutalista: paleta OKLCH (--lime, --forest, --violet…), tipografia Archivo Black, sombras offset, badges coloridos por programa. Implementado via @tailwindcss/postcss + CSS variables custom", "group": "Framework & UI" },
+          { "name": "fast-xml-parser", "role": "Parsing do feed RSS Anchor.fm (XML → JSON) no build com suporte aos atributos iTunes e media:content", "group": "Pipeline de dados" },
+          { "name": "Sentry (@sentry/nextjs)", "role": "Monitoramento de erros em produção", "group": "Produção" },
+          { "name": "Vitest", "role": "Testes unitários para parsing RSS, detecção de programas e utilitários", "group": "Testes & qualidade" },
+          { "name": "Husky + lint-staged + commitlint", "role": "Qualidade do código: ESLint no pre-commit, validação do overrides.json e convenções de commit", "group": "Testes & qualidade" },
+          { "name": "Vercel", "role": "Deploy com deploy hooks para rebuild sob demanda, domínio custom oklmdragclub.com", "group": "Produção" }
         ],
         "metrics": [
           { "label": "Fontes de dados", "value": "3 (RSS Anchor.fm, Apple Podcasts API, Deezer API)" },
@@ -206,6 +216,18 @@
           { "label": "Imagens OG geradas", "value": "3 níveis (home, programa, episódio)" },
           { "label": "Acessibilidade", "value": "Skip links, ARIA labels, foco de teclado, prefers-reduced-motion" },
           { "label": "Segurança", "value": "Sanitização HTML, CSP headers, safeJsonLd(), permissions policy" }
+        ],
+        "media": [
+          { "caption": "Pipeline de dados — RSS → APIs → Build estático" },
+          { "caption": "Jornada do usuário — navegação, filtros, episódios" },
+          { "caption": "Vista responsiva — mobile e tablet" },
+          { "caption": "Design System — Capa" },
+          { "caption": "Design System — Cores OKLCH" },
+          { "caption": "Design System — Tipografia" },
+          { "caption": "Design System — Componentes" },
+          { "caption": "Design System — Formulários" },
+          { "caption": "Design System — Grid & Espaçamento" },
+          { "caption": "Design System — Iconografia" }
         ]
       }
     },

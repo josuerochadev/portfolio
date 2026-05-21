@@ -35,6 +35,7 @@
     "decisions": "Technical decisions",
     "stack": "Tech stack",
     "gallery": "In pictures",
+    "openPdf": "Open document",
     "results": "Results"
   },
   "errors": {
@@ -128,15 +129,15 @@
     },
     "tour-de-controle": {
       "title": "Tour de Contrôle",
-      "description": "Restaurant cash register and staff management web application, with transaction tracking and discrepancy detection.",
-      "deliverables": "Swagger-documented REST API, full React interface, JWT authentication with RBAC, automatic cash discrepancy detection, staff CRUD, PostgreSQL with Sqitch migrations, Docker Compose 6 services",
+      "description": "Full-stack restaurant cash register management application with real-time dashboard, role-based team management, filterable transaction journal and complete audit trail.",
+      "deliverables": "Swagger-documented REST API, full React interface, JWT authentication with RBAC, automatic cash discrepancy detection, staff CRUD, PostgreSQL with Sqitch migrations, Docker Compose 5 services",
       "context": "Addressing a real restaurant need: centralizing cash register and staff management into a single, reliable, and secure tool.",
       "detail": {
         "deliverables": [
           { "title": "Cash register management (La Caisse)", "description": "Opening and closing registers with physical fund entry and automatic discrepancy detection. Full session history per cashier." },
           { "title": "Transaction tracking (Le Flux)", "description": "Recording transactions by payment type (card, cash, meal vouchers, etc.), with advanced filters and pagination." },
           { "title": "Staff management (L'Équipage)", "description": "Full CRUD for team members with 4 role levels (Developer, Manager, Supervisor, Waiter) and password reset by email." },
-          { "title": "KPI Dashboard & Action logs", "description": "Synthetic view of key indicators in real time and full traceability of all actions (who, what, when), filterable by date and user." }
+          { "title": "Real-time Dashboard (La Vigie)", "description": "Synthetic view of real-time KPIs with payment breakdown chart, and complete audit trail of all actions (who, what, when) stored in JSONB, filterable by date and user." }
         ],
         "decisions": [
           { "title": "JWT via httpOnly cookies over localStorage", "description": "Authentication tokens are stored in httpOnly cookies to eliminate the risk of theft via XSS. The sameSite=none flag is enabled in production to handle cross-domain between Railway and Vercel." },
@@ -144,27 +145,36 @@
           { "title": "Monorepo with Docker Compose over a decoupled architecture from the start", "description": "Frontend, backend and database are orchestrated via Docker Compose to simplify local startup and environment consistency, while remaining separately deployable (Vercel + Railway + Neon)." }
         ],
         "stack": [
-          { "name": "React 18 + TypeScript", "role": "UI with strict typing, lazy-loaded routes and state management via Context API" },
+          { "name": "React 18 + TypeScript", "role": "UI with strict typing, lazy-loaded routes, 13 pages, 13 reusable components, state management via Context API + custom hooks" },
           { "name": "Vite", "role": "Frontend bundler and development server" },
-          { "name": "Tailwind CSS", "role": "Utility-first interface styling" },
-          { "name": "Express.js + TypeScript", "role": "REST API backend organized in MVC (controllers, models, routes)" },
-          { "name": "Zod", "role": "Incoming data validation and typing on the API side" },
-          { "name": "JWT + httpOnly cookies", "role": "Stateless authentication secured against XSS" },
-          { "name": "PostgreSQL 15 (Neon)", "role": "Hosted relational database, accessed via direct SQL queries (pg)" },
-          { "name": "Sqitch", "role": "Schema migration management in pure SQL with rollback" },
-          { "name": "Redis", "role": "Session caching and rate limiting in Docker environment" },
-          { "name": "Docker Compose", "role": "Local service orchestration (frontend, backend, PostgreSQL, Redis)" },
+          { "name": "Tailwind CSS", "role": "Custom design system (color tokens, typography, reusable components)" },
+          { "name": "Express.js + TypeScript", "role": "REST API with 6 route modules, end-to-end Zod validation, organized in MVC" },
+          { "name": "Zod", "role": "Incoming data validation and typing on both client and server" },
+          { "name": "JWT + httpOnly cookies", "role": "Stateless authentication with SameSite + Secure, Redis blacklist for instant logout" },
+          { "name": "Bcrypt (12 rounds)", "role": "Password hashing, reset tokens with 15 min TTL" },
+          { "name": "PostgreSQL 15 (Neon)", "role": "Hosted relational database, raw SQL without ORM, JSONB audit trail (action_logs)" },
+          { "name": "Sqitch", "role": "Versioned SQL migrations with deploy/verify/revert" },
+          { "name": "Redis", "role": "JWT blacklist for instant logout, session caching and rate limiting" },
+          { "name": "Helmet", "role": "HTTP security headers (CSP, HSTS, X-Content-Type-Options)" },
+          { "name": "Sentry", "role": "Production error monitoring" },
+          { "name": "Docker Compose", "role": "Orchestration of 5 containers (PostgreSQL, Redis, Backend, Frontend, Sqitch)" },
           { "name": "Railway", "role": "Express backend hosting in production" },
           { "name": "Vercel", "role": "React frontend deployment in production" },
           { "name": "Jest + Supertest", "role": "API integration tests (78 tests)" },
           { "name": "Vitest", "role": "Frontend unit tests (18 tests)" },
           { "name": "Playwright", "role": "End-to-end tests of the user journey" },
+          { "name": "Husky + lint-staged", "role": "Code quality on pre-commit, conventional commits" },
           { "name": "Swagger / OpenAPI", "role": "Interactive API documentation, available in development environment" }
         ],
         "metrics": [
+          { "label": "API route modules", "value": "6" },
+          { "label": "Frontend pages", "value": "13" },
+          { "label": "Reusable components", "value": "13" },
           { "label": "Backend integration tests", "value": "78" },
           { "label": "Frontend unit tests", "value": "18" },
-          { "label": "Role levels", "value": "4 (Developer, Manager, Supervisor, Waiter)" },
+          { "label": "RBAC role levels", "value": "4 (Developer, Manager, Supervisor, Server)" },
+          { "label": "Documented ADRs", "value": "5 (architectural decisions)" },
+          { "label": "Security", "value": "JWT httpOnly + SameSite, bcrypt 12 rounds, Zod client+server, CSRF, Helmet, JSONB audit trail" },
           { "label": "Deployment", "value": "Live demo (Vercel + Railway + Neon)" }
         ]
       }
@@ -188,15 +198,15 @@
           { "title": "External links only, no embedded audio player", "description": "Deliberate choice to redirect to Spotify/Apple/Deezer/Amazon rather than embedding a player. Simplifies the site, respects the podcaster's analytics, and avoids rights issues." }
         ],
         "stack": [
-          { "name": "Next.js 16 (App Router)", "role": "Fullstack framework — static rendering at build, dynamic routes for episodes and shows, API route for the rebuild hook" },
-          { "name": "React 19", "role": "Server Components by default, Client Components only for interactivity (filters, mobile menu, share button)" },
-          { "name": "TypeScript (strict)", "role": "Strict typing with no any — dedicated types for episodes, shows (ShowId union type), and external API responses" },
-          { "name": "Tailwind CSS v4", "role": "Neo-brutalist design system: OKLCH palette (--lime, --forest, --violet…), Archivo Black typography, offset shadows, color-coded badges per show. Built with @tailwindcss/postcss + custom CSS variables" },
-          { "name": "fast-xml-parser", "role": "Anchor.fm RSS feed parsing (XML to JSON) at build with iTunes attributes and media:content support" },
-          { "name": "Sentry (@sentry/nextjs)", "role": "Production error monitoring" },
-          { "name": "Vitest", "role": "Unit tests for RSS parsing, show detection and utilities" },
-          { "name": "Husky + lint-staged + commitlint", "role": "Code quality: ESLint on pre-commit, overrides.json validation, and commit conventions (Conventional Commits)" },
-          { "name": "Vercel", "role": "Deployment with deploy hooks for on-demand rebuild, custom domain oklmdragclub.com" }
+          { "name": "Next.js 16 (App Router)", "role": "Fullstack framework — static rendering at build, dynamic routes for episodes and shows, API route for the rebuild hook", "group": "Framework & UI" },
+          { "name": "React 19", "role": "Server Components by default, Client Components only for interactivity (filters, mobile menu, share button)", "group": "Framework & UI" },
+          { "name": "TypeScript (strict)", "role": "Strict typing with no any — dedicated types for episodes, shows (ShowId union type), and external API responses", "group": "Framework & UI" },
+          { "name": "Tailwind CSS v4", "role": "Neo-brutalist design system: OKLCH palette (--lime, --forest, --violet…), Archivo Black typography, offset shadows, color-coded badges per show. Built with @tailwindcss/postcss + custom CSS variables", "group": "Framework & UI" },
+          { "name": "fast-xml-parser", "role": "Anchor.fm RSS feed parsing (XML to JSON) at build with iTunes attributes and media:content support", "group": "Data Pipeline" },
+          { "name": "Sentry (@sentry/nextjs)", "role": "Production error monitoring", "group": "Production" },
+          { "name": "Vitest", "role": "Unit tests for RSS parsing, show detection and utilities", "group": "Testing & Quality" },
+          { "name": "Husky + lint-staged + commitlint", "role": "Code quality: ESLint on pre-commit, overrides.json validation, and commit conventions (Conventional Commits)", "group": "Testing & Quality" },
+          { "name": "Vercel", "role": "Deployment with deploy hooks for on-demand rebuild, custom domain oklmdragclub.com", "group": "Production" }
         ],
         "metrics": [
           { "label": "Data sources", "value": "3 (Anchor.fm RSS, Apple Podcasts API, Deezer API)" },
@@ -206,6 +216,18 @@
           { "label": "Generated OG images", "value": "3 levels (home, show, episode)" },
           { "label": "Accessibility", "value": "Skip links, ARIA labels, keyboard focus, prefers-reduced-motion" },
           { "label": "Security", "value": "HTML sanitization, CSP headers, safeJsonLd(), permissions policy" }
+        ],
+        "media": [
+          { "caption": "Data Pipeline — RSS → APIs → Static Build" },
+          { "caption": "User journey — navigation, filters, episodes" },
+          { "caption": "Responsive view — mobile and tablet" },
+          { "caption": "Design System — Cover" },
+          { "caption": "Design System — OKLCH Colors" },
+          { "caption": "Design System — Typography" },
+          { "caption": "Design System — Components" },
+          { "caption": "Design System — Forms" },
+          { "caption": "Design System — Grid & Spacing" },
+          { "caption": "Design System — Iconography" }
         ]
       }
     },

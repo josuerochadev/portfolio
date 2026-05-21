@@ -1,6 +1,7 @@
 export interface TechDetail {
 	name: string;
 	role: string;
+	group?: string;
 }
 
 export interface Decision {
@@ -18,11 +19,19 @@ export interface Metric {
 	value: string;
 }
 
+export interface MediaItem {
+	type: 'image' | 'video' | 'embed' | 'pdf';
+	src: string;
+	poster?: string;
+	caption: string;
+}
+
 export interface ProjectDetail {
 	deliverables: Deliverable[];
 	decisions: Decision[];
 	stack: TechDetail[];
 	metrics?: Metric[];
+	media?: MediaItem[];
 }
 
 export interface Project {
@@ -207,9 +216,9 @@ export const PROJECTS: Project[] = [
 		id: "tour-de-controle",
 		title: "Tour de Contrôle",
 		description:
-			"Application web de gestion de caisse et du personnel pour la restauration, avec suivi des transactions et détection d'écarts.",
+			"Application full-stack de gestion de caisse pour la restauration, avec dashboard temps réel, gestion d'équipe par rôles, journal de transactions filtrable et audit trail complet.",
 		deliverables:
-			"API REST documentée Swagger, interface React complète, authentification JWT avec RBAC, détection automatique des écarts de caisse, CRUD personnel, base PostgreSQL avec migrations Sqitch, Docker Compose 6 services",
+			"API REST documentée Swagger, interface React complète, authentification JWT avec RBAC, détection automatique des écarts de caisse, CRUD personnel, base PostgreSQL avec migrations Sqitch, Docker Compose 5 services",
 		context:
 			"Répondre au besoin réel d'un restaurant : centraliser la gestion des caisses et du personnel dans un outil unique, fiable et sécurisé.",
 		image: {
@@ -217,7 +226,7 @@ export const PROJECTS: Project[] = [
 			mobile: "/assets/images/projects/optimized/project-tour-de-controle-mobile.webp",
 			thumbnail: "/assets/images/projects/optimized/project-tour-de-controle-thumb.webp"
 		},
-		technologies: ["React 18", "TypeScript", "Vite", "Tailwind CSS", "Redux Toolkit", "Node.js", "Express", "PostgreSQL", "Redis", "Docker Compose", "JWT", "Swagger", "Jest"],
+		technologies: ["React 18", "TypeScript", "Vite", "Tailwind CSS", "Node.js", "Express", "Zod", "PostgreSQL", "Redis", "Docker Compose", "JWT", "Swagger", "Jest", "Playwright"],
 		status: "in-progress",
 		year: "2025",
 		type: "formation",
@@ -237,8 +246,8 @@ export const PROJECTS: Project[] = [
 					description: "CRUD complet des membres d'équipe avec 4 niveaux de rôle (Développeur, Gérant, Responsable, Serveur) et reset de mot de passe par email."
 				},
 				{
-					title: "Dashboard KPIs & Journaux d'actions",
-					description: "Vue synthétique des indicateurs clés en temps réel et traçabilité complète de toutes les actions (qui, quoi, quand), filtrable par date et utilisateur."
+					title: "Dashboard temps réel (La Vigie)",
+					description: "Vue synthétique des KPIs en temps réel avec graphique de répartition des paiements, et audit trail complet de toutes les actions (qui, quoi, quand) stocké en JSONB, filtrable par date et utilisateur."
 				}
 			],
 			decisions: [
@@ -256,27 +265,36 @@ export const PROJECTS: Project[] = [
 				}
 			],
 			stack: [
-				{ name: "React 18 + TypeScript", role: "Interface utilisateur avec typage strict, lazy loading des routes et gestion d'état via Context API" },
+				{ name: "React 18 + TypeScript", role: "Interface utilisateur avec typage strict, lazy loading des routes, 13 pages, 13 composants réutilisables, gestion d'état via Context API + hooks custom" },
 				{ name: "Vite", role: "Bundler et serveur de développement frontend" },
-				{ name: "Tailwind CSS", role: "Stylisation utilitaire de l'interface" },
-				{ name: "Express.js + TypeScript", role: "API REST backend organisée en MVC (controllers, models, routes)" },
-				{ name: "Zod", role: "Validation et typage des données entrantes côté API" },
-				{ name: "JWT + cookies httpOnly", role: "Authentification stateless sécurisée contre le XSS" },
-				{ name: "PostgreSQL 15 (Neon)", role: "Base de données relationnelle hébergée, accédée via requêtes SQL directes (pg)" },
-				{ name: "Sqitch", role: "Gestion des migrations de schéma en SQL pur avec rollback" },
-				{ name: "Redis", role: "Cache de sessions et rate limiting en environnement Docker" },
-				{ name: "Docker Compose", role: "Orchestration des services en local (frontend, backend, PostgreSQL, Redis)" },
+				{ name: "Tailwind CSS", role: "Design system custom (tokens couleur, typographie, composants réutilisables)" },
+				{ name: "Express.js + TypeScript", role: "API REST avec 6 modules de routes, validation Zod bout-en-bout, organisée en MVC" },
+				{ name: "Zod", role: "Validation et typage des données entrantes côté client et serveur" },
+				{ name: "JWT + cookies httpOnly", role: "Authentification stateless avec SameSite + Secure, blacklist Redis pour logout instantané" },
+				{ name: "Bcrypt (12 rounds)", role: "Hachage des mots de passe, tokens de reset avec TTL 15 min" },
+				{ name: "PostgreSQL 15 (Neon)", role: "Base de données relationnelle hébergée, SQL pur sans ORM, audit trail en JSONB (action_logs)" },
+				{ name: "Sqitch", role: "Migrations SQL versionnées avec deploy/verify/revert" },
+				{ name: "Redis", role: "Blacklist JWT pour logout instantané, cache de sessions et rate limiting" },
+				{ name: "Helmet", role: "Headers de sécurité HTTP (CSP, HSTS, X-Content-Type-Options)" },
+				{ name: "Sentry", role: "Monitoring d'erreurs en production" },
+				{ name: "Docker Compose", role: "Orchestration de 5 containers (PostgreSQL, Redis, Backend, Frontend, Sqitch)" },
 				{ name: "Railway", role: "Hébergement du backend Express en production" },
 				{ name: "Vercel", role: "Déploiement du frontend React en production" },
 				{ name: "Jest + Supertest", role: "Tests d'intégration de l'API (78 tests)" },
 				{ name: "Vitest", role: "Tests unitaires frontend (18 tests)" },
 				{ name: "Playwright", role: "Tests end-to-end du parcours utilisateur" },
+				{ name: "Husky + lint-staged", role: "Qualité du code au pre-commit, conventional commits" },
 				{ name: "Swagger / OpenAPI", role: "Documentation interactive de l'API, disponible en environnement de développement" }
 			],
 			metrics: [
+				{ label: "Modules de routes API", value: "6" },
+				{ label: "Pages frontend", value: "13" },
+				{ label: "Composants réutilisables", value: "13" },
 				{ label: "Tests d'intégration backend", value: "78" },
 				{ label: "Tests unitaires frontend", value: "18" },
-				{ label: "Niveaux de rôle", value: "4 (Développeur, Gérant, Responsable, Serveur)" },
+				{ label: "Niveaux de rôle RBAC", value: "4 (Developer, Manager, Supervisor, Server)" },
+				{ label: "ADRs documentés", value: "5 (décisions architecturales)" },
+				{ label: "Sécurité", value: "JWT httpOnly + SameSite, bcrypt 12 rounds, Zod client+serveur, CSRF, Helmet, audit trail JSONB" },
 				{ label: "Déploiement", value: "Demo live (Vercel + Railway + Neon)" }
 			]
 		}
@@ -340,15 +358,15 @@ export const PROJECTS: Project[] = [
 				}
 			],
 			stack: [
-				{ name: "Next.js 16 (App Router)", role: "Framework fullstack — rendu statique au build, routes dynamiques pour épisodes et émissions, route API pour le rebuild hook" },
-				{ name: "React 19", role: "Server Components par défaut, Client Components uniquement pour l'interactivité (filtres, menu mobile, bouton partage)" },
-				{ name: "TypeScript (strict)", role: "Typage strict sans any — types dédiés pour les épisodes, émissions (ShowId union type), et les réponses API externes" },
-				{ name: "Tailwind CSS v4", role: "Design system néo-brutaliste : palette OKLCH (--lime, --forest, --violet…), typographie Archivo Black, ombres offset, badges colorés par émission. Implémenté via @tailwindcss/postcss + CSS variables custom" },
-				{ name: "fast-xml-parser", role: "Parsing du flux RSS Anchor.fm (XML → JSON) au build avec support des attributs iTunes et media:content" },
-				{ name: "Sentry (@sentry/nextjs)", role: "Monitoring d'erreurs en production" },
-				{ name: "Vitest", role: "Tests unitaires pour le parsing RSS, la détection d'émissions et les utilitaires (slugify, formatDuration, toRoman)" },
-				{ name: "Husky + lint-staged + commitlint", role: "Qualité du code : ESLint au pre-commit, validation du overrides.json, et conventions de commit (Conventional Commits)" },
-				{ name: "Vercel", role: "Déploiement avec deploy hooks pour rebuild à la demande, domaine custom oklmdragclub.com" }
+				{ name: "Next.js 16 (App Router)", role: "Framework fullstack — rendu statique au build, routes dynamiques pour épisodes et émissions, route API pour le rebuild hook", group: "Framework & UI" },
+				{ name: "React 19", role: "Server Components par défaut, Client Components uniquement pour l'interactivité (filtres, menu mobile, bouton partage)", group: "Framework & UI" },
+				{ name: "TypeScript (strict)", role: "Typage strict sans any — types dédiés pour les épisodes, émissions (ShowId union type), et les réponses API externes", group: "Framework & UI" },
+				{ name: "Tailwind CSS v4", role: "Design system néo-brutaliste : palette OKLCH (--lime, --forest, --violet…), typographie Archivo Black, ombres offset, badges colorés par émission. Implémenté via @tailwindcss/postcss + CSS variables custom", group: "Framework & UI" },
+				{ name: "fast-xml-parser", role: "Parsing du flux RSS Anchor.fm (XML → JSON) au build avec support des attributs iTunes et media:content", group: "Pipeline de données" },
+				{ name: "Sentry (@sentry/nextjs)", role: "Monitoring d'erreurs en production", group: "Production" },
+				{ name: "Vitest", role: "Tests unitaires pour le parsing RSS, la détection d'émissions et les utilitaires (slugify, formatDuration, toRoman)", group: "Tests & qualité" },
+				{ name: "Husky + lint-staged + commitlint", role: "Qualité du code : ESLint au pre-commit, validation du overrides.json, et conventions de commit (Conventional Commits)", group: "Tests & qualité" },
+				{ name: "Vercel", role: "Déploiement avec deploy hooks pour rebuild à la demande, domaine custom oklmdragclub.com", group: "Production" }
 			],
 			metrics: [
 				{ label: "Sources de données", value: "3 (RSS Anchor.fm, Apple Podcasts API, Deezer API)" },
@@ -358,6 +376,58 @@ export const PROJECTS: Project[] = [
 				{ label: "Images OG générées", value: "3 niveaux (home, émission, épisode)" },
 				{ label: "Accessibilité", value: "Skip links, ARIA labels, focus clavier, prefers-reduced-motion" },
 				{ label: "Sécurité", value: "Sanitisation HTML, CSP headers, safeJsonLd(), permissions policy" }
+			],
+			media: [
+				{
+					type: "embed",
+					src: "/assets/media/projects/oklm-drag-club/pipeline-diagram.html",
+					caption: "Pipeline de données — RSS → APIs → Build statique"
+				},
+				{
+					type: "video",
+					src: "/assets/media/projects/oklm-drag-club/oklm-demo.mp4",
+					caption: "Parcours utilisateur — navigation, filtres, épisodes"
+				},
+				{
+					type: "video",
+					src: "/assets/media/projects/oklm-drag-club/oklm-responsive.mp4",
+					caption: "Vue responsive — mobile et tablette"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/oklm-drag-club/design-system-1.webp",
+					caption: "Design System — Cover"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/oklm-drag-club/design-system-2.webp",
+					caption: "Design System — Couleurs OKLCH"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/oklm-drag-club/design-system-3.webp",
+					caption: "Design System — Typographie"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/oklm-drag-club/design-system-4.webp",
+					caption: "Design System — Composants"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/oklm-drag-club/design-system-5.webp",
+					caption: "Design System — Formulaires"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/oklm-drag-club/design-system-6.webp",
+					caption: "Design System — Grille & Spacing"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/oklm-drag-club/design-system-7.webp",
+					caption: "Design System — Iconographie"
+				}
 			]
 		}
 	},

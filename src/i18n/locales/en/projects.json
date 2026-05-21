@@ -176,6 +176,28 @@
           { "label": "Documented ADRs", "value": "5 (architectural decisions)" },
           { "label": "Security", "value": "JWT httpOnly + SameSite, bcrypt 12 rounds, Zod client+server, CSRF, Helmet, JSONB audit trail" },
           { "label": "Deployment", "value": "Live demo (Vercel + Railway + Neon)" }
+        ],
+        "media": [
+          { "caption": "Architecture — Frontend ↔ API ↔ PostgreSQL / Redis + Vercel / Railway / Neon deployment" },
+          { "caption": "User journey — login, dashboard, register, transactions" },
+          { "caption": "Responsive view — mobile and tablet" },
+          { "caption": "Design System — Cover" },
+          { "caption": "Design System — Brand (Le Phare)" },
+          { "caption": "Design System — Colors (La Palette)" },
+          { "caption": "Design System — Typography (Le Système)" },
+          { "caption": "Design System — Shapes & Spacing (Le Rythme)" },
+          { "caption": "Design System — Components (La Boîte à Outils)" },
+          { "caption": "Print — Cover" },
+          { "caption": "Print — La Vigie view (Dashboard)" },
+          { "caption": "Print — La Caisse view" },
+          { "caption": "Print — Le Flux view (Transactions)" },
+          { "caption": "Print — L'Équipage view (Staff)" },
+          { "caption": "Database schema — ERD (6 tables, FK relations)" },
+          { "caption": "Conceptual data model — MCD Merise" },
+          { "caption": "Use case diagram — 4 RBAC roles" },
+          { "caption": "Sequence diagram — auth, register, admin flows" },
+          { "caption": "Sitemap — application navigation tree" },
+          { "caption": "Mockup — 7 cash register management views" }
         ]
       }
     },

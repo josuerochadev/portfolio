@@ -296,6 +296,108 @@ export const PROJECTS: Project[] = [
 				{ label: "ADRs documentés", value: "5 (décisions architecturales)" },
 				{ label: "Sécurité", value: "JWT httpOnly + SameSite, bcrypt 12 rounds, Zod client+serveur, CSRF, Helmet, audit trail JSONB" },
 				{ label: "Déploiement", value: "Demo live (Vercel + Railway + Neon)" }
+			],
+			media: [
+				{
+					type: "embed",
+					src: "/assets/media/projects/tour-de-controle/architecture-diagram.html",
+					caption: "Architecture — Frontend ↔ API ↔ PostgreSQL / Redis + déploiement Vercel / Railway / Neon"
+				},
+				{
+					type: "video",
+					src: "/assets/media/projects/tour-de-controle/tour-demo.mp4",
+					caption: "Parcours utilisateur — login, dashboard, caisse, transactions"
+				},
+				{
+					type: "video",
+					src: "/assets/media/projects/tour-de-controle/tour-responsive.mp4",
+					caption: "Vue responsive — mobile et tablette"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/design-system-1.webp",
+					caption: "Design System — Cover"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/design-system-2.webp",
+					caption: "Design System — Brand (Le Phare)"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/design-system-3.webp",
+					caption: "Design System — Couleurs (La Palette)"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/design-system-4.webp",
+					caption: "Design System — Typographie (Le Système)"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/design-system-5.webp",
+					caption: "Design System — Formes & Espacement (Le Rythme)"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/design-system-6.webp",
+					caption: "Design System — Composants (La Boîte à Outils)"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/print-1.webp",
+					caption: "Print — Cover"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/print-2.webp",
+					caption: "Print — Vue La Vigie (Dashboard)"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/print-3.webp",
+					caption: "Print — Vue La Caisse"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/print-4.webp",
+					caption: "Print — Vue Le Flux (Transactions)"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/print-5.webp",
+					caption: "Print — Vue L'Équipage (Personnel)"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/erd.webp",
+					caption: "Schéma base de données — ERD (6 tables, relations FK)"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/mcd.webp",
+					caption: "Modèle conceptuel de données — MCD Merise"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/use-cases.webp",
+					caption: "Diagramme de cas d'utilisation — 4 rôles RBAC"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/sequence.webp",
+					caption: "Diagramme de séquence — flux auth, caisse, admin"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/arborescence.webp",
+					caption: "Arborescence — sitemap et navigation de l'application"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/maquette-caisse.webp",
+					caption: "Maquette — 7 vues de la gestion de caisse"
+				}
 			]
 		}
 	},

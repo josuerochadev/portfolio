@@ -176,6 +176,28 @@
           { "label": "ADRs documentados", "value": "5 (decisões arquiteturais)" },
           { "label": "Segurança", "value": "JWT httpOnly + SameSite, bcrypt 12 rounds, Zod cliente+servidor, CSRF, Helmet, audit trail JSONB" },
           { "label": "Deploy", "value": "Demo ao vivo (Vercel + Railway + Neon)" }
+        ],
+        "media": [
+          { "caption": "Arquitetura — Frontend ↔ API ↔ PostgreSQL / Redis + deploy Vercel / Railway / Neon" },
+          { "caption": "Jornada do usuário — login, dashboard, caixa, transações" },
+          { "caption": "Vista responsiva — mobile e tablet" },
+          { "caption": "Design System — Capa" },
+          { "caption": "Design System — Marca (Le Phare)" },
+          { "caption": "Design System — Cores (La Palette)" },
+          { "caption": "Design System — Tipografia (Le Système)" },
+          { "caption": "Design System — Formas & Espaçamento (Le Rythme)" },
+          { "caption": "Design System — Componentes (La Boîte à Outils)" },
+          { "caption": "Print — Capa" },
+          { "caption": "Print — Vista La Vigie (Dashboard)" },
+          { "caption": "Print — Vista La Caisse" },
+          { "caption": "Print — Vista Le Flux (Transações)" },
+          { "caption": "Print — Vista L'Équipage (Equipe)" },
+          { "caption": "Esquema do banco de dados — ERD (6 tabelas, relações FK)" },
+          { "caption": "Modelo conceitual de dados — MCD Merise" },
+          { "caption": "Diagrama de casos de uso — 4 roles RBAC" },
+          { "caption": "Diagrama de sequência — fluxos auth, caixa, admin" },
+          { "caption": "Arborescência — sitemap e navegação da aplicação" },
+          { "caption": "Maquete — 7 vistas da gestão de caixa" }
         ]
       }
     },

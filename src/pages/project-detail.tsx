@@ -290,8 +290,20 @@ export default function ProjectDetail() {
 										const maxTechs = Math.max(...groups.map(([, t]) => t.length));
 										const heroIndex = groups.findIndex(([, t]) => t.length === maxTechs);
 
-										const crops = ['0% 0%', '100% 100%', '0% 90%', '95% 10%', '50% 0%', '100% 50%'];
-										const scales = [1.8, 2.0, 1.6, 2.2, 1.5, 1.9];
+										// Halton sequence + per-project offset → each card shows a truly different region
+										const halton = (index: number, base: number) => {
+											let f = 1, r = 0;
+											let i = index + 1;
+											while (i > 0) { f /= base; r += f * (i % base); i = Math.floor(i / base); }
+											return r;
+										};
+										const offset = projectIndex * 7;
+										const groupCrop = (i: number) => {
+											const x = Math.round(halton(i + offset, 2) * 100);
+											const y = Math.round(halton(i + offset, 3) * 100);
+											return `${x}% ${y}%`;
+										};
+										const groupScale = (i: number) => 2.0 + halton(i + offset, 5) * 1.5; // 2.0–3.5
 
 										return (
 											<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -314,8 +326,9 @@ export default function ProjectDetail() {
 																aria-hidden="true"
 																className="absolute inset-0 w-full h-full object-cover opacity-[0.08] mix-blend-multiply dark:mix-blend-soft-light dark:opacity-[0.10]"
 																style={{
-																	objectPosition: crops[groupIndex % crops.length],
-																	transform: `scale(${scales[groupIndex % scales.length]})`,
+																	objectPosition: groupCrop(groupIndex),
+																	transformOrigin: groupCrop(groupIndex),
+																	transform: `scale(${groupScale(groupIndex).toFixed(2)})`,
 																}}
 															/>
 
@@ -457,14 +470,22 @@ export default function ProjectDetail() {
 											const isHero = index === 0;
 											const isNuit = index % 2 === 0;
 											const isFullText = number === null;
-											const isLongDetail = detail !== null && detail.length >= 40;
+											const isLast = index === detailMetrics.length - 1;
 
-											// Col span logic
+											// Col span: hero = 2, others = 1, last item fills remaining space
+											const remainingAfterHero = detailMetrics.length - 1;
+											const lastRowCount = remainingAfterHero % 3;
+											const lastRowCountSm = remainingAfterHero % 2;
 											const colSpan = isHero
-												? 'sm:col-span-2 lg:col-span-3'
-												: (isFullText || isLongDetail)
-													? 'sm:col-span-2'
-													: '';
+												? 'sm:col-span-2'
+												: isLast && lastRowCount === 1
+													? 'lg:col-span-3'
+													: isLast && lastRowCount === 2
+														? 'lg:col-span-2'
+														: '';
+											const colSpanSm = !isHero && isLast && lastRowCountSm === 1
+												? 'sm:col-span-2'
+												: '';
 
 											// Color classes
 											const bgClass = isNuit
@@ -479,75 +500,40 @@ export default function ProjectDetail() {
 											const detailClass = isNuit
 												? 'text-beige/70 dark:text-beige/70'
 												: 'text-surface-citron-muted dark:text-beige/60';
+
 											return (
 												<div
 													key={metric.label}
-													className={`flex flex-col justify-between p-6 rounded-2xl
+													className={`flex flex-col gap-3 p-5 rounded-2xl
 														border shadow-card
 														hover:shadow-card-hover hover:scale-[1.01]
 														transition-all duration-300 ease-[cubic-bezier(0.83,0,0.17,1)]
-														${colSpan}
-														${bgClass}
-														${isHero ? 'min-h-[200px]' : 'min-h-[140px]'}`}
+														${colSpan} ${colSpanSm}
+														${bgClass}`}
 												>
-													<span className={`text-xs font-sans font-bold uppercase tracking-[0.2em] mb-4 ${labelClass}`}>
+													<span className={`text-xs font-sans font-bold uppercase tracking-[0.2em] ${labelClass}`}>
 														{metric.label}
 													</span>
 
-													{/* Hero card */}
-													{isHero && number !== null && (
+													{/* Number card (hero or standard) */}
+													{number !== null && (
 														<div className="flex flex-col gap-1">
 															<span
-																className={`text-5xl md:text-7xl font-display font-thin leading-none ${numberClass}`}
-																style={{ fontVariationSettings: 'var(--fv-ghost)' }}
+																className={`${isHero ? 'text-5xl md:text-7xl' : 'text-4xl md:text-5xl'} font-display font-extrabold leading-none ${numberClass}`}
 															>
 																{number}
 															</span>
 															{detail && (
-																<span className={`text-base leading-relaxed mt-2 ${detailClass}`}>
+																<span className={`${isHero ? 'text-base' : 'text-sm'} leading-relaxed ${detailClass}`}>
 																	{detail}
 																</span>
 															)}
-														</div>
-													)}
-
-													{/* Compact card — number with short detail */}
-													{!isHero && number !== null && !isLongDetail && (
-														<div className="flex flex-col gap-1">
-															<span
-																className={`text-4xl md:text-5xl font-display font-thin leading-none ${numberClass}`}
-																style={{ fontVariationSettings: 'var(--fv-ghost)' }}
-															>
-																{number}
-															</span>
-															{detail && (
-																<span className={`text-sm leading-relaxed ${detailClass}`}>
-																	{detail}
-																</span>
-															)}
-														</div>
-													)}
-
-													{/* Wide card — number + long detail side by side */}
-													{!isHero && number !== null && isLongDetail && (
-														<div className="flex items-end gap-6">
-															<span
-																className={`text-4xl md:text-5xl font-display font-thin leading-none shrink-0 ${numberClass}`}
-																style={{ fontVariationSettings: 'var(--fv-ghost)' }}
-															>
-																{number}
-															</span>
-															<div className={`border-l pl-6 py-1 ${isNuit ? 'border-beige/20' : 'border-violet/15 dark:border-beige/15'}`}>
-																<span className={`text-sm leading-relaxed block ${detailClass}`}>
-																	{detail}
-																</span>
-															</div>
 														</div>
 													)}
 
 													{/* Full-text card — no extractable number */}
 													{isFullText && (
-														<span className={`text-xl md:text-2xl font-display font-semibold italic leading-snug break-words ${numberClass}`}>
+														<span className={`text-base md:text-lg font-display font-semibold italic leading-snug break-words ${numberClass}`}>
 															{metric.value}
 														</span>
 													)}

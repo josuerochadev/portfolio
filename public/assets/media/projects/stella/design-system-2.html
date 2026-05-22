@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stella DS — Couleurs</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Roboto:wght@400;500;700&family=Roboto+Slab:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  :root {
+    --bg: #0f0a18;
+    --surface-0: rgba(61,42,84,0.25);
+    --surface-1: rgba(61,42,84,0.40);
+    --border: rgba(174,201,255,0.12);
+    --border-strong: rgba(174,201,255,0.25);
+    --fg: #AEC9FF;
+    --fg-strong: #ffffff;
+    --fg-muted: rgba(174,201,255,0.6);
+    --fg-faint: rgba(174,201,255,0.35);
+    --amber: #FFB347;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Roboto', sans-serif;
+    background: var(--bg);
+    background-image: linear-gradient(135deg, #3D2A54 0%, #1E1326 55%, #0f0a18 100%);
+    background-attachment: fixed;
+    color: var(--fg);
+    min-height: 100vh;
+    display: flex; justify-content: center;
+    padding: 48px 24px 64px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .canvas { width: 100%; max-width: 900px; }
+
+  /* Header */
+  .page-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-bottom: 1px solid var(--border-strong);
+    padding-bottom: 16px; margin-bottom: 40px;
+  }
+  .page-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--fg-faint);
+  }
+  .page-title {
+    font-family: 'Dela Gothic One', cursive;
+    font-size: 28px; color: var(--fg-strong);
+  }
+  .page-context {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--fg-faint);
+  }
+
+  .intro {
+    font-family: 'Roboto Slab', serif;
+    font-size: 15px; color: var(--fg-muted);
+    line-height: 1.7; margin-bottom: 36px;
+    max-width: 640px;
+  }
+
+  /* Section label */
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--fg-faint);
+    margin-bottom: 14px; margin-top: 36px;
+  }
+  .section-label:first-of-type { margin-top: 0; }
+
+  /* Color grid */
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+  }
+  .swatch {
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    backdrop-filter: blur(8px);
+    transition: transform 0.15s;
+  }
+  .swatch:hover { transform: translateY(-2px); }
+  .swatch-color {
+    height: 64px;
+    display: flex; align-items: flex-end; padding: 8px 12px;
+  }
+  .swatch-info { padding: 10px 12px; background: var(--surface-0); }
+  .swatch-var {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; color: var(--fg-faint);
+    letter-spacing: 0.04em; text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .swatch-hex {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; font-weight: 600; color: var(--fg-strong);
+  }
+  .swatch-usage {
+    font-size: 11px; color: var(--fg-muted); margin-top: 2px;
+  }
+
+  /* Semantic tokens */
+  .sem-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+  }
+  .sem-token {
+    padding: 12px 14px; border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface-0);
+  }
+  .sem-token .var {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--fg-faint);
+  }
+  .sem-token .val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--fg); margin-top: 4px;
+  }
+  .sem-token .preview {
+    width: 100%; height: 8px; border-radius: 4px; margin-top: 8px;
+  }
+
+  /* Gradients */
+  .grad-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .grad-card {
+    flex: 1; min-width: 240px;
+    border-radius: 12px; padding: 20px;
+    border: 1px solid var(--border);
+    min-height: 80px;
+    display: flex; flex-direction: column; justify-content: flex-end;
+  }
+  .grad-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 600; color: #fff;
+  }
+  .grad-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; color: rgba(255,255,255,0.6); margin-top: 2px;
+  }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <div class="page-head">
+    <div>
+      <div class="page-num">01 / Couleurs</div>
+      <div class="page-title">LA PALETTE</div>
+    </div>
+    <div class="page-context">Stella DS &middot; 2024</div>
+  </div>
+
+  <div class="intro">
+    Theme cosmique sombre. Purple profond pour les fonds, periwinkle pour le texte,
+    amber pour les CTAs et accents chauds. Cyan et magenta en accents secondaires
+    pour creer de la profondeur stellaire.
+  </div>
+
+  <!-- PURPLE SCALE -->
+  <div class="section-label">Purple &middot; Fonds &amp; Surfaces</div>
+  <div class="color-grid">
+    <div class="swatch">
+      <div class="swatch-color" style="background:#3D2A54;"></div>
+      <div class="swatch-info">
+        <div class="swatch-var">--primary</div>
+        <div class="swatch-hex">#3D2A54</div>
+        <div class="swatch-usage">Purple principal</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#1E1326;"></div>
+      <div class="swatch-info">
+        <div class="swatch-var">--secondary</div>
+        <div class="swatch-hex">#1E1326</div>
+        <div class="swatch-usage">Fond profond</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#0f0a18;"></div>
+      <div class="swatch-info">
+        <div class="swatch-var">--bg</div>
+        <div class="swatch-hex">#0F0A18</div>
+        <div class="swatch-usage">Fond extreme</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#4a3366;"></div>
+      <div class="swatch-info">
+        <div class="swatch-var">--purple-800</div>
+        <div class="swatch-hex">#4A3366</div>
+        <div class="swatch-usage">Hover cards</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PERIWINKLE SCALE -->
+  <div class="section-label">Periwinkle &middot; Texte &amp; Foreground</div>
+  <div class="color-grid">
+    <div class="swatch">
+      <div class="swatch-color" style="background:#AEC9FF;"></div>
+      <div class="swatch-info">
+        <div class="swatch-var">--fg / --text</div>
+        <div class="swatch-hex">#AEC9FF</div>
+        <div class="swatch-usage">Texte principal</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#ffffff;"></div>
+      <div class="swatch-info">
+        <div class="swatch-var">--fg-strong</div>
+        <div class="swatch-hex">#FFFFFF</div>
+        <div class="swatch-usage">Titres, headings</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:rgba(174,201,255,0.6); border: 1px solid rgba(174,201,255,0.2);"></div>
+      <div class="swatch-info">
+        <div class="swatch-var">--fg-muted</div>
+        <div class="swatch-hex">AEC9FF / 60%</div>
+        <div class="swatch-usage">Texte secondaire</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:rgba(174,201,255,0.35); border: 1px solid rgba(174,201,255,0.15);"></div>
+      <div class="swatch-info">
+        <div class="swatch-var">--fg-faint</div>
+        <div class="swatch-hex">AEC9FF / 35%</div>
+        <div class="swatch-usage">Labels, eyebrows</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACCENT COLORS -->
+  <div class="section-label">Accents &middot; Actions &amp; Signaux</div>
+  <div class="color-grid">
+    <div class="swatch">
+      <div class="swatch-color" style="background:#FFB347;"></div>
+      <div class="swatch-info">
+        <div class="swatch-var">--amber / --accent</div>
+        <div class="swatch-hex">#FFB347</div>
+        <div class="swatch-usage">CTA primaire, prix, glow</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#38bdf8;"></div>
+      <div class="swatch-info">
+        <div class="swatch-var">--cyan</div>
+        <div class="swatch-hex">#38BDF8</div>
+        <div class="swatch-usage">Boutons secondaires, liens</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#e040fb;"></div>
+      <div class="swatch-info">
+        <div class="swatch-var">--magenta</div>
+        <div class="swatch-hex">#E040FB</div>
+        <div class="swatch-usage">Accent tertiaire, glow</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#34d399;"></div>
+      <div class="swatch-info">
+        <div class="swatch-var">--green</div>
+        <div class="swatch-hex">#34D399</div>
+        <div class="swatch-usage">Succes, validation</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#f87171;"></div>
+      <div class="swatch-info">
+        <div class="swatch-var">--red</div>
+        <div class="swatch-hex">#F87171</div>
+        <div class="swatch-usage">Erreur, danger, destructif</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEMANTIC TOKENS -->
+  <div class="section-label">Tokens semantiques CSS</div>
+  <div class="sem-grid">
+    <div class="sem-token">
+      <div class="var">--stl-fg</div>
+      <div class="val">#AEC9FF</div>
+      <div class="preview" style="background:#AEC9FF;"></div>
+    </div>
+    <div class="sem-token">
+      <div class="var">--stl-fg-on-amber</div>
+      <div class="val">#3D2A54</div>
+      <div class="preview" style="background:#3D2A54;"></div>
+    </div>
+    <div class="sem-token">
+      <div class="var">--stl-border</div>
+      <div class="val">AEC9FF / 12%</div>
+      <div class="preview" style="background:rgba(174,201,255,0.12);"></div>
+    </div>
+    <div class="sem-token">
+      <div class="var">--stl-border-strong</div>
+      <div class="val">3D2A54 / 90%</div>
+      <div class="preview" style="background:rgba(61,42,84,0.9);"></div>
+    </div>
+    <div class="sem-token">
+      <div class="var">--stl-surface-overlay</div>
+      <div class="val">0F0A18 / 72%</div>
+      <div class="preview" style="background:rgba(15,10,24,0.72);"></div>
+    </div>
+  </div>
+
+  <!-- GRADIENTS -->
+  <div class="section-label">Gradients</div>
+  <div class="grad-row">
+    <div class="grad-card" style="background:linear-gradient(135deg, #3D2A54 0%, #1E1326 55%, #0f0a18 100%);">
+      <div class="grad-name">bg-background-default</div>
+      <div class="grad-val">135deg &middot; primary → secondary → bg</div>
+    </div>
+    <div class="grad-card" style="background:linear-gradient(90deg, #1E1326 0%, #3D2A54 100%);">
+      <div class="grad-name">bg-background-header</div>
+      <div class="grad-val">90deg &middot; secondary → primary</div>
+    </div>
+  </div>
+
+  <!-- GLOWS -->
+  <div class="section-label">Glows &middot; Ombres lumineuses</div>
+  <div class="grad-row">
+    <div class="grad-card" style="background:var(--surface-0); box-shadow: 0 0 20px 4px rgba(255,179,71,0.3);">
+      <div class="grad-name" style="color:var(--amber);">shadow-glow-amber</div>
+      <div class="grad-val" style="color:var(--fg-faint);">0 0 20px 4px / 30%</div>
+    </div>
+    <div class="grad-card" style="background:var(--surface-0); box-shadow: 0 0 20px 4px rgba(56,189,248,0.25);">
+      <div class="grad-name" style="color:#38bdf8;">shadow-glow-cyan</div>
+      <div class="grad-val" style="color:var(--fg-faint);">0 0 20px 4px / 25%</div>
+    </div>
+    <div class="grad-card" style="background:var(--surface-0); box-shadow: 0 0 30px 6px rgba(224,64,251,0.18);">
+      <div class="grad-name" style="color:#e040fb;">shadow-glow-magenta</div>
+      <div class="grad-val" style="color:var(--fg-faint);">0 0 30px 6px / 18%</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

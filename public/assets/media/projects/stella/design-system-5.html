@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stella DS — Composants</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Bebas+Neue&family=Roboto:wght@400;500;700&family=Roboto+Slab:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  :root {
+    --bg: #0f0a18;
+    --surface-0: rgba(61,42,84,0.25);
+    --surface-1: rgba(61,42,84,0.40);
+    --surface-2: rgba(61,42,84,0.55);
+    --border: rgba(174,201,255,0.12);
+    --border-strong: rgba(174,201,255,0.25);
+    --fg: #AEC9FF;
+    --fg-strong: #ffffff;
+    --fg-muted: rgba(174,201,255,0.6);
+    --fg-faint: rgba(174,201,255,0.35);
+    --fg-on-amber: #3D2A54;
+    --amber: #FFB347;
+    --amber-glow: rgba(255,179,71,0.3);
+    --cyan: #38bdf8;
+    --cyan-glow: rgba(56,189,248,0.25);
+    --green: #34d399;
+    --red: #f87171;
+    --magenta: #e040fb;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Roboto', sans-serif;
+    background: var(--bg);
+    background-image: linear-gradient(135deg, #3D2A54 0%, #1E1326 55%, #0f0a18 100%);
+    background-attachment: fixed;
+    color: var(--fg);
+    min-height: 100vh;
+    display: flex; justify-content: center;
+    padding: 48px 24px 64px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .canvas { width: 100%; max-width: 900px; }
+
+  .page-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-bottom: 1px solid var(--border-strong);
+    padding-bottom: 16px; margin-bottom: 40px;
+  }
+  .page-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-faint); }
+  .page-title { font-family: 'Dela Gothic One', cursive; font-size: 28px; color: var(--fg-strong); }
+  .page-context { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-faint); }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--fg-faint);
+    margin-bottom: 14px; margin-top: 40px;
+  }
+  .section-label:first-of-type { margin-top: 0; }
+
+  /* BUTTONS */
+  .btn-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px; letter-spacing: 0.06em;
+    padding: 12px 28px;
+    border-radius: 999px;
+    border: none; cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  .btn-primary {
+    background: var(--amber);
+    color: var(--fg-on-amber);
+    box-shadow: 0 0 20px 4px var(--amber-glow);
+  }
+  .btn-primary:hover {
+    transform: scale(1.04);
+    box-shadow: 0 0 28px 6px var(--amber-glow);
+  }
+  .btn-secondary {
+    background: transparent;
+    color: var(--cyan);
+    border: 1.5px solid rgba(56,189,248,0.4);
+  }
+  .btn-secondary:hover {
+    background: rgba(56,189,248,0.1);
+    box-shadow: 0 0 20px 4px var(--cyan-glow);
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--fg-muted);
+    border: 1.5px solid var(--border);
+  }
+  .btn-ghost:hover {
+    background: var(--surface-1);
+    color: var(--fg);
+  }
+  .btn-danger {
+    background: rgba(248,113,113,0.15);
+    color: var(--red);
+    border: 1.5px solid rgba(248,113,113,0.3);
+  }
+  .btn-sm {
+    font-size: 13px; padding: 8px 18px;
+  }
+
+  /* Filter pills */
+  .filter-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .filter-pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface-0);
+    color: var(--fg-muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .filter-pill:hover {
+    border-color: var(--border-strong);
+    color: var(--fg);
+  }
+  .filter-pill--active {
+    background: rgba(255,179,71,0.15);
+    border-color: rgba(255,179,71,0.3);
+    color: var(--amber);
+    font-weight: 600;
+  }
+
+  /* INPUTS */
+  .input-row { display: flex; gap: 16px; flex-wrap: wrap; }
+  .input-group { flex: 1; min-width: 200px; }
+  .input-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--fg-faint);
+    margin-bottom: 8px; display: block;
+  }
+  .input-field {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--surface-0);
+    color: var(--fg);
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    backdrop-filter: blur(8px);
+  }
+  .input-field::placeholder { color: var(--fg-faint); }
+  .input-field:focus {
+    border-color: var(--amber);
+    box-shadow: 0 0 0 3px var(--amber-glow);
+  }
+  .input-field--error {
+    border-color: var(--red);
+    box-shadow: 0 0 0 3px rgba(248,113,113,0.2);
+  }
+
+  /* BADGES */
+  .badge-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+    display: inline-flex; align-items: center; gap: 5px;
+  }
+  .badge-dot { width: 6px; height: 6px; border-radius: 50%; }
+  .badge--green { background: rgba(52,211,153,0.15); color: var(--green); }
+  .badge--green .badge-dot { background: var(--green); box-shadow: 0 0 6px var(--green); }
+  .badge--amber { background: rgba(255,179,71,0.15); color: var(--amber); }
+  .badge--amber .badge-dot { background: var(--amber); box-shadow: 0 0 6px var(--amber); }
+  .badge--red { background: rgba(248,113,113,0.15); color: var(--red); }
+  .badge--red .badge-dot { background: var(--red); box-shadow: 0 0 6px var(--red); }
+  .badge--cyan { background: rgba(56,189,248,0.15); color: var(--cyan); }
+
+  /* CARDS */
+  .card-row { display: flex; gap: 16px; flex-wrap: wrap; }
+  .card {
+    flex: 1; min-width: 240px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: var(--surface-0);
+    backdrop-filter: blur(12px);
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px -8px rgba(0,0,0,0.4);
+  }
+  .card-img {
+    height: 100px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 40px;
+  }
+  .card-body { padding: 16px 20px; }
+  .card-title {
+    font-family: 'Roboto Slab', serif;
+    font-size: 15px; font-weight: 600;
+    color: var(--fg-strong); margin-bottom: 4px;
+  }
+  .card-desc { font-size: 12px; color: var(--fg-muted); margin-bottom: 12px; }
+  .card-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px; color: var(--amber);
+  }
+  .card-footer {
+    padding: 12px 20px;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+
+  /* SKELETON */
+  .skeleton-row { display: flex; gap: 16px; flex-wrap: wrap; }
+  .skeleton-card {
+    flex: 1; min-width: 200px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: var(--surface-0);
+    padding: 20px; overflow: hidden;
+  }
+  .skel {
+    border-radius: 6px;
+    background: linear-gradient(90deg, var(--surface-1) 25%, var(--surface-2) 50%, var(--surface-1) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+  }
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* TOAST */
+  .toast {
+    padding: 14px 18px;
+    border-radius: 12px;
+    border: 1px solid;
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px; font-weight: 500;
+    max-width: 400px;
+  }
+  .toast--success { background: rgba(52,211,153,0.1); border-color: rgba(52,211,153,0.3); color: var(--green); }
+  .toast--error { background: rgba(248,113,113,0.1); border-color: rgba(248,113,113,0.3); color: var(--red); }
+  .toast--info { background: rgba(56,189,248,0.1); border-color: rgba(56,189,248,0.3); color: var(--cyan); }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <div class="page-head">
+    <div>
+      <div class="page-num">04 / Composants</div>
+      <div class="page-title">LA BOITE A OUTILS</div>
+    </div>
+    <div class="page-context">Stella DS &middot; 2024</div>
+  </div>
+
+  <!-- BUTTONS -->
+  <div class="section-label">Boutons</div>
+  <div class="btn-row">
+    <button class="btn btn-primary">AJOUTER AU PANIER</button>
+    <button class="btn btn-secondary">VOIR LE CATALOGUE</button>
+    <button class="btn btn-ghost">ANNULER</button>
+    <button class="btn btn-danger btn-sm">SUPPRIMER</button>
+  </div>
+
+  <div class="btn-row" style="margin-top: 12px;">
+    <button class="btn btn-primary btn-sm">ACHETER</button>
+    <button class="btn btn-secondary btn-sm">CONNEXION</button>
+    <button class="btn btn-ghost btn-sm">RETOUR</button>
+  </div>
+
+  <!-- FILTER PILLS -->
+  <div class="section-label">Filtres</div>
+  <div class="filter-row">
+    <span class="filter-pill filter-pill--active">Toutes</span>
+    <span class="filter-pill">Orion</span>
+    <span class="filter-pill">Centaure</span>
+    <span class="filter-pill">Lyre</span>
+    <span class="filter-pill">Cygne</span>
+    <span class="filter-pill">Sagittaire</span>
+  </div>
+
+  <!-- INPUTS -->
+  <div class="section-label">Champs</div>
+  <div class="input-row">
+    <div class="input-group">
+      <label class="input-label">Email</label>
+      <input class="input-field" type="text" placeholder="votre@email.fr" value="stella@cosmos.fr">
+    </div>
+    <div class="input-group">
+      <label class="input-label">Mot de passe</label>
+      <input class="input-field" type="password" value="monmdp123!" style="border-color: var(--amber); box-shadow: 0 0 0 3px rgba(255,179,71,0.15);">
+    </div>
+  </div>
+  <div class="input-row" style="margin-top: 12px;">
+    <div class="input-group">
+      <label class="input-label">Recherche</label>
+      <input class="input-field" type="text" placeholder="Rechercher une etoile...">
+    </div>
+    <div class="input-group">
+      <label class="input-label" style="color:var(--red);">Erreur</label>
+      <input class="input-field input-field--error" type="text" value="email-invalide">
+    </div>
+  </div>
+
+  <!-- BADGES -->
+  <div class="section-label">Badges &amp; Statuts</div>
+  <div class="badge-row">
+    <span class="badge badge--green"><span class="badge-dot"></span> Livree</span>
+    <span class="badge badge--amber"><span class="badge-dot"></span> En cours</span>
+    <span class="badge badge--red"><span class="badge-dot"></span> Annulee</span>
+    <span class="badge badge--cyan">Nouveau</span>
+    <span class="badge" style="background:var(--surface-1); color:var(--fg-muted);">Brouillon</span>
+  </div>
+
+  <!-- CARDS -->
+  <div class="section-label">Cartes</div>
+  <div class="card-row">
+    <div class="card">
+      <div class="card-img" style="background: linear-gradient(135deg, rgba(255,179,71,0.15), rgba(255,179,71,0.05));">&#11088;</div>
+      <div class="card-body">
+        <div class="card-title">Betelgeuse</div>
+        <div class="card-desc">Supergéante rouge &middot; Orion &middot; 700 al</div>
+        <div class="card-price">2 450,00 &euro;</div>
+      </div>
+      <div class="card-footer">
+        <span class="badge badge--green"><span class="badge-dot"></span> Disponible</span>
+        <span style="font-size:12px; color:var(--fg-faint);">&#9733; 4.8</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img" style="background: linear-gradient(135deg, rgba(56,189,248,0.12), rgba(56,189,248,0.04));">&#10024;</div>
+      <div class="card-body">
+        <div class="card-title">Vega</div>
+        <div class="card-desc">Etoile brillante &middot; Lyre &middot; 25 al</div>
+        <div class="card-price">1 180,00 &euro;</div>
+      </div>
+      <div class="card-footer">
+        <span class="badge badge--amber"><span class="badge-dot"></span> Reservee</span>
+        <span style="font-size:12px; color:var(--fg-faint);">&#9733; 4.5</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SKELETONS -->
+  <div class="section-label">Skeletons (chargement)</div>
+  <div class="skeleton-row">
+    <div class="skeleton-card">
+      <div class="skel" style="height:80px; margin-bottom:12px;"></div>
+      <div class="skel" style="height:14px; width:70%; margin-bottom:8px;"></div>
+      <div class="skel" style="height:10px; width:50%; margin-bottom:12px;"></div>
+      <div class="skel" style="height:18px; width:40%;"></div>
+    </div>
+    <div class="skeleton-card">
+      <div class="skel" style="height:80px; margin-bottom:12px;"></div>
+      <div class="skel" style="height:14px; width:60%; margin-bottom:8px;"></div>
+      <div class="skel" style="height:10px; width:45%; margin-bottom:12px;"></div>
+      <div class="skel" style="height:18px; width:35%;"></div>
+    </div>
+  </div>
+
+  <!-- TOASTS -->
+  <div class="section-label">Notifications (toasts)</div>
+  <div style="display:flex; flex-direction:column; gap:10px;">
+    <div class="toast toast--success">&#9989; Etoile ajoutee au panier avec succes</div>
+    <div class="toast toast--error">&#10060; Erreur de connexion — verifiez vos identifiants</div>
+    <div class="toast toast--info">&#128161; 3 nouvelles etoiles ajoutees au catalogue</div>
+  </div>
+
+</div>
+</body>
+</html>

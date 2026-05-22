@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stella DS — Cover</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Bebas+Neue&family=Roboto:wght@400;500;700&family=Roboto+Slab:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  :root {
+    --bg: #0f0a18;
+    --surface-0: rgba(61,42,84,0.25);
+    --surface-1: rgba(61,42,84,0.40);
+    --border: rgba(174,201,255,0.12);
+    --border-strong: rgba(174,201,255,0.25);
+    --fg: #AEC9FF;
+    --fg-strong: #ffffff;
+    --fg-muted: rgba(174,201,255,0.6);
+    --fg-faint: rgba(174,201,255,0.35);
+    --amber: #FFB347;
+    --amber-glow: rgba(255,179,71,0.35);
+    --cyan: #38bdf8;
+    --magenta: #e040fb;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Roboto', sans-serif;
+    background: var(--bg);
+    background-image: linear-gradient(135deg, #3D2A54 0%, #1E1326 55%, #0f0a18 100%);
+    background-attachment: fixed;
+    color: var(--fg);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 24px;
+    text-align: center;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+    position: absolute;
+    top: 40px; left: 48px;
+  }
+  .version {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+    position: absolute;
+    top: 40px; right: 48px;
+  }
+
+  /* Star glow */
+  .star-glow {
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--amber-glow) 0%, rgba(255,179,71,0.08) 50%, transparent 70%);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 24px;
+    animation: pulse-glow 4s ease-in-out infinite;
+  }
+  .star-glow .star {
+    font-size: 56px;
+    filter: drop-shadow(0 0 12px var(--amber-glow));
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.08); opacity: 0.85; }
+  }
+
+  .brand {
+    font-family: 'Dela Gothic One', cursive;
+    font-size: clamp(48px, 8vw, 80px);
+    color: var(--fg-strong);
+    letter-spacing: 0.04em;
+    line-height: 1;
+    margin-bottom: 16px;
+    text-shadow: 0 0 60px var(--amber-glow);
+  }
+
+  .subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    margin-bottom: 4px;
+  }
+  .subtitle-2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+  }
+
+  /* TOC */
+  .toc {
+    display: flex;
+    gap: 12px;
+    margin-top: 80px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .toc-item {
+    padding: 16px 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--surface-0);
+    backdrop-filter: blur(8px);
+    min-width: 140px;
+    text-align: left;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .toc-item:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
+  }
+  .toc-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--amber);
+    line-height: 1;
+  }
+  .toc-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    margin-top: 4px;
+  }
+</style>
+</head>
+<body>
+
+<div class="meta">Direction visuelle &middot; Cosmos / Etoiles</div>
+<div class="version">DS v1.0 &middot; 2024</div>
+
+<div class="star-glow">
+  <span class="star">&#11088;</span>
+</div>
+
+<div class="brand">STELLA</div>
+<div class="subtitle">Design System &middot; v1.0</div>
+<div class="subtitle-2">E-Commerce &middot; 2024</div>
+
+<div class="toc">
+  <div class="toc-item">
+    <div class="toc-num">01</div>
+    <div class="toc-label">Couleurs</div>
+  </div>
+  <div class="toc-item">
+    <div class="toc-num">02</div>
+    <div class="toc-label">Typo</div>
+  </div>
+  <div class="toc-item">
+    <div class="toc-num">03</div>
+    <div class="toc-label">Formes</div>
+  </div>
+  <div class="toc-item">
+    <div class="toc-num">04</div>
+    <div class="toc-label">Composants</div>
+  </div>
+</div>
+
+</body>
+</html>

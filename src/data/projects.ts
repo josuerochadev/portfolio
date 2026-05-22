@@ -303,6 +303,47 @@ export const PROJECTS: Project[] = [
 				{ label: "Compilation CI", value: "15/15 programmes batch passent" },
 				{ label: "Transactions CICS", value: "7 (AFFI, AJOU, MAJO, SUPP, DELG, LGEN, STAT)" },
 				{ label: "Tables DB2", value: "5 tables, 14 scripts SQL" }
+			],
+			media: [
+				// --- Architecture (diagrammes interactifs) ---
+				{
+					type: "embed",
+					src: "/assets/media/projects/poei-mainframe/architecture-diagram.html",
+					caption: "Double architecture — z/OS (COBOL/JCL/VSAM/DB2/CICS) et Docker (GnuCOBOL/Flask/SQLite)",
+					group: "Architecture"
+				},
+				{
+					type: "embed",
+					src: "/assets/media/projects/poei-mainframe/erd-diagram.html",
+					caption: "Schéma DB2 — 5 tables (CLIENT, REGION, PROFESSI, NATCOMPT, MOUVEMENT) avec relations FK",
+					group: "Architecture"
+				},
+				{
+					type: "embed",
+					src: "/assets/media/projects/poei-mainframe/cics-flow-diagram.html",
+					caption: "Flux CICS pseudo-conversationnel — SEND MAP → RETURN TRANSID → RECEIVE MAP avec COMMAREA",
+					group: "Architecture"
+				},
+				// --- Démo (vidéos — à fournir) ---
+				// {
+				// 	type: "video",
+				// 	src: "/assets/media/projects/poei-mainframe/mainframe-demo.mp4",
+				// 	caption: "Démo web — simulation des programmes batch et écrans CICS via l'API Flask",
+				// 	group: "Démo"
+				// },
+				// {
+				// 	type: "video",
+				// 	src: "/assets/media/projects/poei-mainframe/mainframe-cics.mp4",
+				// 	caption: "Écrans CICS — navigation dans les 7 transactions (AFFI, AJOU, MAJU, SUPP, DELG, LIST, STAT)",
+				// 	group: "Démo"
+				// },
+				// --- Captures BMS (à fournir) ---
+				// {
+				// 	type: "image",
+				// 	src: "/assets/media/projects/poei-mainframe/bms-1.webp",
+				// 	caption: "Écran BMS — Affichage client (CLIAFF)",
+				// 	group: "Écrans BMS"
+				// },
 			]
 		}
 	},
@@ -777,6 +818,37 @@ export const PROJECTS: Project[] = [
 					src: "/assets/media/projects/stella/auth-flow-diagram.html",
 					caption: "Flux Auth — JWT httpOnly + CSRF double-submit + refresh token rotation",
 					group: "Architecture"
+				},
+				// --- Design System ---
+				{
+					type: "embed",
+					src: "/assets/media/projects/stella/design-system-1.html",
+					caption: "Design System — Cover",
+					group: "Design System"
+				},
+				{
+					type: "embed",
+					src: "/assets/media/projects/stella/design-system-2.html",
+					caption: "Design System — Couleurs & Palette",
+					group: "Design System"
+				},
+				{
+					type: "embed",
+					src: "/assets/media/projects/stella/design-system-3.html",
+					caption: "Design System — Typographie",
+					group: "Design System"
+				},
+				{
+					type: "embed",
+					src: "/assets/media/projects/stella/design-system-4.html",
+					caption: "Design System — Formes & Espacement",
+					group: "Design System"
+				},
+				{
+					type: "embed",
+					src: "/assets/media/projects/stella/design-system-5.html",
+					caption: "Design System — Composants",
+					group: "Design System"
 				}
 			]
 		}

@@ -142,8 +142,8 @@ function ProjectGroup({ title, items, startIndex, t }: {
 											href={project.githubUrl}
 											target="_blank"
 											rel="noopener noreferrer"
-											className="px-4 py-2 rounded-full bg-violet/10 text-violet dark:text-beige border border-violet/20 dark:border-beige/20
-											hover:bg-violet hover:text-beige dark:hover:bg-beige/20 dark:hover:text-beige
+											className="px-4 py-2 rounded-full bg-orange/10 text-orange-dark dark:text-orange border border-orange/20
+											hover:bg-orange hover:text-beige dark:hover:bg-orange/20 dark:hover:text-orange
 											transition-all duration-300
 											inline-flex items-center gap-2 font-medium text-sm
 											hover:shadow-cta hover:scale-105 active:scale-95"
@@ -157,8 +157,8 @@ function ProjectGroup({ title, items, startIndex, t }: {
 											href={project.demoUrl}
 											target="_blank"
 											rel="noopener noreferrer"
-											className="px-4 py-2 rounded-full bg-lime/10 text-violet dark:text-lime border border-lime/30 dark:border-lime/20
-											hover:bg-lime hover:text-violet dark:hover:bg-lime/20 dark:hover:text-lime
+											className="px-4 py-2 rounded-full bg-orange/10 text-orange-dark dark:text-orange border border-orange/20
+											hover:bg-orange hover:text-beige dark:hover:bg-orange/20 dark:hover:text-orange
 											transition-all duration-300
 											inline-flex items-center gap-2 font-medium text-sm
 											hover:shadow-cta hover:scale-105 active:scale-95"

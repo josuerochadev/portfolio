@@ -94,7 +94,7 @@
       "context": "Simulate the full cycle of a mainframe application around a single business domain — from batch processing to real-time transactional screens.",
       "detail": {
         "deliverables": [
-          { "title": "14 batch COBOL programs with 43 JCL", "description": "Complete sequential processing: VSAM KSDS creation, SORT/MERGE, CALL subprograms, account statement editing with control breaks and totals." },
+          { "title": "15 batch COBOL programs with 60 JCL", "description": "Complete sequential processing: VSAM KSDS creation, SORT/MERGE, CALL subprograms, account statement editing with control breaks and totals." },
           { "title": "DB2 system with embedded SQL", "description": "11 COBOL-SQL programs on a 5-table schema (CLIENT, REGION, PROFESSI, NATCOMPT, MOUVEMENT). Parameterized cursors, COMMIT/ROLLBACK transaction management, views and indexes." },
           { "title": "Interactive CICS application — 7 transactions", "description": "Full customer management CRUD in pseudo-conversational mode: generic pagination, real-time VSAM navigation via alternate indexes (AIX/PATH), regional statistics. 7 BMS maps with FSET/DATAONLY/dynamic CURSOR optimizations." },
           { "title": "Docker container with web API and CI/CD", "description": "Docker image compiling the 15 batch programs, simulating DB2 via SQLite and replaying CICS screens. GitHub Actions pipeline compiling and running smoke tests on every push." }
@@ -105,7 +105,7 @@
           { "title": "Pseudo-conversational CICS with COMMAREA", "description": "Standard z/OS pseudo-conversational pattern for the 7 CICS transactions: each SEND MAP interaction frees the task, context is preserved via COMMAREA on RETURN TRANSID." }
         ],
         "stack": [
-          { "name": "COBOL 85", "role": "Primary language — 32 programs covering batch, DB2 and CICS", "group": "Mainframe z/OS" },
+          { "name": "COBOL 85", "role": "Primary language — 33 programs covering batch, DB2 and CICS", "group": "Mainframe z/OS" },
           { "name": "JCL", "role": "60 control jobs: VSAM creation, SORT, compilation, BMS assembly", "group": "Mainframe z/OS" },
           { "name": "z/OS (Hercules TK5)", "role": "Emulated mainframe execution environment for development and testing", "group": "Mainframe z/OS" },
           { "name": "VSAM KSDS", "role": "Indexed storage for customer/account files with alternate indexes (AIX)", "group": "Mainframe z/OS" },
@@ -119,10 +119,10 @@
           { "name": "GitHub Actions", "role": "CI compiling the 15 batch programs and running smoke tests on every push", "group": "Portability & CI" }
         ],
         "metrics": [
-          { "label": "COBOL programs", "value": "32 (14 batch + 11 DB2 + 7 CICS)" },
-          { "label": "Total source files", "value": "118 (COBOL, JCL, SQL, BMS)" },
+          { "label": "COBOL programs", "value": "33 (15 batch + 11 DB2 + 7 CICS)" },
+          { "label": "Total source files", "value": "114 (COBOL, JCL, SQL, BMS)" },
           { "label": "CI compilation", "value": "15/15 batch programs pass" },
-          { "label": "CICS transactions", "value": "7 (AFFI, AJOU, MAJU, SUPP, DELG, LIST, STAT)" },
+          { "label": "CICS transactions", "value": "7 (AFFI, AJOU, MAJO, SUPP, DELG, LGEN, STAT)" },
           { "label": "DB2 tables", "value": "5 tables, 14 SQL scripts" }
         ]
       }
@@ -145,7 +145,7 @@
           { "title": "Monorepo with Docker Compose over a decoupled architecture from the start", "description": "Frontend, backend and database are orchestrated via Docker Compose to simplify local startup and environment consistency, while remaining separately deployable (Vercel + Railway + Neon)." }
         ],
         "stack": [
-          { "name": "React 18 + TypeScript", "role": "UI with strict typing, lazy-loaded routes, 13 pages, 13 reusable components, state management via Context API + custom hooks", "group": "Frontend" },
+          { "name": "React 18 + TypeScript", "role": "UI with strict typing, lazy-loaded routes, 13 pages, 10 reusable components, state management via Context API + custom hooks", "group": "Frontend" },
           { "name": "Vite", "role": "Frontend bundler and development server", "group": "Frontend" },
           { "name": "Tailwind CSS", "role": "Custom design system (color tokens, typography, reusable components)", "group": "Frontend" },
           { "name": "Express.js + TypeScript", "role": "REST API with 6 route modules, end-to-end Zod validation, organized in MVC", "group": "Backend & API" },
@@ -157,11 +157,14 @@
           { "name": "JWT + httpOnly cookies", "role": "Stateless authentication with SameSite + Secure, Redis blacklist for instant logout", "group": "Security" },
           { "name": "Bcrypt (12 rounds)", "role": "Password hashing, reset tokens with 15 min TTL", "group": "Security" },
           { "name": "Helmet", "role": "HTTP security headers (CSP, HSTS, X-Content-Type-Options)", "group": "Security" },
-          { "name": "Sentry", "role": "Production error monitoring", "group": "Security" },
-          { "name": "Jest + Supertest", "role": "API integration tests (78 tests)", "group": "Testing & Quality" },
-          { "name": "Vitest", "role": "Frontend unit tests (18 tests)", "group": "Testing & Quality" },
-          { "name": "Playwright", "role": "End-to-end tests of the user journey", "group": "Testing & Quality" },
-          { "name": "Husky + lint-staged", "role": "Code quality on pre-commit, conventional commits", "group": "Testing & Quality" },
+          { "name": "Sentry", "role": "Production error monitoring (backend + frontend ErrorBoundary)", "group": "Security" },
+          { "name": "express-rate-limit", "role": "Per-IP rate limiting on API and authentication routes", "group": "Security" },
+          { "name": "Winston", "role": "Structured logging (DB, mailer, error middleware) with console and file transports", "group": "Monitoring" },
+          { "name": "Nodemailer", "role": "Password reset email delivery via SMTP", "group": "Monitoring" },
+          { "name": "Jest + Supertest", "role": "Backend tests: 4 integration suites + 4 unit suites (113 describe/it/test blocks)", "group": "Testing & Quality" },
+          { "name": "Vitest", "role": "Frontend unit tests (36 describe/it/test blocks across 4 files)", "group": "Testing & Quality" },
+          { "name": "Playwright", "role": "End-to-end tests of the user journey (2 specs: auth, health)", "group": "Testing & Quality" },
+          { "name": "Husky + lint-staged", "role": "Code quality on pre-commit (Biome backend, ESLint frontend)", "group": "Testing & Quality" },
           { "name": "Docker Compose", "role": "Orchestration of 5 containers (PostgreSQL, Redis, Backend, Frontend, Sqitch)", "group": "Deployment" },
           { "name": "Railway", "role": "Express backend hosting in production", "group": "Deployment" },
           { "name": "Vercel", "role": "React frontend deployment in production", "group": "Deployment" }
@@ -169,12 +172,14 @@
         "metrics": [
           { "label": "API route modules", "value": "6" },
           { "label": "Frontend pages", "value": "13" },
-          { "label": "Reusable components", "value": "13" },
-          { "label": "Backend integration tests", "value": "78" },
-          { "label": "Frontend unit tests", "value": "18" },
+          { "label": "Reusable components", "value": "10" },
+          { "label": "Backend tests", "value": "113 blocks (4 integration + 4 unit suites)" },
+          { "label": "Frontend unit tests", "value": "36 blocks (4 Vitest suites)" },
           { "label": "RBAC role levels", "value": "4 (Developer, Manager, Supervisor, Server)" },
           { "label": "Documented ADRs", "value": "5 (architectural decisions)" },
-          { "label": "Security", "value": "JWT httpOnly + SameSite, bcrypt 12 rounds, Zod client+server, CSRF, Helmet, JSONB audit trail" },
+          { "label": "Security", "value": "JWT httpOnly + SameSite, bcrypt 12 rounds, Zod client+server, Helmet, rate limiting, JSONB audit trail" },
+          { "label": "E2E tests", "value": "2 Playwright specs (auth, health)" },
+          { "label": "PostgreSQL tables", "value": "6 (roles, users, payment_types, cash_registers, transactions, action_logs)" },
           { "label": "Deployment", "value": "Live demo (Vercel + Railway + Neon)" }
         ],
         "media": [
@@ -232,12 +237,13 @@
         ],
         "metrics": [
           { "label": "Data sources", "value": "3 (Anchor.fm RSS, Apple Podcasts API, Deezer API)" },
-          { "label": "Test files", "value": "3 suites (rss, shows, utils)" },
-          { "label": "Supported shows", "value": "6 series" },
+          { "label": "Test files", "value": "4 suites (rss, rss.integration, shows, utils)" },
+          { "label": "Supported shows", "value": "5 series (+ catch-all \"Other\")" },
           { "label": "Listening platforms", "value": "4 (Spotify, Apple Podcasts, Deezer, Amazon Music)" },
           { "label": "Generated OG images", "value": "3 levels (home, show, episode)" },
+          { "label": "Outgoing RSS feed", "value": "/feed.xml route dynamically generated from episodes" },
           { "label": "Accessibility", "value": "Skip links, ARIA labels, keyboard focus, prefers-reduced-motion" },
-          { "label": "Security", "value": "HTML sanitization, CSP headers, safeJsonLd(), permissions policy" }
+          { "label": "Security", "value": "HTML sanitization (anti-XSS), CSP headers, safeJsonLd(), permissions policy, X-Frame-Options, Referrer-Policy" }
         ],
         "media": [
           { "caption": "Data Pipeline — RSS → APIs → Static Build" },
@@ -266,35 +272,41 @@
           { "title": "Admin dashboard", "description": "Admin-only interface exposing system statistics (users, orders, revenue) and user management via dedicated endpoints." }
         ],
         "decisions": [
-          { "title": "Zustand over Redux", "description": "Redux Toolkit is oversized for 5 stores: slices/thunks boilerplate adds no value. Zustand weighs ~1 KB gzipped, requires no Provider, and offers granular re-renders natively." },
-          { "title": "Custom DI container over Awilix or InversifyJS", "description": "The custom container (~220 lines, zero dependencies) covers exactly what the project needs: register, resolve, singleton. InversifyJS requires TypeScript decorators, incompatible with a pure JavaScript backend." },
+          { "title": "Zustand over Redux", "description": "Redux Toolkit is oversized for 4 stores: slices/thunks boilerplate adds no value. Zustand weighs ~1 KB gzipped, requires no Provider, and offers granular re-renders natively." },
+          { "title": "Custom DI container over Awilix or InversifyJS", "description": "The custom container (256 lines, zero dependencies) covers exactly what the project needs: register, resolve, singleton. InversifyJS requires TypeScript decorators, incompatible with a pure JavaScript backend." },
           { "title": "Repository pattern on the frontend", "description": "HTTP calls (Axios) are wrapped in typed repositories, decoupled from Zustand stores and components. This mirrors the backend architecture and allows mocking API calls in tests without touching Axios." }
         ],
         "stack": [
           { "name": "React 18 + TypeScript 5", "role": "UI framework with full static typing on the client side", "group": "Frontend" },
-          { "name": "Zustand", "role": "Global state management (cart, wishlist, auth) — 5 stores", "group": "Frontend" },
+          { "name": "Zustand", "role": "Global state management (cart, wishlist, auth, notifications) — 4 stores", "group": "Frontend" },
           { "name": "React Router v7", "role": "Client-side routing with protected routes", "group": "Frontend" },
           { "name": "Tailwind CSS", "role": "Utility-first styling with custom design system (tokens, palettes, elevations)", "group": "Frontend" },
           { "name": "Axios", "role": "HTTP client with interceptors for automatic CSRF token and Authorization header injection", "group": "Frontend" },
-          { "name": "Node.js + Express", "role": "RESTful API server organized in MVC layers with DI container", "group": "Backend & API" },
-          { "name": "Sequelize + PostgreSQL 15", "role": "Relational ORM with 8 models (User, Star, Cart, CartItem, Order, OrderStar, Review, Wishlist)", "group": "Backend & API" },
-          { "name": "Swagger / OpenAPI", "role": "Interactive API documentation exposed at /api-docs, 9 documented route groups", "group": "Backend & API" },
+          { "name": "@tanstack/react-query", "role": "Client-side data fetching and caching (catalog, star detail)", "group": "Frontend" },
+          { "name": "react-helmet-async", "role": "Dynamic <head> tag management for SEO (titles, meta)", "group": "Frontend" },
+          { "name": "Node.js + Express", "role": "RESTful API server organized in MVC layers with DI container, gzip compression and node-cache", "group": "Backend & API" },
+          { "name": "Sequelize + PostgreSQL 15", "role": "Relational ORM with 9 models (User, Star, Cart, CartItem, Order, OrderStar, Review, Wishlist, RefreshToken)", "group": "Backend & API" },
+          { "name": "Swagger / OpenAPI", "role": "Interactive API documentation exposed at /api-docs, 12 documented route groups", "group": "Backend & API" },
           { "name": "JWT + CSRF tokens", "role": "Stateless authentication via httpOnly cookies and CSRF protection on all mutating routes", "group": "Security" },
           { "name": "Joi + DOMPurify", "role": "Schema validation server-side (Joi) and HTML sanitization client-side (DOMPurify)", "group": "Security" },
           { "name": "Helmet + express-rate-limit", "role": "HTTP security headers (CSP, HSTS) and per-IP rate limiting", "group": "Security" },
           { "name": "Winston", "role": "Structured logging with file and console transports, error/warn/info levels", "group": "Monitoring & Logs" },
+          { "name": "Morgan", "role": "HTTP request logging in development and production", "group": "Monitoring & Logs" },
           { "name": "Sentry", "role": "Production error monitoring — integrated on both frontend (React) and backend (Express)", "group": "Monitoring & Logs" },
           { "name": "Jest + Supertest", "role": "Backend service unit tests and frontend tests with jsdom", "group": "Testing & Quality" },
+          { "name": "Playwright", "role": "End-to-end tests (3 specs: auth, catalog, navigation) with GitHub Actions CI", "group": "Testing & Quality" },
           { "name": "Biome", "role": "Unified linter and formatter shared between client and server (replaces ESLint + Prettier)", "group": "Testing & Quality" },
           { "name": "Docker + docker-compose", "role": "Local orchestration of 3 services (client, server, PostgreSQL) with a single docker-compose up", "group": "Deployment & CI" },
-          { "name": "GitHub Actions", "role": "CI pipeline: lint, typecheck and tests triggered on every push", "group": "Deployment & CI" }
+          { "name": "GitHub Actions", "role": "CI pipeline (lint, typecheck, tests, E2E, security audit) + CD to Render + Release Please", "group": "Deployment & CI" },
+          { "name": "Render", "role": "Production hosting (API + client) with automated deploy hooks", "group": "Deployment & CI" }
         ],
         "metrics": [
-          { "label": "API route groups", "value": "9 (stars, auth, users, orders, cart, wishlist, reviews, payments, admin)" },
+          { "label": "API route groups", "value": "10 files, 12 Swagger tags (Stars, Auth, Cart, Orders, Payments, Reviews, Wishlist, Admin, Profile, Refunds, Payment Stats, Webhooks)" },
           { "label": "Backend unit test files", "value": "4 (cartService, orderService, paymentValidator, bcryptHashingService)" },
           { "label": "Test assertions / blocks", "value": "101 describe/it/test occurrences across 4 files" },
-          { "label": "Frontend test files", "value": "4 (passwordValidation, cartCalculations, orderTypes, AuthContainer)" },
-          { "label": "Sequelize models", "value": "8" },
+          { "label": "Frontend test files", "value": "4 (passwordValidation, cartCalculations, orderTypes, AuthContainer) — 35 blocks" },
+          { "label": "E2E Playwright tests", "value": "3 specs (auth, catalog, navigation)" },
+          { "label": "Sequelize models", "value": "9 (User, Star, Cart, CartItem, Order, OrderStar, Review, Wishlist, RefreshToken)" },
           { "label": "Documented ADRs", "value": "5 (zustand, DI container, JS backend, sequelize sync, repository pattern)" }
         ]
       }

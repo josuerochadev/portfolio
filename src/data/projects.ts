@@ -24,6 +24,7 @@ export interface MediaItem {
 	src: string;
 	poster?: string;
 	caption: string;
+	group?: string;
 }
 
 export interface ProjectDetail {
@@ -179,7 +180,7 @@ export const PROJECTS: Project[] = [
 		detail: {
 			deliverables: [
 				{
-					title: "14 programmes batch COBOL avec 43 JCL",
+					title: "15 programmes batch COBOL avec 60 JCL",
 					description: "Traitements séquentiels complets : création VSAM KSDS, tri/fusion SORT/MERGE, sous-programmes CALL, édition de relevés de compte avec ruptures et totaux."
 				},
 				{
@@ -210,7 +211,7 @@ export const PROJECTS: Project[] = [
 				}
 			],
 			stack: [
-				{ name: "COBOL 85", role: "Langage principal — 32 programmes couvrant batch, DB2 et CICS", group: "Mainframe z/OS" },
+				{ name: "COBOL 85", role: "Langage principal — 33 programmes couvrant batch, DB2 et CICS", group: "Mainframe z/OS" },
 				{ name: "JCL", role: "60 jobs de contrôle : création VSAM, tri SORT, compilation, assemblage BMS", group: "Mainframe z/OS" },
 				{ name: "z/OS (Hercules TK5)", role: "Environnement d'exécution mainframe émulé pour développement et tests", group: "Mainframe z/OS" },
 				{ name: "VSAM KSDS", role: "Stockage indexé des fichiers clients/comptes avec index alternatifs (AIX)", group: "Mainframe z/OS" },
@@ -224,10 +225,10 @@ export const PROJECTS: Project[] = [
 				{ name: "GitHub Actions", role: "CI compilant les 15 programmes batch et exécutant des smoke tests à chaque push", group: "Portabilité & CI" }
 			],
 			metrics: [
-				{ label: "Programmes COBOL", value: "32 (14 batch + 11 DB2 + 7 CICS)" },
-				{ label: "Total fichiers sources", value: "118 (COBOL, JCL, SQL, BMS)" },
+				{ label: "Programmes COBOL", value: "33 (15 batch + 11 DB2 + 7 CICS)" },
+				{ label: "Total fichiers sources", value: "114 (COBOL, JCL, SQL, BMS)" },
 				{ label: "Compilation CI", value: "15/15 programmes batch passent" },
-				{ label: "Transactions CICS", value: "7 (AFFI, AJOU, MAJU, SUPP, DELG, LIST, STAT)" },
+				{ label: "Transactions CICS", value: "7 (AFFI, AJOU, MAJO, SUPP, DELG, LGEN, STAT)" },
 				{ label: "Tables DB2", value: "5 tables, 14 scripts SQL" }
 			]
 		}
@@ -246,7 +247,7 @@ export const PROJECTS: Project[] = [
 			mobile: "/assets/images/projects/optimized/project-tour-de-controle-mobile.webp",
 			thumbnail: "/assets/images/projects/optimized/project-tour-de-controle-thumb.webp"
 		},
-		technologies: ["React 18", "TypeScript", "Vite", "Tailwind CSS", "Node.js", "Express", "Zod", "PostgreSQL", "Redis", "Docker Compose", "JWT", "Swagger", "Jest", "Playwright"],
+		technologies: ["React 18", "TypeScript", "Vite", "Tailwind CSS", "Node.js", "Express", "Zod", "PostgreSQL", "Redis", "Docker Compose", "JWT", "Swagger", "Jest", "Vitest", "Playwright", "Winston", "Sentry"],
 		status: "in-progress",
 		year: "2025",
 		type: "formation",
@@ -285,7 +286,7 @@ export const PROJECTS: Project[] = [
 				}
 			],
 			stack: [
-				{ name: "React 18 + TypeScript", role: "Interface utilisateur avec typage strict, lazy loading des routes, 13 pages, 13 composants réutilisables, gestion d'état via Context API + hooks custom", group: "Frontend" },
+				{ name: "React 18 + TypeScript", role: "Interface utilisateur avec typage strict, lazy loading des routes, 13 pages, 10 composants réutilisables, gestion d'état via Context API + hooks custom", group: "Frontend" },
 				{ name: "Vite", role: "Bundler et serveur de développement frontend", group: "Frontend" },
 				{ name: "Tailwind CSS", role: "Design system custom (tokens couleur, typographie, composants réutilisables)", group: "Frontend" },
 				{ name: "Express.js + TypeScript", role: "API REST avec 6 modules de routes, validation Zod bout-en-bout, organisée en MVC", group: "Backend & API" },
@@ -297,11 +298,14 @@ export const PROJECTS: Project[] = [
 				{ name: "JWT + cookies httpOnly", role: "Authentification stateless avec SameSite + Secure, blacklist Redis pour logout instantané", group: "Sécurité" },
 				{ name: "Bcrypt (12 rounds)", role: "Hachage des mots de passe, tokens de reset avec TTL 15 min", group: "Sécurité" },
 				{ name: "Helmet", role: "Headers de sécurité HTTP (CSP, HSTS, X-Content-Type-Options)", group: "Sécurité" },
-				{ name: "Sentry", role: "Monitoring d'erreurs en production", group: "Sécurité" },
-				{ name: "Jest + Supertest", role: "Tests d'intégration de l'API (78 tests)", group: "Tests & qualité" },
-				{ name: "Vitest", role: "Tests unitaires frontend (18 tests)", group: "Tests & qualité" },
-				{ name: "Playwright", role: "Tests end-to-end du parcours utilisateur", group: "Tests & qualité" },
-				{ name: "Husky + lint-staged", role: "Qualité du code au pre-commit, conventional commits", group: "Tests & qualité" },
+				{ name: "Sentry", role: "Monitoring d'erreurs en production (backend + frontend ErrorBoundary)", group: "Sécurité" },
+				{ name: "express-rate-limit", role: "Limitation de débit par IP sur les routes API et authentification", group: "Sécurité" },
+				{ name: "Winston", role: "Logging structuré (DB, mailer, erreurs middleware) avec transports console et fichier", group: "Monitoring" },
+				{ name: "Nodemailer", role: "Envoi d'emails de réinitialisation de mot de passe via SMTP", group: "Monitoring" },
+				{ name: "Jest + Supertest", role: "Tests backend : 4 suites d'intégration + 4 suites unitaires (113 blocs describe/it/test)", group: "Tests & qualité" },
+				{ name: "Vitest", role: "Tests unitaires frontend (36 blocs describe/it/test sur 4 fichiers)", group: "Tests & qualité" },
+				{ name: "Playwright", role: "Tests end-to-end du parcours utilisateur (2 specs : auth, health)", group: "Tests & qualité" },
+				{ name: "Husky + lint-staged", role: "Qualité du code au pre-commit (Biome backend, ESLint frontend)", group: "Tests & qualité" },
 				{ name: "Docker Compose", role: "Orchestration de 5 containers (PostgreSQL, Redis, Backend, Frontend, Sqitch)", group: "Déploiement" },
 				{ name: "Railway", role: "Hébergement du backend Express en production", group: "Déploiement" },
 				{ name: "Vercel", role: "Déploiement du frontend React en production", group: "Déploiement" }
@@ -309,12 +313,14 @@ export const PROJECTS: Project[] = [
 			metrics: [
 				{ label: "Modules de routes API", value: "6" },
 				{ label: "Pages frontend", value: "13" },
-				{ label: "Composants réutilisables", value: "13" },
-				{ label: "Tests d'intégration backend", value: "78" },
-				{ label: "Tests unitaires frontend", value: "18" },
+				{ label: "Composants réutilisables", value: "10" },
+				{ label: "Tests backend", value: "113 blocs (4 suites intégration + 4 suites unitaires)" },
+				{ label: "Tests unitaires frontend", value: "36 blocs (4 suites Vitest)" },
 				{ label: "Niveaux de rôle RBAC", value: "4 (Developer, Manager, Supervisor, Server)" },
 				{ label: "ADRs documentés", value: "5 (décisions architecturales)" },
-				{ label: "Sécurité", value: "JWT httpOnly + SameSite, bcrypt 12 rounds, Zod client+serveur, CSRF, Helmet, audit trail JSONB" },
+				{ label: "Tests E2E", value: "2 specs Playwright (auth, health)" },
+				{ label: "Tables PostgreSQL", value: "6 (roles, users, payment_types, cash_registers, transactions, action_logs)" },
+				{ label: "Sécurité", value: "JWT httpOnly + SameSite, bcrypt 12 rounds, Zod client+serveur, Helmet, rate limiting, audit trail JSONB" },
 				{ label: "Déploiement", value: "Demo live (Vercel + Railway + Neon)" }
 			],
 			media: [
@@ -492,12 +498,13 @@ export const PROJECTS: Project[] = [
 			],
 			metrics: [
 				{ label: "Sources de données", value: "3 (RSS Anchor.fm, Apple Podcasts API, Deezer API)" },
-				{ label: "Fichiers de test", value: "3 suites (rss, shows, utils)" },
-				{ label: "Émissions supportées", value: "6 séries" },
+				{ label: "Fichiers de test", value: "4 suites (rss, rss.integration, shows, utils)" },
+				{ label: "Émissions supportées", value: "5 séries (+ catch-all \"Autre\")" },
 				{ label: "Plateformes d'écoute", value: "4 (Spotify, Apple Podcasts, Deezer, Amazon Music)" },
 				{ label: "Images OG générées", value: "3 niveaux (home, émission, épisode)" },
+				{ label: "Flux RSS sortant", value: "Route /feed.xml générée dynamiquement à partir des épisodes" },
 				{ label: "Accessibilité", value: "Skip links, ARIA labels, focus clavier, prefers-reduced-motion" },
-				{ label: "Sécurité", value: "Sanitisation HTML, CSP headers, safeJsonLd(), permissions policy" }
+				{ label: "Sécurité", value: "Sanitisation HTML (anti-XSS), CSP headers, safeJsonLd(), permissions policy, X-Frame-Options, Referrer-Policy" }
 			],
 			media: [
 				{
@@ -567,7 +574,7 @@ export const PROJECTS: Project[] = [
 			mobile: "/assets/images/projects/optimized/project-stella-mobile.webp",
 			thumbnail: "/assets/images/projects/optimized/project-stella-thumb.webp"
 		},
-		technologies: ["React", "TypeScript", "Tailwind CSS", "Zustand", "Node.js", "Express", "Sequelize", "PostgreSQL", "JWT", "Jest", "Swagger"],
+		technologies: ["React 18", "TypeScript", "Tailwind CSS", "Zustand", "Node.js", "Express", "Sequelize", "PostgreSQL", "JWT", "Jest", "Swagger", "Sentry", "Playwright", "Biome"],
 		status: "in-progress",
 		year: "2024",
 		type: "project",
@@ -599,7 +606,7 @@ export const PROJECTS: Project[] = [
 				},
 				{
 					title: "Conteneur DI custom plutôt que Awilix ou InversifyJS",
-					description: "Le conteneur custom (~220 lignes, zéro dépendance) couvre exactement les besoins du projet : register, resolve, singleton. InversifyJS requiert TypeScript et décorateurs, incompatible avec un backend JavaScript pur."
+					description: "Le conteneur custom (256 lignes, zéro dépendance) couvre exactement les besoins du projet : register, resolve, singleton. InversifyJS requiert TypeScript et décorateurs, incompatible avec un backend JavaScript pur."
 				},
 				{
 					title: "Repository pattern côté frontend",
@@ -608,29 +615,35 @@ export const PROJECTS: Project[] = [
 			],
 			stack: [
 				{ name: "React 18 + TypeScript 5", role: "Framework UI avec typage statique complet côté client", group: "Frontend" },
-				{ name: "Zustand", role: "State management global (panier, wishlist, auth) — 5 stores", group: "Frontend" },
+				{ name: "Zustand", role: "State management global (panier, wishlist, auth, notifications) — 4 stores", group: "Frontend" },
 				{ name: "React Router v7", role: "Routing client-side avec routes protégées", group: "Frontend" },
 				{ name: "Tailwind CSS", role: "Styling utility-first avec design system personnalisé (tokens, palettes, élévations)", group: "Frontend" },
 				{ name: "Axios", role: "Client HTTP avec intercepteurs pour l'injection automatique du token CSRF et du header Authorization", group: "Frontend" },
-				{ name: "Node.js + Express", role: "Serveur API RESTful organisé en couches MVC avec conteneur DI", group: "Backend & API" },
-				{ name: "Sequelize + PostgreSQL 15", role: "ORM relationnel avec 8 modèles (User, Star, Cart, CartItem, Order, OrderStar, Review, Wishlist)", group: "Backend & API" },
-				{ name: "Swagger / OpenAPI", role: "Documentation interactive de l'API exposée sur /api-docs, 9 groupes de routes documentés", group: "Backend & API" },
+				{ name: "@tanstack/react-query", role: "Data fetching et caching côté client (catalogue, détail étoile)", group: "Frontend" },
+				{ name: "react-helmet-async", role: "Gestion dynamique des balises <head> pour le SEO (titres, meta)", group: "Frontend" },
+				{ name: "Node.js + Express", role: "Serveur API RESTful organisé en couches MVC avec conteneur DI, compression gzip et node-cache", group: "Backend & API" },
+				{ name: "Sequelize + PostgreSQL", role: "ORM relationnel avec 9 modèles (User, Star, Cart, CartItem, Order, OrderStar, Review, Wishlist, RefreshToken)", group: "Backend & API" },
+				{ name: "Swagger / OpenAPI", role: "Documentation interactive de l'API exposée sur /api-docs, 12 groupes de routes documentés", group: "Backend & API" },
 				{ name: "JWT + tokens CSRF", role: "Authentification stateless via cookies httpOnly et protection CSRF sur toutes les routes mutantes", group: "Sécurité" },
 				{ name: "Joi + DOMPurify", role: "Validation de schéma côté serveur (Joi) et sanitisation HTML côté client (DOMPurify)", group: "Sécurité" },
 				{ name: "Helmet + express-rate-limit", role: "Headers de sécurité HTTP (CSP, HSTS) et limitation de débit par IP", group: "Sécurité" },
 				{ name: "Winston", role: "Logging structuré avec transports fichier et console, niveaux error/warn/info", group: "Monitoring & Logs" },
+				{ name: "Morgan", role: "Logging des requêtes HTTP en développement et production", group: "Monitoring & Logs" },
 				{ name: "Sentry", role: "Monitoring d'erreurs en production — intégré côté frontend (React) et backend (Express)", group: "Monitoring & Logs" },
 				{ name: "Jest + Supertest", role: "Tests unitaires des services backend et tests frontend avec jsdom", group: "Tests & qualité" },
+				{ name: "Playwright", role: "Tests end-to-end (3 specs : auth, catalog, navigation) avec CI GitHub Actions", group: "Tests & qualité" },
 				{ name: "Biome", role: "Linter et formateur unifié partagé entre client et serveur (remplace ESLint + Prettier)", group: "Tests & qualité" },
 				{ name: "Docker + docker-compose", role: "Orchestration locale des 3 services (client, serveur, PostgreSQL) en un seul docker-compose up", group: "Déploiement & CI" },
-				{ name: "GitHub Actions", role: "Pipeline CI : lint, typecheck et tests déclenchés à chaque push", group: "Déploiement & CI" }
+				{ name: "GitHub Actions", role: "Pipeline CI (lint, typecheck, tests, E2E, security audit) + CD vers Render + Release Please", group: "Déploiement & CI" },
+				{ name: "Render", role: "Hébergement en production (API + client) avec deploy hooks automatisés", group: "Déploiement & CI" }
 			],
 			metrics: [
-				{ label: "Groupes de routes API", value: "9 (stars, auth, users, orders, cart, wishlist, reviews, payments, admin)" },
+				{ label: "Groupes de routes API", value: "10 fichiers, 12 tags Swagger (Stars, Auth, Cart, Orders, Payments, Reviews, Wishlist, Admin, Profile, Refunds, Payment Stats, Webhooks)" },
 				{ label: "Fichiers de tests unitaires backend", value: "4 (cartService, orderService, paymentValidator, bcryptHashingService)" },
 				{ label: "Assertions / blocs de test backend", value: "101 occurrences describe/it/test sur 4 fichiers" },
-				{ label: "Fichiers de tests frontend", value: "4 (passwordValidation, cartCalculations, orderTypes, AuthContainer)" },
-				{ label: "Modèles Sequelize", value: "8" },
+				{ label: "Fichiers de tests frontend", value: "4 (passwordValidation, cartCalculations, orderTypes, AuthContainer) — 35 blocs" },
+				{ label: "Tests E2E Playwright", value: "3 specs (auth, catalog, navigation)" },
+				{ label: "Modèles Sequelize", value: "9 (User, Star, Cart, CartItem, Order, OrderStar, Review, Wishlist, RefreshToken)" },
 				{ label: "ADRs documentés", value: "5 (zustand, DI container, JS backend, sequelize sync, repository pattern)" }
 			]
 		}

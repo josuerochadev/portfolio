@@ -197,12 +197,12 @@
           { "caption": "Print — La Caisse view" },
           { "caption": "Print — Le Flux view (Transactions)" },
           { "caption": "Print — L'Équipage view (Staff)" },
+          { "caption": "Mockup — 7 cash register management views" },
           { "caption": "Database schema — ERD (6 tables, FK relations)" },
           { "caption": "Conceptual data model — MCD Merise" },
           { "caption": "Use case diagram — 4 RBAC roles" },
           { "caption": "Sequence diagram — auth, register, admin flows" },
-          { "caption": "Sitemap — application navigation tree" },
-          { "caption": "Mockup — 7 cash register management views" }
+          { "caption": "Sitemap — application navigation tree" }
         ]
       }
     },

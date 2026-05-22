@@ -197,12 +197,12 @@
           { "caption": "Print — Vue La Caisse" },
           { "caption": "Print — Vue Le Flux (Transactions)" },
           { "caption": "Print — Vue L'Équipage (Personnel)" },
+          { "caption": "Maquette — 7 vues de la gestion de caisse" },
           { "caption": "Schéma base de données — ERD (6 tables, relations FK)" },
           { "caption": "Modèle conceptuel de données — MCD Merise" },
           { "caption": "Diagramme de cas d'utilisation — 4 rôles RBAC" },
           { "caption": "Diagramme de séquence — flux auth, caisse, admin" },
-          { "caption": "Arborescence — sitemap et navigation de l'application" },
-          { "caption": "Maquette — 7 vues de la gestion de caisse" }
+          { "caption": "Arborescence — sitemap et navigation de l'application" }
         ]
       }
     },

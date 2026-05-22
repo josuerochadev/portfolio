@@ -1,9 +1,11 @@
+import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { FaArrowLeft, FaArrowRight, FaArrowUp, FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 import { PROJECTS, type Project, type MediaItem } from "@/data/projects";
 import FadeInUp from "@/components/common/animations/fade-in-up";
+import MediaLightbox from "@/components/MediaLightbox";
 import ErrorBoundary from "@/components/common/error-boundary";
 import SeoHead from "@/components/common/seo-head";
 import BackgroundGradient from "@/components/layout/background-gradient";
@@ -85,6 +87,17 @@ export default function ProjectDetail() {
 	const hasStack = Array.isArray(detailStack) && detailStack.length > 0;
 	const hasMedia = mediaItems.length > 0;
 	const hasMetrics = Array.isArray(detailMetrics) && detailMetrics.length > 0;
+
+	const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+	const resolveCaption = (index: number): string => {
+		if (Array.isArray(detailMedia) && detailMedia[index]?.caption) {
+			return detailMedia[index].caption;
+		}
+		return mediaItems[index]?.caption ?? '';
+	};
+
+	const allCaptions = mediaItems.map((_, i) => resolveCaption(i));
 
 	return (
 		<ErrorBoundary>
@@ -383,78 +396,148 @@ export default function ProjectDetail() {
 										{t('projects:detail.gallery')}
 									</h2>
 
-									{/* Embeds + Videos — full width */}
-									<div className="flex flex-col gap-8 mb-8">
-										{mediaItems.map((item, index) => {
-											if (item.type !== 'embed' && item.type !== 'video') return null;
-											const caption = Array.isArray(detailMedia) && detailMedia[index]?.caption
-												? detailMedia[index].caption
-												: item.caption;
+									{(() => {
+										// Group media items while preserving flat index for lightbox
+										const groups: { label: string | null; items: { item: MediaItem; flatIndex: number }[] }[] = [];
+										let currentGroup: string | null | undefined = undefined;
+
+										mediaItems.forEach((item, flatIndex) => {
+											const groupLabel = item.group ?? null;
+											if (groupLabel !== currentGroup) {
+												groups.push({ label: groupLabel, items: [] });
+												currentGroup = groupLabel;
+											}
+											groups[groups.length - 1].items.push({ item, flatIndex });
+										});
+
+										let staggerCounter = 0;
+
+										return groups.map((group, groupIndex) => {
+											const videosAndEmbeds = group.items.filter(({ item }) => item.type === 'video' || item.type === 'embed');
+											const images = group.items.filter(({ item }) => item.type === 'image');
 
 											return (
-												<figure key={item.src} className="flex flex-col gap-3">
-													{item.type === 'embed' && (
-														<div className="w-full rounded-2xl overflow-hidden border border-violet/10 dark:border-beige/10 shadow-card">
-															<iframe
-																src={item.src}
-																title={caption}
-																className="w-full border-0"
-																style={{ height: '480px' }}
-																loading="lazy"
-															/>
+												<div key={group.label ?? `group-${groupIndex}`}>
+													{/* Group subtitle */}
+													{group.label && (
+														<FadeInUp delay={Math.min(0.05 * staggerCounter, 0.5)}>
+															<h3 className={`text-sm font-sans font-semibold uppercase tracking-wider text-violet/40 dark:text-beige/40 mb-4 ${groupIndex > 0 ? 'mt-8' : ''}`}>
+																{group.label}
+															</h3>
+														</FadeInUp>
+													)}
+
+													{/* Videos & Embeds — full width */}
+													{videosAndEmbeds.length > 0 && (
+														<div className="flex flex-col gap-8 mb-8">
+															{videosAndEmbeds.map(({ item, flatIndex }) => {
+																const caption = allCaptions[flatIndex];
+																const delay = Math.min(0.05 * staggerCounter++, 0.5);
+
+																return (
+																	<FadeInUp key={item.src} delay={delay}>
+																		<figure
+																			className="flex flex-col gap-3 cursor-pointer group"
+																			onClick={() => setLightboxIndex(flatIndex)}
+																		>
+																			<div className="w-full rounded-2xl overflow-hidden p-2
+																				bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5
+																				dark:from-lime/10 dark:via-orange/5 dark:to-violet/10
+																				backdrop-blur-md border border-lime/30 dark:border-lime/20 shadow-card
+																				hover:shadow-card-hover hover:scale-[1.01]
+																				transition-all duration-300 ease-[cubic-bezier(0.83,0,0.17,1)]">
+																				{item.type === 'embed' && (
+																					<iframe
+																						src={item.src}
+																						title={caption}
+																						className="w-full border-0 rounded-xl"
+																						style={{ height: '480px' }}
+																						loading="lazy"
+																					/>
+																				)}
+																				{item.type === 'video' && (
+																					<video
+																						src={item.src}
+																						poster={item.poster}
+																						controls
+																						preload="metadata"
+																						className="w-full rounded-xl"
+																						onClick={(e) => e.stopPropagation()}
+																					>
+																						<track kind="captions" />
+																					</video>
+																				)}
+																			</div>
+																			<figcaption className="text-sm text-violet/60 dark:text-beige/60 text-center">
+																				{caption}
+																			</figcaption>
+																		</figure>
+																	</FadeInUp>
+																);
+															})}
 														</div>
 													)}
-													{item.type === 'video' && (
-														<div className="w-full rounded-2xl overflow-hidden border border-violet/10 dark:border-beige/10 shadow-card">
-															<video
-																src={item.src}
-																poster={item.poster}
-																controls
-																preload="metadata"
-																className="w-full"
-															>
-																<track kind="captions" />
-															</video>
+
+													{/* Images — masonry */}
+													{images.length > 0 && (
+														<div className="columns-1 sm:columns-2 lg:columns-3 gap-4 mb-8">
+															{images.map(({ item, flatIndex }) => {
+																const caption = allCaptions[flatIndex];
+																const delay = Math.min(0.05 * staggerCounter++, 0.5);
+
+																return (
+																	<FadeInUp key={item.src} delay={delay}>
+																		<figure
+																			className="break-inside-avoid mb-4 cursor-pointer group"
+																			onClick={() => setLightboxIndex(flatIndex)}
+																		>
+																			<div className="relative rounded-2xl overflow-hidden p-2
+																				bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5
+																				dark:from-lime/10 dark:via-orange/5 dark:to-violet/10
+																				backdrop-blur-md border border-lime/30 dark:border-lime/20 shadow-card
+																				hover:shadow-card-hover
+																				transition-all duration-300 ease-[cubic-bezier(0.83,0,0.17,1)]">
+																				<div className="rounded-xl overflow-hidden relative">
+																					<img
+																						src={item.src}
+																						alt={caption}
+																						className="w-full h-auto block group-hover:scale-[1.03] transition-transform duration-300"
+																						loading="lazy"
+																					/>
+																					{/* Hover overlay with caption */}
+																					<div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent
+																						opacity-0 group-hover:opacity-100 transition-opacity duration-300
+																						flex items-end p-4">
+																						<span className="text-sm text-white font-medium">
+																							{caption}
+																						</span>
+																					</div>
+																				</div>
+																			</div>
+																			<figcaption className="sr-only">{caption}</figcaption>
+																		</figure>
+																	</FadeInUp>
+																);
+															})}
 														</div>
 													)}
-													<figcaption className="text-sm text-violet/60 dark:text-beige/60 text-center">
-														{caption}
-													</figcaption>
-												</figure>
+												</div>
 											);
-										})}
-									</div>
-
-									{/* Images — grid compact */}
-									{mediaItems.some((item) => item.type === 'image') && (
-										<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-											{mediaItems.map((item, index) => {
-												if (item.type !== 'image') return null;
-												const caption = Array.isArray(detailMedia) && detailMedia[index]?.caption
-													? detailMedia[index].caption
-													: item.caption;
-
-												return (
-													<figure key={item.src} className="flex flex-col gap-2">
-														<div className="rounded-xl overflow-hidden border border-violet/10 dark:border-beige/10 shadow-card
-															hover:shadow-card-hover hover:scale-[1.01] transition-all duration-300">
-															<img
-																src={item.src}
-																alt={caption}
-																className="w-full h-auto"
-																loading="lazy"
-															/>
-														</div>
-														<figcaption className="text-xs text-violet/50 dark:text-beige/50 text-center">
-															{caption}
-														</figcaption>
-													</figure>
-												);
-											})}
-										</div>
-									)}
+										});
+									})()}
 								</section>
 							</FadeInUp>
+						)}
+
+						{/* Lightbox */}
+						{lightboxIndex !== null && (
+							<MediaLightbox
+								items={mediaItems}
+								captions={allCaptions}
+								currentIndex={lightboxIndex}
+								onClose={() => setLightboxIndex(null)}
+								onNavigate={setLightboxIndex}
+							/>
 						)}
 
 						{/* Résultats / Metrics — bento asymétrique */}

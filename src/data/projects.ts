@@ -141,20 +141,41 @@ export const PROJECTS: Project[] = [
 				{ name: "Railway", role: "Hébergement de l'application conteneurisée (nixpacks)", group: "Sécurité & Ops" }
 			],
 			metrics: [
-				{ label: "Sources RSS surveillées", value: "42 flux (FR + EN)" },
-				{ label: "Articles traités", value: "200+/jour avec déduplication (URL + similarité titre 0.85)" },
-				{ label: "Outils agent", value: "7 (SQL, search web, RAG, vision, preview digest, send digest, réponse directe)" },
-				{ label: "Fichiers de tests", value: "18 fichiers (auth, conversations, streaming, upload, security, RAG, feedback, e2e…)" },
-				{ label: "Dimensions embeddings", value: "768 (gemini-embedding-001)" },
-				{ label: "Scoring RAG", value: "4 signaux combinés : cosine (50%) + BM25 (25%) + fraîcheur (25%) + bonus feedback (10%)" },
-				{ label: "Sécurité", value: "Détection prompt injection (14 patterns), validation SQL, filtrage PII (IBAN, CB, email, téléphone), marqueurs anti-hallucination explicites" },
-				{ label: "Conformité RGPD", value: "Rétention 90j articles, 30j logs, 180j messages — export utilisateur + suppression cascade" },
-				{ label: "Rate limiting", value: "7 endpoints via slowapi (register 5/min, login 10/min, ask 10/min, upload 20/min, feedback 30/min…)" },
-				{ label: "Observabilité", value: "Tracing LLM Langfuse (latence, tokens, coûts, erreurs) + endpoint /metrics protégé par API key" },
-				{ label: "ADRs documentés", value: "3 (OpenAI→Gemini, SQLite→PostgreSQL, Render→Railway)" },
-				{ label: "Graceful degradation", value: "Tavily, Langfuse et Cohere tous optionnels avec fallback automatique si indisponibles" },
-				{ label: "Mémoire conversationnelle", value: "Isolation par conversation, limite 50 messages, pruning automatique, titrage LLM dynamique" },
-				{ label: "Connection pooling", value: "ThreadedConnectionPool psycopg2 (min 2, max 10 connexions)" }
+				{ label: "Articles enrichis par jour", value: "200 avec déduplication (URL + similarité titre)" },
+				{ label: "Sources RSS surveillées", value: "41 flux FR + EN, ingestion quotidienne" },
+				{ label: "Fichiers de tests", value: "18 (auth, streaming, upload, sécurité, RAG, e2e…)" },
+				{ label: "Outils agent", value: "7 (SQL, recherche web, RAG, vision, preview digest, envoi digest, réponse directe)" },
+				{ label: "Patterns anti-injection", value: "14 regex + validation SQL + filtrage PII" },
+				{ label: "Scoring RAG hybride", value: "4 signaux (cosine 50% + BM25 25% + fraîcheur 25% + feedback 10%)" },
+				{ label: "Rétention RGPD", value: "3 politiques (90j articles, 30j logs, 180j messages)" },
+				{ label: "ADRs documentés", value: "3 (OpenAI → Gemini, SQLite → PostgreSQL, Render → Railway)" }
+			],
+			media: [
+				// --- Architecture (diagrammes interactifs) ---
+				{
+					type: "embed",
+					src: "/assets/media/projects/luciole/architecture-diagram.html",
+					caption: "Architecture globale — Frontend Jinja2 ↔ FastAPI ↔ PostgreSQL / Langfuse + pipeline RSS",
+					group: "Architecture"
+				},
+				{
+					type: "embed",
+					src: "/assets/media/projects/luciole/rag-pipeline-diagram.html",
+					caption: "Pipeline RAG — ingestion RSS + recherche hybride (cosine 50% + BM25 25% + fraîcheur 25% + feedback 10%)",
+					group: "Architecture"
+				},
+				{
+					type: "embed",
+					src: "/assets/media/projects/luciole/react-agent-diagram.html",
+					caption: "Boucle agent ReAct — Reason → Act → Observe avec 7 outils",
+					group: "Architecture"
+				},
+				{
+					type: "embed",
+					src: "/assets/media/projects/luciole/model-cascade-diagram.html",
+					caption: "Cascade de modèles — classifier → flash-lite / flash / pro selon complexité",
+					group: "Architecture"
+				}
 			]
 		}
 	},
@@ -315,17 +336,12 @@ export const PROJECTS: Project[] = [
 				{ name: "Vercel", role: "Déploiement du frontend React en production", group: "Déploiement" }
 			],
 			metrics: [
-				{ label: "Modules de routes API", value: "6" },
-				{ label: "Pages frontend", value: "13" },
-				{ label: "Composants réutilisables", value: "10" },
-				{ label: "Tests backend", value: "113 blocs (4 suites intégration + 4 suites unitaires)" },
-				{ label: "Tests unitaires frontend", value: "36 blocs (4 suites Vitest)" },
-				{ label: "Niveaux de rôle RBAC", value: "4 (Developer, Manager, Supervisor, Server)" },
-				{ label: "ADRs documentés", value: "5 (décisions architecturales)" },
-				{ label: "Tests E2E", value: "2 specs Playwright (auth, health)" },
+				{ label: "Tests automatisés", value: "151 blocs (113 backend + 36 frontend + 2 E2E)" },
+				{ label: "Interface complète", value: "13 pages et 10 composants réutilisables" },
+				{ label: "Couches de sécurité", value: "6 (JWT httpOnly, bcrypt 12 rounds, Zod, Helmet, rate limiting, audit JSONB)" },
 				{ label: "Tables PostgreSQL", value: "6 (roles, users, payment_types, cash_registers, transactions, action_logs)" },
-				{ label: "Sécurité", value: "JWT httpOnly + SameSite, bcrypt 12 rounds, Zod client+serveur, Helmet, rate limiting, audit trail JSONB" },
-				{ label: "Déploiement", value: "Demo live (Vercel + Railway + Neon)" }
+				{ label: "Rôles RBAC", value: "4 niveaux (Developer, Manager, Supervisor, Server)" },
+				{ label: "ADRs documentés", value: "5 (JWT cookies, Redis blacklist, Sqitch, Zod, SQL sans ORM)" }
 			],
 			media: [
 				// --- Architecture ---
@@ -526,14 +542,12 @@ export const PROJECTS: Project[] = [
 				{ name: "Vercel", role: "Déploiement avec deploy hooks pour rebuild à la demande, domaine custom oklmdragclub.com", group: "Production" }
 			],
 			metrics: [
-				{ label: "Sources de données", value: "3 (RSS Anchor.fm, Apple Podcasts API, Deezer API)" },
-				{ label: "Fichiers de test", value: "4 suites (rss, rss.integration, shows, utils)" },
-				{ label: "Émissions supportées", value: "5 séries (+ catch-all \"Autre\")" },
+				{ label: "Épisodes publiés", value: "60 générés au build depuis le flux RSS" },
+				{ label: "Émissions détectées", value: "6 séries par pattern matching (+ catch-all)" },
+				{ label: "Sources fusionnées au build", value: "3 (RSS Anchor.fm, Apple Podcasts API, Deezer API)" },
 				{ label: "Plateformes d'écoute", value: "4 (Spotify, Apple Podcasts, Deezer, Amazon Music)" },
-				{ label: "Images OG générées", value: "3 niveaux (home, émission, épisode)" },
-				{ label: "Flux RSS sortant", value: "Route /feed.xml générée dynamiquement à partir des épisodes" },
-				{ label: "Accessibilité", value: "Skip links, ARIA labels, focus clavier, prefers-reduced-motion" },
-				{ label: "Sécurité", value: "Sanitisation HTML (anti-XSS), CSP headers, safeJsonLd(), permissions policy, X-Frame-Options, Referrer-Policy" }
+				{ label: "Suites de tests", value: "4 (rss, rss.integration, shows, utils)" },
+				{ label: "Pages statiques", value: "7 avec SEO dynamique (JSON-LD, sitemap, OG par page)" }
 			],
 			media: [
 				// --- Architecture ---
@@ -681,13 +695,12 @@ export const PROJECTS: Project[] = [
 				{ name: "Render", role: "Hébergement en production (API + client) avec deploy hooks automatisés", group: "Déploiement & CI" }
 			],
 			metrics: [
-				{ label: "Groupes de routes API", value: "10 fichiers, 12 tags Swagger (Stars, Auth, Cart, Orders, Payments, Reviews, Wishlist, Admin, Profile, Refunds, Payment Stats, Webhooks)" },
-				{ label: "Fichiers de tests unitaires backend", value: "4 (cartService, orderService, paymentValidator, bcryptHashingService)" },
-				{ label: "Assertions / blocs de test backend", value: "101 occurrences describe/it/test sur 4 fichiers" },
-				{ label: "Fichiers de tests frontend", value: "4 (passwordValidation, cartCalculations, orderTypes, AuthContainer) — 35 blocs" },
-				{ label: "Tests E2E Playwright", value: "3 specs (auth, catalog, navigation)" },
+				{ label: "Tests automatisés", value: "139 blocs (101 backend + 35 frontend + 3 E2E)" },
+				{ label: "Composants React", value: "61 sur 13 pages avec routing protégé" },
+				{ label: "Tags Swagger documentés", value: "12 (Stars, Auth, Cart, Orders, Payments, Reviews, Wishlist, Admin, Profile, Refunds, Stats, Webhooks)" },
 				{ label: "Modèles Sequelize", value: "9 (User, Star, Cart, CartItem, Order, OrderStar, Review, Wishlist, RefreshToken)" },
-				{ label: "ADRs documentés", value: "5 (zustand, DI container, JS backend, sequelize sync, repository pattern)" }
+				{ label: "Fichiers de routes API", value: "10 avec documentation OpenAPI" },
+				{ label: "ADRs documentés", value: "5 (Zustand, DI container, JS backend, Sequelize sync, repository pattern)" }
 			]
 		}
 	}

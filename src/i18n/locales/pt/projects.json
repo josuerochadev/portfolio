@@ -77,13 +77,14 @@
           { "name": "Railway", "role": "Hospedagem da aplicação conteinerizada (nixpacks)", "group": "Segurança & Ops" }
         ],
         "metrics": [
-          { "label": "Fontes RSS monitoradas", "value": "38 feeds (FR + EN)" },
-          { "label": "Ferramentas do agente", "value": "6 (SQL, busca web, RAG, visão, preview digest, send digest)" },
-          { "label": "Arquivos de teste", "value": "18 arquivos (auth, conversas, streaming, upload, segurança, RAG, feedback, e2e…)" },
-          { "label": "Dimensões embeddings", "value": "768 (gemini-embedding-001)" },
-          { "label": "Scoring RAG", "value": "4 sinais combinados: cosseno (50%) + BM25 (25%) + frescor (25%) + bônus feedback" },
-          { "label": "Segurança", "value": "Detecção de prompt injection (14 padrões), validação SQL, filtragem PII na saída (IBAN, cartão, email, telefone)" },
-          { "label": "ADRs documentados", "value": "3 (OpenAI→Gemini, SQLite→PostgreSQL, Render→Railway)" }
+          { "label": "Artigos enriquecidos por dia", "value": "200 com deduplicação (URL + similaridade de título)" },
+          { "label": "Fontes RSS monitoradas", "value": "41 feeds FR + EN, ingestão diária" },
+          { "label": "Arquivos de teste", "value": "18 (auth, streaming, upload, segurança, RAG, e2e…)" },
+          { "label": "Ferramentas do agente", "value": "7 (SQL, busca web, RAG, visão, preview digest, envio digest, resposta direta)" },
+          { "label": "Padrões anti-injeção", "value": "14 regex + validação SQL + filtragem PII" },
+          { "label": "Scoring RAG híbrido", "value": "4 sinais (cosseno 50% + BM25 25% + frescor 25% + feedback 10%)" },
+          { "label": "Retenção LGPD", "value": "3 políticas (90d artigos, 30d logs, 180d mensagens)" },
+          { "label": "ADRs documentados", "value": "3 (OpenAI → Gemini, SQLite → PostgreSQL, Render → Railway)" }
         ]
       }
     },
@@ -170,17 +171,12 @@
           { "name": "Vercel", "role": "Deploy do frontend React em produção", "group": "Deploy" }
         ],
         "metrics": [
-          { "label": "Módulos de rotas API", "value": "6" },
-          { "label": "Páginas frontend", "value": "13" },
-          { "label": "Componentes reutilizáveis", "value": "10" },
-          { "label": "Testes backend", "value": "113 blocos (4 suites integração + 4 suites unitárias)" },
-          { "label": "Testes unitários frontend", "value": "36 blocos (4 suites Vitest)" },
-          { "label": "Níveis de role RBAC", "value": "4 (Developer, Manager, Supervisor, Server)" },
-          { "label": "ADRs documentados", "value": "5 (decisões arquiteturais)" },
-          { "label": "Segurança", "value": "JWT httpOnly + SameSite, bcrypt 12 rounds, Zod cliente+servidor, Helmet, rate limiting, audit trail JSONB" },
-          { "label": "Testes E2E", "value": "2 specs Playwright (auth, health)" },
+          { "label": "Testes automatizados", "value": "151 blocos (113 backend + 36 frontend + 2 E2E)" },
+          { "label": "Interface completa", "value": "13 páginas e 10 componentes reutilizáveis" },
+          { "label": "Camadas de segurança", "value": "6 (JWT httpOnly, bcrypt 12 rounds, Zod, Helmet, rate limiting, audit JSONB)" },
           { "label": "Tabelas PostgreSQL", "value": "6 (roles, users, payment_types, cash_registers, transactions, action_logs)" },
-          { "label": "Deploy", "value": "Demo ao vivo (Vercel + Railway + Neon)" }
+          { "label": "Roles RBAC", "value": "4 níveis (Developer, Manager, Supervisor, Server)" },
+          { "label": "ADRs documentados", "value": "5 (JWT cookies, Redis blacklist, Sqitch, Zod, SQL sem ORM)" }
         ],
         "media": [
           { "caption": "Arquitetura — Frontend ↔ API ↔ PostgreSQL / Redis + deploy Vercel / Railway / Neon" },
@@ -236,14 +232,12 @@
           { "name": "Vercel", "role": "Deploy com deploy hooks para rebuild sob demanda, domínio custom oklmdragclub.com", "group": "Produção" }
         ],
         "metrics": [
-          { "label": "Fontes de dados", "value": "3 (RSS Anchor.fm, Apple Podcasts API, Deezer API)" },
-          { "label": "Arquivos de teste", "value": "3 suítes (rss, shows, utils)" },
-          { "label": "Programas suportados", "value": "5 séries (+ catch-all \"Autre\")" },
+          { "label": "Episódios publicados", "value": "60 gerados no build a partir do feed RSS" },
+          { "label": "Programas detectados", "value": "6 séries por pattern matching (+ catch-all)" },
+          { "label": "Fontes fundidas no build", "value": "3 (RSS Anchor.fm, Apple Podcasts API, Deezer API)" },
           { "label": "Plataformas de escuta", "value": "4 (Spotify, Apple Podcasts, Deezer, Amazon Music)" },
-          { "label": "Imagens OG geradas", "value": "3 níveis (home, programa, episódio)" },
-          { "label": "Feed RSS de saída", "value": "Rota /feed.xml gerada dinamicamente a partir dos episódios" },
-          { "label": "Acessibilidade", "value": "Skip links, ARIA labels, foco de teclado, prefers-reduced-motion" },
-          { "label": "Segurança", "value": "Sanitização HTML (anti-XSS), CSP headers, safeJsonLd(), permissions policy, X-Frame-Options, Referrer-Policy" }
+          { "label": "Suítes de testes", "value": "4 (rss, rss.integration, shows, utils)" },
+          { "label": "Páginas estáticas", "value": "7 com SEO dinâmico (JSON-LD, sitemap, OG por página)" }
         ],
         "media": [
           { "caption": "Pipeline de dados — RSS → APIs → Build estático" },
@@ -301,13 +295,12 @@
           { "name": "Render", "role": "Hospedagem em produção (API + client) com deploy hooks automatizados", "group": "Deploy & CI" }
         ],
         "metrics": [
-          { "label": "Grupos de rotas API", "value": "10 files, 12 Swagger tags (Stars, Auth, Cart, Orders, Payments, Reviews, Wishlist, Admin, Profile, Refunds, Payment Stats, Webhooks)" },
-          { "label": "Arquivos de testes unitários backend", "value": "4 (cartService, orderService, paymentValidator, bcryptHashingService)" },
-          { "label": "Assertions / blocos de teste backend", "value": "101 ocorrências describe/it/test em 4 arquivos" },
-          { "label": "Arquivos de testes frontend", "value": "4 (passwordValidation, cartCalculations, orderTypes, AuthContainer) — 35 blocos" },
-          { "label": "Testes E2E Playwright", "value": "3 specs (auth, catalog, navigation)" },
+          { "label": "Testes automatizados", "value": "139 blocos (101 backend + 35 frontend + 3 E2E)" },
+          { "label": "Componentes React", "value": "61 em 13 páginas com roteamento protegido" },
+          { "label": "Tags Swagger documentadas", "value": "12 (Stars, Auth, Cart, Orders, Payments, Reviews, Wishlist, Admin, Profile, Refunds, Stats, Webhooks)" },
           { "label": "Modelos Sequelize", "value": "9 (User, Star, Cart, CartItem, Order, OrderStar, Review, Wishlist, RefreshToken)" },
-          { "label": "ADRs documentados", "value": "5 (zustand, DI container, JS backend, sequelize sync, repository pattern)" }
+          { "label": "Arquivos de rotas API", "value": "10 com documentação OpenAPI" },
+          { "label": "ADRs documentados", "value": "5 (Zustand, DI container, JS backend, Sequelize sync, repository pattern)" }
         ]
       }
     }

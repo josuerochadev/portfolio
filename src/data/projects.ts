@@ -751,6 +751,33 @@ export const PROJECTS: Project[] = [
 				{ label: "Modèles Sequelize", value: "9 (User, Star, Cart, CartItem, Order, OrderStar, Review, Wishlist, RefreshToken)" },
 				{ label: "Fichiers de routes API", value: "10 avec documentation OpenAPI" },
 				{ label: "ADRs documentés", value: "5 (Zustand, DI container, JS backend, Sequelize sync, repository pattern)" }
+			],
+			media: [
+				// --- Architecture ---
+				{
+					type: "embed",
+					src: "/assets/media/projects/stella/architecture-diagram.html",
+					caption: "Architecture — React SPA ↔ Express API ↔ PostgreSQL + déploiement Vercel / Render",
+					group: "Architecture"
+				},
+				{
+					type: "embed",
+					src: "/assets/media/projects/stella/erd-diagram.html",
+					caption: "Schéma ERD — 9 modèles Sequelize avec associations",
+					group: "Architecture"
+				},
+				{
+					type: "embed",
+					src: "/assets/media/projects/stella/di-container-diagram.html",
+					caption: "DI Container — register / resolve / singleton (backend + frontend)",
+					group: "Architecture"
+				},
+				{
+					type: "embed",
+					src: "/assets/media/projects/stella/auth-flow-diagram.html",
+					caption: "Flux Auth — JWT httpOnly + CSRF double-submit + refresh token rotation",
+					group: "Architecture"
+				}
 			]
 		}
 	}

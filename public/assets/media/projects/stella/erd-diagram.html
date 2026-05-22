@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stella — ERD (9 modeles Sequelize)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Bebas+Neue&family=Roboto:wght@400;500;700&family=Roboto+Slab:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  :root {
+    --bg:           #0f0a18;
+    --bg-grad:      linear-gradient(135deg, #3D2A54 0%, #1E1326 55%, #0f0a18 100%);
+    --surface-0:    rgba(61, 42, 84, 0.25);
+    --surface-1:    rgba(61, 42, 84, 0.40);
+    --surface-2:    rgba(61, 42, 84, 0.55);
+    --border:       rgba(174, 201, 255, 0.12);
+    --border-strong:rgba(174, 201, 255, 0.25);
+
+    --fg:           #AEC9FF;
+    --fg-strong:    #ffffff;
+    --fg-muted:     rgba(174, 201, 255, 0.6);
+    --fg-faint:     rgba(174, 201, 255, 0.35);
+
+    --amber:        #FFB347;
+    --amber-deep:   #e69a2e;
+    --cyan:         #38bdf8;
+    --green:        #34d399;
+    --green-deep:   #059669;
+    --magenta:      #e040fb;
+    --red:          #f87171;
+    --purple:       #a78bfa;
+
+    --font-display: 'Dela Gothic One', cursive;
+    --font-body:    'Roboto', sans-serif;
+    --font-serif:   'Roboto Slab', serif;
+    --font-mono:    'JetBrains Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    background-image: var(--bg-grad);
+    background-attachment: fixed;
+    color: var(--fg);
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    justify-content: center;
+    padding: 48px 24px 64px;
+    min-height: 100vh;
+  }
+
+  .canvas { width: 100%; max-width: 1100px; }
+
+  .header { text-align: center; margin-bottom: 48px; }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--fg-muted); font-weight: 500;
+  }
+  .header h1 {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 3.5vw, 36px);
+    color: var(--fg-strong);
+    line-height: 1.15;
+    margin-top: 8px;
+  }
+  .header h1 .accent { color: var(--amber); }
+  .header p {
+    font-size: 13px; color: var(--fg-muted); margin-top: 8px;
+    font-family: var(--font-mono);
+  }
+
+  /* ── ERD Grid ── */
+  .erd-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .entity {
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: var(--surface-0);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .entity:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 32px -8px rgba(174, 201, 255, 0.1);
+  }
+
+  .entity-header {
+    padding: 14px 16px 10px;
+    display: flex; align-items: center; gap: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .entity-header .icon { font-size: 18px; }
+  .entity-header .name {
+    font-family: var(--font-serif);
+    font-size: 15px; font-weight: 600;
+    color: var(--fg-strong);
+  }
+  .entity-header .badge {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 8px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 2px 7px; border-radius: 999px;
+    background: var(--surface-1);
+    color: var(--fg-muted);
+    border: 1px solid var(--border);
+  }
+
+  /* Entity themes */
+  .entity--amber .entity-header { background: linear-gradient(135deg, rgba(255,179,71,0.2), rgba(255,179,71,0.08)); border-color: rgba(255,179,71,0.2); }
+  .entity--amber .name { color: var(--amber); }
+  .entity--amber .badge { background: rgba(255,179,71,0.15); color: var(--amber); border-color: rgba(255,179,71,0.3); }
+
+  .entity--cyan .entity-header { background: linear-gradient(135deg, rgba(56,189,248,0.15), rgba(56,189,248,0.05)); border-color: rgba(56,189,248,0.2); }
+  .entity--cyan .name { color: var(--cyan); }
+  .entity--cyan .badge { background: rgba(56,189,248,0.15); color: var(--cyan); border-color: rgba(56,189,248,0.3); }
+
+  .entity--green .entity-header { background: linear-gradient(135deg, rgba(52,211,153,0.15), rgba(52,211,153,0.05)); border-color: rgba(52,211,153,0.2); }
+  .entity--green .name { color: var(--green); }
+  .entity--green .badge { background: rgba(52,211,153,0.15); color: var(--green); border-color: rgba(52,211,153,0.3); }
+
+  .entity--purple .entity-header { background: linear-gradient(135deg, rgba(167,139,250,0.15), rgba(167,139,250,0.05)); border-color: rgba(167,139,250,0.2); }
+  .entity--purple .name { color: var(--purple); }
+  .entity--purple .badge { background: rgba(167,139,250,0.15); color: var(--purple); border-color: rgba(167,139,250,0.3); }
+
+  .entity--magenta .entity-header { background: linear-gradient(135deg, rgba(224,64,251,0.12), rgba(224,64,251,0.04)); border-color: rgba(224,64,251,0.2); }
+  .entity--magenta .name { color: var(--magenta); }
+  .entity--magenta .badge { background: rgba(224,64,251,0.15); color: var(--magenta); border-color: rgba(224,64,251,0.3); }
+
+  .fields { padding: 10px 16px 14px; }
+  .field {
+    display: flex; align-items: baseline; gap: 8px;
+    padding: 4px 0;
+  }
+  .field + .field { border-top: 1px solid var(--border); }
+  .field-name {
+    font-family: var(--font-mono);
+    font-weight: 600; font-size: 11px;
+    color: var(--fg);
+    min-width: 100px;
+  }
+  .field-type {
+    font-family: var(--font-mono);
+    font-size: 10px; color: var(--fg-muted);
+  }
+  .field-key {
+    font-family: var(--font-mono);
+    font-size: 8px; font-weight: 600;
+    letter-spacing: 0.06em;
+    padding: 1px 5px; border-radius: 3px;
+    margin-left: auto; flex-shrink: 0;
+  }
+  .pk { background: rgba(255,179,71,0.2); color: var(--amber); border: 1px solid rgba(255,179,71,0.3); }
+  .fk { background: rgba(56,189,248,0.15); color: var(--cyan); border: 1px solid rgba(56,189,248,0.3); }
+  .uq { background: rgba(224,64,251,0.15); color: var(--magenta); border: 1px solid rgba(224,64,251,0.3); }
+
+  .field-note {
+    font-family: var(--font-mono);
+    font-size: 9px; color: var(--fg-faint);
+    padding: 4px 0;
+  }
+
+  /* ── Relations ── */
+  .relations {
+    margin-top: 36px;
+    padding: 20px 24px;
+    border: 1.5px dashed var(--border-strong);
+    border-radius: 14px;
+    background: var(--surface-0);
+    backdrop-filter: blur(8px);
+  }
+  .relations h3 {
+    font-family: var(--font-serif);
+    font-size: 14px; font-weight: 600;
+    margin-bottom: 14px;
+    color: var(--fg-strong);
+  }
+  .rel-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 8px;
+  }
+  .rel {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    font-size: 11px;
+  }
+  .rel:hover { border-color: var(--border-strong); }
+  .rel-from, .rel-to {
+    font-family: var(--font-mono);
+    font-weight: 600; font-size: 11px;
+    color: var(--fg-strong);
+  }
+  .rel-arrow {
+    font-family: var(--font-mono);
+    font-size: 10px; color: var(--fg-faint);
+    white-space: nowrap;
+  }
+
+  /* ── Legend ── */
+  .legend {
+    margin-top: 24px;
+    display: flex; flex-wrap: wrap; gap: 16px;
+    justify-content: center;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 10px; color: var(--fg-muted);
+  }
+  .legend-swatch {
+    width: 12px; height: 12px;
+    border-radius: 3px;
+  }
+
+  @media (max-width: 768px) {
+    .erd-grid { grid-template-columns: 1fr; }
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .erd-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <header class="header">
+    <div class="eyebrow">Stella E-Commerce</div>
+    <h1>Schema <span class="accent">ERD</span> — 9 modeles</h1>
+    <p>Sequelize ORM &middot; PostgreSQL &middot; Associations auto-loaded</p>
+  </header>
+
+  <div class="erd-grid">
+
+    <!-- USER -->
+    <div class="entity entity--amber">
+      <div class="entity-header">
+        <span class="icon">&#128100;</span>
+        <span class="name">User</span>
+        <span class="badge">Central</span>
+      </div>
+      <div class="fields">
+        <div class="field"><span class="field-name">id</span><span class="field-type">INTEGER</span><span class="field-key pk">PK</span></div>
+        <div class="field"><span class="field-name">firstName</span><span class="field-type">STRING(50)</span></div>
+        <div class="field"><span class="field-name">lastName</span><span class="field-type">STRING(50)</span></div>
+        <div class="field"><span class="field-name">email</span><span class="field-type">STRING(100)</span><span class="field-key uq">UQ</span></div>
+        <div class="field"><span class="field-name">password</span><span class="field-type">STRING(255)</span></div>
+        <div class="field"><span class="field-name">role</span><span class="field-type">ENUM(client, admin)</span></div>
+      </div>
+    </div>
+
+    <!-- STAR -->
+    <div class="entity entity--amber">
+      <div class="entity-header">
+        <span class="icon">&#11088;</span>
+        <span class="name">Star</span>
+        <span class="badge">Produit</span>
+      </div>
+      <div class="fields">
+        <div class="field"><span class="field-name">starid</span><span class="field-type">INTEGER</span><span class="field-key pk">PK</span></div>
+        <div class="field"><span class="field-name">name</span><span class="field-type">STRING(100)</span></div>
+        <div class="field"><span class="field-name">description</span><span class="field-type">TEXT</span></div>
+        <div class="field"><span class="field-name">constellation</span><span class="field-type">STRING(50)</span></div>
+        <div class="field"><span class="field-name">distanceFromEarth</span><span class="field-type">FLOAT</span></div>
+        <div class="field"><span class="field-name">luminosity</span><span class="field-type">FLOAT</span></div>
+        <div class="field"><span class="field-name">mass</span><span class="field-type">FLOAT</span></div>
+        <div class="field"><span class="field-name">magnitude</span><span class="field-type">FLOAT</span></div>
+        <div class="field"><span class="field-name">price</span><span class="field-type">DECIMAL(10,2)</span></div>
+      </div>
+    </div>
+
+    <!-- CART -->
+    <div class="entity entity--green">
+      <div class="entity-header">
+        <span class="icon">&#128722;</span>
+        <span class="name">Cart</span>
+        <span class="badge">1:1 User</span>
+      </div>
+      <div class="fields">
+        <div class="field"><span class="field-name">id</span><span class="field-type">INTEGER</span><span class="field-key pk">PK</span></div>
+        <div class="field"><span class="field-name">userId</span><span class="field-type">INTEGER</span><span class="field-key fk">FK</span></div>
+        <div class="field-note">&#9881; getTotalPrice() — instance method</div>
+      </div>
+    </div>
+
+    <!-- CART ITEM -->
+    <div class="entity entity--green">
+      <div class="entity-header">
+        <span class="icon">&#128230;</span>
+        <span class="name">CartItem</span>
+        <span class="badge">Join</span>
+      </div>
+      <div class="fields">
+        <div class="field"><span class="field-name">id</span><span class="field-type">INTEGER</span><span class="field-key pk">PK</span></div>
+        <div class="field"><span class="field-name">cartId</span><span class="field-type">INTEGER</span><span class="field-key fk">FK</span></div>
+        <div class="field"><span class="field-name">starId</span><span class="field-type">INTEGER</span><span class="field-key fk">FK</span></div>
+        <div class="field"><span class="field-name">quantity</span><span class="field-type">INTEGER</span></div>
+        <div class="field-note">&#128274; unique: [cartId, starId]</div>
+      </div>
+    </div>
+
+    <!-- ORDER -->
+    <div class="entity entity--cyan">
+      <div class="entity-header">
+        <span class="icon">&#128230;</span>
+        <span class="name">Order</span>
+        <span class="badge">Commande</span>
+      </div>
+      <div class="fields">
+        <div class="field"><span class="field-name">id</span><span class="field-type">INTEGER</span><span class="field-key pk">PK</span></div>
+        <div class="field"><span class="field-name">userId</span><span class="field-type">INTEGER</span><span class="field-key fk">FK</span></div>
+        <div class="field"><span class="field-name">status</span><span class="field-type">ENUM(8 valeurs)</span></div>
+        <div class="field"><span class="field-name">totalAmount</span><span class="field-type">DECIMAL(10,2)</span></div>
+        <div class="field"><span class="field-name">paymentMethod</span><span class="field-type">STRING(50)</span></div>
+        <div class="field"><span class="field-name">transactionId</span><span class="field-type">STRING(255)</span><span class="field-key uq">UQ</span></div>
+        <div class="field"><span class="field-name">shippingAddress</span><span class="field-type">TEXT</span></div>
+        <div class="field"><span class="field-name">refundId</span><span class="field-type">STRING(255)</span></div>
+      </div>
+    </div>
+
+    <!-- ORDER STAR -->
+    <div class="entity entity--cyan">
+      <div class="entity-header">
+        <span class="icon">&#128279;</span>
+        <span class="name">OrderStar</span>
+        <span class="badge">N:N Join</span>
+      </div>
+      <div class="fields">
+        <div class="field"><span class="field-name">orderId</span><span class="field-type">INTEGER</span><span class="field-key fk">FK</span></div>
+        <div class="field"><span class="field-name">starId</span><span class="field-type">INTEGER</span><span class="field-key fk">FK</span></div>
+        <div class="field"><span class="field-name">quantity</span><span class="field-type">INTEGER</span></div>
+        <div class="field-note">&#128274; unique: [orderId, starId]</div>
+      </div>
+    </div>
+
+    <!-- REVIEW -->
+    <div class="entity entity--purple">
+      <div class="entity-header">
+        <span class="icon">&#11088;</span>
+        <span class="name">Review</span>
+        <span class="badge">Avis</span>
+      </div>
+      <div class="fields">
+        <div class="field"><span class="field-name">id</span><span class="field-type">INTEGER</span><span class="field-key pk">PK</span></div>
+        <div class="field"><span class="field-name">userId</span><span class="field-type">INTEGER</span><span class="field-key fk">FK</span></div>
+        <div class="field"><span class="field-name">starId</span><span class="field-type">INTEGER</span><span class="field-key fk">FK</span></div>
+        <div class="field"><span class="field-name">rating</span><span class="field-type">INTEGER (1-5)</span></div>
+        <div class="field"><span class="field-name">comment</span><span class="field-type">TEXT</span></div>
+        <div class="field-note">&#128274; unique: [userId, starId]</div>
+      </div>
+    </div>
+
+    <!-- WISHLIST -->
+    <div class="entity entity--purple">
+      <div class="entity-header">
+        <span class="icon">&#128150;</span>
+        <span class="name">Wishlist</span>
+        <span class="badge">Favoris</span>
+      </div>
+      <div class="fields">
+        <div class="field"><span class="field-name">id</span><span class="field-type">INTEGER</span><span class="field-key pk">PK</span></div>
+        <div class="field"><span class="field-name">userId</span><span class="field-type">INTEGER</span><span class="field-key fk">FK</span></div>
+        <div class="field"><span class="field-name">starId</span><span class="field-type">INTEGER</span><span class="field-key fk">FK</span></div>
+        <div class="field-note">&#128274; unique: [userId, starId]</div>
+      </div>
+    </div>
+
+    <!-- REFRESH TOKEN -->
+    <div class="entity entity--magenta">
+      <div class="entity-header">
+        <span class="icon">&#128273;</span>
+        <span class="name">RefreshToken</span>
+        <span class="badge">Auth</span>
+      </div>
+      <div class="fields">
+        <div class="field"><span class="field-name">id</span><span class="field-type">INTEGER</span><span class="field-key pk">PK</span></div>
+        <div class="field"><span class="field-name">token</span><span class="field-type">STRING(500)</span><span class="field-key uq">UQ</span></div>
+        <div class="field"><span class="field-name">userId</span><span class="field-type">INTEGER</span><span class="field-key fk">FK</span></div>
+        <div class="field"><span class="field-name">expiresAt</span><span class="field-type">DATE</span></div>
+        <div class="field"><span class="field-name">isRevoked</span><span class="field-type">BOOLEAN</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RELATIONS -->
+  <div class="relations">
+    <h3>Associations Sequelize</h3>
+    <div class="rel-grid">
+      <div class="rel"><span class="rel-from">User</span><span class="rel-arrow">hasMany &#8594;</span><span class="rel-to">Order</span></div>
+      <div class="rel"><span class="rel-from">User</span><span class="rel-arrow">hasMany &#8594;</span><span class="rel-to">Review</span></div>
+      <div class="rel"><span class="rel-from">User</span><span class="rel-arrow">hasMany &#8594;</span><span class="rel-to">Wishlist</span></div>
+      <div class="rel"><span class="rel-from">User</span><span class="rel-arrow">hasOne &#8594;</span><span class="rel-to">Cart</span></div>
+      <div class="rel"><span class="rel-from">User</span><span class="rel-arrow">hasMany &#8594;</span><span class="rel-to">RefreshToken</span></div>
+      <div class="rel"><span class="rel-from">Cart</span><span class="rel-arrow">hasMany &#8594;</span><span class="rel-to">CartItem</span></div>
+      <div class="rel"><span class="rel-from">CartItem</span><span class="rel-arrow">belongsTo &#8594;</span><span class="rel-to">Star</span></div>
+      <div class="rel"><span class="rel-from">Order</span><span class="rel-arrow">belongsToMany &#8594;</span><span class="rel-to">Star (via OrderStar)</span></div>
+      <div class="rel"><span class="rel-from">Star</span><span class="rel-arrow">belongsToMany &#8594;</span><span class="rel-to">Order (via OrderStar)</span></div>
+      <div class="rel"><span class="rel-from">Review</span><span class="rel-arrow">belongsTo &#8594;</span><span class="rel-to">User + Star</span></div>
+      <div class="rel"><span class="rel-from">Wishlist</span><span class="rel-arrow">belongsTo &#8594;</span><span class="rel-to">User + Star</span></div>
+    </div>
+  </div>
+
+  <!-- LEGEND -->
+  <div class="legend">
+    <div class="legend-item"><div class="legend-swatch" style="background: rgba(255,179,71,0.3);"></div> PK — Cle primaire</div>
+    <div class="legend-item"><div class="legend-swatch" style="background: rgba(56,189,248,0.3);"></div> FK — Cle etrangere</div>
+    <div class="legend-item"><div class="legend-swatch" style="background: rgba(224,64,251,0.3);"></div> UQ — Unique</div>
+    <div class="legend-item"><div class="legend-swatch" style="background: rgba(255,179,71,0.2); border: 1px solid rgba(255,179,71,0.3);"></div> Entites centrales</div>
+    <div class="legend-item"><div class="legend-swatch" style="background: rgba(52,211,153,0.2); border: 1px solid rgba(52,211,153,0.3);"></div> Panier</div>
+    <div class="legend-item"><div class="legend-swatch" style="background: rgba(56,189,248,0.2); border: 1px solid rgba(56,189,248,0.3);"></div> Commandes</div>
+    <div class="legend-item"><div class="legend-swatch" style="background: rgba(167,139,250,0.2); border: 1px solid rgba(167,139,250,0.3);"></div> Social</div>
+    <div class="legend-item"><div class="legend-swatch" style="background: rgba(224,64,251,0.2); border: 1px solid rgba(224,64,251,0.3);"></div> Auth</div>
+  </div>
+
+</div>
+</body>
+</html>

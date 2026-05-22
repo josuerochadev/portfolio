@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { useScroll, useTransform, motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { FaEye } from "react-icons/fa";
+import { FaEye, FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import { PROJECTS } from "@/data/projects";
 
@@ -125,17 +125,49 @@ function ProjectGroup({ title, items, startIndex, t }: {
 								<p className="text-base mb-1 text-violet/80 dark:text-beige/80">{projectTranslations?.deliverables || project.deliverables}</p>
 								<p className="text-sm font-sans font-bold uppercase tracking-wider text-violet/60 dark:text-beige/60 mt-3">{t('labels.context')}</p>
 								<p className="text-base text-violet/80 dark:text-beige/80">{projectTranslations?.context || project.context}</p>
-								<Link
-									to={`/projet/${project.id}`}
-									className="mt-6 px-4 py-2 rounded-full bg-orange/10 text-orange-dark dark:text-orange border border-orange/20
-									hover:bg-orange hover:text-beige dark:hover:bg-orange/20 dark:hover:text-orange
-									transition-all duration-300
-									inline-flex items-center gap-2 self-start font-medium text-sm
-									hover:shadow-cta hover:scale-105 active:scale-95"
-									aria-label={`${t('labels.seeMore')} ${projectTranslations?.title || project.title}`}
-								>
-									<FaEye className="inline-block" /> {t('labels.moreDetails')}
-								</Link>
+								<div className="flex flex-wrap gap-3 mt-6">
+									<Link
+										to={`/projet/${project.id}`}
+										className="px-4 py-2 rounded-full bg-orange/10 text-orange-dark dark:text-orange border border-orange/20
+										hover:bg-orange hover:text-beige dark:hover:bg-orange/20 dark:hover:text-orange
+										transition-all duration-300
+										inline-flex items-center gap-2 font-medium text-sm
+										hover:shadow-cta hover:scale-105 active:scale-95"
+										aria-label={`${t('labels.seeMore')} ${projectTranslations?.title || project.title}`}
+									>
+										<FaEye className="inline-block" /> {t('labels.moreDetails')}
+									</Link>
+									{project.githubUrl && (
+										<a
+											href={project.githubUrl}
+											target="_blank"
+											rel="noopener noreferrer"
+											className="px-4 py-2 rounded-full bg-violet/10 text-violet dark:text-beige border border-violet/20 dark:border-beige/20
+											hover:bg-violet hover:text-beige dark:hover:bg-beige/20 dark:hover:text-beige
+											transition-all duration-300
+											inline-flex items-center gap-2 font-medium text-sm
+											hover:shadow-cta hover:scale-105 active:scale-95"
+											aria-label={`Code source ${projectTranslations?.title || project.title}`}
+										>
+											<FaGithub className="inline-block" /> Code
+										</a>
+									)}
+									{project.demoUrl && (
+										<a
+											href={project.demoUrl}
+											target="_blank"
+											rel="noopener noreferrer"
+											className="px-4 py-2 rounded-full bg-lime/10 text-violet dark:text-lime border border-lime/30 dark:border-lime/20
+											hover:bg-lime hover:text-violet dark:hover:bg-lime/20 dark:hover:text-lime
+											transition-all duration-300
+											inline-flex items-center gap-2 font-medium text-sm
+											hover:shadow-cta hover:scale-105 active:scale-95"
+											aria-label={`Demo live ${projectTranslations?.title || project.title}`}
+										>
+											<FaExternalLinkAlt className="inline-block" /> Demo
+										</a>
+									)}
+								</div>
 							</div>
 						</article>
 					</FadeInUpOnScroll>

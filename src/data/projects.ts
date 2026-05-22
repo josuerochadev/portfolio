@@ -76,7 +76,7 @@ export const PROJECTS: Project[] = [
 		year: "2026",
 		type: "formation",
 		category: "ai",
-		githubUrl: "https://github.com/josuerochadev/formation-ia",
+		githubUrl: "https://github.com/josuerochadev/luciole",
 		demoUrl: "https://luciole-production.up.railway.app",
 		detail: {
 			deliverables: [
@@ -177,6 +177,8 @@ export const PROJECTS: Project[] = [
 		year: "2025",
 		type: "formation",
 		category: "mainframe",
+		githubUrl: "https://github.com/josuerochadev/fil-rouge-mainframe",
+		demoUrl: "https://fil-rouge-mainframe-production.up.railway.app",
 		detail: {
 			deliverables: [
 				{
@@ -252,6 +254,8 @@ export const PROJECTS: Project[] = [
 		year: "2025",
 		type: "formation",
 		category: "web-app",
+		githubUrl: "https://github.com/josuerochadev/tour-de-controle",
+		demoUrl: "https://tour-de-controle-omega.vercel.app",
 		detail: {
 			deliverables: [
 				{
@@ -618,6 +622,7 @@ export const PROJECTS: Project[] = [
 		type: "project",
 		category: "e-commerce",
 		githubUrl: "https://github.com/josuerochadev/stella-ecommerce",
+		demoUrl: "https://stella-ecommerce.vercel.app",
 		detail: {
 			deliverables: [
 				{

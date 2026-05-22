@@ -146,16 +146,6 @@ export default function ProjectDetail() {
 							</p>
 
 							<div className="flex flex-wrap gap-4 mt-8">
-								{project.demoUrl && (
-									<a
-										href={project.demoUrl}
-										target="_blank"
-										rel="noopener noreferrer"
-										className="button !text-beige hover:!text-violet"
-									>
-										<FaExternalLinkAlt className="inline-block mr-2" aria-hidden="true" /> DEMO
-									</a>
-								)}
 								{project.githubUrl && (
 									<a
 										href={project.githubUrl}
@@ -164,6 +154,16 @@ export default function ProjectDetail() {
 										className="button !text-beige hover:!text-violet"
 									>
 										<FaGithub className="inline-block mr-2" aria-hidden="true" /> CODE
+									</a>
+								)}
+								{project.demoUrl && (
+									<a
+										href={project.demoUrl}
+										target="_blank"
+										rel="noopener noreferrer"
+										className="button !text-beige hover:!text-violet"
+									>
+										<FaExternalLinkAlt className="inline-block mr-2" aria-hidden="true" /> DEMO
 									</a>
 								)}
 							</div>
@@ -629,6 +629,47 @@ export default function ProjectDetail() {
 						)}
 
 					</main>
+
+					{/* Bottom nav — end-of-page navigation */}
+					<nav className="max-w-5xl mx-auto px-6 pb-20 flex flex-wrap gap-3" aria-label="Project navigation">
+						{prevProject && (
+							<Link
+								to={`/projet/${prevProject.id}`}
+								className="px-4 py-2 rounded-full bg-orange/10 text-orange-dark dark:text-orange border border-orange/20
+								hover:bg-orange hover:text-beige dark:hover:bg-orange/20 dark:hover:text-orange
+								transition-all duration-300
+								inline-flex items-center gap-2 font-medium text-sm
+								hover:shadow-cta hover:scale-105 active:scale-95"
+							>
+								<FaArrowLeft className="inline-block" aria-hidden="true" />
+								{t(`projects:items.${prevProject.id}.title`, { defaultValue: prevProject.title })}
+							</Link>
+						)}
+						<Link
+							to="/#projects"
+							className="px-4 py-2 rounded-full bg-orange/10 text-orange-dark dark:text-orange border border-orange/20
+							hover:bg-orange hover:text-beige dark:hover:bg-orange/20 dark:hover:text-orange
+							transition-all duration-300
+							inline-flex items-center gap-2 font-medium text-sm
+							hover:shadow-cta hover:scale-105 active:scale-95"
+						>
+							<FaArrowUp className="inline-block" aria-hidden="true" />
+							{t('projects:actions.backToProjects')}
+						</Link>
+						{nextProject && (
+							<Link
+								to={`/projet/${nextProject.id}`}
+								className="px-4 py-2 rounded-full bg-orange/10 text-orange-dark dark:text-orange border border-orange/20
+								hover:bg-orange hover:text-beige dark:hover:bg-orange/20 dark:hover:text-orange
+								transition-all duration-300
+								inline-flex items-center gap-2 font-medium text-sm
+								hover:shadow-cta hover:scale-105 active:scale-95"
+							>
+								{t(`projects:items.${nextProject.id}.title`, { defaultValue: nextProject.title })}
+								<FaArrowRight className="inline-block" aria-hidden="true" />
+							</Link>
+						)}
+					</nav>
 				</motion.div>
 				<ScrollToTop />
 				<Footer />

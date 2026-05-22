@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luciole — Pipeline RAG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Zilla+Slab:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --luciole-ink: #1a1a1a;
+    --luciole-ink-soft: #2d2d2d;
+    --luciole-muted: #6b6b6b;
+    --luciole-rule: #d9d6d0;
+    --luciole-paper: #faf8f3;
+    --luciole-paper-alt: #f2efe8;
+    --luciole-white: #ffffff;
+    --luciole-accent: #991b1b;
+    --luciole-accent-dark: #7f1515;
+    --luciole-accent-soft: #fef2f2;
+    --luciole-secondary: #8b9daf;
+    --luciole-secondary-soft: #e8ecf0;
+    --font-serif: 'Zilla Slab', Georgia, serif;
+    --font-sans: 'Inter', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--luciole-paper);
+    color: var(--luciole-ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 48px 24px 64px;
+  }
+
+  /* ---- HEADER ---- */
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--luciole-accent);
+    margin-bottom: 8px;
+  }
+
+  .header h1 {
+    font-family: var(--font-serif);
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--luciole-ink);
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+
+  .header .subtitle {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--luciole-muted);
+    letter-spacing: 0.02em;
+  }
+
+  .header-rule {
+    width: 64px;
+    height: 1px;
+    background: var(--luciole-accent);
+    margin: 20px auto 0;
+  }
+
+  /* ---- PIPELINE GRID ---- */
+  .pipeline-grid {
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+    gap: 0;
+  }
+
+  .pipeline-section {
+    padding: 0 32px;
+  }
+
+  .pipeline-section:first-child { padding-left: 0; }
+  .pipeline-section:last-child { padding-right: 0; }
+
+  .divider-vertical {
+    background: var(--luciole-rule);
+    position: relative;
+  }
+
+  /* ---- SECTION HEADER ---- */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 28px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--luciole-rule);
+  }
+
+  .section-icon {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    background: var(--luciole-accent-soft);
+    color: var(--luciole-accent);
+  }
+
+  .section-icon svg { width: 18px; height: 18px; }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--luciole-muted);
+  }
+
+  .section-title {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--luciole-ink);
+    line-height: 1.3;
+  }
+
+  /* ---- STEP CARDS ---- */
+  .steps { display: flex; flex-direction: column; gap: 0; }
+
+  .step-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .step-card {
+    width: 100%;
+    background: var(--luciole-white);
+    border: 1px solid var(--luciole-rule);
+    border-radius: 7px;
+    padding: 16px 18px;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+    cursor: default;
+    position: relative;
+  }
+
+  .step-card:hover {
+    border-color: var(--luciole-secondary);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    transform: translateY(-1px);
+  }
+
+  .step-card.prominent {
+    border-color: var(--luciole-accent);
+    border-width: 1.5px;
+    background: var(--luciole-accent-soft);
+  }
+
+  .step-card.prominent:hover {
+    box-shadow: 0 3px 16px rgba(153, 27, 27, 0.1);
+  }
+
+  .step-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+
+  .step-number {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--luciole-accent);
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--luciole-accent-soft);
+    border-radius: 5px;
+  }
+
+  .prominent .step-number {
+    background: var(--luciole-accent);
+    color: var(--luciole-white);
+  }
+
+  .step-title {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--luciole-ink);
+    line-height: 1.3;
+  }
+
+  .step-desc {
+    font-size: 12.5px;
+    color: var(--luciole-muted);
+    line-height: 1.55;
+    padding-left: 34px;
+  }
+
+  .step-desc code {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    background: var(--luciole-paper-alt);
+    padding: 1px 5px;
+    border-radius: 3px;
+    color: var(--luciole-ink-soft);
+  }
+
+  .prominent .step-desc code {
+    background: var(--luciole-white);
+  }
+
+  /* ---- ARROW CONNECTOR ---- */
+  .arrow-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6px 0;
+    color: var(--luciole-rule);
+  }
+
+  .arrow-connector .arrow-line {
+    width: 1px;
+    height: 12px;
+    background: var(--luciole-rule);
+  }
+
+  .arrow-connector svg {
+    width: 12px;
+    height: 8px;
+    color: var(--luciole-secondary);
+  }
+
+  /* ---- SCORING BREAKDOWN ---- */
+  .scoring-breakdown {
+    margin-top: 10px;
+    padding: 12px 14px;
+    background: var(--luciole-white);
+    border-radius: 6px;
+    border: 1px solid rgba(153, 27, 27, 0.12);
+  }
+
+  .scoring-breakdown .scoring-title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--luciole-muted);
+    margin-bottom: 10px;
+  }
+
+  .score-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .score-row:last-child { margin-bottom: 0; }
+
+  .score-label {
+    font-size: 11.5px;
+    color: var(--luciole-ink-soft);
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .score-bar-track {
+    width: 80px;
+    height: 6px;
+    background: var(--luciole-paper-alt);
+    border-radius: 3px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .score-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.6s ease;
+  }
+
+  .score-bar-fill.cosine { background: var(--luciole-accent); width: 0%; }
+  .score-bar-fill.bm25 { background: var(--luciole-secondary); width: 0%; }
+  .score-bar-fill.freshness { background: #a68a5b; width: 0%; }
+  .score-bar-fill.feedback { background: #5b8a6a; width: 0%; }
+
+  .score-pct {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--luciole-ink);
+    width: 38px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .score-detail {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--luciole-muted);
+    margin-top: 2px;
+    padding-left: 0;
+  }
+
+  /* ---- MOBILE SECTION DIVIDER ---- */
+  .divider-horizontal {
+    display: none;
+    text-align: center;
+    margin: 40px 0;
+    position: relative;
+  }
+
+  .divider-horizontal::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--luciole-rule);
+  }
+
+  .divider-horizontal span {
+    position: relative;
+    background: var(--luciole-paper);
+    padding: 0 16px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--luciole-muted);
+  }
+
+  /* ---- FOOTER ---- */
+  .footer {
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid var(--luciole-rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .footer-left {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--luciole-muted);
+    letter-spacing: 0.05em;
+  }
+
+  .footer-right {
+    display: flex;
+    gap: 16px;
+  }
+
+  .footer-tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--luciole-secondary);
+    background: var(--luciole-secondary-soft);
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 720px) {
+    .container { padding: 32px 16px 48px; }
+
+    .header h1 { font-size: 28px; }
+
+    .pipeline-grid {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .divider-vertical { display: none; }
+    .divider-horizontal { display: block; }
+
+    .pipeline-section {
+      padding: 0 !important;
+    }
+
+    .step-desc { padding-left: 34px; }
+
+    .scoring-breakdown { margin-left: 0; }
+
+    .score-bar-track { width: 60px; }
+  }
+
+  /* ---- ANIMATIONS ---- */
+  .step-card {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  .step-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.4s ease, transform 0.4s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+
+  .step-card.visible:hover {
+    transform: translateY(-1px);
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <!-- HEADER -->
+  <header class="header">
+    <div class="eyebrow">LUCIOLE</div>
+    <h1>Pipeline RAG</h1>
+    <p class="subtitle">ingestion + recherche hybride</p>
+    <div class="header-rule"></div>
+  </header>
+
+  <!-- PIPELINE GRID -->
+  <div class="pipeline-grid">
+
+    <!-- ===================== INGESTION ===================== -->
+    <div class="pipeline-section" id="ingestion">
+      <div class="section-header">
+        <div class="section-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3v18"/>
+            <path d="M5 10l7-7 7 7"/>
+          </svg>
+        </div>
+        <div>
+          <div class="section-label">Part A</div>
+          <div class="section-title">Ingestion</div>
+        </div>
+      </div>
+
+      <div class="steps">
+        <!-- 01 RSS -->
+        <div class="step-wrapper">
+          <div class="step-card" data-delay="0">
+            <div class="step-top">
+              <span class="step-number">01</span>
+              <span class="step-title">RSS Collection</span>
+            </div>
+            <div class="step-desc">
+              42 flux FR + EN, organises par categorie<br>
+              <code>IA</code> <code>Cloud</code> <code>Cyber</code> <code>DevOps</code> <code>Data</code> <code>Infra</code>
+            </div>
+          </div>
+          <div class="arrow-connector">
+            <div class="arrow-line"></div>
+            <svg viewBox="0 0 12 8" fill="currentColor"><path d="M6 8L0 0h12z"/></svg>
+          </div>
+        </div>
+
+        <!-- 02 Filtrage -->
+        <div class="step-wrapper">
+          <div class="step-card" data-delay="60">
+            <div class="step-top">
+              <span class="step-number">02</span>
+              <span class="step-title">Filtrage thematique</span>
+            </div>
+            <div class="step-desc">
+              60+ mots-cles thematiques pour filtrer les articles pertinents
+            </div>
+          </div>
+          <div class="arrow-connector">
+            <div class="arrow-line"></div>
+            <svg viewBox="0 0 12 8" fill="currentColor"><path d="M6 8L0 0h12z"/></svg>
+          </div>
+        </div>
+
+        <!-- 03 Dedup -->
+        <div class="step-wrapper">
+          <div class="step-card" data-delay="120">
+            <div class="step-top">
+              <span class="step-number">03</span>
+              <span class="step-title">Deduplication</span>
+            </div>
+            <div class="step-desc">
+              <code>SequenceMatcher</code> seuil 0.85 (titre) + URL unique
+            </div>
+          </div>
+          <div class="arrow-connector">
+            <div class="arrow-line"></div>
+            <svg viewBox="0 0 12 8" fill="currentColor"><path d="M6 8L0 0h12z"/></svg>
+          </div>
+        </div>
+
+        <!-- 04 Scraping -->
+        <div class="step-wrapper">
+          <div class="step-card" data-delay="180">
+            <div class="step-top">
+              <span class="step-number">04</span>
+              <span class="step-title">Scraping contenu</span>
+            </div>
+            <div class="step-desc">
+              <code>trafilatura</code>, 8 workers paralleles, max 5000 chars
+            </div>
+          </div>
+          <div class="arrow-connector">
+            <div class="arrow-line"></div>
+            <svg viewBox="0 0 12 8" fill="currentColor"><path d="M6 8L0 0h12z"/></svg>
+          </div>
+        </div>
+
+        <!-- 05 Enrichissement -->
+        <div class="step-wrapper">
+          <div class="step-card" data-delay="240">
+            <div class="step-top">
+              <span class="step-number">05</span>
+              <span class="step-title">Enrichissement LLM</span>
+            </div>
+            <div class="step-desc">
+              <code>ThreadPoolExecutor</code> 5 threads. Par article : resume, categorie (8 cat.), score pertinence (0-10), action suggeree.<br>
+              Filtre <code>PERTINENCE_MIN = 5</code>
+            </div>
+          </div>
+          <div class="arrow-connector">
+            <div class="arrow-line"></div>
+            <svg viewBox="0 0 12 8" fill="currentColor"><path d="M6 8L0 0h12z"/></svg>
+          </div>
+        </div>
+
+        <!-- 06 Indexation -->
+        <div class="step-wrapper">
+          <div class="step-card" data-delay="300">
+            <div class="step-top">
+              <span class="step-number">06</span>
+              <span class="step-title">Indexation RAG</span>
+            </div>
+            <div class="step-desc">
+              Embeddings <code>gemini-embedding-001</code> (768 dim)<br>
+              Chunking ~500 tokens / 80 overlap<br>
+              Stockage <code>PostgreSQL</code> + <code>embeddings.json</code>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VERTICAL DIVIDER (desktop) -->
+    <div class="divider-vertical"></div>
+
+    <!-- HORIZONTAL DIVIDER (mobile) -->
+    <div class="divider-horizontal">
+      <span>RECHERCHE</span>
+    </div>
+
+    <!-- ===================== QUERY ===================== -->
+    <div class="pipeline-section" id="query">
+      <div class="section-header">
+        <div class="section-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="M21 21l-4.35-4.35"/>
+          </svg>
+        </div>
+        <div>
+          <div class="section-label">Part B</div>
+          <div class="section-title">Recherche</div>
+        </div>
+      </div>
+
+      <div class="steps">
+        <!-- 01 Query -->
+        <div class="step-wrapper">
+          <div class="step-card" data-delay="80">
+            <div class="step-top">
+              <span class="step-number">01</span>
+              <span class="step-title">Query utilisateur</span>
+            </div>
+            <div class="step-desc">
+              Requete en langage naturel transmise par l'agent
+            </div>
+          </div>
+          <div class="arrow-connector">
+            <div class="arrow-line"></div>
+            <svg viewBox="0 0 12 8" fill="currentColor"><path d="M6 8L0 0h12z"/></svg>
+          </div>
+        </div>
+
+        <!-- 02 HyDE -->
+        <div class="step-wrapper">
+          <div class="step-card" data-delay="140">
+            <div class="step-top">
+              <span class="step-number">02</span>
+              <span class="step-title">Expansion HyDE</span>
+            </div>
+            <div class="step-desc">
+              Genere un document hypothetique pour ameliorer la recherche semantique
+            </div>
+          </div>
+          <div class="arrow-connector">
+            <div class="arrow-line"></div>
+            <svg viewBox="0 0 12 8" fill="currentColor"><path d="M6 8L0 0h12z"/></svg>
+          </div>
+        </div>
+
+        <!-- 03 Scoring hybride (PROMINENT) -->
+        <div class="step-wrapper">
+          <div class="step-card prominent" data-delay="200">
+            <div class="step-top">
+              <span class="step-number">03</span>
+              <span class="step-title">Scoring hybride</span>
+            </div>
+            <div class="step-desc">
+              Combinaison de 4 signaux pour le classement final
+            </div>
+            <div class="scoring-breakdown">
+              <div class="scoring-title">Poids des signaux</div>
+
+              <div class="score-row">
+                <span class="score-label">Similarite cosine</span>
+                <div class="score-bar-track">
+                  <div class="score-bar-fill cosine" data-width="100"></div>
+                </div>
+                <span class="score-pct">50%</span>
+              </div>
+              <div class="score-detail"><code>numpy</code> + embeddings <code>gemini-embedding-001</code></div>
+
+              <div class="score-row" style="margin-top: 10px;">
+                <span class="score-label">BM25 lexical</span>
+                <div class="score-bar-track">
+                  <div class="score-bar-fill bm25" data-width="50"></div>
+                </div>
+                <span class="score-pct">25%</span>
+              </div>
+              <div class="score-detail"><code>rank_bm25</code> + stop words FR/EN + normalisation</div>
+
+              <div class="score-row" style="margin-top: 10px;">
+                <span class="score-label">Fraicheur</span>
+                <div class="score-bar-track">
+                  <div class="score-bar-fill freshness" data-width="50"></div>
+                </div>
+                <span class="score-pct">25%</span>
+              </div>
+              <div class="score-detail">Decroissance lineaire sur 90 jours</div>
+
+              <div class="score-row" style="margin-top: 10px;">
+                <span class="score-label">Feedback utilisateur</span>
+                <div class="score-bar-track">
+                  <div class="score-bar-fill feedback" data-width="20"></div>
+                </div>
+                <span class="score-pct">+10%</span>
+              </div>
+              <div class="score-detail">Bonus base sur les retours utilisateur</div>
+            </div>
+          </div>
+          <div class="arrow-connector">
+            <div class="arrow-line"></div>
+            <svg viewBox="0 0 12 8" fill="currentColor"><path d="M6 8L0 0h12z"/></svg>
+          </div>
+        </div>
+
+        <!-- 04 Re-ranking -->
+        <div class="step-wrapper">
+          <div class="step-card" data-delay="260">
+            <div class="step-top">
+              <span class="step-number">04</span>
+              <span class="step-title">Re-ranking optionnel</span>
+            </div>
+            <div class="step-desc">
+              <code>Cohere rerank-multilingual-v3.0</code>
+            </div>
+          </div>
+          <div class="arrow-connector">
+            <div class="arrow-line"></div>
+            <svg viewBox="0 0 12 8" fill="currentColor"><path d="M6 8L0 0h12z"/></svg>
+          </div>
+        </div>
+
+        <!-- 05 Dedup & filtrage -->
+        <div class="step-wrapper">
+          <div class="step-card" data-delay="320">
+            <div class="step-top">
+              <span class="step-number">05</span>
+              <span class="step-title">Deduplication &amp; filtrage</span>
+            </div>
+            <div class="step-desc">
+              Grouper chunks par article, filtrer par categorie / date / score, max 1500 chars par extrait
+            </div>
+          </div>
+          <div class="arrow-connector">
+            <div class="arrow-line"></div>
+            <svg viewBox="0 0 12 8" fill="currentColor"><path d="M6 8L0 0h12z"/></svg>
+          </div>
+        </div>
+
+        <!-- 06 Resultats -->
+        <div class="step-wrapper">
+          <div class="step-card" data-delay="380">
+            <div class="step-top">
+              <span class="step-number">06</span>
+              <span class="step-title">Resultats avec sources</span>
+            </div>
+            <div class="step-desc">
+              Articles pertinents retournes a l'agent, avec liens sources et extraits
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /pipeline-grid -->
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-left">LUCIOLE / RAG Pipeline v2</div>
+    <div class="footer-right">
+      <span class="footer-tag">Gemini</span>
+      <span class="footer-tag">PostgreSQL</span>
+      <span class="footer-tag">Cohere</span>
+      <span class="footer-tag">Python</span>
+    </div>
+  </footer>
+</div>
+
+<script>
+(function() {
+  // Animate step cards on scroll
+  const cards = document.querySelectorAll('.step-card');
+  const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        const delay = parseInt(entry.target.getAttribute('data-delay')) || 0;
+        setTimeout(function() {
+          entry.target.classList.add('visible');
+        }, delay);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  cards.forEach(function(card) { observer.observe(card); });
+
+  // Animate score bars when scoring section is visible
+  const scoringCard = document.querySelector('.step-card.prominent');
+  const barObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        const fills = entry.target.querySelectorAll('.score-bar-fill');
+        fills.forEach(function(fill) {
+          const w = fill.getAttribute('data-width');
+          setTimeout(function() {
+            fill.style.width = w + '%';
+          }, 400);
+        });
+        barObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  if (scoringCard) barObserver.observe(scoringCard);
+})();
+</script>
+
+</body>
+</html>

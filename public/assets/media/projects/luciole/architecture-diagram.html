@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luciole — Architecture &amp; Flux</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Zilla+Slab:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --luciole-ink: #1a1a1a;
+      --luciole-ink-soft: #2d2d2d;
+      --luciole-muted: #6b6b6b;
+      --luciole-rule: #d9d6d0;
+      --luciole-paper: #faf8f3;
+      --luciole-paper-alt: #f2efe8;
+      --luciole-white: #ffffff;
+      --luciole-accent: #991b1b;
+      --luciole-accent-dark: #7f1515;
+      --luciole-accent-soft: #fef2f2;
+      --luciole-secondary: #8b9daf;
+      --luciole-secondary-soft: #e8ecf0;
+      --font-serif: 'Zilla Slab', Georgia, serif;
+      --font-sans: 'Inter', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--luciole-paper);
+      color: var(--luciole-ink);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 48px 24px 64px;
+    }
+
+    /* ── Header ── */
+    .header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--luciole-muted);
+      margin-bottom: 8px;
+    }
+    .title {
+      font-family: var(--font-serif);
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--luciole-ink);
+      line-height: 1.2;
+    }
+    .title .amp {
+      color: var(--luciole-accent);
+      font-style: italic;
+    }
+    .header-rule {
+      width: 64px;
+      height: 1px;
+      background: var(--luciole-rule);
+      margin: 20px auto 0;
+    }
+
+    /* ── Flow connector arrows ── */
+    .flow-connector {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 12px 0;
+      gap: 2px;
+    }
+    .flow-connector .arrow-line {
+      width: 1px;
+      height: 18px;
+      background: var(--luciole-rule);
+    }
+    .flow-connector .arrow-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--luciole-muted);
+      letter-spacing: 0.5px;
+      background: var(--luciole-paper-alt);
+      padding: 2px 10px;
+      border-radius: 4px;
+      border: 0.5px solid var(--luciole-rule);
+    }
+    .flow-connector .arrow-head {
+      color: var(--luciole-rule);
+      font-size: 14px;
+      line-height: 1;
+      margin-top: -2px;
+    }
+
+    /* ── Section divider ── */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 32px 0 20px;
+    }
+    .section-divider::before,
+    .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 0.5px;
+      background: var(--luciole-rule);
+    }
+    .section-divider span {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--luciole-muted);
+      white-space: nowrap;
+    }
+
+    /* ── Generic node card ── */
+    .node {
+      border-radius: 8px;
+      padding: 20px 24px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+    }
+    .node:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+    .node-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      flex-shrink: 0;
+    }
+    .node-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+    .node-name {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .node-subtitle {
+      font-family: var(--font-sans);
+      font-size: 13px;
+      color: var(--luciole-muted);
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+    .node-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 500;
+      padding: 3px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+    }
+    .deploy-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 4px;
+      margin-top: 10px;
+      letter-spacing: 0.3px;
+    }
+    .deploy-badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    /* ── User node ── */
+    .node-user {
+      background: var(--luciole-white);
+      border: 0.5px solid var(--luciole-rule);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      text-align: center;
+      max-width: 220px;
+      margin: 0 auto;
+    }
+    .node-user .node-icon {
+      background: var(--luciole-paper-alt);
+    }
+    .node-user .node-icon svg { stroke: var(--luciole-ink-soft); fill: none; }
+
+    /* ── Frontend node ── */
+    .node-frontend {
+      background: var(--luciole-accent);
+      color: var(--luciole-white);
+      box-shadow: 0 2px 8px rgba(153,27,27,0.15);
+    }
+    .node-frontend .node-icon {
+      background: rgba(255,255,255,0.15);
+    }
+    .node-frontend .node-icon svg { stroke: var(--luciole-white); fill: none; }
+    .node-frontend .node-subtitle { color: rgba(255,255,255,0.75); }
+    .node-frontend .tag {
+      background: rgba(255,255,255,0.15);
+      color: var(--luciole-white);
+    }
+    .node-frontend .deploy-badge {
+      background: rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.85);
+    }
+    .node-frontend .deploy-badge .dot { background: #4ade80; }
+
+    /* ── Middleware node ── */
+    .node-middleware {
+      background: var(--luciole-white);
+      border: 1.5px dashed var(--luciole-rule);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .middleware-items {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    .middleware-item {
+      text-align: center;
+      padding: 10px 6px;
+      border-radius: 6px;
+      background: var(--luciole-paper-alt);
+      border: 0.5px solid var(--luciole-rule);
+    }
+    .middleware-item svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--luciole-muted);
+      fill: none;
+      margin-bottom: 6px;
+    }
+    .middleware-item-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--luciole-ink-soft);
+      line-height: 1.3;
+    }
+    .middleware-item-sub {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--luciole-muted);
+      margin-top: 2px;
+    }
+
+    /* ── Backend node ── */
+    .node-backend {
+      background: var(--luciole-ink);
+      color: var(--luciole-white);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+    .node-backend .node-icon {
+      background: rgba(255,255,255,0.1);
+    }
+    .node-backend .node-icon svg { stroke: var(--luciole-white); fill: none; }
+    .node-backend .node-subtitle { color: rgba(255,255,255,0.55); }
+    .node-backend .tag {
+      background: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.8);
+    }
+    .node-backend .deploy-badge {
+      background: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.7);
+    }
+    .node-backend .deploy-badge .dot { background: #4ade80; }
+
+    /* ── Branching connector ── */
+    .branch-connector {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 12px 0 0;
+      position: relative;
+      height: 48px;
+    }
+    .branch-connector::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 1px;
+      height: 14px;
+      background: var(--luciole-rule);
+    }
+    .branch-connector::after {
+      content: '';
+      position: absolute;
+      top: 14px;
+      left: 25%;
+      width: 50%;
+      height: 0.5px;
+      background: var(--luciole-rule);
+    }
+    .branch-left, .branch-right {
+      position: absolute;
+      top: 14px;
+      width: 1px;
+      height: 28px;
+      background: var(--luciole-rule);
+    }
+    .branch-left { left: 25%; }
+    .branch-right { right: 25%; }
+    .branch-arrow {
+      position: absolute;
+      bottom: -2px;
+      color: var(--luciole-rule);
+      font-size: 12px;
+    }
+    .branch-left .branch-arrow { left: -4px; }
+    .branch-right .branch-arrow { right: -5px; }
+
+    /* ── Data layer ── */
+    .data-row {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 16px;
+    }
+    .node-db {
+      background: var(--luciole-white);
+      border: 0.5px solid #b8d4b8;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .node-db .node-icon {
+      background: #ecfdf5;
+    }
+    .node-db .node-icon svg { stroke: #166534; fill: none; }
+    .node-db .tag {
+      background: #ecfdf5;
+      color: #166534;
+    }
+
+    .node-files {
+      background: var(--luciole-white);
+      border: 0.5px solid var(--luciole-rule);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .node-files .node-icon {
+      background: var(--luciole-paper-alt);
+    }
+    .node-files .node-icon svg { stroke: var(--luciole-muted); fill: none; }
+    .node-files .tag {
+      background: var(--luciole-paper-alt);
+      color: var(--luciole-ink-soft);
+    }
+
+    /* ── External services ── */
+    .services-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .node-service {
+      background: var(--luciole-white);
+      border: 0.5px solid var(--luciole-rule);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      padding: 16px 14px;
+      text-align: center;
+    }
+    .node-service .node-icon { margin: 0 auto 8px; }
+    .node-service .node-name { font-size: 14px; margin-bottom: 2px; }
+    .node-service .node-subtitle { font-size: 11px; margin-bottom: 0; }
+
+    .node-service.service-accent {
+      border-color: var(--luciole-accent);
+      border-width: 1px;
+    }
+    .node-service.service-accent .node-icon {
+      background: var(--luciole-accent-soft);
+    }
+    .node-service.service-accent .node-icon svg { stroke: var(--luciole-accent); }
+
+    .node-service:not(.service-accent) .node-icon {
+      background: var(--luciole-secondary-soft);
+    }
+    .node-service:not(.service-accent) .node-icon svg { stroke: var(--luciole-secondary); }
+
+    /* ── Deploy topology ── */
+    .node-deploy {
+      background: var(--luciole-white);
+      border: 0.5px solid var(--luciole-rule);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      text-align: center;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+    .node-deploy .node-icon {
+      background: #ecfdf5;
+      margin: 0 auto 8px;
+    }
+    .node-deploy .node-icon svg { stroke: #166534; fill: none; }
+    .node-deploy .deploy-badge {
+      background: #ecfdf5;
+      color: #166534;
+      margin-top: 8px;
+    }
+    .node-deploy .deploy-badge .dot { background: #4ade80; }
+
+    /* ── Responsive ── */
+    @media (max-width: 680px) {
+      .container { padding: 32px 16px 48px; }
+      .title { font-size: 28px; }
+      .middleware-items { grid-template-columns: repeat(2, 1fr); }
+      .data-row { grid-template-columns: 1fr; }
+      .services-row { grid-template-columns: repeat(2, 1fr); }
+      .branch-connector { display: none; }
+      .data-row { margin-top: 12px; }
+      .node { padding: 16px 18px; }
+    }
+    @media (max-width: 420px) {
+      .services-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Header -->
+    <header class="header">
+      <div class="eyebrow">LUCIOLE</div>
+      <h1 class="title">Architecture <span class="amp">&amp;</span> Flux</h1>
+      <div class="header-rule"></div>
+    </header>
+
+    <!-- 1. User -->
+    <div class="node node-user">
+      <div class="node-icon">
+        <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+      </div>
+      <div class="node-name">Utilisateur</div>
+    </div>
+
+    <!-- Arrow: HTTPS -->
+    <div class="flow-connector">
+      <div class="arrow-line"></div>
+      <span class="arrow-label">HTTPS</span>
+      <div class="arrow-line"></div>
+      <span class="arrow-head">v</span>
+    </div>
+
+    <!-- 2. Frontend -->
+    <div class="node node-frontend">
+      <div style="display:flex;align-items:flex-start;gap:14px;">
+        <div class="node-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2"/>
+            <line x1="8" y1="21" x2="16" y2="21"/>
+            <line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+        </div>
+        <div style="flex:1;">
+          <div class="node-name">Interface Web Jinja2</div>
+          <div class="node-subtitle">Zilla Slab serif + Inter sans + design system custom, streaming SSE, upload fichiers</div>
+          <div class="node-tags">
+            <span class="tag">Chat SSE</span>
+            <span class="tag">Articles</span>
+            <span class="tag">Digest</span>
+            <span class="tag">Auth JWT</span>
+          </div>
+          <div class="deploy-badge"><span class="dot"></span> Railway :8000</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Arrow: REST / JSON + JWT -->
+    <div class="flow-connector">
+      <div class="arrow-line"></div>
+      <span class="arrow-label">REST / JSON + JWT httpOnly cookie</span>
+      <div class="arrow-line"></div>
+      <span class="arrow-head">v</span>
+    </div>
+
+    <!-- 3. Middleware -->
+    <div class="node node-middleware">
+      <div style="margin-bottom:14px;">
+        <div class="node-name" style="font-size:15px;">Middleware</div>
+      </div>
+      <div class="middleware-items">
+        <div class="middleware-item">
+          <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <div class="middleware-item-label">Rate Limiting</div>
+          <div class="middleware-item-sub">slowapi</div>
+        </div>
+        <div class="middleware-item">
+          <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+          <div class="middleware-item-label">JWT Auth</div>
+          <div class="middleware-item-sub">PyJWT + bcrypt</div>
+        </div>
+        <div class="middleware-item">
+          <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          <div class="middleware-item-label">Input Validation</div>
+          <div class="middleware-item-sub">&nbsp;</div>
+        </div>
+        <div class="middleware-item">
+          <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+          <div class="middleware-item-label">CORS</div>
+          <div class="middleware-item-sub">&nbsp;</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Arrow -->
+    <div class="flow-connector">
+      <div class="arrow-line"></div>
+      <div class="arrow-line"></div>
+      <span class="arrow-head">v</span>
+    </div>
+
+    <!-- 4. Backend -->
+    <div class="node node-backend">
+      <div style="display:flex;align-items:flex-start;gap:14px;">
+        <div class="node-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="16 18 22 12 16 6"/>
+            <polyline points="8 6 2 12 8 18"/>
+            <line x1="14" y1="4" x2="10" y2="20"/>
+          </svg>
+        </div>
+        <div style="flex:1;">
+          <div class="node-name">FastAPI</div>
+          <div class="node-subtitle">Python 3.12 &middot; API REST + SSE streaming + Jinja2 templates</div>
+          <div class="node-tags">
+            <span class="tag">/ask</span>
+            <span class="tag">/articles</span>
+            <span class="tag">/digest</span>
+            <span class="tag">/upload</span>
+            <span class="tag">/auth</span>
+            <span class="tag">/conversations</span>
+            <span class="tag">/feedback</span>
+            <span class="tag">/metrics</span>
+          </div>
+          <div class="deploy-badge"><span class="dot"></span> Railway</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Branch connector -->
+    <div class="branch-connector">
+      <div class="branch-left"><span class="branch-arrow">v</span></div>
+      <div class="branch-right"><span class="branch-arrow">v</span></div>
+    </div>
+
+    <!-- 5. Data Layer -->
+    <div class="data-row">
+      <div class="node node-db">
+        <div style="display:flex;align-items:flex-start;gap:12px;">
+          <div class="node-icon">
+            <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <ellipse cx="12" cy="5" rx="9" ry="3"/>
+              <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+              <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+            </svg>
+          </div>
+          <div style="flex:1;">
+            <div class="node-name" style="font-size:16px;">PostgreSQL (Neon)</div>
+            <div class="node-subtitle">conversations, messages, articles, users, feedbacks</div>
+            <div class="node-tags">
+              <span class="tag">ThreadedConnectionPool</span>
+              <span class="tag">Serverless</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="node node-files">
+        <div style="display:flex;align-items:flex-start;gap:12px;">
+          <div class="node-icon">
+            <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+            </svg>
+          </div>
+          <div style="flex:1;">
+            <div class="node-name" style="font-size:16px;">Fichiers JSON</div>
+            <div class="node-subtitle" style="font-size:12px;">Stockage fichier local</div>
+            <div class="node-tags">
+              <span class="tag">embeddings.json</span>
+              <span class="tag">articles_raw.json</span>
+              <span class="tag">metrics.jsonl</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section: External Services -->
+    <div class="section-divider"><span>Services externes</span></div>
+
+    <!-- 6. External Services -->
+    <div class="services-row">
+      <div class="node node-service service-accent">
+        <div class="node-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+          </svg>
+        </div>
+        <div class="node-name">Gemini API</div>
+        <div class="node-subtitle">flash / flash-lite / pro</div>
+      </div>
+      <div class="node node-service">
+        <div class="node-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </div>
+        <div class="node-name">Tavily API</div>
+        <div class="node-subtitle">Web search</div>
+      </div>
+      <div class="node node-service">
+        <div class="node-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" y1="9" x2="20" y2="9"/>
+            <line x1="4" y1="15" x2="20" y2="15"/>
+            <line x1="10" y1="3" x2="8" y2="21"/>
+            <line x1="16" y1="3" x2="14" y2="21"/>
+          </svg>
+        </div>
+        <div class="node-name">Cohere API</div>
+        <div class="node-subtitle">Reranking RAG</div>
+      </div>
+      <div class="node node-service">
+        <div class="node-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+          </svg>
+        </div>
+        <div class="node-name">Langfuse</div>
+        <div class="node-subtitle">Tracing LLM</div>
+      </div>
+    </div>
+
+    <!-- Section: Deploy Topology -->
+    <div class="section-divider"><span>Topologie de deploiement</span></div>
+
+    <!-- 7. Deploy -->
+    <div class="node node-deploy">
+      <div class="node-icon">
+        <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+          <line x1="4" y1="22" x2="4" y2="15"/>
+        </svg>
+      </div>
+      <div class="node-name" style="font-size:16px;">Railway</div>
+      <div class="node-subtitle">Docker multi-stage build</div>
+      <div class="deploy-badge"><span class="dot"></span> Production</div>
+    </div>
+
+  </div>
+</body>
+</html>

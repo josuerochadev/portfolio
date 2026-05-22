@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luciole — Cascade de Modèles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Zilla+Slab:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --luciole-ink: #1a1a1a;
+    --luciole-ink-soft: #2d2d2d;
+    --luciole-muted: #6b6b6b;
+    --luciole-rule: #d9d6d0;
+    --luciole-paper: #faf8f3;
+    --luciole-paper-alt: #f2efe8;
+    --luciole-white: #ffffff;
+    --luciole-accent: #991b1b;
+    --luciole-accent-dark: #7f1515;
+    --luciole-accent-soft: #fef2f2;
+    --luciole-secondary: #8b9daf;
+    --luciole-secondary-soft: #e8ecf0;
+    --font-serif: 'Zilla Slab', Georgia, serif;
+    --font-sans: 'Inter', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--luciole-paper);
+    color: var(--luciole-ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .diagram {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 48px 24px 64px;
+  }
+
+  /* ── Header ── */
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--luciole-accent);
+    margin-bottom: 12px;
+  }
+
+  .title {
+    font-family: var(--font-serif);
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--luciole-ink);
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+
+  .subtitle {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--luciole-muted);
+    letter-spacing: 0.2px;
+  }
+
+  .header-rule {
+    width: 64px;
+    height: 1px;
+    background: var(--luciole-rule);
+    margin: 24px auto 0;
+  }
+
+  /* ── Flow connector lines ── */
+  .flow-connector {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    position: relative;
+  }
+
+  .arrow-down {
+    width: 1px;
+    height: 32px;
+    background: var(--luciole-rule);
+    position: relative;
+  }
+
+  .arrow-down::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid var(--luciole-rule);
+  }
+
+  .arrow-down.dark {
+    background: var(--luciole-ink-soft);
+  }
+  .arrow-down.dark::after {
+    border-top-color: var(--luciole-ink-soft);
+  }
+
+  /* ── Input node ── */
+  .input-node {
+    display: flex;
+    justify-content: center;
+  }
+
+  .input-node-inner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--luciole-white);
+    border: 1px solid var(--luciole-rule);
+    border-radius: 8px;
+    padding: 14px 28px;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--luciole-ink);
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+
+  .input-node-inner:hover {
+    border-color: var(--luciole-secondary);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+
+  .input-node-inner svg {
+    flex-shrink: 0;
+  }
+
+  /* ── Classifier node ── */
+  .classifier-node {
+    display: flex;
+    justify-content: center;
+  }
+
+  .classifier-inner {
+    background: var(--luciole-ink);
+    color: var(--luciole-white);
+    border-radius: 8px;
+    padding: 24px 32px;
+    max-width: 520px;
+    width: 100%;
+    text-align: center;
+    transition: box-shadow 0.2s ease, transform 0.15s ease;
+  }
+
+  .classifier-inner:hover {
+    box-shadow: 0 8px 32px rgba(26,26,26,0.25);
+    transform: translateY(-1px);
+  }
+
+  .classifier-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--luciole-secondary);
+    margin-bottom: 8px;
+  }
+
+  .classifier-model {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .classifier-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.5;
+  }
+
+  .classifier-output {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+  }
+
+  .classifier-output code {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    background: rgba(255,255,255,0.08);
+    padding: 6px 12px;
+    border-radius: 4px;
+    color: rgba(255,255,255,0.8);
+    display: inline-block;
+  }
+
+  /* ── Branch split ── */
+  .branch-split {
+    position: relative;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .branch-split-line {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 1px;
+    height: 16px;
+    background: var(--luciole-rule);
+  }
+
+  .branch-split-horizontal {
+    position: absolute;
+    top: 16px;
+    height: 1px;
+    background: var(--luciole-rule);
+  }
+
+  .branch-split-left,
+  .branch-split-center,
+  .branch-split-right {
+    position: absolute;
+    top: 16px;
+    width: 1px;
+    height: 32px;
+    background: var(--luciole-rule);
+  }
+
+  .branch-split-left::after,
+  .branch-split-center::after,
+  .branch-split-right::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid var(--luciole-rule);
+  }
+
+  /* ── Labels above branches ── */
+  .branch-labels {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 4px;
+  }
+
+  .branch-label {
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 0;
+  }
+
+  .branch-label.simple { color: var(--luciole-secondary); }
+  .branch-label.standard { color: var(--luciole-ink-soft); }
+  .branch-label.complex { color: var(--luciole-accent); }
+
+  /* ── Model cards ── */
+  .model-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+
+  .model-card {
+    border-radius: 8px;
+    padding: 24px 20px;
+    transition: box-shadow 0.25s ease, transform 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .model-card:hover {
+    transform: translateY(-2px);
+  }
+
+  /* Simple */
+  .model-card.simple {
+    background: var(--luciole-paper-alt);
+    border: 1px solid var(--luciole-rule);
+  }
+  .model-card.simple:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  }
+
+  /* Standard */
+  .model-card.standard {
+    background: var(--luciole-white);
+    border: 1px solid var(--luciole-secondary);
+  }
+  .model-card.standard:hover {
+    box-shadow: 0 4px 20px rgba(139,157,175,0.18);
+  }
+
+  /* Complex */
+  .model-card.complex {
+    background: var(--luciole-accent-soft);
+    border: 1px solid var(--luciole-accent);
+  }
+  .model-card.complex:hover {
+    box-shadow: 0 4px 20px rgba(153,27,27,0.15);
+  }
+
+  .card-tier {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .model-card.simple .card-tier { color: var(--luciole-secondary); }
+  .model-card.standard .card-tier { color: var(--luciole-ink-soft); }
+  .model-card.complex .card-tier { color: var(--luciole-accent); }
+
+  .card-model-name {
+    font-family: var(--font-serif);
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--luciole-ink);
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+
+  .card-use-cases {
+    margin-bottom: 14px;
+  }
+
+  .card-use-cases-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--luciole-muted);
+    margin-bottom: 6px;
+  }
+
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .card-tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 400;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: rgba(0,0,0,0.04);
+    color: var(--luciole-muted);
+  }
+
+  .model-card.complex .card-tag {
+    background: rgba(153,27,27,0.07);
+    color: var(--luciole-accent);
+  }
+
+  .card-characteristic {
+    font-size: 12px;
+    color: var(--luciole-muted);
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+
+  /* ── Speed / Cost bars ── */
+  .card-indicators {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(0,0,0,0.06);
+  }
+
+  .indicator-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .indicator-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--luciole-muted);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    flex-shrink: 0;
+    width: 48px;
+  }
+
+  .indicator-bar-track {
+    flex: 1;
+    height: 4px;
+    background: rgba(0,0,0,0.06);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .indicator-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .model-card.simple .indicator-bar-fill.speed { width: 95%; background: var(--luciole-secondary); }
+  .model-card.simple .indicator-bar-fill.cost { width: 20%; background: var(--luciole-secondary); }
+  .model-card.simple .indicator-bar-fill.quality { width: 50%; background: var(--luciole-secondary); }
+
+  .model-card.standard .indicator-bar-fill.speed { width: 70%; background: var(--luciole-ink-soft); }
+  .model-card.standard .indicator-bar-fill.cost { width: 50%; background: var(--luciole-ink-soft); }
+  .model-card.standard .indicator-bar-fill.quality { width: 75%; background: var(--luciole-ink-soft); }
+
+  .model-card.complex .indicator-bar-fill.speed { width: 40%; background: var(--luciole-accent); }
+  .model-card.complex .indicator-bar-fill.cost { width: 90%; background: var(--luciole-accent); }
+  .model-card.complex .indicator-bar-fill.quality { width: 95%; background: var(--luciole-accent); }
+
+  .indicator-value {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    flex-shrink: 0;
+    width: 56px;
+    text-align: right;
+  }
+
+  .model-card.simple .indicator-value { color: var(--luciole-secondary); }
+  .model-card.standard .indicator-value { color: var(--luciole-ink-soft); }
+  .model-card.complex .indicator-value { color: var(--luciole-accent); }
+
+  /* ── Converge ── */
+  .converge-section {
+    position: relative;
+    height: 48px;
+    margin-top: 4px;
+  }
+
+  .converge-horizontal {
+    position: absolute;
+    top: 0;
+    height: 1px;
+    background: var(--luciole-rule);
+  }
+
+  .converge-left,
+  .converge-center,
+  .converge-right {
+    position: absolute;
+    top: 0;
+    width: 1px;
+    height: 1px;
+    background: var(--luciole-rule);
+  }
+
+  .converge-down {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 1px;
+    height: 48px;
+    background: var(--luciole-rule);
+  }
+
+  .converge-down::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid var(--luciole-rule);
+  }
+
+  /* ── Output node ── */
+  .output-node {
+    display: flex;
+    justify-content: center;
+  }
+
+  .output-node-inner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--luciole-ink);
+    border: 1px solid var(--luciole-ink);
+    border-radius: 8px;
+    padding: 14px 28px;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--luciole-white);
+    transition: box-shadow 0.2s ease;
+  }
+
+  .output-node-inner:hover {
+    box-shadow: 0 4px 20px rgba(26,26,26,0.2);
+  }
+
+  .output-node-inner svg {
+    flex-shrink: 0;
+  }
+
+  /* ── Fallback note ── */
+  .fallback-section {
+    margin-top: 40px;
+    padding-top: 32px;
+    border-top: 1px solid var(--luciole-rule);
+  }
+
+  .fallback-title {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--luciole-muted);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .fallback-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .fallback-item {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 10px 16px;
+    background: var(--luciole-white);
+    border: 1px solid var(--luciole-rule);
+    border-radius: 6px;
+    transition: border-color 0.2s ease;
+  }
+
+  .fallback-item:hover {
+    border-color: var(--luciole-secondary);
+  }
+
+  .fallback-condition {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--luciole-accent);
+    flex-shrink: 0;
+  }
+
+  .fallback-arrow {
+    color: var(--luciole-rule);
+    flex-shrink: 0;
+    font-size: 12px;
+  }
+
+  .fallback-result {
+    color: var(--luciole-muted);
+    font-size: 13px;
+  }
+
+  .fallback-result strong {
+    color: var(--luciole-ink-soft);
+    font-weight: 600;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 700px) {
+    .diagram { padding: 32px 16px 48px; }
+    .title { font-size: 28px; }
+
+    .model-cards {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .branch-labels {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+
+    .branch-split { display: none; }
+    .converge-section { display: none; }
+
+    .flow-connector.branch-only { display: none; }
+
+    .classifier-inner { padding: 20px 24px; }
+    .classifier-model { font-size: 18px; }
+
+    .fallback-item { flex-direction: column; gap: 4px; }
+  }
+
+  /* ── Animations on load ── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(12px);
+    animation: fadeUp 0.5s ease forwards;
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.2s; }
+  .delay-3 { animation-delay: 0.3s; }
+  .delay-4 { animation-delay: 0.4s; }
+  .delay-5 { animation-delay: 0.5s; }
+  .delay-6 { animation-delay: 0.6s; }
+  .delay-7 { animation-delay: 0.7s; }
+  .delay-8 { animation-delay: 0.8s; }
+
+  /* Bar animation */
+  .indicator-bar-fill {
+    width: 0 !important;
+  }
+  .animated .indicator-bar-fill.speed,
+  .animated .indicator-bar-fill.cost,
+  .animated .indicator-bar-fill.quality {
+    width: revert !important;
+  }
+</style>
+</head>
+<body>
+
+<div class="diagram">
+
+  <!-- Header -->
+  <header class="header fade-in delay-1">
+    <div class="eyebrow">Luciole</div>
+    <h1 class="title">Cascade de Mod&#232;les</h1>
+    <p class="subtitle">Routage intelligent par complexit&#233;</p>
+    <div class="header-rule"></div>
+  </header>
+
+  <!-- Input -->
+  <div class="input-node fade-in delay-2">
+    <div class="input-node-inner">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="8" cy="5" r="3.5"/>
+        <path d="M1.5 14.5c0-3.5 2.9-5.5 6.5-5.5s6.5 2 6.5 5.5"/>
+      </svg>
+      <span>Requ&#234;te utilisateur</span>
+    </div>
+  </div>
+
+  <!-- Arrow -->
+  <div class="flow-connector fade-in delay-2">
+    <div class="arrow-down dark"></div>
+  </div>
+
+  <!-- Classifier -->
+  <div class="classifier-node fade-in delay-3">
+    <div class="classifier-inner">
+      <div class="classifier-label">Classifieur</div>
+      <div class="classifier-model">Gemini 2.5 Flash-Lite</div>
+      <div class="classifier-desc">Classifie la complexit&#233; de la requ&#234;te en JSON structur&#233;</div>
+      <div class="classifier-output">
+        <code>{ "complexity": "simple" | "standard" | "complex", "category": "..." }</code>
+      </div>
+    </div>
+  </div>
+
+  <!-- Branch split (visual) -->
+  <div class="branch-split fade-in delay-4 branch-only" id="branchSplit">
+    <div class="branch-split-line"></div>
+    <div class="branch-split-horizontal" id="branchH"></div>
+    <div class="branch-split-left" id="branchLeft"></div>
+    <div class="branch-split-center" id="branchCenter"></div>
+    <div class="branch-split-right" id="branchRight"></div>
+  </div>
+
+  <!-- Branch labels -->
+  <div class="branch-labels fade-in delay-5">
+    <div class="branch-label simple">Simple</div>
+    <div class="branch-label standard">Standard</div>
+    <div class="branch-label complex">Complex</div>
+  </div>
+
+  <!-- Model cards -->
+  <div class="model-cards fade-in delay-5" id="modelCards">
+
+    <!-- Simple -->
+    <div class="model-card simple">
+      <div class="card-tier">Tier 1 &#8212; Rapide</div>
+      <div class="card-model-name">Gemini 2.5 Flash-Lite</div>
+      <div class="card-use-cases">
+        <div class="card-use-cases-label">Cas d'usage</div>
+        <div class="card-tags">
+          <span class="card-tag">Salutations</span>
+          <span class="card-tag">FAQ simples</span>
+        </div>
+      </div>
+      <div class="card-characteristic">Le plus rapide, co&#251;t minimal</div>
+      <div class="card-indicators">
+        <div class="indicator-row">
+          <span class="indicator-label">Vitesse</span>
+          <div class="indicator-bar-track"><div class="indicator-bar-fill speed"></div></div>
+          <span class="indicator-value">Rapide</span>
+        </div>
+        <div class="indicator-row">
+          <span class="indicator-label">Co&#251;t</span>
+          <div class="indicator-bar-track"><div class="indicator-bar-fill cost"></div></div>
+          <span class="indicator-value">Minimal</span>
+        </div>
+        <div class="indicator-row">
+          <span class="indicator-label">Qualit&#233;</span>
+          <div class="indicator-bar-track"><div class="indicator-bar-fill quality"></div></div>
+          <span class="indicator-value">Bonne</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Standard -->
+    <div class="model-card standard">
+      <div class="card-tier">Tier 2 &#8212; &#201;quilibr&#233;</div>
+      <div class="card-model-name">Gemini 2.5 Flash</div>
+      <div class="card-use-cases">
+        <div class="card-use-cases-label">Cas d'usage</div>
+        <div class="card-tags">
+          <span class="card-tag">Raisonnement</span>
+          <span class="card-tag">Recherche</span>
+          <span class="card-tag">Synth&#232;se</span>
+        </div>
+      </div>
+      <div class="card-characteristic">Bon &#233;quilibre vitesse / qualit&#233;</div>
+      <div class="card-indicators">
+        <div class="indicator-row">
+          <span class="indicator-label">Vitesse</span>
+          <div class="indicator-bar-track"><div class="indicator-bar-fill speed"></div></div>
+          <span class="indicator-value">Mod&#233;r&#233;e</span>
+        </div>
+        <div class="indicator-row">
+          <span class="indicator-label">Co&#251;t</span>
+          <div class="indicator-bar-track"><div class="indicator-bar-fill cost"></div></div>
+          <span class="indicator-value">Moyen</span>
+        </div>
+        <div class="indicator-row">
+          <span class="indicator-label">Qualit&#233;</span>
+          <div class="indicator-bar-track"><div class="indicator-bar-fill quality"></div></div>
+          <span class="indicator-value">&#201;lev&#233;e</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Complex -->
+    <div class="model-card complex">
+      <div class="card-tier">Tier 3 &#8212; Puissant</div>
+      <div class="card-model-name">Gemini 2.5 Pro</div>
+      <div class="card-use-cases">
+        <div class="card-use-cases-label">Cas d'usage</div>
+        <div class="card-tags">
+          <span class="card-tag">Analyse approfondie</span>
+          <span class="card-tag">Requ&#234;tes complexes</span>
+        </div>
+      </div>
+      <div class="card-characteristic">Le plus capable, co&#251;t plus &#233;lev&#233;</div>
+      <div class="card-indicators">
+        <div class="indicator-row">
+          <span class="indicator-label">Vitesse</span>
+          <div class="indicator-bar-track"><div class="indicator-bar-fill speed"></div></div>
+          <span class="indicator-value">Lente</span>
+        </div>
+        <div class="indicator-row">
+          <span class="indicator-label">Co&#251;t</span>
+          <div class="indicator-bar-track"><div class="indicator-bar-fill cost"></div></div>
+          <span class="indicator-value">&#201;lev&#233;</span>
+        </div>
+        <div class="indicator-row">
+          <span class="indicator-label">Qualit&#233;</span>
+          <div class="indicator-bar-track"><div class="indicator-bar-fill quality"></div></div>
+          <span class="indicator-value">Maximale</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Converge lines -->
+  <div class="converge-section fade-in delay-6 branch-only" id="convergeSection">
+    <div class="converge-horizontal" id="convergeH"></div>
+    <div class="converge-left" id="convergeLeft"></div>
+    <div class="converge-center" id="convergeCenter"></div>
+    <div class="converge-right" id="convergeRight"></div>
+    <div class="converge-down"></div>
+  </div>
+
+  <!-- Mobile-only arrow -->
+  <div class="flow-connector fade-in delay-6" style="display:none;" id="mobileArrow">
+    <div class="arrow-down"></div>
+  </div>
+
+  <!-- Output -->
+  <div class="output-node fade-in delay-7">
+    <div class="output-node-inner">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 4l6 4 6-4"/>
+        <rect x="1" y="3" width="14" height="10" rx="1.5"/>
+      </svg>
+      <span>R&#233;ponse stream&#233;e SSE</span>
+    </div>
+  </div>
+
+  <!-- Fallback -->
+  <div class="fallback-section fade-in delay-8">
+    <div class="fallback-title">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="var(--luciole-muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M8 1.5v6.5"/>
+        <circle cx="8" cy="12" r="0.5" fill="var(--luciole-muted)"/>
+        <path d="M3 3a7 7 0 1 1-1 4"/>
+        <path d="M1 1l2 2-2 2"/>
+      </svg>
+      Logique de fallback
+    </div>
+    <div class="fallback-list">
+      <div class="fallback-item">
+        <span class="fallback-condition">JSON parse fail</span>
+        <span class="fallback-arrow">&rarr;</span>
+        <span class="fallback-result">D&#233;faut : <strong>&laquo; powerful &raquo;</strong> (Gemini 2.5 Pro)</span>
+      </div>
+      <div class="fallback-item">
+        <span class="fallback-condition">Classification invalide</span>
+        <span class="fallback-arrow">&rarr;</span>
+        <span class="fallback-result">Escalade vers <strong>&laquo; complex &raquo;</strong></span>
+      </div>
+      <div class="fallback-item">
+        <span class="fallback-condition">Cat&#233;gorie manquante</span>
+        <span class="fallback-arrow">&rarr;</span>
+        <span class="fallback-result">D&#233;faut : <strong>&laquo; raisonnement &raquo;</strong></span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function() {
+  // Position branch split and converge lines dynamically
+  function layoutBranches() {
+    var cards = document.getElementById('modelCards');
+    var split = document.getElementById('branchSplit');
+    var converge = document.getElementById('convergeSection');
+    if (!cards || !split || !converge) return;
+
+    var rect = cards.getBoundingClientRect();
+    var diagramRect = cards.closest('.diagram').getBoundingClientRect();
+    var offsetLeft = rect.left - diagramRect.left;
+
+    // Card positions (approximate centers)
+    var cardEls = cards.querySelectorAll('.model-card');
+    if (cardEls.length < 3) return;
+
+    var leftCenter = cardEls[0].getBoundingClientRect().left + cardEls[0].offsetWidth / 2 - diagramRect.left;
+    var midCenter = cardEls[1].getBoundingClientRect().left + cardEls[1].offsetWidth / 2 - diagramRect.left;
+    var rightCenter = cardEls[2].getBoundingClientRect().left + cardEls[2].offsetWidth / 2 - diagramRect.left;
+
+    var diagramW = diagramRect.width;
+
+    // Branch split horizontal
+    var bh = document.getElementById('branchH');
+    bh.style.left = (leftCenter / diagramW * 100) + '%';
+    bh.style.width = ((rightCenter - leftCenter) / diagramW * 100) + '%';
+
+    // Branch verticals
+    document.getElementById('branchLeft').style.left = (leftCenter / diagramW * 100) + '%';
+    document.getElementById('branchCenter').style.left = (midCenter / diagramW * 100) + '%';
+    document.getElementById('branchRight').style.left = (rightCenter / diagramW * 100) + '%';
+
+    // Converge horizontal
+    var ch = document.getElementById('convergeH');
+    ch.style.left = (leftCenter / diagramW * 100) + '%';
+    ch.style.width = ((rightCenter - leftCenter) / diagramW * 100) + '%';
+
+    document.getElementById('convergeLeft').style.left = (leftCenter / diagramW * 100) + '%';
+    document.getElementById('convergeCenter').style.left = (midCenter / diagramW * 100) + '%';
+    document.getElementById('convergeRight').style.left = (rightCenter / diagramW * 100) + '%';
+  }
+
+  // Animate bars after they appear
+  function animateBars() {
+    document.getElementById('modelCards').classList.add('animated');
+  }
+
+  // Mobile arrow toggle
+  function handleResponsive() {
+    var mobileArrow = document.getElementById('mobileArrow');
+    if (window.innerWidth <= 700) {
+      mobileArrow.style.display = 'flex';
+    } else {
+      mobileArrow.style.display = 'none';
+    }
+  }
+
+  window.addEventListener('load', function() {
+    layoutBranches();
+    handleResponsive();
+    setTimeout(animateBars, 600);
+  });
+
+  window.addEventListener('resize', function() {
+    layoutBranches();
+    handleResponsive();
+  });
+})();
+</script>
+
+</body>
+</html>

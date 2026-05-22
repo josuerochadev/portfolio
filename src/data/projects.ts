@@ -175,6 +175,56 @@ export const PROJECTS: Project[] = [
 					src: "/assets/media/projects/luciole/model-cascade-diagram.html",
 					caption: "Cascade de modèles — classifier → flash-lite / flash / pro selon complexité",
 					group: "Architecture"
+				},
+				// --- Démo (vidéos) ---
+				{
+					type: "video",
+					src: "/assets/media/projects/luciole/luciole-demo-chat.mp4",
+					caption: "Parcours chat — question, streaming SSE, outil sélectionné, réponse temps réel",
+					group: "Démo"
+				},
+				{
+					type: "video",
+					src: "/assets/media/projects/luciole/luciole-demo-veille.mp4",
+					caption: "Parcours veille — preview digest, envoi email, historique",
+					group: "Démo"
+				},
+				{
+					type: "video",
+					src: "/assets/media/projects/luciole/luciole-demo-upload.mp4",
+					caption: "Upload multimodal — envoi image/PDF, analyse Vision, réponse",
+					group: "Démo"
+				},
+				{
+					type: "video",
+					src: "/assets/media/projects/luciole/luciole-responsive.mp4",
+					caption: "Vue responsive — mobile et tablette",
+					group: "Démo"
+				},
+				// --- Monitoring & Tests ---
+				{
+					type: "image",
+					src: "/assets/media/projects/luciole/langfuse-trace-1.webp",
+					caption: "Langfuse — traces d'appels LLM (latence, tokens, coûts)",
+					group: "Monitoring & Tests"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/luciole/langfuse-trace-2.webp",
+					caption: "Langfuse — détail d'une trace agent (outils, modèle, durée)",
+					group: "Monitoring & Tests"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/luciole/langfuse-trace-3.webp",
+					caption: "Langfuse — dashboard métriques et coûts",
+					group: "Monitoring & Tests"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/luciole/tests-results.webp",
+					caption: "Résultats des tests — 71 passed (sécurité, dark mode, UX)",
+					group: "Monitoring & Tests"
 				}
 			]
 		}

@@ -324,105 +324,130 @@ export const PROJECTS: Project[] = [
 				{ label: "Déploiement", value: "Demo live (Vercel + Railway + Neon)" }
 			],
 			media: [
+				// --- Architecture ---
 				{
 					type: "embed",
 					src: "/assets/media/projects/tour-de-controle/architecture-diagram.html",
-					caption: "Architecture — Frontend ↔ API ↔ PostgreSQL / Redis + déploiement Vercel / Railway / Neon"
+					caption: "Architecture — Frontend ↔ API ↔ PostgreSQL / Redis + déploiement Vercel / Railway / Neon",
+					group: "Architecture"
 				},
+				// --- Demo ---
 				{
 					type: "video",
 					src: "/assets/media/projects/tour-de-controle/tour-demo.mp4",
-					caption: "Parcours utilisateur — login, dashboard, caisse, transactions"
+					caption: "Parcours utilisateur — login, dashboard, caisse, transactions",
+					group: "Démo"
 				},
 				{
 					type: "video",
 					src: "/assets/media/projects/tour-de-controle/tour-responsive.mp4",
-					caption: "Vue responsive — mobile et tablette"
+					caption: "Vue responsive — mobile et tablette",
+					group: "Démo"
 				},
+				// --- Design System ---
 				{
 					type: "image",
 					src: "/assets/media/projects/tour-de-controle/design-system-1.webp",
-					caption: "Design System — Cover"
+					caption: "Design System — Cover",
+					group: "Design System"
 				},
 				{
 					type: "image",
 					src: "/assets/media/projects/tour-de-controle/design-system-2.webp",
-					caption: "Design System — Brand (Le Phare)"
+					caption: "Design System — Brand (Le Phare)",
+					group: "Design System"
 				},
 				{
 					type: "image",
 					src: "/assets/media/projects/tour-de-controle/design-system-3.webp",
-					caption: "Design System — Couleurs (La Palette)"
+					caption: "Design System — Couleurs (La Palette)",
+					group: "Design System"
 				},
 				{
 					type: "image",
 					src: "/assets/media/projects/tour-de-controle/design-system-4.webp",
-					caption: "Design System — Typographie (Le Système)"
+					caption: "Design System — Typographie (Le Système)",
+					group: "Design System"
 				},
 				{
 					type: "image",
 					src: "/assets/media/projects/tour-de-controle/design-system-5.webp",
-					caption: "Design System — Formes & Espacement (Le Rythme)"
+					caption: "Design System — Formes & Espacement (Le Rythme)",
+					group: "Design System"
 				},
 				{
 					type: "image",
 					src: "/assets/media/projects/tour-de-controle/design-system-6.webp",
-					caption: "Design System — Composants (La Boîte à Outils)"
+					caption: "Design System — Composants (La Boîte à Outils)",
+					group: "Design System"
 				},
+				// --- Maquettes print ---
 				{
 					type: "image",
 					src: "/assets/media/projects/tour-de-controle/print-1.webp",
-					caption: "Print — Cover"
+					caption: "Print — Cover",
+					group: "Maquettes"
 				},
 				{
 					type: "image",
 					src: "/assets/media/projects/tour-de-controle/print-2.webp",
-					caption: "Print — Vue La Vigie (Dashboard)"
+					caption: "Print — Vue La Vigie (Dashboard)",
+					group: "Maquettes"
 				},
 				{
 					type: "image",
 					src: "/assets/media/projects/tour-de-controle/print-3.webp",
-					caption: "Print — Vue La Caisse"
+					caption: "Print — Vue La Caisse",
+					group: "Maquettes"
 				},
 				{
 					type: "image",
 					src: "/assets/media/projects/tour-de-controle/print-4.webp",
-					caption: "Print — Vue Le Flux (Transactions)"
+					caption: "Print — Vue Le Flux (Transactions)",
+					group: "Maquettes"
 				},
 				{
 					type: "image",
 					src: "/assets/media/projects/tour-de-controle/print-5.webp",
-					caption: "Print — Vue L'Équipage (Personnel)"
-				},
-				{
-					type: "image",
-					src: "/assets/media/projects/tour-de-controle/erd.webp",
-					caption: "Schéma base de données — ERD (6 tables, relations FK)"
-				},
-				{
-					type: "image",
-					src: "/assets/media/projects/tour-de-controle/mcd.webp",
-					caption: "Modèle conceptuel de données — MCD Merise"
-				},
-				{
-					type: "image",
-					src: "/assets/media/projects/tour-de-controle/use-cases.webp",
-					caption: "Diagramme de cas d'utilisation — 4 rôles RBAC"
-				},
-				{
-					type: "image",
-					src: "/assets/media/projects/tour-de-controle/sequence.webp",
-					caption: "Diagramme de séquence — flux auth, caisse, admin"
-				},
-				{
-					type: "image",
-					src: "/assets/media/projects/tour-de-controle/arborescence.webp",
-					caption: "Arborescence — sitemap et navigation de l'application"
+					caption: "Print — Vue L'Équipage (Personnel)",
+					group: "Maquettes"
 				},
 				{
 					type: "image",
 					src: "/assets/media/projects/tour-de-controle/maquette-caisse.webp",
-					caption: "Maquette — 7 vues de la gestion de caisse"
+					caption: "Maquette — 7 vues de la gestion de caisse",
+					group: "Maquettes"
+				},
+				// --- Diagrammes ---
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/erd.webp",
+					caption: "Schéma base de données — ERD (6 tables, relations FK)",
+					group: "Diagrammes"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/mcd.webp",
+					caption: "Modèle conceptuel de données — MCD Merise",
+					group: "Diagrammes"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/use-cases.webp",
+					caption: "Diagramme de cas d'utilisation — 4 rôles RBAC",
+					group: "Diagrammes"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/sequence.webp",
+					caption: "Diagramme de séquence — flux auth, caisse, admin",
+					group: "Diagrammes"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/arborescence.webp",
+					caption: "Arborescence — sitemap et navigation de l'application",
+					group: "Diagrammes"
 				}
 			]
 		}
@@ -507,55 +532,68 @@ export const PROJECTS: Project[] = [
 				{ label: "Sécurité", value: "Sanitisation HTML (anti-XSS), CSP headers, safeJsonLd(), permissions policy, X-Frame-Options, Referrer-Policy" }
 			],
 			media: [
+				// --- Architecture ---
 				{
 					type: "embed",
 					src: "/assets/media/projects/oklm-drag-club/pipeline-diagram.html",
-					caption: "Pipeline de données — RSS → APIs → Build statique"
+					caption: "Pipeline de données — RSS → APIs → Build statique",
+					group: "Architecture"
 				},
+				// --- Demo ---
 				{
 					type: "video",
 					src: "/assets/media/projects/oklm-drag-club/oklm-demo.mp4",
-					caption: "Parcours utilisateur — navigation, filtres, épisodes"
+					caption: "Parcours utilisateur — navigation, filtres, épisodes",
+					group: "Démo"
 				},
 				{
 					type: "video",
 					src: "/assets/media/projects/oklm-drag-club/oklm-responsive.mp4",
-					caption: "Vue responsive — mobile et tablette"
+					caption: "Vue responsive — mobile et tablette",
+					group: "Démo"
 				},
+				// --- Design System ---
 				{
 					type: "image",
 					src: "/assets/media/projects/oklm-drag-club/design-system-1.webp",
-					caption: "Design System — Cover"
+					caption: "Design System — Cover",
+					group: "Design System"
 				},
 				{
 					type: "image",
 					src: "/assets/media/projects/oklm-drag-club/design-system-2.webp",
-					caption: "Design System — Couleurs OKLCH"
+					caption: "Design System — Couleurs OKLCH",
+					group: "Design System"
 				},
 				{
 					type: "image",
 					src: "/assets/media/projects/oklm-drag-club/design-system-3.webp",
-					caption: "Design System — Typographie"
+					caption: "Design System — Typographie",
+					group: "Design System"
 				},
 				{
 					type: "image",
 					src: "/assets/media/projects/oklm-drag-club/design-system-4.webp",
-					caption: "Design System — Composants"
+					caption: "Design System — Composants",
+					group: "Design System"
 				},
 				{
 					type: "image",
 					src: "/assets/media/projects/oklm-drag-club/design-system-5.webp",
-					caption: "Design System — Formulaires"
+					caption: "Design System — Formulaires",
+					group: "Design System"
 				},
 				{
 					type: "image",
 					src: "/assets/media/projects/oklm-drag-club/design-system-6.webp",
-					caption: "Design System — Grille & Spacing"
+					caption: "Design System — Grille & Spacing",
+					group: "Design System"
 				},
 				{
 					type: "image",
 					src: "/assets/media/projects/oklm-drag-club/design-system-7.webp",
-					caption: "Design System — Iconographie"
+					caption: "Design System — Iconographie",
+					group: "Design System"
 				}
 			]
 		}

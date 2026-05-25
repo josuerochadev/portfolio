@@ -324,26 +324,75 @@ export const PROJECTS: Project[] = [
 					caption: "Flux CICS pseudo-conversationnel — SEND MAP → RETURN TRANSID → RECEIVE MAP avec COMMAREA",
 					group: "Architecture"
 				},
-				// --- Démo (vidéos — à fournir) ---
-				// {
-				// 	type: "video",
-				// 	src: "/assets/media/projects/poei-mainframe/mainframe-demo.mp4",
-				// 	caption: "Démo web — simulation des programmes batch et écrans CICS via l'API Flask",
-				// 	group: "Démo"
-				// },
-				// {
-				// 	type: "video",
-				// 	src: "/assets/media/projects/poei-mainframe/mainframe-cics.mp4",
-				// 	caption: "Écrans CICS — navigation dans les 7 transactions (AFFI, AJOU, MAJU, SUPP, DELG, LIST, STAT)",
-				// 	group: "Démo"
-				// },
-				// --- Captures BMS (à fournir) ---
-				// {
-				// 	type: "image",
-				// 	src: "/assets/media/projects/poei-mainframe/bms-1.webp",
-				// 	caption: "Écran BMS — Affichage client (CLIAFF)",
-				// 	group: "Écrans BMS"
-				// },
+				// --- Démo ---
+				{
+					type: "video",
+					src: "/assets/media/projects/poei-mainframe/mainframe-demo.mp4",
+					caption: "Démo web — simulation des programmes batch et écrans CICS via l'API Flask",
+					group: "Démo"
+				},
+				// --- Écrans BMS (captures z/OS — 7 maps) ---
+				{
+					type: "image",
+					src: "/assets/media/projects/poei-mainframe/bms-affi.webp",
+					caption: "AFFI — Écran d'affichage client (saisie numéro de compte)",
+					group: "Écrans BMS"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/poei-mainframe/bms-ajou.webp",
+					caption: "AJOU — Formulaire d'ajout client avec guides de saisie",
+					group: "Écrans BMS"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/poei-mainframe/cics-ajou-validation.webp",
+					caption: "AJOU — Validation exhaustive : message « SEXE INVALIDE (M OU F) »",
+					group: "Écrans BMS"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/poei-mainframe/bms-majo.webp",
+					caption: "MAJO — Mise à jour client (clé non modifiable, gestion NOTFND)",
+					group: "Écrans BMS"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/poei-mainframe/bms-supp.webp",
+					caption: "SUPP — Suppression client avec confirmation (O/N)",
+					group: "Écrans BMS"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/poei-mainframe/bms-delg.webp",
+					caption: "DELG — Suppression générique par préfixe (STARTBR/READNEXT/DELETE)",
+					group: "Écrans BMS"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/poei-mainframe/bms-list.webp",
+					caption: "LIST — Liste paginée des 10 clients (PF7/PF8 navigation)",
+					group: "Écrans BMS"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/poei-mainframe/bms-stat.webp",
+					caption: "STAT — Statistiques par région (débiteurs/créditeurs via AIX/PATH)",
+					group: "Écrans BMS"
+				},
+				// --- Debug & Admin z/OS ---
+				{
+					type: "image",
+					src: "/assets/media/projects/poei-mainframe/cics-cedf-read.webp",
+					caption: "CEDF — Trace EXEC CICS READ : données client DUPONT visibles dans le buffer",
+					group: "Debug & Admin z/OS"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/poei-mainframe/cics-ceda-groupe.webp",
+					caption: "CEDA — Vue d'ensemble des 19 ressources du groupe CLIGROUP (7 MAPSET, 7 PROGRAM, 5 TRANSACTION)",
+					group: "Debug & Admin z/OS"
+				},
 			]
 		}
 	},

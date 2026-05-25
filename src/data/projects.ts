@@ -829,25 +829,31 @@ export const PROJECTS: Project[] = [
 				{
 					type: "embed",
 					src: "/assets/media/projects/stella/design-system-2.html",
-					caption: "Design System — Couleurs & Palette",
+					caption: "Design System — Couleurs (palette, échelles violet/cyan, dégradés, statuts)",
 					group: "Design System"
 				},
 				{
 					type: "embed",
 					src: "/assets/media/projects/stella/design-system-3.html",
-					caption: "Design System — Typographie",
+					caption: "Design System — Typographie (4 familles, échelle complète)",
 					group: "Design System"
 				},
 				{
 					type: "embed",
 					src: "/assets/media/projects/stella/design-system-4.html",
-					caption: "Design System — Formes & Espacement",
+					caption: "Design System — Espacements, rayons de bordure, ombres & glows",
 					group: "Design System"
 				},
 				{
 					type: "embed",
 					src: "/assets/media/projects/stella/design-system-5.html",
-					caption: "Design System — Composants",
+					caption: "Design System — Boutons & Formulaires",
+					group: "Design System"
+				},
+				{
+					type: "embed",
+					src: "/assets/media/projects/stella/design-system-6.html",
+					caption: "Design System — Carte étoile, badges & iconographie",
 					group: "Design System"
 				}
 			]

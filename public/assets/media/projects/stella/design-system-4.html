@@ -3,173 +3,114 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stella DS — Formes & Espacement</title>
+<title>Stella DS — 03 Espacements · Rayons · Ombres</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Bebas+Neue&family=Roboto:wght@400;500;700&family=Roboto+Slab:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Bebas+Neue&family=Roboto:wght@400;500;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
   :root {
     --bg: #0f0a18;
-    --surface-0: rgba(61,42,84,0.25);
-    --surface-1: rgba(61,42,84,0.40);
-    --surface-2: rgba(61,42,84,0.55);
-    --surface-3: rgba(61,42,84,0.70);
-    --surface-4: rgba(61,42,84,0.85);
-    --border: rgba(174,201,255,0.12);
-    --border-strong: rgba(174,201,255,0.25);
     --fg: #AEC9FF;
     --fg-strong: #ffffff;
-    --fg-muted: rgba(174,201,255,0.6);
-    --fg-faint: rgba(174,201,255,0.35);
+    --fg-muted: rgba(174,201,255,0.55);
+    --fg-faint: rgba(174,201,255,0.3);
     --amber: #FFB347;
     --cyan: #38bdf8;
+    --s1: #1E1326;
+    --border: rgba(174,201,255,0.10);
+    --font-display: 'Dela Gothic One', cursive;
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-body: 'Roboto', sans-serif;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    font-family: 'Roboto', sans-serif;
+    font-family: var(--font-body);
     background: var(--bg);
-    background-image: linear-gradient(135deg, #3D2A54 0%, #1E1326 55%, #0f0a18 100%);
-    background-attachment: fixed;
+    background-image:
+      radial-gradient(1px 1px at 10% 15%, rgba(174,201,255,0.2) 50%, transparent 50%),
+      radial-gradient(1px 1px at 55% 12%, rgba(174,201,255,0.18) 50%, transparent 50%),
+      radial-gradient(1px 1px at 85% 55%, rgba(174,201,255,0.15) 50%, transparent 50%),
+      radial-gradient(1px 1px at 40% 75%, rgba(174,201,255,0.18) 50%, transparent 50%),
+      radial-gradient(1px 1px at 70% 35%, rgba(174,201,255,0.2) 50%, transparent 50%),
+      radial-gradient(1px 1px at 25% 90%, rgba(174,201,255,0.15) 50%, transparent 50%),
+      linear-gradient(180deg, #1E1326 0%, #0f0a18 100%);
     color: var(--fg);
     min-height: 100vh;
     display: flex; justify-content: center;
-    padding: 48px 24px 64px;
+    padding: 48px 60px 64px;
     -webkit-font-smoothing: antialiased;
   }
 
-  .canvas { width: 100%; max-width: 900px; }
+  .canvas { width: 100%; max-width: 820px; }
 
   .page-head {
     display: flex; justify-content: space-between; align-items: baseline;
-    border-bottom: 1px solid var(--border-strong);
-    padding-bottom: 16px; margin-bottom: 40px;
+    padding-bottom: 14px; border-bottom: 1px solid var(--amber); margin-bottom: 36px;
   }
-  .page-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-faint); }
-  .page-title { font-family: 'Dela Gothic One', cursive; font-size: 28px; color: var(--fg-strong); }
-  .page-context { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-faint); }
+  .page-brand { font-family: var(--font-display); font-size: 22px; color: var(--fg); font-style: italic; }
+  .page-id { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-faint); }
 
-  .section-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px; font-weight: 600;
-    letter-spacing: 0.16em; text-transform: uppercase;
-    color: var(--fg-faint);
-    margin-bottom: 14px; margin-top: 40px;
+  .section {
+    font-family: var(--font-mono); font-size: 10px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--fg-faint); margin-bottom: 14px; margin-top: 32px;
   }
-  .section-label:first-of-type { margin-top: 0; }
 
-  /* Border radius demo */
-  .radius-row {
-    display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-end;
-  }
-  .radius-item { text-align: center; }
-  .radius-box {
-    width: 72px; height: 48px;
-    background: var(--surface-2);
-    border: 1px solid var(--border-strong);
-    margin-bottom: 8px;
-  }
-  .radius-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px; font-weight: 600; color: var(--fg);
-  }
-  .radius-val {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 9px; color: var(--fg-faint);
-  }
-  .radius-usage {
-    font-size: 10px; color: var(--fg-muted); margin-top: 2px;
-  }
+  /* Two columns */
+  .cols { display: flex; gap: 40px; flex-wrap: wrap; }
+  .col { flex: 1; min-width: 280px; }
 
   /* Spacing scale */
-  .spacing-list { display: flex; flex-direction: column; gap: 8px; }
-  .spacing-row {
-    display: flex; align-items: center; gap: 16px;
-  }
-  .spacing-bar {
-    height: 12px;
-    background: linear-gradient(90deg, var(--amber), rgba(255,179,71,0.3));
-    border-radius: 2px;
-    flex-shrink: 0;
-  }
-  .spacing-info {
-    display: flex; gap: 16px; align-items: baseline;
-    min-width: 200px;
-  }
-  .spacing-token {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px; color: var(--fg);
-    min-width: 50px;
-  }
-  .spacing-px {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px; font-weight: 600; color: var(--fg-strong);
-    min-width: 40px;
-  }
-  .spacing-use {
-    font-size: 11px; color: var(--fg-muted);
-  }
+  .sp-row { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+  .sp-name { font-family: var(--font-mono); font-size: 12px; color: var(--fg-muted); min-width: 72px; }
+  .sp-val { font-family: var(--font-mono); font-size: 12px; color: var(--fg); min-width: 36px; text-align: right; }
+  .sp-bar { height: 10px; background: var(--amber); border-radius: 2px; }
 
-  /* Surfaces */
-  .surface-row { display: flex; gap: 10px; flex-wrap: wrap; }
-  .surface-card {
-    flex: 1; min-width: 140px;
-    padding: 20px 16px;
-    border-radius: 12px;
+  /* Token table */
+  .tok-table { width: 100%; border-collapse: collapse; }
+  .tok-table th {
+    font-family: var(--font-mono); font-size: 9px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-faint);
+    text-align: left; padding: 6px 0; border-bottom: 1px solid var(--border);
+  }
+  .tok-table td {
+    padding: 6px 0; border-bottom: 1px solid var(--border);
+    font-size: 12px;
+  }
+  .tok-table .tok { font-family: var(--font-mono); font-size: 11px; color: var(--fg-muted); }
+  .tok-table .val { font-family: var(--font-mono); font-size: 11px; font-weight: 600; color: var(--amber); }
+  .tok-table .use { font-size: 12px; color: var(--fg-muted); }
+
+  /* Radius demo */
+  .radius-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .radius-item { text-align: center; }
+  .radius-box {
+    width: 80px; height: 56px;
+    background: rgba(61,42,84,0.4);
     border: 1px solid var(--border);
-    text-align: center;
-    backdrop-filter: blur(8px);
+    margin-bottom: 6px;
   }
-  .surface-name {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px; color: var(--fg-faint);
-    letter-spacing: 0.06em;
-  }
-  .surface-val {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px; color: var(--fg-muted);
-    margin-top: 4px;
-  }
+  .radius-label { font-family: var(--font-mono); font-size: 10px; color: var(--fg-muted); }
 
-  /* Shadows */
-  .shadow-row { display: flex; gap: 12px; flex-wrap: wrap; }
-  .shadow-card {
-    flex: 1; min-width: 200px;
-    padding: 20px;
-    border-radius: 14px;
-    border: 1px solid var(--border);
-    background: var(--surface-0);
-  }
-  .shadow-name {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px; font-weight: 600; color: var(--fg);
-  }
-  .shadow-val {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 9px; color: var(--fg-faint); margin-top: 4px;
-  }
-
-  /* Breakpoints */
-  .bp-row { display: flex; flex-direction: column; gap: 6px; }
-  .bp-item {
-    display: flex; align-items: center; gap: 12px;
-    padding: 8px 14px;
+  /* Shadows demo */
+  .shadow-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
+  .shadow-box {
+    width: 90px; height: 64px;
     border-radius: 8px;
-    background: var(--surface-0);
+    background: rgba(61,42,84,0.35);
     border: 1px solid var(--border);
+    display: flex; align-items: flex-end; justify-content: center;
+    padding-bottom: 8px;
   }
-  .bp-name {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px; font-weight: 600; color: var(--amber);
-    min-width: 32px;
-  }
-  .bp-val {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px; color: var(--fg); min-width: 60px;
-  }
-  .bp-bar {
-    flex: 1; height: 6px; border-radius: 3px;
-    background: linear-gradient(90deg, rgba(56,189,248,0.4), rgba(56,189,248,0.1));
+  .shadow-label { font-family: var(--font-mono); font-size: 9px; color: var(--fg-muted); }
+  .shadow-glow {
+    width: 90px; height: 64px;
+    border-radius: 8px;
+    background: rgba(61,42,84,0.25);
+    border: 1px solid var(--border);
+    display: flex; align-items: flex-end; justify-content: center;
+    padding-bottom: 8px;
   }
 </style>
 </head>
@@ -177,132 +118,72 @@
 <div class="canvas">
 
   <div class="page-head">
-    <div>
-      <div class="page-num">03 / Formes &amp; Espacement</div>
-      <div class="page-title">LE RYTHME</div>
+    <div class="page-brand">Stella</div>
+    <div class="page-id">03 — Espacements &middot; Rayons &middot; Ombres</div>
+  </div>
+
+  <div class="cols">
+    <!-- LEFT: Spacing -->
+    <div class="col">
+      <div class="section" style="margin-top:0;">Echelle d'espacement</div>
+      <div class="sp-row"><span class="sp-name">space-1</span><span class="sp-val">4px</span><div class="sp-bar" style="width:8px;"></div></div>
+      <div class="sp-row"><span class="sp-name">space-2</span><span class="sp-val">8px</span><div class="sp-bar" style="width:16px;"></div></div>
+      <div class="sp-row"><span class="sp-name">space-3</span><span class="sp-val">12px</span><div class="sp-bar" style="width:24px;"></div></div>
+      <div class="sp-row"><span class="sp-name">space-4</span><span class="sp-val">16px</span><div class="sp-bar" style="width:32px;"></div></div>
+      <div class="sp-row"><span class="sp-name">space-6</span><span class="sp-val">24px</span><div class="sp-bar" style="width:48px;"></div></div>
+      <div class="sp-row"><span class="sp-name">space-8</span><span class="sp-val">32px</span><div class="sp-bar" style="width:64px;"></div></div>
+      <div class="sp-row"><span class="sp-name">space-12</span><span class="sp-val">48px</span><div class="sp-bar" style="width:96px;"></div></div>
+      <div class="sp-row"><span class="sp-name">space-16</span><span class="sp-val">64px</span><div class="sp-bar" style="width:128px;"></div></div>
+      <div class="sp-row"><span class="sp-name">space-20</span><span class="sp-val">80px</span><div class="sp-bar" style="width:160px;"></div></div>
+      <div class="sp-row"><span class="sp-name">space-24</span><span class="sp-val">96px</span><div class="sp-bar" style="width:192px;"></div></div>
     </div>
-    <div class="page-context">Stella DS &middot; 2024</div>
+
+    <!-- RIGHT: Layout tokens + Durations -->
+    <div class="col">
+      <div class="section" style="margin-top:0;">Tokens de layout</div>
+      <table class="tok-table">
+        <tr><th>Token</th><th>Valeur</th><th>Usage</th></tr>
+        <tr><td class="tok">--stl-header-h</td><td class="val">48px</td><td class="use">Header fixe top-0</td></tr>
+        <tr><td class="tok">--stl-container-max</td><td class="val">1280px</td><td class="use">Max-width container</td></tr>
+        <tr><td class="tok">--stl-content-max</td><td class="val">900px</td><td class="use">Colonne catalogue</td></tr>
+        <tr><td class="tok">--stl-footer-h</td><td class="val">60px</td><td class="use">Footer</td></tr>
+      </table>
+
+      <div class="section">Durees de mouvement</div>
+      <table class="tok-table">
+        <tr><th>Token</th><th>Valeur</th><th>Usage</th></tr>
+        <tr><td class="tok">--stl-dur-fast</td><td class="val">150ms</td><td class="use">Micro-interactions</td></tr>
+        <tr><td class="tok">--stl-dur-base</td><td class="val">220ms</td><td class="use">Transitions standards</td></tr>
+        <tr><td class="tok">--stl-dur-slow</td><td class="val">350ms</td><td class="use">Boutons, cartes</td></tr>
+        <tr><td class="tok">--stl-dur-hero</td><td class="val">600ms</td><td class="use">Entrees hero</td></tr>
+        <tr><td class="tok">--stl-dur-phrase</td><td class="val">4000ms</td><td class="use">Rotation phrases</td></tr>
+        <tr><td class="tok">--stl-dur-hero-img</td><td class="val">15s</td><td class="use">Zoom fond hero</td></tr>
+      </table>
+    </div>
   </div>
 
   <!-- BORDER RADIUS -->
-  <div class="section-label">Coins — direction douce, rien sous 8px</div>
+  <div class="section">Rayons de bordure</div>
   <div class="radius-row">
-    <div class="radius-item">
-      <div class="radius-box" style="border-radius:8px;"></div>
-      <div class="radius-label">sm</div>
-      <div class="radius-val">8px</div>
-      <div class="radius-usage">Badges, tags</div>
-    </div>
-    <div class="radius-item">
-      <div class="radius-box" style="border-radius:12px;"></div>
-      <div class="radius-label">md</div>
-      <div class="radius-val">12px</div>
-      <div class="radius-usage">Inputs, pills</div>
-    </div>
-    <div class="radius-item">
-      <div class="radius-box" style="border-radius:14px;"></div>
-      <div class="radius-label">lg</div>
-      <div class="radius-val">14px</div>
-      <div class="radius-usage">Cards, modals</div>
-    </div>
-    <div class="radius-item">
-      <div class="radius-box" style="border-radius:16px;"></div>
-      <div class="radius-label">xl</div>
-      <div class="radius-val">16px</div>
-      <div class="radius-usage">Panels, hero</div>
-    </div>
-    <div class="radius-item">
-      <div class="radius-box" style="border-radius:999px;"></div>
-      <div class="radius-label">pill</div>
-      <div class="radius-val">999px</div>
-      <div class="radius-usage">Boutons, nav</div>
-    </div>
-  </div>
-
-  <!-- SPACING -->
-  <div class="section-label">Espacement — echelle 4-pt</div>
-  <div class="spacing-list">
-    <div class="spacing-row">
-      <div class="spacing-info"><span class="spacing-token">--s-1</span><span class="spacing-px">4px</span><span class="spacing-use">gap icones</span></div>
-      <div class="spacing-bar" style="width:16px;"></div>
-    </div>
-    <div class="spacing-row">
-      <div class="spacing-info"><span class="spacing-token">--s-2</span><span class="spacing-px">8px</span><span class="spacing-use">gap interne</span></div>
-      <div class="spacing-bar" style="width:32px;"></div>
-    </div>
-    <div class="spacing-row">
-      <div class="spacing-info"><span class="spacing-token">--s-3</span><span class="spacing-px">12px</span><span class="spacing-use">gap compact</span></div>
-      <div class="spacing-bar" style="width:48px;"></div>
-    </div>
-    <div class="spacing-row">
-      <div class="spacing-info"><span class="spacing-token">--s-4</span><span class="spacing-px">16px</span><span class="spacing-use">gap standard</span></div>
-      <div class="spacing-bar" style="width:64px;"></div>
-    </div>
-    <div class="spacing-row">
-      <div class="spacing-info"><span class="spacing-token">--s-6</span><span class="spacing-px">24px</span><span class="spacing-use">gap cards, padding</span></div>
-      <div class="spacing-bar" style="width:96px;"></div>
-    </div>
-    <div class="spacing-row">
-      <div class="spacing-info"><span class="spacing-token">--s-9</span><span class="spacing-px">36px</span><span class="spacing-use">padding card premium</span></div>
-      <div class="spacing-bar" style="width:144px;"></div>
-    </div>
-    <div class="spacing-row">
-      <div class="spacing-info"><span class="spacing-token">--s-12</span><span class="spacing-px">48px</span><span class="spacing-use">gap section</span></div>
-      <div class="spacing-bar" style="width:192px;"></div>
-    </div>
-  </div>
-
-  <!-- SURFACES -->
-  <div class="section-label">Surfaces — 5 niveaux d'elevation</div>
-  <div class="surface-row">
-    <div class="surface-card" style="background: var(--surface-0);">
-      <div class="surface-name">surface-0</div>
-      <div class="surface-val">3D2A54 / 25%</div>
-    </div>
-    <div class="surface-card" style="background: var(--surface-1);">
-      <div class="surface-name">surface-1</div>
-      <div class="surface-val">3D2A54 / 40%</div>
-    </div>
-    <div class="surface-card" style="background: var(--surface-2);">
-      <div class="surface-name">surface-2</div>
-      <div class="surface-val">3D2A54 / 55%</div>
-    </div>
-    <div class="surface-card" style="background: var(--surface-3);">
-      <div class="surface-name">surface-3</div>
-      <div class="surface-val">3D2A54 / 70%</div>
-    </div>
-    <div class="surface-card" style="background: var(--surface-4);">
-      <div class="surface-name">surface-4</div>
-      <div class="surface-val">3D2A54 / 85%</div>
-    </div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:2px;"></div><div class="radius-label">xs &middot; 2</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:4px;"></div><div class="radius-label">sm &middot; 4</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:6px;"></div><div class="radius-label">md &middot; 6</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:8px;"></div><div class="radius-label">lg &middot; 8</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:12px;"></div><div class="radius-label">xl &middot; 12</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:20px;"></div><div class="radius-label">2xl &middot; 20</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:999px; width:56px;"></div><div class="radius-label">full</div></div>
   </div>
 
   <!-- SHADOWS -->
-  <div class="section-label">Ombres</div>
+  <div class="section">Ombres</div>
   <div class="shadow-row">
-    <div class="shadow-card" style="box-shadow: 0 1px 3px rgba(0,0,0,0.3);">
-      <div class="shadow-name">shadow-sm</div>
-      <div class="shadow-val">0 1px 3px &middot; Subtile</div>
-    </div>
-    <div class="shadow-card" style="box-shadow: 0 4px 16px rgba(0,0,0,0.4);">
-      <div class="shadow-name">shadow-card</div>
-      <div class="shadow-val">0 4px 16px &middot; Cards</div>
-    </div>
-    <div class="shadow-card" style="box-shadow: 0 12px 40px rgba(0,0,0,0.5);">
-      <div class="shadow-name">shadow-pop</div>
-      <div class="shadow-val">0 12px 40px &middot; Modals</div>
-    </div>
-  </div>
-
-  <!-- BREAKPOINTS -->
-  <div class="section-label">Breakpoints</div>
-  <div class="bp-row">
-    <div class="bp-item"><span class="bp-name">xs</span><span class="bp-val">475px</span><div class="bp-bar" style="max-width:20%;"></div></div>
-    <div class="bp-item"><span class="bp-name">sm</span><span class="bp-val">640px</span><div class="bp-bar" style="max-width:30%;"></div></div>
-    <div class="bp-item"><span class="bp-name">md</span><span class="bp-val">768px</span><div class="bp-bar" style="max-width:45%;"></div></div>
-    <div class="bp-item"><span class="bp-name">lg</span><span class="bp-val">1024px</span><div class="bp-bar" style="max-width:60%;"></div></div>
-    <div class="bp-item"><span class="bp-name">xl</span><span class="bp-val">1280px</span><div class="bp-bar" style="max-width:80%;"></div></div>
-    <div class="bp-item"><span class="bp-name">2xl</span><span class="bp-val">1536px</span><div class="bp-bar" style="max-width:100%;"></div></div>
+    <div class="shadow-box" style="box-shadow: 0 1px 3px rgba(0,0,0,0.3);"><span class="shadow-label">sm</span></div>
+    <div class="shadow-box" style="box-shadow: 0 4px 12px rgba(0,0,0,0.4);"><span class="shadow-label">md</span></div>
+    <div class="shadow-box" style="box-shadow: 0 8px 24px rgba(0,0,0,0.5);"><span class="shadow-label">lg &middot; cartes</span></div>
+    <div class="shadow-box" style="box-shadow: 0 16px 40px rgba(0,0,0,0.6);"><span class="shadow-label">xl &middot; hover</span></div>
+    <div class="shadow-glow" style="box-shadow: 0 0 20px 4px rgba(255,179,71,0.3);"><span class="shadow-label" style="color:var(--amber);">glow amber</span></div>
+    <div class="shadow-glow" style="box-shadow: 0 0 20px 4px rgba(56,189,248,0.25);"><span class="shadow-label" style="color:var(--cyan);">glow cyan</span></div>
+    <div class="shadow-glow" style="box-shadow: 0 0 30px 6px rgba(224,64,251,0.18);"><span class="shadow-label" style="color:#e040fb;">glow magenta</span></div>
   </div>
 
 </div>

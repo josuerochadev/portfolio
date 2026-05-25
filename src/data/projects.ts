@@ -393,6 +393,19 @@ export const PROJECTS: Project[] = [
 					caption: "CEDA — Vue d'ensemble des 19 ressources du groupe CLIGROUP (7 MAPSET, 7 PROGRAM, 5 TRANSACTION)",
 					group: "Debug & Admin z/OS"
 				},
+				// --- Code & CI ---
+				{
+					type: "image",
+					src: "/assets/media/projects/poei-mainframe/cobol-sample.webp",
+					caption: "PRGCLIA — PROCEDURE DIVISION pseudo-conversationnelle (EVALUATE, SEND MAP, RETURN TRANSID)",
+					group: "Code & CI"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/poei-mainframe/ci-results.webp",
+					caption: "GitHub Actions — 15/15 programmes batch compilés avec GnuCOBOL",
+					group: "Code & CI"
+				},
 			]
 		}
 	},

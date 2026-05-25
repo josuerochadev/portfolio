@@ -69,6 +69,9 @@ export default function ProjectDetail() {
 	const prevProject = projectIndex > 0 ? PROJECTS[projectIndex - 1] : undefined;
 	const nextProject = projectIndex < PROJECTS.length - 1 ? PROJECTS[projectIndex + 1] : undefined;
 
+	const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+	const [activeGroupIndex, setActiveGroupIndex] = useState(0);
+
 	if (!project) {
 		return (
 			<div className="min-h-screen flex items-center justify-center text-violet dark:text-beige">
@@ -98,9 +101,6 @@ export default function ProjectDetail() {
 	const hasStack = Array.isArray(detailStack) && detailStack.length > 0;
 	const hasMedia = mediaItems.length > 0;
 	const hasMetrics = Array.isArray(detailMetrics) && detailMetrics.length > 0;
-
-	const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-	const [activeGroupIndex, setActiveGroupIndex] = useState(0);
 
 	const resolveCaption = (index: number): string => {
 		if (Array.isArray(detailMedia) && detailMedia[index]?.caption) {

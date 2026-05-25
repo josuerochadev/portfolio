@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import { FaArrowLeft, FaArrowRight, FaArrowUp, FaGithub, FaExternalLinkAlt } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight, FaArrowUp, FaGithub, FaExternalLinkAlt, FaPlay } from "react-icons/fa";
 import { PROJECTS, type Project, type MediaItem } from "@/data/projects";
 import FadeInUp from "@/components/common/animations/fade-in-up";
 import MediaLightbox from "@/components/MediaLightbox";
@@ -49,6 +49,17 @@ const getStatusLabel = (status: Project['status'], t: any) => {
 	}
 };
 
+const getGroupCount = (items: { item: MediaItem }[]) => {
+	const embeds = items.filter(({ item }) => item.type === 'embed').length;
+	const videos = items.filter(({ item }) => item.type === 'video').length;
+	const images = items.filter(({ item }) => item.type === 'image').length;
+	const parts: string[] = [];
+	if (embeds > 0) parts.push(`${embeds} diagramme${embeds > 1 ? 's' : ''}`);
+	if (videos > 0) parts.push(`${videos} vid\u00e9o${videos > 1 ? 's' : ''}`);
+	if (images > 0) parts.push(`${images} image${images > 1 ? 's' : ''}`);
+	return parts.join(', ');
+};
+
 export default function ProjectDetail() {
 	const { t } = useTranslation(['projects', 'common']);
 	const { projectId } = useParams<{ projectId: string }>();
@@ -89,6 +100,7 @@ export default function ProjectDetail() {
 	const hasMetrics = Array.isArray(detailMetrics) && detailMetrics.length > 0;
 
 	const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+	const [activeGroupIndex, setActiveGroupIndex] = useState(0);
 
 	const resolveCaption = (index: number): string => {
 		if (Array.isArray(detailMedia) && detailMedia[index]?.caption) {
@@ -99,10 +111,24 @@ export default function ProjectDetail() {
 
 	const allCaptions = mediaItems.map((_, i) => resolveCaption(i));
 
+	// Build media groups once
+	const mediaGroups: { label: string | null; items: { item: MediaItem; flatIndex: number }[] }[] = [];
+	if (hasMedia) {
+		let currentGroup: string | null | undefined = undefined;
+		mediaItems.forEach((item, flatIndex) => {
+			const groupLabel = item.group ?? null;
+			if (groupLabel !== currentGroup) {
+				mediaGroups.push({ label: groupLabel, items: [] });
+				currentGroup = groupLabel;
+			}
+			mediaGroups[mediaGroups.length - 1].items.push({ item, flatIndex });
+		});
+	}
+
 	return (
 		<ErrorBoundary>
 			<SeoHead
-				title={`${projectTitle} — Josué Rocha`}
+				title={`${projectTitle} — Josu\u00e9 Rocha`}
 				description={projectDescription}
 				ogImage={`https://josuerocha.dev${project.image.desktop}`}
 				canonical={`https://josuerocha.dev/projet/${project.id}`}
@@ -389,145 +415,194 @@ export default function ProjectDetail() {
 						)}
 
 						{/* Galerie / Media */}
-						{hasMedia && (
-							<FadeInUp delay={0.55}>
-								<section id="gallery" className="mb-24 scroll-mt-24">
-									<h2 className="text-base md:text-lg font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange mb-8">
-										{t('projects:detail.gallery')}
-									</h2>
+						{hasMedia && (() => {
+							const safeIndex = activeGroupIndex < mediaGroups.length ? activeGroupIndex : 0;
+							const activeGroup = mediaGroups[safeIndex];
+							const embeds = activeGroup.items.filter(({ item }) => item.type === 'embed');
+							const videos = activeGroup.items.filter(({ item }) => item.type === 'video');
+							const images = activeGroup.items.filter(({ item }) => item.type === 'image');
 
-									{(() => {
-										// Group media items while preserving flat index for lightbox
-										const groups: { label: string | null; items: { item: MediaItem; flatIndex: number }[] }[] = [];
-										let currentGroup: string | null | undefined = undefined;
+							return (
+								<FadeInUp delay={0.55}>
+									<section id="gallery" className="mb-24 scroll-mt-24">
+										<h2 className="text-base md:text-lg font-sans font-bold uppercase tracking-widest text-orange-dark dark:text-orange mb-8">
+											{t('projects:detail.gallery')}
+										</h2>
 
-										mediaItems.forEach((item, flatIndex) => {
-											const groupLabel = item.group ?? null;
-											if (groupLabel !== currentGroup) {
-												groups.push({ label: groupLabel, items: [] });
-												currentGroup = groupLabel;
-											}
-											groups[groups.length - 1].items.push({ item, flatIndex });
-										});
+										{/* Tabs */}
+										{mediaGroups.length > 1 && (
+											<div className="flex flex-wrap gap-2 mb-8" role="tablist" aria-label="Media groups">
+												{mediaGroups.map((group, i) => {
+													const isActive = i === safeIndex;
+													return (
+														<button
+															key={group.label ?? `tab-${i}`}
+															type="button"
+															role="tab"
+															aria-selected={isActive}
+															onClick={() => setActiveGroupIndex(i)}
+															className={`flex flex-col items-start px-4 py-2.5 rounded-xl text-left
+																transition-all duration-300 ease-[cubic-bezier(0.83,0,0.17,1)]
+																border font-sans
+																${isActive
+																	? 'bg-orange text-beige border-orange shadow-cta scale-[1.02]'
+																	: 'bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5 dark:from-lime/10 dark:via-orange/5 dark:to-violet/10 backdrop-blur-md border-lime/30 dark:border-lime/20 text-violet dark:text-beige hover:border-orange/50 hover:shadow-card'
+																}`}
+														>
+															<span className="text-sm font-bold uppercase tracking-wider">
+																{group.label ?? t('projects:detail.gallery')}
+															</span>
+															<span className={`text-xs mt-0.5 ${isActive ? 'text-beige/70' : 'text-violet/50 dark:text-beige/40'}`}>
+																{getGroupCount(group.items)}
+															</span>
+														</button>
+													);
+												})}
+											</div>
+										)}
 
-										let staggerCounter = 0;
-
-										return groups.map((group, groupIndex) => {
-											const videosAndEmbeds = group.items.filter(({ item }) => item.type === 'video' || item.type === 'embed');
-											const images = group.items.filter(({ item }) => item.type === 'image');
-
-											return (
-												<div key={group.label ?? `group-${groupIndex}`}>
-													{/* Group subtitle */}
-													{group.label && (
-														<FadeInUp delay={Math.min(0.05 * staggerCounter, 0.5)}>
-															<h3 className={`text-sm font-sans font-semibold uppercase tracking-wider text-violet/40 dark:text-beige/40 mb-4 ${groupIndex > 0 ? 'mt-8' : ''}`}>
-																{group.label}
-															</h3>
-														</FadeInUp>
-													)}
-
-													{/* Videos & Embeds — full width */}
-													{videosAndEmbeds.length > 0 && (
-														<div className="flex flex-col gap-8 mb-8">
-															{videosAndEmbeds.map(({ item, flatIndex }) => {
-																const caption = allCaptions[flatIndex];
-																const delay = Math.min(0.05 * staggerCounter++, 0.5);
-
-																return (
-																	<FadeInUp key={item.src} delay={delay}>
-																		<figure
-																			className="flex flex-col gap-3 cursor-pointer group"
-																			onClick={() => setLightboxIndex(flatIndex)}
-																		>
-																			<div className="w-full rounded-2xl overflow-hidden p-2
-																				bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5
-																				dark:from-lime/10 dark:via-orange/5 dark:to-violet/10
-																				backdrop-blur-md border border-lime/30 dark:border-lime/20 shadow-card
-																				hover:shadow-card-hover hover:scale-[1.01]
-																				transition-all duration-300 ease-[cubic-bezier(0.83,0,0.17,1)]">
-																				{item.type === 'embed' && (
-																					<iframe
-																						src={item.src}
-																						title={caption}
-																						className="w-full border-0 rounded-xl"
-																						style={{ height: '480px' }}
-																						loading="lazy"
-																					/>
-																				)}
-																				{item.type === 'video' && (
-																					<video
-																						src={item.src}
-																						poster={item.poster}
-																						controls
-																						preload="metadata"
-																						className="w-full rounded-xl"
-																						onClick={(e) => e.stopPropagation()}
-																					>
-																						<track kind="captions" />
-																					</video>
-																				)}
-																			</div>
-																			<figcaption className="text-sm text-violet/60 dark:text-beige/60 text-center">
-																				{caption}
-																			</figcaption>
-																		</figure>
-																	</FadeInUp>
-																);
-															})}
-														</div>
-													)}
-
-													{/* Images — masonry */}
-													{images.length > 0 && (
-														<div className="columns-1 sm:columns-2 lg:columns-3 gap-4 mb-8">
-															{images.map(({ item, flatIndex }) => {
-																const caption = allCaptions[flatIndex];
-																const delay = Math.min(0.05 * staggerCounter++, 0.5);
-
-																return (
-																	<FadeInUp key={item.src} delay={delay}>
-																		<figure
-																			className="break-inside-avoid mb-4 cursor-pointer group"
-																			onClick={() => setLightboxIndex(flatIndex)}
-																		>
-																			<div className="relative rounded-2xl overflow-hidden p-2
-																				bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5
-																				dark:from-lime/10 dark:via-orange/5 dark:to-violet/10
-																				backdrop-blur-md border border-lime/30 dark:border-lime/20 shadow-card
-																				hover:shadow-card-hover
-																				transition-all duration-300 ease-[cubic-bezier(0.83,0,0.17,1)]">
-																				<div className="rounded-xl overflow-hidden relative">
-																					<img
-																						src={item.src}
-																						alt={caption}
-																						className="w-full h-auto block group-hover:scale-[1.03] transition-transform duration-300"
-																						loading="lazy"
-																					/>
-																					{/* Hover overlay with caption */}
-																					<div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent
-																						opacity-0 group-hover:opacity-100 transition-opacity duration-300
-																						flex items-end p-4">
-																						<span className="text-sm text-white font-medium">
-																							{caption}
-																						</span>
-																					</div>
-																				</div>
-																			</div>
-																			<figcaption className="sr-only">{caption}</figcaption>
-																		</figure>
-																	</FadeInUp>
-																);
-															})}
-														</div>
-													)}
+										{/* Active group content */}
+										<motion.div
+											key={safeIndex}
+											initial={{ opacity: 0, y: 12 }}
+											animate={{ opacity: 1, y: 0 }}
+											transition={{ duration: 0.3, ease: [0.83, 0, 0.17, 1] }}
+											role="tabpanel"
+										>
+											{/* Embeds — breakout width */}
+											{embeds.length > 0 && (
+												<div className="flex flex-col gap-8 mb-8 -mx-6 px-6 md:-mx-24 md:px-24 lg:-mx-32 lg:px-32">
+													{embeds.map(({ item, flatIndex }) => {
+														const caption = allCaptions[flatIndex];
+														return (
+															<figure
+																key={item.src}
+																className="flex flex-col gap-3 cursor-pointer group"
+																onClick={() => setLightboxIndex(flatIndex)}
+															>
+																<div className="w-full rounded-2xl overflow-hidden p-2
+																	bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5
+																	dark:from-lime/10 dark:via-orange/5 dark:to-violet/10
+																	backdrop-blur-md border border-lime/30 dark:border-lime/20 shadow-card
+																	hover:shadow-card-hover hover:scale-[1.005]
+																	transition-all duration-300 ease-[cubic-bezier(0.83,0,0.17,1)]">
+																	<iframe
+																		src={item.src}
+																		title={caption}
+																		className="w-full border-0 rounded-xl"
+																		style={{ height: '600px' }}
+																		loading="lazy"
+																	/>
+																</div>
+																<figcaption className="text-sm text-violet/60 dark:text-beige/60 text-center">
+																	{caption}
+																</figcaption>
+															</figure>
+														);
+													})}
 												</div>
-											);
-										});
-									})()}
-								</section>
-							</FadeInUp>
-						)}
+											)}
+
+											{/* Videos — poster + play overlay */}
+											{videos.length > 0 && (
+												<div className="flex flex-col gap-8 mb-8 -mx-6 px-6 md:-mx-24 md:px-24 lg:-mx-32 lg:px-32">
+													{videos.map(({ item, flatIndex }) => {
+														const caption = allCaptions[flatIndex];
+														return (
+															<figure
+																key={item.src}
+																className="flex flex-col gap-3 cursor-pointer group"
+																onClick={() => setLightboxIndex(flatIndex)}
+															>
+																<div className="w-full rounded-2xl overflow-hidden p-2
+																	bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5
+																	dark:from-lime/10 dark:via-orange/5 dark:to-violet/10
+																	backdrop-blur-md border border-lime/30 dark:border-lime/20 shadow-card
+																	hover:shadow-card-hover hover:scale-[1.005]
+																	transition-all duration-300 ease-[cubic-bezier(0.83,0,0.17,1)]">
+																	<div className="relative rounded-xl overflow-hidden">
+																		{item.poster ? (
+																			<img
+																				src={item.poster}
+																				alt={caption}
+																				className="w-full h-auto block group-hover:scale-[1.03] transition-transform duration-300"
+																				loading="lazy"
+																			/>
+																		) : (
+																			<video
+																				src={item.src}
+																				preload="metadata"
+																				className="w-full pointer-events-none"
+																				muted
+																			>
+																				<track kind="captions" />
+																			</video>
+																		)}
+																		{/* Play overlay */}
+																		<div className="absolute inset-0 flex items-center justify-center
+																			bg-black/20 group-hover:bg-black/40 transition-colors duration-300">
+																			<div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white/90 dark:bg-beige/90
+																				flex items-center justify-center
+																				shadow-lg group-hover:scale-110 transition-transform duration-300">
+																				<FaPlay className="w-5 h-5 md:w-6 md:h-6 text-violet ml-1" />
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<figcaption className="text-sm text-violet/60 dark:text-beige/60 text-center">
+																	{caption}
+																</figcaption>
+															</figure>
+														);
+													})}
+												</div>
+											)}
+
+											{/* Images — masonry */}
+											{images.length > 0 && (
+												<div className="columns-1 sm:columns-2 lg:columns-3 gap-4 mb-8">
+													{images.map(({ item, flatIndex }) => {
+														const caption = allCaptions[flatIndex];
+														return (
+															<figure
+																key={item.src}
+																className="break-inside-avoid mb-4 cursor-pointer group"
+																onClick={() => setLightboxIndex(flatIndex)}
+															>
+																<div className="relative rounded-2xl overflow-hidden p-2
+																	bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5
+																	dark:from-lime/10 dark:via-orange/5 dark:to-violet/10
+																	backdrop-blur-md border border-lime/30 dark:border-lime/20 shadow-card
+																	hover:shadow-card-hover
+																	transition-all duration-300 ease-[cubic-bezier(0.83,0,0.17,1)]">
+																	<div className="rounded-xl overflow-hidden relative">
+																		<img
+																			src={item.src}
+																			alt={caption}
+																			className="w-full h-auto block group-hover:scale-[1.03] transition-transform duration-300"
+																			loading="lazy"
+																		/>
+																		{/* Hover overlay with caption */}
+																		<div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent
+																			opacity-0 group-hover:opacity-100 transition-opacity duration-300
+																			flex items-end p-4">
+																			<span className="text-sm text-white font-medium">
+																				{caption}
+																			</span>
+																		</div>
+																	</div>
+																</div>
+																<figcaption className="sr-only">{caption}</figcaption>
+															</figure>
+														);
+													})}
+												</div>
+											)}
+										</motion.div>
+									</section>
+								</FadeInUp>
+							);
+						})()}
 
 						{/* Lightbox */}
 						{lightboxIndex !== null && (

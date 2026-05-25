@@ -34,9 +34,11 @@ export default function MediaLightbox({ items, captions, currentIndex, onClose, 
 		};
 		document.addEventListener("keydown", handleKey);
 		document.body.style.overflow = "hidden";
+		document.body.setAttribute("data-lightbox-open", "true");
 		return () => {
 			document.removeEventListener("keydown", handleKey);
 			document.body.style.overflow = "";
+			document.body.removeAttribute("data-lightbox-open");
 		};
 	}, [onClose, goPrev, goNext]);
 

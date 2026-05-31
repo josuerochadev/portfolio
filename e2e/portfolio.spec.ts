@@ -67,7 +67,7 @@ test.describe('Portfolio - Core functionality', () => {
     await expect(page).toHaveURL(/\/projet\/.+/);
     
     // Should show project detail content
-    await expect(page.getByText('Retour aux projets')).toBeVisible();
+    await expect(page.getByText('Retour aux projets').first()).toBeVisible();
   });
 
   test('should have working contact section', async ({ page }) => {

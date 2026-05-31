@@ -60,8 +60,8 @@ export default function Contact() {
 
 			{/* CARD */}
 			<FadeInUpOnScroll delay={0.4}>
-				<div className="relative z-10 max-w-xl mx-auto mt-8 bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5 dark:from-lime/10 dark:via-orange/5 dark:to-violet/10 backdrop-blur-md border border-lime/30 dark:border-lime/20 rounded-2xl shadow-glow-lime p-8">
-					<p className="text-base sm:text-lg text-violet dark:text-beige leading-relaxed mb-6">
+				<div className="relative z-10 max-w-xl mx-auto mt-8 bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5 dark:from-lime/10 dark:via-orange/5 dark:to-violet/10 backdrop-blur-md border border-lime/30 dark:border-lime/20 rounded-2xl shadow-card p-8">
+					<p className="text-lg sm:text-xl font-display font-light text-violet dark:text-beige leading-relaxed mb-6">
 						{t('contact.description')}
 					</p>
 					<div className="flex gap-4 flex-wrap justify-center">
@@ -75,7 +75,7 @@ export default function Contact() {
 								hover:bg-orange hover:text-beige dark:hover:bg-orange/20 dark:hover:text-orange
 								transition-all duration-300
 								inline-flex items-center gap-2 font-medium text-sm
-								hover:shadow-glow-orange hover:scale-105 active:scale-95"
+								hover:shadow-cta hover:scale-105 active:scale-95"
 								aria-label={`Link to ${label.toLowerCase()}`}
 							>
 								{icon} {label}

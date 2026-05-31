@@ -6,7 +6,7 @@ import tseslint from '@typescript-eslint/eslint-plugin'
 import tsParser from '@typescript-eslint/parser'
 
 export default [
-  { ignores: ['dist', '*.config.ts', '*.config.js', 'e2e/**/*', 'playwright.config.ts'] },
+  { ignores: ['dist', '*.config.ts', '*.config.js', 'e2e/**/*', 'playwright.config.ts', 'Josu*Rocha*Design*System/**'] },
   {
     files: ['**/*.{js,jsx}'],
     languageOptions: {

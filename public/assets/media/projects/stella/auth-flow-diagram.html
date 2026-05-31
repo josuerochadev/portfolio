@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stella — Flux Auth JWT + CSRF</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Bebas+Neue&family=Roboto:wght@400;500;700&family=Roboto+Slab:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  :root {
+    --bg:           #0f0a18;
+    --bg-grad:      linear-gradient(135deg, #3D2A54 0%, #1E1326 55%, #0f0a18 100%);
+    --surface-0:    rgba(61, 42, 84, 0.25);
+    --surface-1:    rgba(61, 42, 84, 0.40);
+    --surface-2:    rgba(61, 42, 84, 0.55);
+    --border:       rgba(174, 201, 255, 0.12);
+    --border-strong:rgba(174, 201, 255, 0.25);
+
+    --fg:           #AEC9FF;
+    --fg-strong:    #ffffff;
+    --fg-muted:     rgba(174, 201, 255, 0.6);
+    --fg-faint:     rgba(174, 201, 255, 0.35);
+
+    --amber:        #FFB347;
+    --amber-deep:   #e69a2e;
+    --cyan:         #38bdf8;
+    --green:        #34d399;
+    --green-deep:   #059669;
+    --magenta:      #e040fb;
+    --red:          #f87171;
+    --red-deep:     #ef4444;
+    --purple:       #a78bfa;
+
+    --font-display: 'Dela Gothic One', cursive;
+    --font-body:    'Roboto', sans-serif;
+    --font-serif:   'Roboto Slab', serif;
+    --font-mono:    'JetBrains Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    background-image: var(--bg-grad);
+    background-attachment: fixed;
+    color: var(--fg);
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    justify-content: center;
+    padding: 48px 24px 64px;
+    min-height: 100vh;
+  }
+
+  .canvas { width: 100%; max-width: 900px; }
+
+  .header { text-align: center; margin-bottom: 48px; }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--fg-muted); font-weight: 500;
+  }
+  .header h1 {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 3.5vw, 36px);
+    color: var(--fg-strong); line-height: 1.15; margin-top: 8px;
+  }
+  .header h1 .accent { color: var(--amber); }
+
+  /* ── Shared ── */
+  .flow { display: flex; flex-direction: column; gap: 0; }
+  .arrow { display: flex; align-items: center; justify-content: center; padding: 10px 0; gap: 10px; }
+  .arrow-line { width: 1.5px; height: 28px; background: var(--border-strong); position: relative; }
+  .arrow-line::after {
+    content: ''; position: absolute; bottom: -1px; left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent; border-top: 5px solid var(--border-strong);
+  }
+  .arrow-label {
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--fg-faint);
+    background: var(--surface-1); padding: 2px 8px;
+    border-radius: 4px; border: 1px solid var(--border); white-space: nowrap;
+  }
+
+  .box {
+    padding: 20px 24px; border-radius: 16px;
+    border: 1px solid var(--border);
+    background: var(--surface-0);
+    backdrop-filter: blur(12px);
+  }
+  .box--amber { background: linear-gradient(135deg, rgba(255,179,71,0.12), rgba(255,179,71,0.04)); border-color: rgba(255,179,71,0.25); }
+  .box--cyan { background: linear-gradient(135deg, rgba(56,189,248,0.1), rgba(56,189,248,0.03)); border-color: rgba(56,189,248,0.2); }
+  .box--green { background: linear-gradient(135deg, rgba(52,211,153,0.1), rgba(52,211,153,0.03)); border-color: rgba(52,211,153,0.2); }
+  .box--red { background: linear-gradient(135deg, rgba(248,113,113,0.1), rgba(248,113,113,0.03)); border-color: rgba(248,113,113,0.2); }
+  .box--strong { background: var(--surface-2); border-color: var(--border-strong); }
+
+  .box-head { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+  .box-icon { font-size: 20px; }
+  .box-title { font-family: var(--font-serif); font-size: 15px; font-weight: 600; color: var(--fg-strong); }
+  .box--amber .box-title { color: var(--amber); }
+  .box--cyan .box-title { color: var(--cyan); }
+  .box--green .box-title { color: var(--green); }
+  .box--red .box-title { color: var(--red); }
+  .box-sub { font-size: 12px; color: var(--fg-muted); font-weight: 500; }
+
+  /* ── Steps ── */
+  .steps { margin-top: 12px; }
+  .step { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; }
+  .step + .step { border-top: 1px solid var(--border); }
+  .step-num {
+    flex-shrink: 0; width: 22px; height: 22px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+    background: var(--amber); color: var(--bg);
+  }
+  .step-text { font-size: 12px; color: var(--fg); line-height: 1.5; }
+  .step-text code {
+    font-family: var(--font-mono); font-size: 10px;
+    background: var(--surface-1); padding: 1px 5px;
+    border-radius: 3px; color: var(--amber);
+  }
+  .step-text strong { color: var(--fg-strong); }
+
+  /* ── Tags ── */
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+  .tag {
+    font-family: var(--font-mono); font-size: 9px; font-weight: 500;
+    padding: 3px 8px; border-radius: 999px;
+    border: 1px solid var(--border); background: var(--surface-0); color: var(--fg-muted);
+  }
+  .tag--red { background: rgba(248,113,113,0.15); color: var(--red); border-color: rgba(248,113,113,0.3); font-weight: 600; }
+  .tag--green { background: rgba(52,211,153,0.15); color: var(--green); border-color: rgba(52,211,153,0.3); }
+  .tag--cyan { background: rgba(56,189,248,0.15); color: var(--cyan); border-color: rgba(56,189,248,0.3); }
+  .tag--amber { background: rgba(255,179,71,0.15); color: var(--amber); border-color: rgba(255,179,71,0.3); }
+
+  /* ── Token cards ── */
+  .token-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px; margin-top: 12px;
+  }
+  .token-card {
+    padding: 14px 16px; border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--surface-1);
+    transition: border-color 0.15s;
+  }
+  .token-card:hover { border-color: var(--border-strong); }
+  .token-card .label {
+    font-family: var(--font-mono);
+    font-size: 12px; font-weight: 600; margin-bottom: 6px;
+  }
+  .token-card .detail {
+    font-size: 11px; color: var(--fg-muted); line-height: 1.7;
+  }
+  .token-card .detail code {
+    font-family: var(--font-mono); font-size: 10px;
+    background: var(--surface-0); padding: 1px 4px;
+    border-radius: 3px; color: var(--fg);
+  }
+
+  /* ── Row + Divider ── */
+  .row { display: flex; gap: 12px; }
+  .row > * { flex: 1; }
+
+  .divider { display: flex; align-items: center; gap: 12px; margin: 36px 0 24px; }
+  .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border-strong); }
+  .divider span {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--fg-faint); font-weight: 500;
+  }
+
+  @media (max-width: 600px) { .row { flex-direction: column; } }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <header class="header">
+    <div class="eyebrow">Stella E-Commerce</div>
+    <h1>Flux <span class="accent">Auth</span> — JWT + CSRF</h1>
+  </header>
+
+  <!-- TOKEN OVERVIEW -->
+  <div class="box">
+    <div class="box-head">
+      <span class="box-icon">&#128273;</span>
+      <span class="box-title">Double protection : Tokens</span>
+    </div>
+    <div class="box-sub">Trois tokens complementaires pour une securite multicouche</div>
+
+    <div class="token-grid">
+      <div class="token-card">
+        <div class="label" style="color: var(--amber);">Access Token (JWT)</div>
+        <div class="detail">
+          Cookie <code>accessToken</code> httpOnly<br>
+          Expire : <code>15 min</code><br>
+          Signe avec <code>JWT_SECRET</code><br>
+          Scope : <code>/api</code>
+        </div>
+      </div>
+      <div class="token-card">
+        <div class="label" style="color: var(--cyan);">Refresh Token (JWT)</div>
+        <div class="detail">
+          Cookie <code>refreshToken</code> httpOnly<br>
+          Expire : <code>7 jours</code><br>
+          Persiste en DB (RefreshToken)<br>
+          Rotation a chaque refresh
+        </div>
+      </div>
+      <div class="token-card">
+        <div class="label" style="color: var(--red);">CSRF Token (JWT)</div>
+        <div class="detail">
+          Cookie <code>XSRF-TOKEN</code> (lisible JS)<br>
+          Expire : <code>1 heure</code><br>
+          Header <code>X-CSRF-Token</code> requis<br>
+          Double validation : JWT + session
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOGIN FLOW -->
+  <div class="divider"><span>Flux de connexion</span></div>
+
+  <div class="flow">
+
+    <div class="box box--amber">
+      <div class="box-head">
+        <span class="box-icon">&#128100;</span>
+        <span class="box-title">1. Client — Login</span>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <span class="step-num">1</span>
+          <span class="step-text">L'utilisateur saisit email + mot de passe</span>
+        </div>
+        <div class="step">
+          <span class="step-num">2</span>
+          <span class="step-text"><code>POST /api/auth/login</code> avec <code>withCredentials: true</code></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrow">
+      <div class="arrow-line"></div>
+      <span class="arrow-label">authLimiter: 5 req / 15 min</span>
+      <div class="arrow-line"></div>
+    </div>
+
+    <div class="box box--strong">
+      <div class="box-head">
+        <span class="box-icon">&#9881;&#65039;</span>
+        <span class="box-title" style="color:var(--fg-strong);">2. Serveur — Auth Controller</span>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <span class="step-num">1</span>
+          <span class="step-text">Validation Joi du schema <code>loginSchema</code></span>
+        </div>
+        <div class="step">
+          <span class="step-num">2</span>
+          <span class="step-text">Recherche utilisateur via <code>userRepository.findByEmail()</code></span>
+        </div>
+        <div class="step">
+          <span class="step-num">3</span>
+          <span class="step-text">Comparaison <strong>bcrypt</strong> — auto-rehash si rounds obsolete</span>
+        </div>
+        <div class="step">
+          <span class="step-num">4</span>
+          <span class="step-text">Generation paire <code>{ accessToken, refreshToken }</code></span>
+        </div>
+        <div class="step">
+          <span class="step-num">5</span>
+          <span class="step-text">Revocation des anciens refresh tokens, sauvegarde nouveau en DB</span>
+        </div>
+        <div class="step">
+          <span class="step-num">6</span>
+          <span class="step-text">Set cookies httpOnly + retourne <code>{ success, userId, role }</code></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrow">
+      <div class="arrow-line"></div>
+      <span class="arrow-label">Set-Cookie: accessToken, refreshToken (httpOnly)</span>
+      <span class="arrow-label">Set-Cookie: XSRF-TOKEN (lisible)</span>
+      <div class="arrow-line"></div>
+    </div>
+
+    <div class="box box--green">
+      <div class="box-head">
+        <span class="box-icon">&#9989;</span>
+        <span class="box-title">3. Client — Session active</span>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <span class="step-num" style="background:var(--green);color:var(--bg);">1</span>
+          <span class="step-text">AuthContext passe a <code>isAuthenticated = true</code></span>
+        </div>
+        <div class="step">
+          <span class="step-num" style="background:var(--green);color:var(--bg);">2</span>
+          <span class="step-text">Fetch panier + wishlist en parallele</span>
+        </div>
+        <div class="step">
+          <span class="step-num" style="background:var(--green);color:var(--bg);">3</span>
+          <span class="step-text">Intercepteur Axios lit <code>XSRF-TOKEN</code> cookie et injecte <code>X-CSRF-Token</code> header</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PROTECTED REQUEST -->
+  <div class="divider"><span>Requete protegee (mutation)</span></div>
+
+  <div class="flow">
+
+    <div class="box box--cyan">
+      <div class="box-head">
+        <span class="box-icon">&#128640;</span>
+        <span class="box-title">Requete depuis le client</span>
+      </div>
+      <div class="box-sub">Exemple : POST /api/cart/add</div>
+      <div class="tags">
+        <span class="tag tag--cyan">Cookie: accessToken (auto)</span>
+        <span class="tag tag--red">Header: X-CSRF-Token</span>
+        <span class="tag">withCredentials: true</span>
+      </div>
+    </div>
+
+    <div class="arrow">
+      <div class="arrow-line"></div>
+    </div>
+
+    <div class="box box--red">
+      <div class="box-head">
+        <span class="box-icon">&#128737;&#65039;</span>
+        <span class="box-title">Chaine de middleware</span>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <span class="step-num" style="background:var(--red);color:var(--bg);">1</span>
+          <span class="step-text"><strong>authenticateUser</strong> — decode JWT depuis cookie <code>accessToken</code> (ou Bearer header fallback)</span>
+        </div>
+        <div class="step">
+          <span class="step-num" style="background:var(--red);color:var(--bg);">2</span>
+          <span class="step-text"><strong>requireAuth</strong> — bloque si <code>req.user === null</code> (401)</span>
+        </div>
+        <div class="step">
+          <span class="step-num" style="background:var(--red);color:var(--bg);">3</span>
+          <span class="step-text"><strong>csrfValidate</strong> — verifie signature JWT du token CSRF + match avec <code>req.session.csrfToken</code></span>
+        </div>
+        <div class="step">
+          <span class="step-num" style="background:var(--red);color:var(--bg);">4</span>
+          <span class="step-text"><strong>validate(schema)</strong> — validation Joi du body/params</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrow">
+      <div class="arrow-line"></div>
+      <span class="arrow-label">req.user disponible</span>
+      <div class="arrow-line"></div>
+    </div>
+
+    <div class="box box--amber">
+      <div class="box-head">
+        <span class="box-icon">&#9989;</span>
+        <span class="box-title">Controller</span>
+      </div>
+      <div class="box-sub">Traitement de la requete avec l'utilisateur authentifie</div>
+    </div>
+
+  </div>
+
+  <!-- REFRESH + LOGOUT -->
+  <div class="divider"><span>Refresh &amp; Logout</span></div>
+
+  <div class="row">
+    <div class="box">
+      <div class="box-head">
+        <span class="box-icon">&#128260;</span>
+        <span class="box-title">Refresh</span>
+      </div>
+      <div class="box-sub">POST /api/auth/refresh</div>
+      <div class="steps">
+        <div class="step"><span class="step-num">1</span><span class="step-text">Lit cookie <code>refreshToken</code></span></div>
+        <div class="step"><span class="step-num">2</span><span class="step-text">Verifie en DB (non revoque, non expire) + JWT</span></div>
+        <div class="step"><span class="step-num">3</span><span class="step-text">Genere nouvelle paire (rotation)</span></div>
+        <div class="step"><span class="step-num">4</span><span class="step-text">Revoque ancien, sauvegarde nouveau</span></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-head">
+        <span class="box-icon">&#128682;</span>
+        <span class="box-title">Logout</span>
+      </div>
+      <div class="box-sub">POST /api/auth/logout (requireAuth)</div>
+      <div class="steps">
+        <div class="step"><span class="step-num">1</span><span class="step-text">Revoque le refresh token courant</span></div>
+        <div class="step"><span class="step-num">2</span><span class="step-text">Revoque TOUS les tokens de l'utilisateur</span></div>
+        <div class="step"><span class="step-num">3</span><span class="step-text">Clear cookies <code>accessToken</code> + <code>refreshToken</code></span></div>
+        <div class="step"><span class="step-num">4</span><span class="step-text">Client : reset stores Zustand + redirect <code>/auth</code></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECURITY LAYERS -->
+  <div class="divider"><span>Couches de securite</span></div>
+
+  <div class="row">
+    <div class="box">
+      <div class="box-head">
+        <span class="box-icon">&#128274;</span>
+        <span class="box-title">Rate Limiting</span>
+      </div>
+      <div class="tags" style="margin-top:8px;">
+        <span class="tag tag--red">Login: 5 / 15min</span>
+        <span class="tag tag--red">Register: 3 / heure</span>
+        <span class="tag">General: 100 / 15min</span>
+        <span class="tag">Strict: 20 / 15min</span>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-head">
+        <span class="box-icon">&#128737;&#65039;</span>
+        <span class="box-title">Password Policy</span>
+      </div>
+      <div class="tags" style="margin-top:8px;">
+        <span class="tag tag--green">8+ caracteres</span>
+        <span class="tag tag--green">Maj + min + chiffre + special</span>
+        <span class="tag tag--green">Not in common passwords</span>
+        <span class="tag tag--amber">Bcrypt 10 rounds</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

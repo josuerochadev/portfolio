@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POEI Mainframe — Schema DB2</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #33ff33;
+    --green-dim: #1a9a1a;
+    --green-glow: #00ff0044;
+    --amber: #ffaa00;
+    --amber-dim: #996600;
+    --amber-glow: rgba(255, 170, 0, 0.15);
+    --cyan: #00ddff;
+    --cyan-dim: #007a8a;
+    --red: #ff4444;
+    --red-dim: #993333;
+    --white: #ccffcc;
+    --muted: #5a7a5a;
+    --faint: #3a5a3a;
+    --bg: #0a0a08;
+    --surface: #0d0f0a;
+    --surface-up: #111410;
+    --border: #1a2a1a;
+    --border-strong: #2a4a2a;
+    --font: "IBM Plex Mono", "Courier New", monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--green);
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px 56px;
+    min-height: 100vh;
+  }
+
+  body::after {
+    content: "";
+    position: fixed; inset: 0;
+    background: repeating-linear-gradient(
+      0deg, transparent, transparent 2px,
+      rgba(0, 0, 0, 0.06) 2px, rgba(0, 0, 0, 0.06) 4px
+    );
+    pointer-events: none; z-index: 9999;
+  }
+
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    background: radial-gradient(ellipse at center, transparent 65%, rgba(0,0,0,0.5) 100%);
+    pointer-events: none; z-index: 9998;
+  }
+
+  .canvas { width: 100%; max-width: 960px; }
+
+  /* -- Header -- */
+  .header { text-align: center; margin-bottom: 40px; }
+  .eyebrow {
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .header h1 {
+    font-size: clamp(20px, 3.2vw, 32px);
+    font-weight: 600; color: var(--green);
+    margin-top: 8px; letter-spacing: 1px;
+    text-shadow: 0 0 20px var(--green-glow);
+  }
+  .header h1 .accent { color: var(--cyan); text-shadow: 0 0 20px rgba(0,221,255,0.25); }
+  .header .subtitle { font-size: 11px; color: var(--muted); margin-top: 8px; }
+
+  /* -- Table card -- */
+  .table-card {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    margin-bottom: 20px;
+  }
+  .table-header {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .table-name { font-size: 13px; font-weight: 600; letter-spacing: 0.5px; }
+  .table-count { font-size: 10px; color: var(--muted); margin-left: auto; }
+
+  .table-card--green { border-color: var(--green-dim); }
+  .table-card--green .table-header { background: rgba(26, 154, 26, 0.08); }
+  .table-card--green .table-name { color: var(--green); }
+
+  .table-card--cyan { border-color: var(--cyan-dim); }
+  .table-card--cyan .table-header { background: rgba(0, 221, 255, 0.05); }
+  .table-card--cyan .table-name { color: var(--cyan); }
+
+  .table-card--amber { border-color: var(--amber-dim); }
+  .table-card--amber .table-header { background: rgba(255, 170, 0, 0.06); }
+  .table-card--amber .table-name { color: var(--amber); }
+
+  .table-card--red { border-color: var(--red-dim); }
+  .table-card--red .table-header { background: rgba(255, 68, 68, 0.05); }
+  .table-card--red .table-name { color: var(--red); }
+
+  /* -- Columns -- */
+  .col-row {
+    display: flex; align-items: center;
+    padding: 6px 16px;
+    border-bottom: 1px solid rgba(26, 42, 26, 0.5);
+    gap: 10px; font-size: 11px;
+  }
+  .col-row:last-child { border-bottom: none; }
+  .col-row:hover { background: rgba(26, 42, 26, 0.3); }
+
+  .col-badge {
+    font-size: 8px; font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 1px 5px;
+    min-width: 22px; text-align: center;
+    flex-shrink: 0;
+    border: 1px solid;
+  }
+  .col-badge--pk { border-color: var(--amber-dim); color: var(--amber); background: rgba(255,170,0,0.08); }
+  .col-badge--fk { border-color: var(--cyan-dim); color: var(--cyan); background: rgba(0,221,255,0.06); }
+  .col-badge--chk { border-color: var(--red-dim); color: var(--red); background: rgba(255,68,68,0.06); }
+
+  .col-name { font-size: 11px; font-weight: 500; color: var(--white); min-width: 120px; }
+  .col-type { font-size: 10px; color: var(--muted); min-width: 100px; }
+  .col-desc { font-size: 10px; color: var(--faint); }
+
+  /* -- Reference tables grid -- */
+  .ref-tables { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+
+  /* -- Relations -- */
+  .relations {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    justify-content: center;
+    padding: 14px;
+    border: 1px dashed var(--border-strong);
+    background: var(--surface);
+  }
+  .rel-pill {
+    font-size: 10px; font-weight: 500;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .rel-arrow { color: var(--green); font-weight: 700; }
+  .rel-card { color: var(--faint); font-size: 9px; }
+
+  /* -- Divider -- */
+  .divider { display: flex; align-items: center; gap: 12px; margin: 24px 0 14px; }
+  .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border-strong); }
+  .divider span {
+    font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--faint); font-weight: 500;
+  }
+
+  @media (max-width: 700px) {
+    .ref-tables { grid-template-columns: 1fr; }
+    .col-desc { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <header class="header">
+    <div class="eyebrow">POEI Mainframe &middot; Phase DB2</div>
+    <h1>Schema <span class="accent">DB2</span> &mdash; 5 Tables</h1>
+    <div class="subtitle">Schema relationnel du systeme de gestion clientele financiere &middot; SQL embarque dans COBOL</div>
+  </header>
+
+  <!-- ===== CLIENT ===== -->
+  <div class="table-card table-card--green">
+    <div class="table-header">
+      <span class="table-name">&gt; CLIENT</span>
+      <span class="table-count">12 colonnes &middot; table centrale</span>
+    </div>
+    <div>
+      <div class="col-row">
+        <span class="col-badge col-badge--pk">PK</span>
+        <span class="col-name">NUM_COMPTE</span>
+        <span class="col-type">CHAR(3) NOT NULL</span>
+        <span class="col-desc">Identifiant unique du client</span>
+      </div>
+      <div class="col-row">
+        <span class="col-badge col-badge--fk">FK</span>
+        <span class="col-name">CODE_REGION</span>
+        <span class="col-type">CHAR(2)</span>
+        <span class="col-desc">&rarr; REGION.CODE_REGION</span>
+      </div>
+      <div class="col-row">
+        <span class="col-badge col-badge--fk">FK</span>
+        <span class="col-name">CODE_NATCPT</span>
+        <span class="col-type">CHAR(2)</span>
+        <span class="col-desc">&rarr; NATCOMPT.CODE_NATCPT</span>
+      </div>
+      <div class="col-row">
+        <span class="col-badge col-badge--fk">FK</span>
+        <span class="col-name">CODE_PROF</span>
+        <span class="col-type">CHAR(2)</span>
+        <span class="col-desc">&rarr; PROFESSI.CODE_PROF</span>
+      </div>
+      <div class="col-row">
+        <span class="col-badge" style="visibility:hidden">--</span>
+        <span class="col-name">NOM_CLIENT</span>
+        <span class="col-type">VARCHAR(10)</span>
+        <span class="col-desc">Nom du client</span>
+      </div>
+      <div class="col-row">
+        <span class="col-badge" style="visibility:hidden">--</span>
+        <span class="col-name">PREN_CLIENT</span>
+        <span class="col-type">VARCHAR(10)</span>
+        <span class="col-desc">Prenom</span>
+      </div>
+      <div class="col-row">
+        <span class="col-badge" style="visibility:hidden">--</span>
+        <span class="col-name">DATE_NAIS</span>
+        <span class="col-type">DATE</span>
+        <span class="col-desc">Date de naissance</span>
+      </div>
+      <div class="col-row">
+        <span class="col-badge" style="visibility:hidden">--</span>
+        <span class="col-name">SEXE</span>
+        <span class="col-type">CHAR(1)</span>
+        <span class="col-desc">M ou F</span>
+      </div>
+      <div class="col-row">
+        <span class="col-badge" style="visibility:hidden">--</span>
+        <span class="col-name">SIT_FAM</span>
+        <span class="col-type">CHAR(1)</span>
+        <span class="col-desc">Situation familiale (C/M/D/V)</span>
+      </div>
+      <div class="col-row">
+        <span class="col-badge" style="visibility:hidden">--</span>
+        <span class="col-name">ADRESSE</span>
+        <span class="col-type">VARCHAR(20)</span>
+        <span class="col-desc">Adresse du client</span>
+      </div>
+      <div class="col-row">
+        <span class="col-badge" style="visibility:hidden">--</span>
+        <span class="col-name">SOLDE</span>
+        <span class="col-type">DECIMAL(10,2)</span>
+        <span class="col-desc">Solde du compte</span>
+      </div>
+      <div class="col-row">
+        <span class="col-badge col-badge--chk">CHK</span>
+        <span class="col-name">POS</span>
+        <span class="col-type">CHAR(2)</span>
+        <span class="col-desc">Position : DB (debiteur) ou CR (crediteur)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== RELATIONS ===== -->
+  <div class="divider"><span>Relations</span></div>
+
+  <div class="relations">
+    <div class="rel-pill">
+      <span>CLIENT.CODE_REGION</span>
+      <span class="rel-arrow">&rarr;</span>
+      <span>REGION.CODE_REGION</span>
+      <span class="rel-card">N:1</span>
+    </div>
+    <div class="rel-pill">
+      <span>CLIENT.CODE_NATCPT</span>
+      <span class="rel-arrow">&rarr;</span>
+      <span>NATCOMPT.CODE_NATCPT</span>
+      <span class="rel-card">N:1</span>
+    </div>
+    <div class="rel-pill">
+      <span>CLIENT.CODE_PROF</span>
+      <span class="rel-arrow">&rarr;</span>
+      <span>PROFESSI.CODE_PROF</span>
+      <span class="rel-card">N:1</span>
+    </div>
+    <div class="rel-pill">
+      <span>MOUVEMENT.NUM_COMPTE</span>
+      <span class="rel-arrow">&rarr;</span>
+      <span>CLIENT.NUM_COMPTE</span>
+      <span class="rel-card">N:1</span>
+    </div>
+  </div>
+
+  <!-- ===== REFERENCE TABLES ===== -->
+  <div class="divider"><span>Tables de reference</span></div>
+
+  <div class="ref-tables">
+    <div class="table-card table-card--cyan">
+      <div class="table-header">
+        <span class="table-name">&gt; REGION</span>
+      </div>
+      <div>
+        <div class="col-row">
+          <span class="col-badge col-badge--pk">PK</span>
+          <span class="col-name">CODE_REGION</span>
+          <span class="col-type">CHAR(2)</span>
+        </div>
+        <div class="col-row">
+          <span class="col-badge" style="visibility:hidden">--</span>
+          <span class="col-name">NOM_REGION</span>
+          <span class="col-type">VARCHAR(15)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-card table-card--cyan">
+      <div class="table-header">
+        <span class="table-name">&gt; NATCOMPT</span>
+      </div>
+      <div>
+        <div class="col-row">
+          <span class="col-badge col-badge--pk">PK</span>
+          <span class="col-name">CODE_NATCPT</span>
+          <span class="col-type">CHAR(2)</span>
+        </div>
+        <div class="col-row">
+          <span class="col-badge" style="visibility:hidden">--</span>
+          <span class="col-name">LIB_NATCPT</span>
+          <span class="col-type">VARCHAR(30)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-card table-card--amber">
+      <div class="table-header">
+        <span class="table-name">&gt; PROFESSI</span>
+      </div>
+      <div>
+        <div class="col-row">
+          <span class="col-badge col-badge--pk">PK</span>
+          <span class="col-name">CODE_PROF</span>
+          <span class="col-type">CHAR(2)</span>
+        </div>
+        <div class="col-row">
+          <span class="col-badge" style="visibility:hidden">--</span>
+          <span class="col-name">LIB_PROF</span>
+          <span class="col-type">VARCHAR(20)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MOUVEMENT ===== -->
+  <div class="divider"><span>Table transactionnelle</span></div>
+
+  <div class="table-card table-card--red">
+    <div class="table-header">
+      <span class="table-name">&gt; MOUVEMENT</span>
+      <span class="table-count">6 colonnes &middot; historique des operations</span>
+    </div>
+    <div>
+      <div class="col-row">
+        <span class="col-badge col-badge--fk">FK</span>
+        <span class="col-name">NUM_COMPTE</span>
+        <span class="col-type">CHAR(3)</span>
+        <span class="col-desc">&rarr; CLIENT.NUM_COMPTE</span>
+      </div>
+      <div class="col-row">
+        <span class="col-badge" style="visibility:hidden">--</span>
+        <span class="col-name">LIB_MOUV</span>
+        <span class="col-type">VARCHAR(15)</span>
+        <span class="col-desc">Libelle du mouvement</span>
+      </div>
+      <div class="col-row">
+        <span class="col-badge" style="visibility:hidden">--</span>
+        <span class="col-name">MONTANT_MVT</span>
+        <span class="col-type">DECIMAL(8,2)</span>
+        <span class="col-desc">Montant de l'operation</span>
+      </div>
+      <div class="col-row">
+        <span class="col-badge col-badge--chk">CHK</span>
+        <span class="col-name">SENS</span>
+        <span class="col-type">CHAR(2)</span>
+        <span class="col-desc">DB (debit) ou CR (credit)</span>
+      </div>
+      <div class="col-row">
+        <span class="col-badge col-badge--chk">CHK</span>
+        <span class="col-name">NATURE</span>
+        <span class="col-type">CHAR(3)</span>
+        <span class="col-desc">CHQ (cheque), VER (versement), VIR (virement)</span>
+      </div>
+      <div class="col-row">
+        <span class="col-badge" style="visibility:hidden">--</span>
+        <span class="col-name">DATE_MVT</span>
+        <span class="col-type">DATE</span>
+        <span class="col-desc">Date de l'operation</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

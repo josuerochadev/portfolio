@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stella DS — Cover</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Bebas+Neue&family=Roboto:wght@400;500;700&family=Roboto+Slab:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  :root {
+    --bg: #0f0a18;
+    --primary: #3D2A54;
+    --secondary: #1E1326;
+    --fg: #AEC9FF;
+    --fg-strong: #ffffff;
+    --fg-muted: rgba(174,201,255,0.55);
+    --fg-faint: rgba(174,201,255,0.3);
+    --amber: #FFB347;
+    --cyan: #38bdf8;
+    --surface-1: #1E1326;
+    --border: rgba(174,201,255,0.10);
+    --font-display: 'Dela Gothic One', cursive;
+    --font-action: 'Bebas Neue', sans-serif;
+    --font-body: 'Roboto', sans-serif;
+    --font-serif: 'Roboto Slab', serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    background-image:
+      radial-gradient(1px 1px at 10% 15%, rgba(174,201,255,0.25) 50%, transparent 50%),
+      radial-gradient(1px 1px at 25% 35%, rgba(174,201,255,0.2) 50%, transparent 50%),
+      radial-gradient(1px 1px at 40% 8%, rgba(174,201,255,0.15) 50%, transparent 50%),
+      radial-gradient(1px 1px at 55% 42%, rgba(174,201,255,0.2) 50%, transparent 50%),
+      radial-gradient(1px 1px at 70% 18%, rgba(174,201,255,0.25) 50%, transparent 50%),
+      radial-gradient(1px 1px at 85% 55%, rgba(174,201,255,0.15) 50%, transparent 50%),
+      radial-gradient(1px 1px at 15% 65%, rgba(174,201,255,0.2) 50%, transparent 50%),
+      radial-gradient(1px 1px at 50% 75%, rgba(174,201,255,0.18) 50%, transparent 50%),
+      radial-gradient(1px 1px at 78% 38%, rgba(174,201,255,0.22) 50%, transparent 50%),
+      radial-gradient(1px 1px at 35% 88%, rgba(174,201,255,0.15) 50%, transparent 50%),
+      radial-gradient(1px 1px at 62% 62%, rgba(174,201,255,0.2) 50%, transparent 50%),
+      radial-gradient(1px 1px at 90% 82%, rgba(174,201,255,0.18) 50%, transparent 50%),
+      radial-gradient(1px 1px at 5% 48%, rgba(174,201,255,0.15) 50%, transparent 50%),
+      radial-gradient(1px 1px at 45% 22%, rgba(174,201,255,0.22) 50%, transparent 50%),
+      radial-gradient(1px 1px at 95% 12%, rgba(174,201,255,0.18) 50%, transparent 50%),
+      radial-gradient(1.5px 1.5px at 30% 50%, rgba(255,179,71,0.3) 50%, transparent 50%),
+      radial-gradient(1.5px 1.5px at 75% 70%, rgba(56,189,248,0.25) 50%, transparent 50%),
+      linear-gradient(180deg, #3D2A54 0%, #1E1326 40%, #0f0a18 100%);
+    color: var(--fg);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 60px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .version-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    margin-bottom: 16px;
+  }
+  .version-tag .v { color: var(--amber); }
+
+  .bar {
+    width: 64px; height: 3px;
+    background: var(--amber);
+    border-radius: 2px;
+    margin-bottom: 28px;
+  }
+
+  .brand {
+    font-family: var(--font-display);
+    font-size: clamp(72px, 12vw, 120px);
+    color: var(--fg);
+    line-height: 0.95;
+    letter-spacing: 0.01em;
+    margin-bottom: 24px;
+    font-style: italic;
+    opacity: 0.85;
+  }
+
+  .desc {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    color: var(--fg-muted);
+    line-height: 1.6;
+    max-width: 380px;
+    margin-bottom: 48px;
+  }
+
+  /* TOC */
+  .toc {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-width: 560px;
+  }
+  .toc-item {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding: 8px 0;
+    border-bottom: 1px dotted rgba(174,201,255,0.1);
+  }
+  .toc-num {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--fg-faint);
+    min-width: 24px;
+  }
+  .toc-label {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--fg-muted);
+    flex: 1;
+  }
+  .toc-page {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--fg-faint);
+  }
+
+  .footer {
+    margin-top: 48px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+  }
+</style>
+</head>
+<body>
+
+<div class="version-tag">Design System &middot; <span class="v">V2</span></div>
+<div class="bar"></div>
+
+<div class="brand">Stella</div>
+
+<div class="desc">
+  Tokens, typographie, palette de couleurs et
+  composants pour l'interface e-commerce Stella.
+</div>
+
+<div class="toc">
+  <div class="toc-item"><span class="toc-num">01</span><span class="toc-label">Couleurs</span><span class="toc-page">02</span></div>
+  <div class="toc-item"><span class="toc-num">02</span><span class="toc-label">Typographie</span><span class="toc-page">03</span></div>
+  <div class="toc-item"><span class="toc-num">03</span><span class="toc-label">Espacements &middot; Rayons &middot; Ombres</span><span class="toc-page">04</span></div>
+  <div class="toc-item"><span class="toc-num">04</span><span class="toc-label">Boutons &amp; Formulaires</span><span class="toc-page">05</span></div>
+  <div class="toc-item"><span class="toc-num">05</span><span class="toc-label">Carte etoile &middot; Badges &middot; Iconographie</span><span class="toc-page">06</span></div>
+</div>
+
+<div class="footer">Stella Design System &middot; Mai 2026 &middot; josuerochadev/stella-ecommerce</div>
+
+</body>
+</html>

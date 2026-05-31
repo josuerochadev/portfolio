@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tour de Controle — Architecture</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  :root {
+    --paper:      #fef3e2;
+    --paper-soft: #fef9ee;
+    --paper-2:    #f7e9d3;
+    --paper-3:    #efe0c4;
+    --ink:        #1c1917;
+    --ink-2:      #3f3a36;
+    --ink-3:      #6b645e;
+    --ink-4:      #9a928a;
+    --signal:     #dc2626;
+    --signal-deep:#991b1b;
+    --ok:         #059669;
+    --ok-soft:    #d1fae5;
+    --ok-deep:    #065f46;
+    --danger-soft:#fee2e2;
+
+    --font-sans:    'Inter', ui-sans-serif, system-ui, sans-serif;
+    --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+
+    --shadow-card: 0 1px 0 rgba(28,25,23,0.04), 0 12px 40px -12px rgba(28,25,23,0.18);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--paper);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    justify-content: center;
+    padding: 48px 24px 64px;
+  }
+
+  .canvas {
+    width: 100%;
+    max-width: 960px;
+  }
+
+  /* ── Header ── */
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    font-weight: 500;
+  }
+  .header h1 {
+    font-family: var(--font-mono);
+    font-size: clamp(24px, 3.5vw, 36px);
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-top: 8px;
+  }
+  .header h1 .accent { color: var(--signal); }
+
+  /* ── Flow layout ── */
+  .flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* ── Nodes ── */
+  .node {
+    display: flex;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .node-box {
+    flex: 1;
+    padding: 20px 24px;
+    border-radius: 16px;
+    border: 1.5px solid var(--paper-3);
+    background: var(--paper-soft);
+    position: relative;
+  }
+  .node-box--ink {
+    background: var(--ink);
+    border-color: var(--ink-2);
+    color: var(--paper);
+  }
+  .node-box--ink .node-sub { color: var(--ink-4); }
+  .node-box--ink .node-tag { background: var(--ink-2); color: var(--paper-3); border-color: transparent; }
+
+  .node-box--signal {
+    background: var(--signal);
+    border-color: var(--signal-deep);
+    color: var(--paper);
+  }
+  .node-box--signal .node-sub { color: rgba(254,243,226,0.65); }
+  .node-box--signal .node-tag { background: var(--signal-deep); color: var(--paper); border-color: transparent; }
+
+  .node-box--ok {
+    background: var(--ok-soft);
+    border-color: #a7f3d0;
+  }
+  .node-box--ok .node-tag { background: #a7f3d0; color: var(--ok-deep); border-color: transparent; }
+
+  .node-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+  .node-icon { font-size: 20px; }
+  .node-title {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .node-sub {
+    font-size: 12px;
+    color: var(--ink-3);
+    font-weight: 500;
+  }
+  .node-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 10px;
+  }
+  .node-tag {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    padding: 3px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--paper-3);
+    background: var(--paper);
+    color: var(--ink-3);
+  }
+  .node-deploy {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    margin-top: 10px;
+    color: var(--ink-4);
+  }
+  .node-box--ink .node-deploy { color: var(--ink-4); }
+  .node-box--signal .node-deploy { color: rgba(254,243,226,0.55); }
+  .node-deploy .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--ok);
+  }
+
+  /* ── Arrows ── */
+  .arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0;
+    gap: 10px;
+  }
+  .arrow-line {
+    width: 1.5px;
+    height: 28px;
+    background: var(--paper-3);
+    position: relative;
+  }
+  .arrow-line::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-top: 5px solid var(--paper-3);
+  }
+  .arrow-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    background: var(--paper);
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--paper-3);
+    white-space: nowrap;
+  }
+
+  /* ── Middleware bar ── */
+  .middleware {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 12px 16px;
+    border: 1.5px dashed var(--paper-3);
+    border-radius: 12px;
+    background: var(--paper);
+  }
+  .mw-pill {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--paper-2);
+    color: var(--ink-3);
+  }
+  .mw-pill--red { background: var(--danger-soft); color: var(--signal); font-weight: 600; }
+  .mw-pill--green { background: var(--ok-soft); color: var(--ok-deep); }
+
+  /* ── Side-by-side row ── */
+  .row { display: flex; gap: 12px; }
+  .row > * { flex: 1; }
+
+  /* ── Deploy section ── */
+  .deploy-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+  }
+  .deploy-card {
+    flex: 1;
+    text-align: center;
+    padding: 16px;
+    border-radius: 12px;
+    border: 1.5px solid var(--paper-3);
+    background: var(--paper-soft);
+  }
+  .deploy-card .node-icon { font-size: 24px; margin-bottom: 6px; }
+  .deploy-card .node-title { font-size: 13px; margin-bottom: 2px; }
+  .deploy-card .node-sub { font-size: 11px; }
+  .deploy-card--signal { background: var(--signal); border-color: var(--signal-deep); color: var(--paper); }
+  .deploy-card--signal .node-sub { color: rgba(254,243,226,0.6); }
+  .deploy-card--ink { background: var(--ink); border-color: var(--ink-2); color: var(--paper); }
+  .deploy-card--ink .node-sub { color: var(--ink-4); }
+  .deploy-card--ok { background: var(--ok-soft); border-color: #a7f3d0; }
+  .deploy-card--ok .node-sub { color: var(--ok-deep); }
+
+  .deploy-connector {
+    display: flex;
+    align-items: center;
+    color: var(--ink-4);
+    font-size: 18px;
+    flex: 0;
+    padding: 0 2px;
+  }
+
+  /* ── Divider ── */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 36px 0 24px;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--paper-3);
+  }
+  .divider span {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    font-weight: 500;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    .row { flex-direction: column; }
+    .deploy-row { flex-direction: column; }
+    .deploy-connector { transform: rotate(90deg); justify-content: center; }
+  }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <header class="header">
+    <div class="eyebrow">Tour de Controle</div>
+    <h1>Architecture <span class="accent">&</span> Flux</h1>
+  </header>
+
+  <div class="flow">
+
+    <!-- ═══ USERS ═══ -->
+    <div class="row">
+      <div class="node-box">
+        <div class="node-head">
+          <span class="node-icon">&#128100;</span>
+          <span class="node-title">Gerant / Dev</span>
+        </div>
+        <div class="node-sub">Acces complet + admin</div>
+      </div>
+      <div class="node-box">
+        <div class="node-head">
+          <span class="node-icon">&#128101;</span>
+          <span class="node-title">Responsable / Serveur</span>
+        </div>
+        <div class="node-sub">Caisse + transactions</div>
+      </div>
+    </div>
+
+    <!-- arrow -->
+    <div class="arrow">
+      <div class="arrow-line"></div>
+      <span class="arrow-label">HTTPS</span>
+      <div class="arrow-line"></div>
+    </div>
+
+    <!-- ═══ FRONTEND ═══ -->
+    <div class="node-box node-box--signal">
+      <div class="node-head">
+        <span class="node-icon">&#9878;&#65039;</span>
+        <span class="node-title">Frontend SPA</span>
+      </div>
+      <div class="node-sub">React 18 + TypeScript + Vite + Tailwind CSS</div>
+      <div class="node-tags">
+        <span class="node-tag">13 pages</span>
+        <span class="node-tag">13 composants</span>
+        <span class="node-tag">Lazy loading</span>
+        <span class="node-tag">Design system custom</span>
+      </div>
+      <div class="node-deploy"><span class="dot"></span> Vercel &middot; :3002 Docker</div>
+    </div>
+
+    <!-- arrow -->
+    <div class="arrow">
+      <div class="arrow-line"></div>
+      <span class="arrow-label">REST / JSON</span>
+      <span class="arrow-label">JWT httpOnly cookie</span>
+      <div class="arrow-line"></div>
+    </div>
+
+    <!-- ═══ MIDDLEWARE ═══ -->
+    <div class="middleware">
+      <span class="mw-pill mw-pill--red">JWT Auth</span>
+      <span class="mw-pill mw-pill--red">RBAC 4 roles</span>
+      <span class="mw-pill mw-pill--red">CSRF</span>
+      <span class="mw-pill mw-pill--green">Zod validation</span>
+      <span class="mw-pill mw-pill--green">Helmet</span>
+      <span class="mw-pill">Rate limit</span>
+      <span class="mw-pill">CORS</span>
+      <span class="mw-pill">Bcrypt 12</span>
+    </div>
+
+    <!-- arrow -->
+    <div class="arrow">
+      <div class="arrow-line"></div>
+    </div>
+
+    <!-- ═══ BACKEND ═══ -->
+    <div class="node-box node-box--ink">
+      <div class="node-head">
+        <span class="node-icon">&#9881;&#65039;</span>
+        <span class="node-title">API Express</span>
+      </div>
+      <div class="node-sub">Node.js + TypeScript &middot; MVC &middot; SQL pur (zero ORM)</div>
+      <div class="node-tags">
+        <span class="node-tag">6 modules</span>
+        <span class="node-tag">auth</span>
+        <span class="node-tag">users</span>
+        <span class="node-tag">transactions</span>
+        <span class="node-tag">cash-registers</span>
+        <span class="node-tag">payment-types</span>
+        <span class="node-tag">action-logs</span>
+      </div>
+      <div class="node-deploy"><span class="dot"></span> Railway &middot; :4000</div>
+    </div>
+
+    <!-- arrow -->
+    <div class="arrow">
+      <div class="arrow-line"></div>
+      <span class="arrow-label">SQL (node-postgres)</span>
+      <span class="arrow-label">Token blacklist</span>
+      <div class="arrow-line"></div>
+    </div>
+
+    <!-- ═══ DATA ═══ -->
+    <div class="row">
+      <div class="node-box node-box--ok" style="flex: 2;">
+        <div class="node-head">
+          <span class="node-icon">&#128451;</span>
+          <span class="node-title">PostgreSQL 15</span>
+        </div>
+        <div class="node-sub">6 tables &middot; FK &middot; indexes &middot; triggers &middot; JSONB audit</div>
+        <div class="node-deploy"><span class="dot"></span> Neon &middot; :5433 Docker</div>
+      </div>
+      <div class="node-box">
+        <div class="node-head">
+          <span class="node-icon">&#9889;</span>
+          <span class="node-title">Redis 7</span>
+        </div>
+        <div class="node-sub">JWT blacklist &middot; TTL auto &middot; fallback in-memory</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ DEPLOY TOPOLOGY ═══ -->
+  <div class="divider"><span>Deploiement production</span></div>
+
+  <div class="deploy-row">
+    <div class="deploy-card deploy-card--signal">
+      <div class="node-icon">&#9650;</div>
+      <div class="node-title">Vercel</div>
+      <div class="node-sub">Frontend</div>
+    </div>
+    <div class="deploy-connector">&#8594;</div>
+    <div class="deploy-card deploy-card--ink">
+      <div class="node-icon">&#128642;</div>
+      <div class="node-title">Railway</div>
+      <div class="node-sub">API</div>
+    </div>
+    <div class="deploy-connector">&#8594;</div>
+    <div class="deploy-card deploy-card--ok">
+      <div class="node-icon">&#128154;</div>
+      <div class="node-title">Neon</div>
+      <div class="node-sub">PostgreSQL</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stella — Architecture</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Bebas+Neue&family=Roboto:wght@400;500;700&family=Roboto+Slab:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  :root {
+    --bg:           #0f0a18;
+    --bg-grad:      linear-gradient(135deg, #3D2A54 0%, #1E1326 55%, #0f0a18 100%);
+    --surface-0:    rgba(61, 42, 84, 0.25);
+    --surface-1:    rgba(61, 42, 84, 0.40);
+    --surface-2:    rgba(61, 42, 84, 0.55);
+    --surface-3:    rgba(61, 42, 84, 0.70);
+    --border:       rgba(174, 201, 255, 0.12);
+    --border-strong:rgba(174, 201, 255, 0.25);
+
+    --fg:           #AEC9FF;
+    --fg-strong:    #ffffff;
+    --fg-muted:     rgba(174, 201, 255, 0.6);
+    --fg-faint:     rgba(174, 201, 255, 0.35);
+
+    --amber:        #FFB347;
+    --amber-deep:   #e69a2e;
+    --amber-glow:   rgba(255, 179, 71, 0.3);
+    --cyan:         #38bdf8;
+    --cyan-deep:    #0ea5e9;
+    --cyan-glow:    rgba(56, 189, 248, 0.25);
+    --magenta:      #e040fb;
+    --magenta-glow: rgba(224, 64, 251, 0.18);
+    --green:        #34d399;
+    --green-deep:   #059669;
+    --red:          #f87171;
+
+    --font-display: 'Dela Gothic One', cursive;
+    --font-action:  'Bebas Neue', sans-serif;
+    --font-body:    'Roboto', sans-serif;
+    --font-serif:   'Roboto Slab', serif;
+    --font-mono:    'JetBrains Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    background-image: var(--bg-grad);
+    background-attachment: fixed;
+    color: var(--fg);
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    justify-content: center;
+    padding: 48px 24px 64px;
+    min-height: 100vh;
+  }
+
+  .canvas { width: 100%; max-width: 960px; }
+
+  /* ── Header ── */
+  .header { text-align: center; margin-bottom: 48px; }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--fg-muted); font-weight: 500;
+  }
+  .header h1 {
+    font-family: var(--font-display);
+    font-size: clamp(26px, 4vw, 40px);
+    color: var(--fg-strong);
+    line-height: 1.15;
+    letter-spacing: 0.02em;
+    margin-top: 8px;
+  }
+  .header h1 .accent { color: var(--amber); }
+
+  /* ── Flow ── */
+  .flow { display: flex; flex-direction: column; gap: 0; }
+
+  /* ── Nodes ── */
+  .node-box {
+    flex: 1;
+    padding: 20px 24px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    background: var(--surface-0);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    position: relative;
+  }
+  .node-box--amber {
+    background: linear-gradient(135deg, rgba(255,179,71,0.15), rgba(255,179,71,0.05));
+    border-color: rgba(255,179,71,0.3);
+  }
+  .node-box--amber .node-title { color: var(--amber); }
+
+  .node-box--cyan {
+    background: linear-gradient(135deg, rgba(56,189,248,0.12), rgba(56,189,248,0.04));
+    border-color: rgba(56,189,248,0.25);
+  }
+  .node-box--cyan .node-title { color: var(--cyan); }
+
+  .node-box--green {
+    background: linear-gradient(135deg, rgba(52,211,153,0.12), rgba(52,211,153,0.04));
+    border-color: rgba(52,211,153,0.25);
+  }
+  .node-box--green .node-title { color: var(--green); }
+
+  .node-box--strong {
+    background: var(--surface-2);
+    border-color: var(--border-strong);
+  }
+
+  .node-head { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+  .node-icon { font-size: 20px; }
+  .node-title {
+    font-family: var(--font-serif);
+    font-size: 15px; font-weight: 600;
+    color: var(--fg-strong);
+  }
+  .node-sub { font-size: 12px; color: var(--fg-muted); font-weight: 500; }
+  .node-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+  .node-tag {
+    font-family: var(--font-mono);
+    font-size: 9px; font-weight: 500;
+    letter-spacing: 0.03em;
+    padding: 3px 8px; border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface-0);
+    color: var(--fg-muted);
+  }
+  .node-box--amber .node-tag { border-color: rgba(255,179,71,0.2); color: var(--amber); }
+  .node-box--cyan .node-tag { border-color: rgba(56,189,248,0.2); color: var(--cyan); }
+  .node-box--green .node-tag { border-color: rgba(52,211,153,0.2); color: var(--green); }
+
+  .node-deploy {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 500;
+    margin-top: 10px; color: var(--fg-faint);
+  }
+  .node-deploy .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 6px var(--green);
+  }
+
+  /* ── Arrows ── */
+  .arrow { display: flex; align-items: center; justify-content: center; padding: 10px 0; gap: 10px; }
+  .arrow-line {
+    width: 1.5px; height: 28px;
+    background: var(--border-strong);
+    position: relative;
+  }
+  .arrow-line::after {
+    content: '';
+    position: absolute; bottom: -1px; left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-top: 5px solid var(--border-strong);
+  }
+  .arrow-label {
+    font-family: var(--font-mono);
+    font-size: 9px; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--fg-faint);
+    background: var(--surface-1);
+    padding: 2px 8px; border-radius: 4px;
+    border: 1px solid var(--border);
+    white-space: nowrap;
+  }
+
+  /* ── Middleware ── */
+  .middleware {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    padding: 12px 16px;
+    border: 1.5px dashed var(--border-strong);
+    border-radius: 12px;
+    background: var(--surface-0);
+  }
+  .mw-pill {
+    font-family: var(--font-mono);
+    font-size: 9px; font-weight: 500;
+    letter-spacing: 0.03em;
+    padding: 4px 10px; border-radius: 999px;
+    background: var(--surface-1);
+    color: var(--fg-muted);
+  }
+  .mw-pill--red { background: rgba(248,113,113,0.15); color: var(--red); font-weight: 600; }
+  .mw-pill--green { background: rgba(52,211,153,0.15); color: var(--green); }
+  .mw-pill--amber { background: rgba(255,179,71,0.15); color: var(--amber); }
+
+  /* ── Layout ── */
+  .row { display: flex; gap: 12px; }
+  .row > * { flex: 1; }
+
+  /* ── Deploy ── */
+  .deploy-row { display: flex; gap: 12px; margin-top: 8px; }
+  .deploy-card {
+    flex: 1; text-align: center;
+    padding: 16px; border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--surface-0);
+    backdrop-filter: blur(8px);
+  }
+  .deploy-card .node-icon { font-size: 24px; margin-bottom: 6px; }
+  .deploy-card .node-title { font-size: 13px; margin-bottom: 2px; }
+  .deploy-card .node-sub { font-size: 11px; }
+  .deploy-card--amber { border-color: rgba(255,179,71,0.3); }
+  .deploy-card--amber .node-title { color: var(--amber); }
+  .deploy-card--cyan { border-color: rgba(56,189,248,0.25); }
+  .deploy-card--cyan .node-title { color: var(--cyan); }
+  .deploy-card--green { border-color: rgba(52,211,153,0.25); }
+  .deploy-card--green .node-title { color: var(--green); }
+
+  .deploy-connector {
+    display: flex; align-items: center;
+    color: var(--fg-faint); font-size: 18px;
+    flex: 0; padding: 0 2px;
+  }
+
+  /* ── Divider ── */
+  .divider { display: flex; align-items: center; gap: 12px; margin: 36px 0 24px; }
+  .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border-strong); }
+  .divider span {
+    font-family: var(--font-mono);
+    font-size: 10px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--fg-faint); font-weight: 500;
+  }
+
+  /* ── Layers ── */
+  .layer-stack { display: flex; flex-direction: column; gap: 8px; }
+  .layer-arrow { display: flex; align-items: center; justify-content: center; padding: 4px 0; }
+  .layer-arrow .arrow-line { height: 16px; }
+
+  @media (max-width: 600px) {
+    .row { flex-direction: column; }
+    .deploy-row { flex-direction: column; }
+    .deploy-connector { transform: rotate(90deg); justify-content: center; }
+  }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <header class="header">
+    <div class="eyebrow">Stella E-Commerce</div>
+    <h1>Architecture <span class="accent">&</span> Flux</h1>
+  </header>
+
+  <div class="flow">
+
+    <!-- USERS -->
+    <div class="row">
+      <div class="node-box">
+        <div class="node-head">
+          <span class="node-icon">&#128100;</span>
+          <span class="node-title">Client</span>
+        </div>
+        <div class="node-sub">Catalogue, panier, commandes, avis</div>
+      </div>
+      <div class="node-box">
+        <div class="node-head">
+          <span class="node-icon">&#128737;&#65039;</span>
+          <span class="node-title">Admin</span>
+        </div>
+        <div class="node-sub">Dashboard, gestion utilisateurs, stats</div>
+      </div>
+    </div>
+
+    <div class="arrow">
+      <div class="arrow-line"></div>
+      <span class="arrow-label">HTTPS</span>
+      <div class="arrow-line"></div>
+    </div>
+
+    <!-- FRONTEND -->
+    <div class="node-box node-box--amber">
+      <div class="node-head">
+        <span class="node-icon">&#9878;&#65039;</span>
+        <span class="node-title">Frontend SPA</span>
+      </div>
+      <div class="node-sub">React 19 + TypeScript 5 + Tailwind CSS 3</div>
+      <div class="node-tags">
+        <span class="node-tag">13 pages lazy-loaded</span>
+        <span class="node-tag">61 composants</span>
+        <span class="node-tag">4 stores Zustand</span>
+        <span class="node-tag">React Query</span>
+        <span class="node-tag">DI Container frontend</span>
+        <span class="node-tag">Repository pattern</span>
+      </div>
+      <div class="node-deploy"><span class="dot"></span> Vercel &middot; :3001</div>
+    </div>
+
+    <div class="arrow">
+      <div class="arrow-line"></div>
+      <span class="arrow-label">REST / JSON</span>
+      <span class="arrow-label">JWT httpOnly cookie</span>
+      <span class="arrow-label">X-CSRF-Token</span>
+      <div class="arrow-line"></div>
+    </div>
+
+    <!-- MIDDLEWARE -->
+    <div class="middleware">
+      <span class="mw-pill mw-pill--red">JWT Auth</span>
+      <span class="mw-pill mw-pill--red">CSRF double-submit</span>
+      <span class="mw-pill mw-pill--red">RBAC (client/admin)</span>
+      <span class="mw-pill mw-pill--green">Joi validation</span>
+      <span class="mw-pill mw-pill--green">DOMPurify sanitize</span>
+      <span class="mw-pill mw-pill--green">Helmet + CSP</span>
+      <span class="mw-pill">Rate limit (4 niveaux)</span>
+      <span class="mw-pill">CORS credentials</span>
+      <span class="mw-pill">Compression gzip</span>
+      <span class="mw-pill mw-pill--amber">Bcrypt 10</span>
+    </div>
+
+    <div class="arrow">
+      <div class="arrow-line"></div>
+    </div>
+
+    <!-- BACKEND -->
+    <div class="node-box node-box--cyan">
+      <div class="node-head">
+        <span class="node-icon">&#9881;&#65039;</span>
+        <span class="node-title">API Express</span>
+      </div>
+      <div class="node-sub">Node.js &middot; Clean Architecture &middot; DI Container &middot; Interfaces (DIP)</div>
+      <div class="node-tags">
+        <span class="node-tag">10 routes</span>
+        <span class="node-tag">auth</span>
+        <span class="node-tag">stars</span>
+        <span class="node-tag">cart</span>
+        <span class="node-tag">orders</span>
+        <span class="node-tag">payments</span>
+        <span class="node-tag">reviews</span>
+        <span class="node-tag">wishlist</span>
+        <span class="node-tag">admin</span>
+        <span class="node-tag">health</span>
+      </div>
+      <div class="node-deploy"><span class="dot"></span> Render &middot; :3000</div>
+    </div>
+
+    <div class="arrow">
+      <div class="arrow-line"></div>
+      <span class="arrow-label">Sequelize ORM</span>
+      <span class="arrow-label">9 modeles</span>
+      <div class="arrow-line"></div>
+    </div>
+
+    <!-- DATABASE -->
+    <div class="node-box node-box--green">
+      <div class="node-head">
+        <span class="node-icon">&#128451;</span>
+        <span class="node-title">PostgreSQL</span>
+      </div>
+      <div class="node-sub">9 tables &middot; FK &middot; indexes composites &middot; Sequelize sync</div>
+      <div class="node-tags">
+        <span class="node-tag">User</span>
+        <span class="node-tag">Star</span>
+        <span class="node-tag">Cart</span>
+        <span class="node-tag">CartItem</span>
+        <span class="node-tag">Order</span>
+        <span class="node-tag">OrderStar</span>
+        <span class="node-tag">Review</span>
+        <span class="node-tag">Wishlist</span>
+        <span class="node-tag">RefreshToken</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- DEPLOY -->
+  <div class="divider"><span>Deploiement production</span></div>
+
+  <div class="deploy-row">
+    <div class="deploy-card deploy-card--amber">
+      <div class="node-icon">&#9650;</div>
+      <div class="node-title">Vercel</div>
+      <div class="node-sub">Frontend React</div>
+    </div>
+    <div class="deploy-connector">&#8594;</div>
+    <div class="deploy-card deploy-card--cyan">
+      <div class="node-icon">&#128640;</div>
+      <div class="node-title">Render</div>
+      <div class="node-sub">API Express</div>
+    </div>
+    <div class="deploy-connector">&#8594;</div>
+    <div class="deploy-card deploy-card--green">
+      <div class="node-icon">&#128451;</div>
+      <div class="node-title">PostgreSQL</div>
+      <div class="node-sub">Render DB</div>
+    </div>
+  </div>
+
+  <!-- LAYERS -->
+  <div class="divider"><span>Architecture en couches (backend)</span></div>
+
+  <div class="layer-stack">
+    <div class="node-box node-box--amber" style="text-align: center;">
+      <div class="node-title">Routes</div>
+      <div class="node-sub">10 fichiers &middot; validation Joi &middot; rate limiting</div>
+    </div>
+    <div class="layer-arrow"><div class="arrow-line" style="height: 16px;"></div></div>
+    <div class="node-box node-box--strong" style="text-align: center;">
+      <div class="node-title" style="color: var(--fg-strong);">Controllers</div>
+      <div class="node-sub">Orchestrent les services &middot; resolus via getService()</div>
+    </div>
+    <div class="layer-arrow"><div class="arrow-line" style="height: 16px;"></div></div>
+    <div class="node-box node-box--cyan" style="text-align: center;">
+      <div class="node-title">Services</div>
+      <div class="node-sub">Logique metier &middot; CartService, OrderService, PaymentService...</div>
+    </div>
+    <div class="layer-arrow"><div class="arrow-line" style="height: 16px;"></div></div>
+    <div class="node-box node-box--green" style="text-align: center;">
+      <div class="node-title">Repositories</div>
+      <div class="node-sub">Abstractions via Interfaces (DIP) &middot; Sequelize implementations</div>
+    </div>
+    <div class="layer-arrow"><div class="arrow-line" style="height: 16px;"></div></div>
+    <div class="node-box" style="text-align: center;">
+      <div class="node-title">Models (Sequelize)</div>
+      <div class="node-sub">9 modeles &middot; associations &middot; validations &middot; hooks</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

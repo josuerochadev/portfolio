@@ -1,6 +1,7 @@
 export interface TechDetail {
 	name: string;
 	role: string;
+	group?: string;
 }
 
 export interface Decision {
@@ -18,11 +19,20 @@ export interface Metric {
 	value: string;
 }
 
+export interface MediaItem {
+	type: 'image' | 'video' | 'embed' | 'pdf';
+	src: string;
+	poster?: string;
+	caption: string;
+	group?: string;
+}
+
 export interface ProjectDetail {
 	deliverables: Deliverable[];
 	decisions: Decision[];
 	stack: TechDetail[];
 	metrics?: Metric[];
+	media?: MediaItem[];
 }
 
 export interface Project {
@@ -51,40 +61,52 @@ export const PROJECTS: Project[] = [
 		id: "luciole",
 		title: "Luciole",
 		description:
-			"Agent IA conversationnel qui automatise la veille technologique : collecte, analyse et synthétise 200+ articles/jour depuis 40+ sources RSS.",
+			"Agent IA conversationnel qui automatise la veille technologique : collecte, analyse et synthétise 200+ articles/jour depuis 42 sources RSS.",
 		deliverables:
-			"Agent ReAct avec 8 outils, pipeline d'ingestion RSS automatique, interface web avec streaming SSE, système RAG maison, sécurité anti-injection, déploiement Docker",
+			"Agent ReAct avec 7 outils, pipeline d'ingestion RSS automatique, interface web avec streaming SSE, système RAG maison, sécurité anti-injection, conformité RGPD, déploiement Docker",
 		context:
-			"Les équipes IT passent environ 15 min par article en veille manuelle. Cet agent réduit ce temps à quelques secondes par question.",
+			"Projet réalisé en équipe de 4 dans le cadre d'une formation IA de 70h. Les équipes IT passent environ 15 min par article en veille manuelle — cet agent réduit ce temps à quelques secondes par question.",
 		image: {
 			desktop: "/assets/images/projects/optimized/project-luciole-desktop.webp",
 			mobile: "/assets/images/projects/optimized/project-luciole-mobile.webp",
 			thumbnail: "/assets/images/projects/optimized/project-luciole-thumb.webp"
 		},
-		technologies: ["Python 3.12", "FastAPI", "OpenAI API", "RAG", "SQLite", "Docker", "Langfuse", "SSE"],
+		technologies: ["Python 3.12", "FastAPI", "Gemini API", "RAG", "PostgreSQL", "Docker", "Langfuse", "SSE"],
 		status: "completed",
 		year: "2026",
 		type: "formation",
 		category: "ai",
-		githubUrl: "https://github.com/josuerochadev/formation-ia",
-		demoUrl: "https://luciole.onrender.com",
+		githubUrl: "https://github.com/josuerochadev/luciole",
+		demoUrl: "https://luciole-production.up.railway.app",
 		detail: {
 			deliverables: [
 				{
 					title: "Agent conversationnel ReAct",
-					description: "Boucle Reason → Act → Observe avec routing intelligent vers 7 outils (search web, RAG, SQL, transcription audio, vision, digest email). Cascade de modèles gpt-4o-mini / gpt-4o selon la complexité détectée."
+					description: "Boucle Reason → Act → Observe avec routing intelligent vers 7 outils (search web, RAG, SQL, vision, preview digest, send digest, réponse directe). Cascade de modèles Gemini flash / flash-lite / pro selon la complexité détectée."
 				},
 				{
 					title: "Pipeline de veille automatisé",
-					description: "Collecte quotidienne de 38 flux RSS, filtrage thématique, scraping du contenu, enrichissement LLM parallélisé (5 threads), indexation RAG avec chunking et embeddings. Exécutable en one-shot ou via scheduler APScheduler."
+					description: "Collecte quotidienne de 42 flux RSS (FR + EN), filtrage thématique, scraping du contenu via trafilatura, enrichissement LLM parallélisé (5 threads), indexation RAG avec chunking et embeddings. Exécutable en one-shot ou via scheduler APScheduler."
 				},
 				{
 					title: "Interface web Luciole",
-					description: "Frontend Jinja2 avec design system custom, streaming SSE des réponses, authentification JWT avec comptes utilisateurs, historique de conversations persistant en SQLite, upload de fichiers (images, audio, PDF) avec validation magic bytes."
+					description: "Frontend Jinja2 avec design system custom, streaming SSE des réponses, authentification JWT avec comptes utilisateurs, historique de conversations persistant en PostgreSQL (Neon), upload de fichiers (images, PDF) avec validation magic bytes."
 				},
 				{
 					title: "RAG hybride maison",
-					description: "Recherche sémantique numpy (similarité cosine sur text-embedding-3-small) + BM25 lexical + score de fraîcheur + feedback utilisateur. Query expansion HyDE et re-ranking Cohere optionnel. Pas de framework RAG externe."
+					description: "Recherche sémantique numpy (similarité cosine sur gemini-embedding-001) + BM25 lexical + score de fraîcheur + feedback utilisateur. Query expansion HyDE et re-ranking Cohere optionnel. Pas de framework RAG externe."
+				},
+				{
+					title: "Conformité RGPD et export données",
+					description: "Rétention automatique (90j articles, 30j logs, 180j messages) avec purge périodique. Export complet des données utilisateur via /users/me/export et suppression cascade de toutes les données personnelles."
+				},
+				{
+					title: "Analyse multimodale (Vision + PDF)",
+					description: "Upload d'images (PNG, JPEG, WebP) et PDF avec validation magic bytes, analyse via Gemini Vision. Extraction de la première page PDF pour analyse visuelle. Nettoyage automatique des fichiers après 1h."
+				},
+				{
+					title: "Digest email automatisé",
+					description: "Génération de rapports HTML regroupés par catégorie, envoi via SMTP TLS. Prévisualisation avant envoi via l'outil preview_digest, gestion de la liste de destinataires par variable d'environnement."
 				}
 			],
 			decisions: [
@@ -94,7 +116,7 @@ export const PROJECTS: Project[] = [
 				},
 				{
 					title: "Cascade de modèles plutôt qu'un modèle unique",
-					description: "Un classifier rapide (gpt-4o-mini) route chaque requête vers le modèle adapté : gpt-4o-mini pour les salutations/FAQ, gpt-4o pour le raisonnement complexe. Réduit les coûts API sur les requêtes simples tout en gardant la qualité sur les requêtes complexes."
+					description: "Un classifier rapide (gemini-2.5-flash-lite) route chaque requête vers le modèle adapté : flash-lite pour les salutations/FAQ, flash pour le raisonnement standard, pro pour les requêtes complexes. Réduit les coûts API tout en gardant la qualité."
 				},
 				{
 					title: "Streaming SSE plutôt que requête/réponse classique",
@@ -102,30 +124,108 @@ export const PROJECTS: Project[] = [
 				}
 			],
 			stack: [
-				{ name: "Python 3.12", role: "Langage principal de l'agent, du pipeline et de l'API" },
-				{ name: "FastAPI", role: "API REST + SSE streaming + pages HTML (Jinja2 templates)" },
-				{ name: "OpenAI API (gpt-4o / gpt-4o-mini)", role: "Raisonnement agent, classification, résumé d'articles, génération de réponses" },
-				{ name: "OpenAI text-embedding-3-small", role: "Embeddings 1536 dimensions pour l'indexation et la recherche RAG" },
-				{ name: "OpenAI Whisper", role: "Transcription de fichiers audio uploadés par l'utilisateur" },
-				{ name: "numpy", role: "Calcul vectorisé de similarité cosine pour la recherche sémantique RAG" },
-				{ name: "rank_bm25", role: "Score lexical BM25 combiné au score sémantique pour le ranking hybride" },
-				{ name: "Cohere rerank-multilingual-v3.0", role: "Re-ranking optionnel des résultats RAG pour affiner la pertinence" },
-				{ name: "SQLite", role: "Persistance des conversations, messages, comptes utilisateurs et feedbacks" },
-				{ name: "JWT (PyJWT + bcrypt)", role: "Authentification utilisateur avec cookies httpOnly sécurisés" },
-				{ name: "slowapi", role: "Rate limiting par IP sur les endpoints sensibles (auth, ask, upload)" },
-				{ name: "Langfuse", role: "Tracing et observabilité des appels LLM (latence, tokens, erreurs)" },
-				{ name: "Tavily API", role: "Recherche web en temps réel pour la veille externe" },
-				{ name: "Docker (multi-stage)", role: "Image de production avec prebuild RSS au build, utilisateur non-root, healthcheck" },
-				{ name: "Render", role: "Hébergement de l'application conteneurisée (région Frankfurt, plan free)" }
+				{ name: "Python 3.12", role: "Langage principal de l'agent, du pipeline et de l'API", group: "Agent & LLM" },
+				{ name: "FastAPI", role: "API REST + SSE streaming + pages HTML (Jinja2 templates)", group: "Agent & LLM" },
+				{ name: "Gemini (via SDK OpenAI)", role: "Raisonnement agent (gemini-2.5-flash / flash-lite / pro), classification, résumé d'articles, génération de réponses", group: "Agent & LLM" },
+				{ name: "gemini-embedding-001", role: "Embeddings 768 dimensions pour l'indexation et la recherche RAG", group: "RAG & Recherche" },
+				{ name: "numpy", role: "Calcul vectorisé de similarité cosine pour la recherche sémantique RAG", group: "RAG & Recherche" },
+				{ name: "rank_bm25", role: "Score lexical BM25 combiné au score sémantique pour le ranking hybride", group: "RAG & Recherche" },
+				{ name: "Cohere rerank-multilingual-v3.0", role: "Re-ranking optionnel des résultats RAG pour affiner la pertinence", group: "RAG & Recherche" },
+				{ name: "Tavily API", role: "Recherche web en temps réel pour la veille externe", group: "RAG & Recherche" },
+				{ name: "trafilatura", role: "Scraping et extraction de contenu web des articles RSS", group: "RAG & Recherche" },
+				{ name: "PostgreSQL (Neon)", role: "Persistance des conversations, messages, comptes utilisateurs, articles et feedbacks (ThreadedConnectionPool min 2, max 10)", group: "Backend & Données" },
+				{ name: "JWT (PyJWT + bcrypt)", role: "Authentification utilisateur avec cookies httpOnly sécurisés", group: "Sécurité & Ops" },
+				{ name: "slowapi", role: "Rate limiting par IP sur les endpoints sensibles (auth, ask, upload)", group: "Sécurité & Ops" },
+				{ name: "Langfuse", role: "Tracing et observabilité des appels LLM (latence, tokens, erreurs)", group: "Sécurité & Ops" },
+				{ name: "Docker (multi-stage)", role: "Image de production avec prebuild RSS au build, utilisateur non-root, healthcheck", group: "Sécurité & Ops" },
+				{ name: "Railway", role: "Hébergement de l'application conteneurisée (nixpacks)", group: "Sécurité & Ops" }
 			],
 			metrics: [
-				{ label: "Sources RSS surveillées", value: "38 flux (FR + EN)" },
-				{ label: "Outils agent", value: "7 (SQL, search web, RAG, transcription, vision, preview digest, send digest)" },
-				{ label: "Fichiers de tests", value: "18 fichiers (auth, conversations, streaming, upload, security, RAG, feedback, e2e…)" },
-				{ label: "Dimensions embeddings", value: "1 536 (text-embedding-3-small)" },
-				{ label: "Scoring RAG", value: "4 signaux combinés : cosine (50%) + BM25 (25%) + fraîcheur (25%) + bonus feedback" },
-				{ label: "Sécurité", value: "Détection prompt injection (14 patterns), validation SQL, filtrage PII en sortie (IBAN, CB, email, téléphone)" },
-				{ label: "Docker image", value: "Multi-stage 3 étapes (build → prebuild RSS → runtime non-root)" }
+				{ label: "Articles enrichis par jour", value: "200 avec déduplication (URL + similarité titre)" },
+				{ label: "Sources RSS surveillées", value: "41 flux FR + EN, ingestion quotidienne" },
+				{ label: "Fichiers de tests", value: "18 (auth, streaming, upload, sécurité, RAG, e2e…)" },
+				{ label: "Outils agent", value: "7 (SQL, recherche web, RAG, vision, preview digest, envoi digest, réponse directe)" },
+				{ label: "Patterns anti-injection", value: "14 regex + validation SQL + filtrage PII" },
+				{ label: "Scoring RAG hybride", value: "4 signaux (cosine 50% + BM25 25% + fraîcheur 25% + feedback 10%)" },
+				{ label: "Rétention RGPD", value: "3 politiques (90j articles, 30j logs, 180j messages)" },
+				{ label: "ADRs documentés", value: "3 (OpenAI → Gemini, SQLite → PostgreSQL, Render → Railway)" }
+			],
+			media: [
+				// --- Architecture (diagrammes interactifs) ---
+				{
+					type: "embed",
+					src: "/assets/media/projects/luciole/architecture-diagram.html",
+					caption: "Architecture globale — Frontend Jinja2 ↔ FastAPI ↔ PostgreSQL / Langfuse + pipeline RSS",
+					group: "Architecture"
+				},
+				{
+					type: "embed",
+					src: "/assets/media/projects/luciole/rag-pipeline-diagram.html",
+					caption: "Pipeline RAG — ingestion RSS + recherche hybride (cosine 50% + BM25 25% + fraîcheur 25% + feedback 10%)",
+					group: "Architecture"
+				},
+				{
+					type: "embed",
+					src: "/assets/media/projects/luciole/react-agent-diagram.html",
+					caption: "Boucle agent ReAct — Reason → Act → Observe avec 7 outils",
+					group: "Architecture"
+				},
+				{
+					type: "embed",
+					src: "/assets/media/projects/luciole/model-cascade-diagram.html",
+					caption: "Cascade de modèles — classifier → flash-lite / flash / pro selon complexité",
+					group: "Architecture"
+				},
+				// --- Démo (vidéos) ---
+				{
+					type: "video",
+					src: "/assets/media/projects/luciole/luciole-demo-chat.mp4",
+					caption: "Parcours chat — question, streaming SSE, outil sélectionné, réponse temps réel",
+					group: "Démo"
+				},
+				{
+					type: "video",
+					src: "/assets/media/projects/luciole/luciole-demo-veille.mp4",
+					caption: "Parcours veille — preview digest, envoi email, historique",
+					group: "Démo"
+				},
+				{
+					type: "video",
+					src: "/assets/media/projects/luciole/luciole-demo-upload.mp4",
+					caption: "Upload multimodal — envoi image/PDF, analyse Vision, réponse",
+					group: "Démo"
+				},
+				{
+					type: "video",
+					src: "/assets/media/projects/luciole/luciole-responsive.mp4",
+					caption: "Vue responsive — mobile et tablette",
+					group: "Démo"
+				},
+				// --- Monitoring & Tests ---
+				{
+					type: "image",
+					src: "/assets/media/projects/luciole/langfuse-trace-1.webp",
+					caption: "Langfuse — traces d'appels LLM (latence, tokens, coûts)",
+					group: "Monitoring & Tests"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/luciole/langfuse-trace-2.webp",
+					caption: "Langfuse — détail d'une trace agent (outils, modèle, durée)",
+					group: "Monitoring & Tests"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/luciole/langfuse-trace-3.webp",
+					caption: "Langfuse — dashboard métriques et coûts",
+					group: "Monitoring & Tests"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/luciole/tests-results.webp",
+					caption: "Résultats des tests — 71 passed (sécurité, dark mode, UX)",
+					group: "Monitoring & Tests"
+				}
 			]
 		}
 	},
@@ -148,10 +248,12 @@ export const PROJECTS: Project[] = [
 		year: "2025",
 		type: "formation",
 		category: "mainframe",
+		githubUrl: "https://github.com/josuerochadev/fil-rouge-mainframe",
+		demoUrl: "https://fil-rouge-mainframe-production.up.railway.app",
 		detail: {
 			deliverables: [
 				{
-					title: "14 programmes batch COBOL avec 43 JCL",
+					title: "15 programmes batch COBOL avec 60 JCL",
 					description: "Traitements séquentiels complets : création VSAM KSDS, tri/fusion SORT/MERGE, sous-programmes CALL, édition de relevés de compte avec ruptures et totaux."
 				},
 				{
@@ -182,25 +284,128 @@ export const PROJECTS: Project[] = [
 				}
 			],
 			stack: [
-				{ name: "COBOL 85", role: "Langage principal — 32 programmes couvrant batch, DB2 et CICS" },
-				{ name: "JCL", role: "60 jobs de contrôle : création VSAM, tri SORT, compilation, assemblage BMS" },
-				{ name: "z/OS (Hercules TK5)", role: "Environnement d'exécution mainframe émulé pour développement et tests" },
-				{ name: "VSAM KSDS", role: "Stockage indexé des fichiers clients/comptes avec index alternatifs (AIX)" },
-				{ name: "DB2/SQL", role: "Base relationnelle à 5 tables, 14 scripts SQL (DDL, DML, vues, index)" },
-				{ name: "CICS TS", role: "Moniteur transactionnel pour les 7 écrans interactifs pseudo-conversationnels" },
-				{ name: "BMS", role: "7 maps d'écran définissant les interfaces utilisateur des transactions CICS" },
-				{ name: "GnuCOBOL", role: "Compilateur open source pour exécution hors z/OS (CI et conteneur Docker)" },
-				{ name: "Docker", role: "Conteneurisation de l'API web avec compilation automatique des programmes batch" },
-				{ name: "Flask + Gunicorn", role: "API REST servant l'interface web, la simulation DB2 et le replay d'écrans CICS" },
-				{ name: "SQLite", role: "Simulation du schéma DB2 dans le conteneur Docker" },
-				{ name: "GitHub Actions", role: "CI compilant les 15 programmes batch et exécutant des smoke tests à chaque push" }
+				{ name: "COBOL 85", role: "Langage principal — 33 programmes couvrant batch, DB2 et CICS", group: "Mainframe z/OS" },
+				{ name: "JCL", role: "60 jobs de contrôle : création VSAM, tri SORT, compilation, assemblage BMS", group: "Mainframe z/OS" },
+				{ name: "z/OS (Hercules TK5)", role: "Environnement d'exécution mainframe émulé pour développement et tests", group: "Mainframe z/OS" },
+				{ name: "VSAM KSDS", role: "Stockage indexé des fichiers clients/comptes avec index alternatifs (AIX)", group: "Mainframe z/OS" },
+				{ name: "CICS TS", role: "Moniteur transactionnel pour les 7 écrans interactifs pseudo-conversationnels", group: "Mainframe z/OS" },
+				{ name: "BMS", role: "7 maps d'écran définissant les interfaces utilisateur des transactions CICS", group: "Mainframe z/OS" },
+				{ name: "DB2/SQL", role: "Base relationnelle à 5 tables, 14 scripts SQL (DDL, DML, vues, index)", group: "Base de données" },
+				{ name: "SQLite", role: "Simulation du schéma DB2 dans le conteneur Docker", group: "Base de données" },
+				{ name: "GnuCOBOL", role: "Compilateur open source pour exécution hors z/OS (CI et conteneur Docker)", group: "Portabilité & CI" },
+				{ name: "Docker", role: "Conteneurisation de l'API web avec compilation automatique des programmes batch", group: "Portabilité & CI" },
+				{ name: "Flask + Gunicorn", role: "API REST servant l'interface web, la simulation DB2 et le replay d'écrans CICS", group: "Portabilité & CI" },
+				{ name: "GitHub Actions", role: "CI compilant les 15 programmes batch et exécutant des smoke tests à chaque push", group: "Portabilité & CI" }
 			],
 			metrics: [
-				{ label: "Programmes COBOL", value: "32 (14 batch + 11 DB2 + 7 CICS)" },
-				{ label: "Total fichiers sources", value: "118 (COBOL, JCL, SQL, BMS)" },
+				{ label: "Programmes COBOL", value: "33 (15 batch + 11 DB2 + 7 CICS)" },
+				{ label: "Total fichiers sources", value: "114 (COBOL, JCL, SQL, BMS)" },
 				{ label: "Compilation CI", value: "15/15 programmes batch passent" },
-				{ label: "Transactions CICS", value: "7 (AFFI, AJOU, MAJU, SUPP, DELG, LIST, STAT)" },
+				{ label: "Transactions CICS", value: "7 (AFFI, AJOU, MAJO, SUPP, DELG, LGEN, STAT)" },
 				{ label: "Tables DB2", value: "5 tables, 14 scripts SQL" }
+			],
+			media: [
+				// --- Architecture (diagrammes interactifs) ---
+				{
+					type: "embed",
+					src: "/assets/media/projects/poei-mainframe/architecture-diagram.html",
+					caption: "Double architecture — z/OS (COBOL/JCL/VSAM/DB2/CICS) et Docker (GnuCOBOL/Flask/SQLite)",
+					group: "Architecture"
+				},
+				{
+					type: "embed",
+					src: "/assets/media/projects/poei-mainframe/erd-diagram.html",
+					caption: "Schéma DB2 — 5 tables (CLIENT, REGION, PROFESSI, NATCOMPT, MOUVEMENT) avec relations FK",
+					group: "Architecture"
+				},
+				{
+					type: "embed",
+					src: "/assets/media/projects/poei-mainframe/cics-flow-diagram.html",
+					caption: "Flux CICS pseudo-conversationnel — SEND MAP → RETURN TRANSID → RECEIVE MAP avec COMMAREA",
+					group: "Architecture"
+				},
+				// --- Démo ---
+				{
+					type: "video",
+					src: "/assets/media/projects/poei-mainframe/mainframe-demo.mp4",
+					caption: "Démo web — simulation des programmes batch et écrans CICS via l'API Flask",
+					group: "Démo"
+				},
+				// --- Écrans BMS (captures z/OS — 7 maps) ---
+				{
+					type: "image",
+					src: "/assets/media/projects/poei-mainframe/bms-affi.webp",
+					caption: "AFFI — Écran d'affichage client (saisie numéro de compte)",
+					group: "Écrans BMS"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/poei-mainframe/bms-ajou.webp",
+					caption: "AJOU — Formulaire d'ajout client avec guides de saisie",
+					group: "Écrans BMS"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/poei-mainframe/cics-ajou-validation.webp",
+					caption: "AJOU — Validation exhaustive : message « SEXE INVALIDE (M OU F) »",
+					group: "Écrans BMS"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/poei-mainframe/bms-majo.webp",
+					caption: "MAJO — Mise à jour client (clé non modifiable, gestion NOTFND)",
+					group: "Écrans BMS"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/poei-mainframe/bms-supp.webp",
+					caption: "SUPP — Suppression client avec confirmation (O/N)",
+					group: "Écrans BMS"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/poei-mainframe/bms-delg.webp",
+					caption: "DELG — Suppression générique par préfixe (STARTBR/READNEXT/DELETE)",
+					group: "Écrans BMS"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/poei-mainframe/bms-list.webp",
+					caption: "LIST — Liste paginée des 10 clients (PF7/PF8 navigation)",
+					group: "Écrans BMS"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/poei-mainframe/bms-stat.webp",
+					caption: "STAT — Statistiques par région (débiteurs/créditeurs via AIX/PATH)",
+					group: "Écrans BMS"
+				},
+				// --- Debug & Admin z/OS ---
+				{
+					type: "image",
+					src: "/assets/media/projects/poei-mainframe/cics-cedf-read.webp",
+					caption: "CEDF — Trace EXEC CICS READ : données client DUPONT visibles dans le buffer",
+					group: "Debug & Admin z/OS"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/poei-mainframe/cics-ceda-groupe.webp",
+					caption: "CEDA — Vue d'ensemble des 19 ressources du groupe CLIGROUP (7 MAPSET, 7 PROGRAM, 5 TRANSACTION)",
+					group: "Debug & Admin z/OS"
+				},
+				// --- Code & CI ---
+				{
+					type: "image",
+					src: "/assets/media/projects/poei-mainframe/cobol-sample.webp",
+					caption: "PRGCLIA — PROCEDURE DIVISION pseudo-conversationnelle (EVALUATE, SEND MAP, RETURN TRANSID)",
+					group: "Code & CI"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/poei-mainframe/ci-results.webp",
+					caption: "GitHub Actions — 15/15 programmes batch compilés avec GnuCOBOL",
+					group: "Code & CI"
+				},
 			]
 		}
 	},
@@ -208,9 +413,9 @@ export const PROJECTS: Project[] = [
 		id: "tour-de-controle",
 		title: "Tour de Contrôle",
 		description:
-			"Application web de gestion de caisse et du personnel pour la restauration, avec suivi des transactions et détection d'écarts.",
+			"Application full-stack de gestion de caisse pour la restauration, avec dashboard temps réel, gestion d'équipe par rôles, journal de transactions filtrable et audit trail complet.",
 		deliverables:
-			"API REST documentée Swagger, interface React complète, authentification JWT avec RBAC, détection automatique des écarts de caisse, CRUD personnel, base PostgreSQL avec migrations Sqitch, Docker Compose 6 services",
+			"API REST documentée Swagger, interface React complète, authentification JWT avec RBAC, détection automatique des écarts de caisse, CRUD personnel, base PostgreSQL avec migrations Sqitch, Docker Compose 5 services",
 		context:
 			"Répondre au besoin réel d'un restaurant : centraliser la gestion des caisses et du personnel dans un outil unique, fiable et sécurisé.",
 		image: {
@@ -218,11 +423,13 @@ export const PROJECTS: Project[] = [
 			mobile: "/assets/images/projects/optimized/project-tour-de-controle-mobile.webp",
 			thumbnail: "/assets/images/projects/optimized/project-tour-de-controle-thumb.webp"
 		},
-		technologies: ["React 18", "TypeScript", "Vite", "Tailwind CSS", "Redux Toolkit", "Node.js", "Express", "PostgreSQL", "Redis", "Docker Compose", "JWT", "Swagger", "Jest"],
+		technologies: ["React 18", "TypeScript", "Vite", "Tailwind CSS", "Node.js", "Express", "Zod", "PostgreSQL", "Redis", "Docker Compose", "JWT", "Swagger", "Jest", "Vitest", "Playwright", "Winston", "Sentry"],
 		status: "in-progress",
 		year: "2025",
 		type: "formation",
 		category: "web-app",
+		githubUrl: "https://github.com/josuerochadev/tour-de-controle",
+		demoUrl: "https://tour-de-controle-omega.vercel.app",
 		detail: {
 			deliverables: [
 				{
@@ -238,8 +445,8 @@ export const PROJECTS: Project[] = [
 					description: "CRUD complet des membres d'équipe avec 4 niveaux de rôle (Développeur, Gérant, Responsable, Serveur) et reset de mot de passe par email."
 				},
 				{
-					title: "Dashboard KPIs & Journaux d'actions",
-					description: "Vue synthétique des indicateurs clés en temps réel et traçabilité complète de toutes les actions (qui, quoi, quand), filtrable par date et utilisateur."
+					title: "Dashboard temps réel (La Vigie)",
+					description: "Vue synthétique des KPIs en temps réel avec graphique de répartition des paiements, et audit trail complet de toutes les actions (qui, quoi, quand) stocké en JSONB, filtrable par date et utilisateur."
 				}
 			],
 			decisions: [
@@ -257,28 +464,164 @@ export const PROJECTS: Project[] = [
 				}
 			],
 			stack: [
-				{ name: "React 18 + TypeScript", role: "Interface utilisateur avec typage strict, lazy loading des routes et gestion d'état via Context API" },
-				{ name: "Vite", role: "Bundler et serveur de développement frontend" },
-				{ name: "Tailwind CSS", role: "Stylisation utilitaire de l'interface" },
-				{ name: "Express.js + TypeScript", role: "API REST backend organisée en MVC (controllers, models, routes)" },
-				{ name: "Zod", role: "Validation et typage des données entrantes côté API" },
-				{ name: "JWT + cookies httpOnly", role: "Authentification stateless sécurisée contre le XSS" },
-				{ name: "PostgreSQL 15 (Neon)", role: "Base de données relationnelle hébergée, accédée via requêtes SQL directes (pg)" },
-				{ name: "Sqitch", role: "Gestion des migrations de schéma en SQL pur avec rollback" },
-				{ name: "Redis", role: "Cache de sessions et rate limiting en environnement Docker" },
-				{ name: "Docker Compose", role: "Orchestration des services en local (frontend, backend, PostgreSQL, Redis)" },
-				{ name: "Railway", role: "Hébergement du backend Express en production" },
-				{ name: "Vercel", role: "Déploiement du frontend React en production" },
-				{ name: "Jest + Supertest", role: "Tests d'intégration de l'API (78 tests)" },
-				{ name: "Vitest", role: "Tests unitaires frontend (18 tests)" },
-				{ name: "Playwright", role: "Tests end-to-end du parcours utilisateur" },
-				{ name: "Swagger / OpenAPI", role: "Documentation interactive de l'API, disponible en environnement de développement" }
+				{ name: "React 18 + TypeScript", role: "Interface utilisateur avec typage strict, lazy loading des routes, 13 pages, 10 composants réutilisables, gestion d'état via Context API + hooks custom", group: "Frontend" },
+				{ name: "Vite", role: "Bundler et serveur de développement frontend", group: "Frontend" },
+				{ name: "Tailwind CSS", role: "Design system custom (tokens couleur, typographie, composants réutilisables)", group: "Frontend" },
+				{ name: "Express.js + TypeScript", role: "API REST avec 6 modules de routes, validation Zod bout-en-bout, organisée en MVC", group: "Backend & API" },
+				{ name: "Zod", role: "Validation et typage des données entrantes côté client et serveur", group: "Backend & API" },
+				{ name: "Swagger / OpenAPI", role: "Documentation interactive de l'API, disponible en environnement de développement", group: "Backend & API" },
+				{ name: "PostgreSQL 15 (Neon)", role: "Base de données relationnelle hébergée, SQL pur sans ORM, audit trail en JSONB (action_logs)", group: "Base de données" },
+				{ name: "Sqitch", role: "Migrations SQL versionnées avec deploy/verify/revert", group: "Base de données" },
+				{ name: "Redis", role: "Blacklist JWT pour logout instantané, cache de sessions et rate limiting", group: "Base de données" },
+				{ name: "JWT + cookies httpOnly", role: "Authentification stateless avec SameSite + Secure, blacklist Redis pour logout instantané", group: "Sécurité" },
+				{ name: "Bcrypt (12 rounds)", role: "Hachage des mots de passe, tokens de reset avec TTL 15 min", group: "Sécurité" },
+				{ name: "Helmet", role: "Headers de sécurité HTTP (CSP, HSTS, X-Content-Type-Options)", group: "Sécurité" },
+				{ name: "Sentry", role: "Monitoring d'erreurs en production (backend + frontend ErrorBoundary)", group: "Sécurité" },
+				{ name: "express-rate-limit", role: "Limitation de débit par IP sur les routes API et authentification", group: "Sécurité" },
+				{ name: "Winston", role: "Logging structuré (DB, mailer, erreurs middleware) avec transports console et fichier", group: "Monitoring" },
+				{ name: "Nodemailer", role: "Envoi d'emails de réinitialisation de mot de passe via SMTP", group: "Monitoring" },
+				{ name: "Jest + Supertest", role: "Tests backend : 4 suites d'intégration + 4 suites unitaires (113 blocs describe/it/test)", group: "Tests & qualité" },
+				{ name: "Vitest", role: "Tests unitaires frontend (36 blocs describe/it/test sur 4 fichiers)", group: "Tests & qualité" },
+				{ name: "Playwright", role: "Tests end-to-end du parcours utilisateur (2 specs : auth, health)", group: "Tests & qualité" },
+				{ name: "Husky + lint-staged", role: "Qualité du code au pre-commit (Biome backend, ESLint frontend)", group: "Tests & qualité" },
+				{ name: "Docker Compose", role: "Orchestration de 5 containers (PostgreSQL, Redis, Backend, Frontend, Sqitch)", group: "Déploiement" },
+				{ name: "Railway", role: "Hébergement du backend Express en production", group: "Déploiement" },
+				{ name: "Vercel", role: "Déploiement du frontend React en production", group: "Déploiement" }
 			],
 			metrics: [
-				{ label: "Tests d'intégration backend", value: "78" },
-				{ label: "Tests unitaires frontend", value: "18" },
-				{ label: "Niveaux de rôle", value: "4 (Développeur, Gérant, Responsable, Serveur)" },
-				{ label: "Déploiement", value: "Demo live (Vercel + Railway + Neon)" }
+				{ label: "Tests automatisés", value: "151 blocs (113 backend + 36 frontend + 2 E2E)" },
+				{ label: "Interface complète", value: "13 pages et 10 composants réutilisables" },
+				{ label: "Couches de sécurité", value: "6 (JWT httpOnly, bcrypt 12 rounds, Zod, Helmet, rate limiting, audit JSONB)" },
+				{ label: "Tables PostgreSQL", value: "6 (roles, users, payment_types, cash_registers, transactions, action_logs)" },
+				{ label: "Rôles RBAC", value: "4 niveaux (Developer, Manager, Supervisor, Server)" },
+				{ label: "ADRs documentés", value: "5 (JWT cookies, Redis blacklist, Sqitch, Zod, SQL sans ORM)" }
+			],
+			media: [
+				// --- Architecture ---
+				{
+					type: "embed",
+					src: "/assets/media/projects/tour-de-controle/architecture-diagram.html",
+					caption: "Architecture — Frontend ↔ API ↔ PostgreSQL / Redis + déploiement Vercel / Railway / Neon",
+					group: "Architecture"
+				},
+				// --- Demo ---
+				{
+					type: "video",
+					src: "/assets/media/projects/tour-de-controle/tour-demo.mp4",
+					caption: "Parcours utilisateur — login, dashboard, caisse, transactions",
+					group: "Démo"
+				},
+				{
+					type: "video",
+					src: "/assets/media/projects/tour-de-controle/tour-responsive.mp4",
+					caption: "Vue responsive — mobile et tablette",
+					group: "Démo"
+				},
+				// --- Design System ---
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/design-system-1.webp",
+					caption: "Design System — Cover",
+					group: "Design System"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/design-system-2.webp",
+					caption: "Design System — Brand (Le Phare)",
+					group: "Design System"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/design-system-3.webp",
+					caption: "Design System — Couleurs (La Palette)",
+					group: "Design System"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/design-system-4.webp",
+					caption: "Design System — Typographie (Le Système)",
+					group: "Design System"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/design-system-5.webp",
+					caption: "Design System — Formes & Espacement (Le Rythme)",
+					group: "Design System"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/design-system-6.webp",
+					caption: "Design System — Composants (La Boîte à Outils)",
+					group: "Design System"
+				},
+				// --- Maquettes print ---
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/print-1.webp",
+					caption: "Print — Cover",
+					group: "Maquettes"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/print-2.webp",
+					caption: "Print — Vue La Vigie (Dashboard)",
+					group: "Maquettes"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/print-3.webp",
+					caption: "Print — Vue La Caisse",
+					group: "Maquettes"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/print-4.webp",
+					caption: "Print — Vue Le Flux (Transactions)",
+					group: "Maquettes"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/print-5.webp",
+					caption: "Print — Vue L'Équipage (Personnel)",
+					group: "Maquettes"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/maquette-caisse.webp",
+					caption: "Maquette — 7 vues de la gestion de caisse",
+					group: "Maquettes"
+				},
+				// --- Diagrammes ---
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/erd.webp",
+					caption: "Schéma base de données — ERD (6 tables, relations FK)",
+					group: "Diagrammes"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/mcd.webp",
+					caption: "Modèle conceptuel de données — MCD Merise",
+					group: "Diagrammes"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/use-cases.webp",
+					caption: "Diagramme de cas d'utilisation — 4 rôles RBAC",
+					group: "Diagrammes"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/sequence.webp",
+					caption: "Diagramme de séquence — flux auth, caisse, admin",
+					group: "Diagrammes"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/tour-de-controle/arborescence.webp",
+					caption: "Arborescence — sitemap et navigation de l'application",
+					group: "Diagrammes"
+				}
 			]
 		}
 	},
@@ -315,17 +658,21 @@ export const PROJECTS: Project[] = [
 				},
 				{
 					title: "SEO dynamique et Open Graph",
-					description: "Sitemap générée dynamiquement, JSON-LD PodcastSeries, et images Open Graph générées côté serveur pour la home, chaque émission et chaque épisode."
+					description: "Sitemap générée dynamiquement, JSON-LD structuré par page (PodcastSeries et PodcastEpisode), et images Open Graph générées côté serveur pour la home, chaque émission et chaque épisode."
 				},
 				{
 					title: "Endpoint de redéploiement sécurisé",
 					description: "Route API POST /api/rebuild protégée par comparaison timing-safe qui déclenche un deploy hook Vercel, permettant de republier le site sans push git quand un nouvel épisode sort."
+				},
+				{
+					title: "Accessibilité et durcissement sécurité",
+					description: "Skip links, ARIA labels sur tous les composants interactifs, gestion du focus clavier sur le menu mobile, respect de prefers-reduced-motion. Sanitisation HTML des descriptions RSS (anti-XSS), headers CSP et permissions policy restrictive, fonction safeJsonLd() qui échappe les balises </script>."
 				}
 			],
 			decisions: [
 				{
-					title: "Site 100% statique sans BDD plutôt qu'un CMS",
-					description: "Le RSS Anchor.fm est la source de vérité. Un fichier overrides.json local corrige les manques (liens Deezer, Amazon, classification par émission). Aucune base de données à maintenir, build rapide, coût zéro."
+					title: "Pipeline RSS → APIs tierces → overrides locaux plutôt qu'un CMS",
+					description: "Le RSS Anchor.fm est la source de vérité, enrichi par merge automatique avec les APIs Apple Podcasts et Deezer. Un fichier overrides.json local corrige les manques (liens manquants, classification par émission). Trois sources fusionnées en un seul modèle de données, avec détection automatique de l'émission et de la saison par regex. Aucune base de données à maintenir, build rapide, coût zéro."
 				},
 				{
 					title: "Détection automatique des émissions par titre plutôt que tagging manuel",
@@ -337,21 +684,88 @@ export const PROJECTS: Project[] = [
 				}
 			],
 			stack: [
-				{ name: "Next.js 16 (App Router)", role: "Framework fullstack — rendu statique au build, routes dynamiques pour épisodes et émissions, route API pour le rebuild hook" },
-				{ name: "React 19", role: "Server Components par défaut, Client Components uniquement pour l'interactivité (filtres, menu mobile, bouton partage)" },
-				{ name: "TypeScript (strict)", role: "Typage strict sans any — types dédiés pour les épisodes, émissions (ShowId union type), et les réponses API externes" },
-				{ name: "Tailwind CSS v4", role: "Styling utilitaire via @tailwindcss/postcss, combiné à des CSS variables custom (--lime, --forest, --font-display) pour le design system" },
-				{ name: "fast-xml-parser", role: "Parsing du flux RSS Anchor.fm (XML → JSON) au build avec support des attributs iTunes et media:content" },
-				{ name: "Sentry (@sentry/nextjs)", role: "Monitoring d'erreurs en production" },
-				{ name: "Vitest", role: "Tests unitaires pour le parsing RSS, la détection d'émissions et les utilitaires (slugify, formatDuration, toRoman)" },
-				{ name: "Husky + lint-staged + commitlint", role: "Qualité du code : ESLint au pre-commit, validation du overrides.json, et conventions de commit (Conventional Commits)" },
-				{ name: "Vercel", role: "Déploiement avec deploy hooks pour rebuild à la demande, domaine custom oklmdragclub.com" }
+				{ name: "Next.js 16 (App Router)", role: "Framework fullstack — rendu statique au build, routes dynamiques pour épisodes et émissions, route API pour le rebuild hook", group: "Framework & UI" },
+				{ name: "React 19", role: "Server Components par défaut, Client Components uniquement pour l'interactivité (filtres, menu mobile, bouton partage)", group: "Framework & UI" },
+				{ name: "TypeScript (strict)", role: "Typage strict sans any — types dédiés pour les épisodes, émissions (ShowId union type), et les réponses API externes", group: "Framework & UI" },
+				{ name: "Tailwind CSS v4", role: "Design system néo-brutaliste : palette OKLCH (--lime, --forest, --violet…), typographie Archivo Black, ombres offset, badges colorés par émission. Implémenté via @tailwindcss/postcss + CSS variables custom", group: "Framework & UI" },
+				{ name: "fast-xml-parser", role: "Parsing du flux RSS Anchor.fm (XML → JSON) au build avec support des attributs iTunes et media:content", group: "Pipeline de données" },
+				{ name: "Sentry (@sentry/nextjs)", role: "Monitoring d'erreurs en production", group: "Production" },
+				{ name: "Vitest", role: "Tests unitaires pour le parsing RSS, la détection d'émissions et les utilitaires (slugify, formatDuration, toRoman)", group: "Tests & qualité" },
+				{ name: "Husky + lint-staged + commitlint", role: "Qualité du code : ESLint au pre-commit, validation du overrides.json, et conventions de commit (Conventional Commits)", group: "Tests & qualité" },
+				{ name: "Vercel", role: "Déploiement avec deploy hooks pour rebuild à la demande, domaine custom oklmdragclub.com", group: "Production" }
 			],
 			metrics: [
-				{ label: "Fichiers de test", value: "3 suites (rss, shows, utils)" },
-				{ label: "Émissions supportées", value: "6 séries" },
+				{ label: "Épisodes publiés", value: "60 générés au build depuis le flux RSS" },
+				{ label: "Émissions détectées", value: "6 séries par pattern matching (+ catch-all)" },
+				{ label: "Sources fusionnées au build", value: "3 (RSS Anchor.fm, Apple Podcasts API, Deezer API)" },
 				{ label: "Plateformes d'écoute", value: "4 (Spotify, Apple Podcasts, Deezer, Amazon Music)" },
-				{ label: "Images OG générées", value: "3 niveaux (home, émission, épisode)" }
+				{ label: "Suites de tests", value: "4 (rss, rss.integration, shows, utils)" },
+				{ label: "Pages statiques", value: "7 avec SEO dynamique (JSON-LD, sitemap, OG par page)" }
+			],
+			media: [
+				// --- Architecture ---
+				{
+					type: "embed",
+					src: "/assets/media/projects/oklm-drag-club/pipeline-diagram.html",
+					caption: "Pipeline de données — RSS → APIs → Build statique",
+					group: "Architecture"
+				},
+				// --- Demo ---
+				{
+					type: "video",
+					src: "/assets/media/projects/oklm-drag-club/oklm-demo.mp4",
+					caption: "Parcours utilisateur — navigation, filtres, épisodes",
+					group: "Démo"
+				},
+				{
+					type: "video",
+					src: "/assets/media/projects/oklm-drag-club/oklm-responsive.mp4",
+					caption: "Vue responsive — mobile et tablette",
+					group: "Démo"
+				},
+				// --- Design System ---
+				{
+					type: "image",
+					src: "/assets/media/projects/oklm-drag-club/design-system-1.webp",
+					caption: "Design System — Cover",
+					group: "Design System"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/oklm-drag-club/design-system-2.webp",
+					caption: "Design System — Couleurs OKLCH",
+					group: "Design System"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/oklm-drag-club/design-system-3.webp",
+					caption: "Design System — Typographie",
+					group: "Design System"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/oklm-drag-club/design-system-4.webp",
+					caption: "Design System — Composants",
+					group: "Design System"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/oklm-drag-club/design-system-5.webp",
+					caption: "Design System — Formulaires",
+					group: "Design System"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/oklm-drag-club/design-system-6.webp",
+					caption: "Design System — Grille & Spacing",
+					group: "Design System"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/oklm-drag-club/design-system-7.webp",
+					caption: "Design System — Iconographie",
+					group: "Design System"
+				}
 			]
 		}
 	},
@@ -369,12 +783,13 @@ export const PROJECTS: Project[] = [
 			mobile: "/assets/images/projects/optimized/project-stella-mobile.webp",
 			thumbnail: "/assets/images/projects/optimized/project-stella-thumb.webp"
 		},
-		technologies: ["React", "TypeScript", "Tailwind CSS", "Zustand", "Node.js", "Express", "Sequelize", "PostgreSQL", "JWT", "Jest", "Swagger"],
+		technologies: ["React 18", "TypeScript", "Tailwind CSS", "Zustand", "Node.js", "Express", "Sequelize", "PostgreSQL", "JWT", "Jest", "Swagger", "Sentry", "Playwright", "Biome"],
 		status: "in-progress",
 		year: "2024",
 		type: "project",
 		category: "e-commerce",
 		githubUrl: "https://github.com/josuerochadev/stella-ecommerce",
+		demoUrl: "https://stella-ecommerce.vercel.app",
 		detail: {
 			deliverables: [
 				{
@@ -401,7 +816,7 @@ export const PROJECTS: Project[] = [
 				},
 				{
 					title: "Conteneur DI custom plutôt que Awilix ou InversifyJS",
-					description: "Le conteneur custom (~220 lignes, zéro dépendance) couvre exactement les besoins du projet : register, resolve, singleton. InversifyJS requiert TypeScript et décorateurs, incompatible avec un backend JavaScript pur."
+					description: "Le conteneur custom (256 lignes, zéro dépendance) couvre exactement les besoins du projet : register, resolve, singleton. InversifyJS requiert TypeScript et décorateurs, incompatible avec un backend JavaScript pur."
 				},
 				{
 					title: "Repository pattern côté frontend",
@@ -409,31 +824,100 @@ export const PROJECTS: Project[] = [
 				}
 			],
 			stack: [
-				{ name: "React 18 + TypeScript 5", role: "Framework UI avec typage statique complet côté client" },
-				{ name: "Zustand", role: "State management global (panier, wishlist, auth) — 5 stores" },
-				{ name: "React Router v7", role: "Routing client-side avec routes protégées" },
-				{ name: "Tailwind CSS", role: "Styling utility-first avec design system personnalisé (tokens, palettes, élévations)" },
-				{ name: "Axios", role: "Client HTTP avec intercepteurs pour l'injection automatique du token CSRF et du header Authorization" },
-				{ name: "Node.js + Express", role: "Serveur API RESTful organisé en couches MVC avec conteneur DI" },
-				{ name: "Sequelize + PostgreSQL 15", role: "ORM relationnel avec 8 modèles (User, Star, Cart, CartItem, Order, OrderStar, Review, Wishlist)" },
-				{ name: "JWT + tokens CSRF", role: "Authentification stateless via cookies httpOnly et protection CSRF sur toutes les routes mutantes" },
-				{ name: "Joi + DOMPurify", role: "Validation de schéma côté serveur (Joi) et sanitisation HTML côté client (DOMPurify)" },
-				{ name: "Helmet + express-rate-limit", role: "Headers de sécurité HTTP (CSP, HSTS) et limitation de débit par IP" },
-				{ name: "Winston", role: "Logging structuré avec transports fichier et console, niveaux error/warn/info" },
-				{ name: "Sentry", role: "Monitoring d'erreurs en production — intégré côté frontend (React) et backend (Express)" },
-				{ name: "Jest + Supertest", role: "Tests unitaires des services backend et tests frontend avec jsdom" },
-				{ name: "Swagger / OpenAPI", role: "Documentation interactive de l'API exposée sur /api-docs, 9 groupes de routes documentés" },
-				{ name: "Docker + docker-compose", role: "Orchestration locale des 3 services (client, serveur, PostgreSQL) en un seul docker-compose up" },
-				{ name: "GitHub Actions", role: "Pipeline CI : lint, typecheck et tests déclenchés à chaque push" },
-				{ name: "Biome", role: "Linter et formateur unifié partagé entre client et serveur (remplace ESLint + Prettier)" }
+				{ name: "React 18 + TypeScript 5", role: "Framework UI avec typage statique complet côté client", group: "Frontend" },
+				{ name: "Zustand", role: "State management global (panier, wishlist, auth, notifications) — 4 stores", group: "Frontend" },
+				{ name: "React Router v7", role: "Routing client-side avec routes protégées", group: "Frontend" },
+				{ name: "Tailwind CSS", role: "Styling utility-first avec design system personnalisé (tokens, palettes, élévations)", group: "Frontend" },
+				{ name: "Axios", role: "Client HTTP avec intercepteurs pour l'injection automatique du token CSRF et du header Authorization", group: "Frontend" },
+				{ name: "@tanstack/react-query", role: "Data fetching et caching côté client (catalogue, détail étoile)", group: "Frontend" },
+				{ name: "react-helmet-async", role: "Gestion dynamique des balises <head> pour le SEO (titres, meta)", group: "Frontend" },
+				{ name: "Node.js + Express", role: "Serveur API RESTful organisé en couches MVC avec conteneur DI, compression gzip et node-cache", group: "Backend & API" },
+				{ name: "Sequelize + PostgreSQL", role: "ORM relationnel avec 9 modèles (User, Star, Cart, CartItem, Order, OrderStar, Review, Wishlist, RefreshToken)", group: "Backend & API" },
+				{ name: "Swagger / OpenAPI", role: "Documentation interactive de l'API exposée sur /api-docs, 12 groupes de routes documentés", group: "Backend & API" },
+				{ name: "JWT + tokens CSRF", role: "Authentification stateless via cookies httpOnly et protection CSRF sur toutes les routes mutantes", group: "Sécurité" },
+				{ name: "Joi + DOMPurify", role: "Validation de schéma côté serveur (Joi) et sanitisation HTML côté client (DOMPurify)", group: "Sécurité" },
+				{ name: "Helmet + express-rate-limit", role: "Headers de sécurité HTTP (CSP, HSTS) et limitation de débit par IP", group: "Sécurité" },
+				{ name: "Winston", role: "Logging structuré avec transports fichier et console, niveaux error/warn/info", group: "Monitoring & Logs" },
+				{ name: "Morgan", role: "Logging des requêtes HTTP en développement et production", group: "Monitoring & Logs" },
+				{ name: "Sentry", role: "Monitoring d'erreurs en production — intégré côté frontend (React) et backend (Express)", group: "Monitoring & Logs" },
+				{ name: "Jest + Supertest", role: "Tests unitaires des services backend et tests frontend avec jsdom", group: "Tests & qualité" },
+				{ name: "Playwright", role: "Tests end-to-end (3 specs : auth, catalog, navigation) avec CI GitHub Actions", group: "Tests & qualité" },
+				{ name: "Biome", role: "Linter et formateur unifié partagé entre client et serveur (remplace ESLint + Prettier)", group: "Tests & qualité" },
+				{ name: "Docker + docker-compose", role: "Orchestration locale des 3 services (client, serveur, PostgreSQL) en un seul docker-compose up", group: "Déploiement & CI" },
+				{ name: "GitHub Actions", role: "Pipeline CI (lint, typecheck, tests, E2E, security audit) + CD vers Render + Release Please", group: "Déploiement & CI" },
+				{ name: "Render", role: "Hébergement en production (API + client) avec deploy hooks automatisés", group: "Déploiement & CI" }
 			],
 			metrics: [
-				{ label: "Groupes de routes API", value: "9 (stars, auth, users, orders, cart, wishlist, reviews, payments, admin)" },
-				{ label: "Fichiers de tests unitaires backend", value: "4 (cartService, orderService, paymentValidator, bcryptHashingService)" },
-				{ label: "Assertions / blocs de test backend", value: "101 occurrences describe/it/test sur 4 fichiers" },
-				{ label: "Fichiers de tests frontend", value: "4 (passwordValidation, cartCalculations, orderTypes, AuthContainer)" },
-				{ label: "Modèles Sequelize", value: "8" },
-				{ label: "ADRs documentés", value: "5 (zustand, DI container, JS backend, sequelize sync, repository pattern)" }
+				{ label: "Tests automatisés", value: "139 blocs (101 backend + 35 frontend + 3 E2E)" },
+				{ label: "Composants React", value: "61 sur 13 pages avec routing protégé" },
+				{ label: "Tags Swagger documentés", value: "12 (Stars, Auth, Cart, Orders, Payments, Reviews, Wishlist, Admin, Profile, Refunds, Stats, Webhooks)" },
+				{ label: "Modèles Sequelize", value: "9 (User, Star, Cart, CartItem, Order, OrderStar, Review, Wishlist, RefreshToken)" },
+				{ label: "Fichiers de routes API", value: "10 avec documentation OpenAPI" },
+				{ label: "ADRs documentés", value: "5 (Zustand, DI container, JS backend, Sequelize sync, repository pattern)" }
+			],
+			media: [
+				// --- Architecture ---
+				{
+					type: "embed",
+					src: "/assets/media/projects/stella/architecture-diagram.html",
+					caption: "Architecture — React SPA ↔ Express API ↔ PostgreSQL + déploiement Vercel / Render",
+					group: "Architecture"
+				},
+				{
+					type: "embed",
+					src: "/assets/media/projects/stella/erd-diagram.html",
+					caption: "Schéma ERD — 9 modèles Sequelize avec associations",
+					group: "Architecture"
+				},
+				{
+					type: "embed",
+					src: "/assets/media/projects/stella/di-container-diagram.html",
+					caption: "DI Container — register / resolve / singleton (backend + frontend)",
+					group: "Architecture"
+				},
+				{
+					type: "embed",
+					src: "/assets/media/projects/stella/auth-flow-diagram.html",
+					caption: "Flux Auth — JWT httpOnly + CSRF double-submit + refresh token rotation",
+					group: "Architecture"
+				},
+				// --- Design System ---
+				{
+					type: "embed",
+					src: "/assets/media/projects/stella/design-system-1.html",
+					caption: "Design System — Cover",
+					group: "Design System"
+				},
+				{
+					type: "embed",
+					src: "/assets/media/projects/stella/design-system-2.html",
+					caption: "Design System — Couleurs (palette, échelles violet/cyan, dégradés, statuts)",
+					group: "Design System"
+				},
+				{
+					type: "embed",
+					src: "/assets/media/projects/stella/design-system-3.html",
+					caption: "Design System — Typographie (4 familles, échelle complète)",
+					group: "Design System"
+				},
+				{
+					type: "embed",
+					src: "/assets/media/projects/stella/design-system-4.html",
+					caption: "Design System — Espacements, rayons de bordure, ombres & glows",
+					group: "Design System"
+				},
+				{
+					type: "embed",
+					src: "/assets/media/projects/stella/design-system-5.html",
+					caption: "Design System — Boutons & Formulaires",
+					group: "Design System"
+				},
+				{
+					type: "embed",
+					src: "/assets/media/projects/stella/design-system-6.html",
+					caption: "Design System — Carte étoile, badges & iconographie",
+					group: "Design System"
+				}
 			]
 		}
 	}

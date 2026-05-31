@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POEI Mainframe — Double Architecture</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #33ff33;
+    --green-dim: #1a9a1a;
+    --green-glow: #00ff0044;
+    --amber: #ffaa00;
+    --amber-dim: #996600;
+    --amber-glow: rgba(255, 170, 0, 0.15);
+    --cyan: #00ddff;
+    --cyan-dim: #007a8a;
+    --cyan-glow: rgba(0, 221, 255, 0.12);
+    --red: #ff4444;
+    --white: #ccffcc;
+    --muted: #5a7a5a;
+    --faint: #3a5a3a;
+    --bg: #0a0a08;
+    --surface: #0d0f0a;
+    --surface-up: #111410;
+    --border: #1a2a1a;
+    --border-strong: #2a4a2a;
+    --font: "IBM Plex Mono", "Courier New", monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--green);
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px 56px;
+    min-height: 100vh;
+  }
+
+  /* Subtle scanlines */
+  body::after {
+    content: "";
+    position: fixed; inset: 0;
+    background: repeating-linear-gradient(
+      0deg, transparent, transparent 2px,
+      rgba(0, 0, 0, 0.06) 2px, rgba(0, 0, 0, 0.06) 4px
+    );
+    pointer-events: none; z-index: 9999;
+  }
+
+  /* Vignette */
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    background: radial-gradient(ellipse at center, transparent 65%, rgba(0,0,0,0.5) 100%);
+    pointer-events: none; z-index: 9998;
+  }
+
+  .canvas { width: 100%; max-width: 1040px; }
+
+  /* -- Header -- */
+  .header { text-align: center; margin-bottom: 40px; }
+  .eyebrow {
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .header h1 {
+    font-size: clamp(20px, 3.2vw, 32px);
+    font-weight: 600; color: var(--green);
+    margin-top: 8px; letter-spacing: 1px;
+    text-shadow: 0 0 20px var(--green-glow);
+  }
+  .header h1 .accent { color: var(--amber); text-shadow: 0 0 20px var(--amber-glow); }
+  .header .subtitle {
+    font-size: 11px; color: var(--muted);
+    margin-top: 8px; max-width: 560px;
+    margin-left: auto; margin-right: auto;
+  }
+
+  /* -- Dual columns -- */
+  .dual { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  /* -- Column header -- */
+  .col-header {
+    text-align: center; padding: 12px 14px;
+    border: 1px solid var(--border);
+    border-bottom: 2px solid;
+    background: var(--surface);
+  }
+  .col-header--zos { border-bottom-color: var(--green); }
+  .col-header--docker { border-bottom-color: var(--amber); }
+  .col-title { font-size: 14px; font-weight: 600; letter-spacing: 1px; }
+  .col-header--zos .col-title { color: var(--green); text-shadow: 0 0 10px var(--green-glow); }
+  .col-header--docker .col-title { color: var(--amber); text-shadow: 0 0 10px var(--amber-glow); }
+  .col-sub { font-size: 10px; color: var(--muted); margin-top: 2px; }
+
+  /* -- Column body -- */
+  .col-body {
+    display: flex; flex-direction: column; gap: 0;
+    border: 1px solid var(--border);
+    border-top: none;
+    padding: 14px;
+  }
+
+  /* -- Nodes -- */
+  .node {
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .node--green { border-color: var(--green-dim); }
+  .node--green .node-title { color: var(--green); }
+  .node--green .node-tag { border-color: #1a3a1a; color: var(--green-dim); }
+
+  .node--amber { border-color: var(--amber-dim); }
+  .node--amber .node-title { color: var(--amber); }
+  .node--amber .node-tag { border-color: #3a2a0a; color: var(--amber-dim); }
+
+  .node--cyan { border-color: var(--cyan-dim); }
+  .node--cyan .node-title { color: var(--cyan); }
+  .node--cyan .node-tag { border-color: #0a2a30; color: var(--cyan-dim); }
+
+  .node--red { border-color: #662222; }
+  .node--red .node-title { color: var(--red); }
+  .node--red .node-tag { border-color: #3a1a1a; color: #aa4444; }
+
+  .node-head { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+  .node-title { font-size: 13px; font-weight: 600; letter-spacing: 0.5px; }
+  .node-sub { font-size: 10px; color: var(--muted); line-height: 1.4; }
+  .node-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+  .node-tag {
+    font-size: 9px; font-weight: 500;
+    letter-spacing: 0.3px;
+    padding: 2px 6px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--muted);
+  }
+
+  /* -- Arrows -- */
+  .arrow { display: flex; align-items: center; justify-content: center; padding: 6px 0; gap: 8px; }
+  .arrow-line {
+    width: 1px; height: 18px;
+    background: var(--border-strong);
+    position: relative;
+  }
+  .arrow-line::after {
+    content: '';
+    position: absolute; bottom: -1px; left: 50%;
+    transform: translateX(-50%);
+    border: 3px solid transparent;
+    border-top: 4px solid var(--border-strong);
+  }
+  .arrow-label {
+    font-size: 8px; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--faint);
+    background: var(--surface-up);
+    padding: 2px 6px;
+    border: 1px solid var(--border);
+  }
+
+  /* -- Shared layer -- */
+  .shared-layer {
+    margin-top: 20px; padding: 16px;
+    border: 1px dashed var(--border-strong);
+    background: var(--surface);
+  }
+  .shared-layer .layer-title {
+    font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--faint);
+    margin-bottom: 10px; text-align: center;
+  }
+  .shared-layer .row { display: flex; gap: 10px; }
+  .shared-layer .row > * { flex: 1; }
+
+  /* -- Stats -- */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 20px; }
+  .stat-card {
+    text-align: center; padding: 12px 8px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .stat-val {
+    font-size: 26px; font-weight: 600;
+    letter-spacing: 2px; color: var(--green);
+    text-shadow: 0 0 12px var(--green-glow);
+  }
+  .stat-label {
+    font-size: 9px; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 1px;
+    margin-top: 2px;
+  }
+  .stat-card--amber .stat-val { color: var(--amber); text-shadow: 0 0 12px var(--amber-glow); }
+  .stat-card--cyan .stat-val { color: var(--cyan); text-shadow: 0 0 12px var(--cyan-glow); }
+
+  /* -- Divider -- */
+  .divider { display: flex; align-items: center; gap: 12px; margin: 28px 0 16px; }
+  .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border-strong); }
+  .divider span {
+    font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--faint); font-weight: 500;
+  }
+
+  /* -- Deploy -- */
+  .deploy-row { display: flex; gap: 10px; justify-content: center; align-items: center; }
+  .deploy-card {
+    flex: 1; max-width: 200px; text-align: center;
+    padding: 12px; border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .deploy-card .card-icon { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+  .deploy-card .card-title { font-size: 12px; font-weight: 600; margin-bottom: 2px; }
+  .deploy-card .card-sub { font-size: 10px; color: var(--muted); }
+  .deploy-card--green .card-title { color: var(--green); }
+  .deploy-card--amber .card-title { color: var(--amber); }
+  .deploy-card--cyan .card-title { color: var(--cyan); }
+  .deploy-connector { color: var(--faint); font-size: 14px; flex: 0; padding: 0 4px; }
+
+  @media (max-width: 700px) {
+    .dual { grid-template-columns: 1fr; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .deploy-row { flex-direction: column; }
+    .deploy-connector { transform: rotate(90deg); }
+    .shared-layer .row { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <header class="header">
+    <div class="eyebrow">POEI Mainframe COBOL</div>
+    <h1>Double Architecture <span class="accent">z/OS &amp; Docker</span></h1>
+    <div class="subtitle">Un meme systeme de gestion clientele, deux environnements d'execution : le mainframe original et sa transposition conteneurisee.</div>
+  </header>
+
+  <!-- ===== DUAL COLUMNS ===== -->
+  <div class="dual">
+
+    <!-- LEFT: z/OS -->
+    <div>
+      <div class="col-header col-header--zos">
+        <div class="col-title">[ ENVIRONNEMENT z/OS ]</div>
+        <div class="col-sub">Hercules TK5 &middot; TSO/ISPF</div>
+      </div>
+      <div class="col-body">
+
+        <div class="node node--green">
+          <div class="node-head">
+            <span class="node-title">&gt; Traitements Batch</span>
+          </div>
+          <div class="node-sub">15 programmes COBOL 85 &middot; 60 JCL</div>
+          <div class="node-tags">
+            <span class="node-tag">SORT/MERGE</span>
+            <span class="node-tag">sous-pgm CALL</span>
+            <span class="node-tag">ruptures</span>
+            <span class="node-tag">releves</span>
+          </div>
+        </div>
+
+        <div class="arrow">
+          <div class="arrow-line"></div>
+          <span class="arrow-label">fichiers seq.</span>
+          <div class="arrow-line"></div>
+        </div>
+
+        <div class="node node--cyan">
+          <div class="node-head">
+            <span class="node-title">&gt; VSAM KSDS</span>
+          </div>
+          <div class="node-sub">4 fichiers indexes &middot; index alternatifs (AIX)</div>
+          <div class="node-tags">
+            <span class="node-tag">CLIENT</span>
+            <span class="node-tag">COMPTE</span>
+            <span class="node-tag">PROFES</span>
+            <span class="node-tag">REGION</span>
+          </div>
+        </div>
+
+        <div class="arrow">
+          <div class="arrow-line"></div>
+          <span class="arrow-label">EXEC SQL</span>
+          <div class="arrow-line"></div>
+        </div>
+
+        <div class="node node--cyan">
+          <div class="node-head">
+            <span class="node-title">&gt; DB2/SQL</span>
+          </div>
+          <div class="node-sub">11 programmes COBOL-SQL &middot; 14 scripts &middot; 5 tables</div>
+          <div class="node-tags">
+            <span class="node-tag">curseurs</span>
+            <span class="node-tag">COMMIT/ROLLBACK</span>
+            <span class="node-tag">vues</span>
+            <span class="node-tag">jointures</span>
+          </div>
+        </div>
+
+        <div class="arrow">
+          <div class="arrow-line"></div>
+          <span class="arrow-label">EXEC CICS</span>
+          <div class="arrow-line"></div>
+        </div>
+
+        <div class="node node--amber">
+          <div class="node-head">
+            <span class="node-title">&gt; CICS TS</span>
+          </div>
+          <div class="node-sub">7 programmes pseudo-conversationnels &middot; COMMAREA</div>
+          <div class="node-tags">
+            <span class="node-tag">AFFI</span>
+            <span class="node-tag">AJOU</span>
+            <span class="node-tag">MAJU</span>
+            <span class="node-tag">SUPP</span>
+            <span class="node-tag">DELG</span>
+            <span class="node-tag">LIST</span>
+            <span class="node-tag">STAT</span>
+          </div>
+        </div>
+
+        <div class="arrow">
+          <div class="arrow-line"></div>
+          <span class="arrow-label">SEND / RECEIVE MAP</span>
+          <div class="arrow-line"></div>
+        </div>
+
+        <div class="node node--amber">
+          <div class="node-head">
+            <span class="node-title">&gt; Ecrans BMS</span>
+          </div>
+          <div class="node-sub">7 maps &middot; interfaces terminal 3270</div>
+          <div class="node-tags">
+            <span class="node-tag">FSET</span>
+            <span class="node-tag">DATAONLY</span>
+            <span class="node-tag">CURSOR dyn.</span>
+            <span class="node-tag">pagination</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- RIGHT: Docker -->
+    <div>
+      <div class="col-header col-header--docker">
+        <div class="col-title">[ CONTENEUR DOCKER ]</div>
+        <div class="col-sub">GnuCOBOL &middot; Flask &middot; Railway</div>
+      </div>
+      <div class="col-body">
+
+        <div class="node node--amber">
+          <div class="node-head">
+            <span class="node-title">&gt; GnuCOBOL</span>
+          </div>
+          <div class="node-sub">15 programmes batch compiles &middot; ASSIGN TO fichier</div>
+          <div class="node-tags">
+            <span class="node-tag">cobc -x</span>
+            <span class="node-tag">LINE SEQUENTIAL</span>
+            <span class="node-tag">COB_LIBRARY_PATH</span>
+          </div>
+        </div>
+
+        <div class="arrow">
+          <div class="arrow-line"></div>
+          <span class="arrow-label">subprocess</span>
+          <div class="arrow-line"></div>
+        </div>
+
+        <div class="node node--cyan">
+          <div class="node-head">
+            <span class="node-title">&gt; API Flask</span>
+          </div>
+          <div class="node-sub">REST API &middot; Gunicorn &middot; CORS</div>
+          <div class="node-tags">
+            <span class="node-tag">/api/programs</span>
+            <span class="node-tag">/api/run/:id</span>
+            <span class="node-tag">/api/db2/queries</span>
+            <span class="node-tag">/api/db2/run/:id</span>
+            <span class="node-tag">/api/cics/screens</span>
+            <span class="node-tag">/api/source/:id</span>
+          </div>
+        </div>
+
+        <div class="arrow">
+          <div class="arrow-line"></div>
+          <span class="arrow-label">SQL</span>
+          <div class="arrow-line"></div>
+        </div>
+
+        <div class="node node--cyan">
+          <div class="node-head">
+            <span class="node-title">&gt; SQLite</span>
+          </div>
+          <div class="node-sub">Simulation DB2 &middot; meme schema, memes donnees</div>
+          <div class="node-tags">
+            <span class="node-tag">db2_sim.py</span>
+            <span class="node-tag">5 tables</span>
+            <span class="node-tag">14 requetes</span>
+          </div>
+        </div>
+
+        <div class="arrow">
+          <div class="arrow-line"></div>
+          <span class="arrow-label">cics_screens.py</span>
+          <div class="arrow-line"></div>
+        </div>
+
+        <div class="node node--amber">
+          <div class="node-head">
+            <span class="node-title">&gt; Replay Ecrans CICS</span>
+          </div>
+          <div class="node-sub">Simulation des 7 transactions en ASCII art</div>
+          <div class="node-tags">
+            <span class="node-tag">navigation</span>
+            <span class="node-tag">rendu terminal</span>
+            <span class="node-tag">donnees live</span>
+          </div>
+        </div>
+
+        <div class="arrow">
+          <div class="arrow-line"></div>
+          <span class="arrow-label">HTML / CSS / JS</span>
+          <div class="arrow-line"></div>
+        </div>
+
+        <div class="node node--green">
+          <div class="node-head">
+            <span class="node-title">&gt; Interface Web</span>
+          </div>
+          <div class="node-sub">SPA statique &middot; navigation entre les 3 phases</div>
+          <div class="node-tags">
+            <span class="node-tag">batch exec</span>
+            <span class="node-tag">DB2 requetes</span>
+            <span class="node-tag">ecrans CICS</span>
+            <span class="node-tag">code source</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== SHARED DATA ===== -->
+  <div class="shared-layer">
+    <div class="layer-title">Domaine metier partage</div>
+    <div class="row">
+      <div class="node node--green" style="text-align: center;">
+        <div class="node-title">Clients</div>
+        <div class="node-sub">NUM_COMPTE, NOM, PRENOM, SOLDE, POS (DB/CR)</div>
+      </div>
+      <div class="node node--cyan" style="text-align: center;">
+        <div class="node-title">Comptes &amp; Mouvements</div>
+        <div class="node-sub">CHQ, VER, VIR &middot; ruptures debit/credit</div>
+      </div>
+      <div class="node node--amber" style="text-align: center;">
+        <div class="node-title">References</div>
+        <div class="node-sub">4 regions, 5 natures, professions</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== STATS ===== -->
+  <div class="divider"><span>Statistiques du projet</span></div>
+
+  <div class="stats">
+    <div class="stat-card">
+      <div class="stat-val">33</div>
+      <div class="stat-label">Programmes COBOL</div>
+    </div>
+    <div class="stat-card stat-card--amber">
+      <div class="stat-val">60</div>
+      <div class="stat-label">Fichiers JCL</div>
+    </div>
+    <div class="stat-card stat-card--cyan">
+      <div class="stat-val">14</div>
+      <div class="stat-label">Scripts SQL</div>
+    </div>
+    <div class="stat-card stat-card--amber">
+      <div class="stat-val">7</div>
+      <div class="stat-label">Maps BMS</div>
+    </div>
+  </div>
+
+  <!-- ===== DEPLOY ===== -->
+  <div class="divider"><span>Deploiement</span></div>
+
+  <div class="deploy-row">
+    <div class="deploy-card deploy-card--green">
+      <div class="card-icon">[ z/OS ]</div>
+      <div class="card-title">Hercules TK5</div>
+      <div class="card-sub">Emulateur mainframe</div>
+    </div>
+    <div class="deploy-connector">&rarr;</div>
+    <div class="deploy-card deploy-card--amber">
+      <div class="card-icon">[ DOCKER ]</div>
+      <div class="card-title">Docker</div>
+      <div class="card-sub">GnuCOBOL + Flask</div>
+    </div>
+    <div class="deploy-connector">&rarr;</div>
+    <div class="deploy-card deploy-card--cyan">
+      <div class="card-icon">[ PROD ]</div>
+      <div class="card-title">Railway</div>
+      <div class="card-sub">Production</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

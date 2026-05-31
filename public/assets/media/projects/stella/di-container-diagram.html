@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stella — DI Container</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Bebas+Neue&family=Roboto:wght@400;500;700&family=Roboto+Slab:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  :root {
+    --bg:           #0f0a18;
+    --bg-grad:      linear-gradient(135deg, #3D2A54 0%, #1E1326 55%, #0f0a18 100%);
+    --surface-0:    rgba(61, 42, 84, 0.25);
+    --surface-1:    rgba(61, 42, 84, 0.40);
+    --surface-2:    rgba(61, 42, 84, 0.55);
+    --border:       rgba(174, 201, 255, 0.12);
+    --border-strong:rgba(174, 201, 255, 0.25);
+
+    --fg:           #AEC9FF;
+    --fg-strong:    #ffffff;
+    --fg-muted:     rgba(174, 201, 255, 0.6);
+    --fg-faint:     rgba(174, 201, 255, 0.35);
+
+    --amber:        #FFB347;
+    --amber-deep:   #e69a2e;
+    --cyan:         #38bdf8;
+    --green:        #34d399;
+    --green-deep:   #059669;
+    --magenta:      #e040fb;
+    --purple:       #a78bfa;
+
+    --font-display: 'Dela Gothic One', cursive;
+    --font-body:    'Roboto', sans-serif;
+    --font-serif:   'Roboto Slab', serif;
+    --font-mono:    'JetBrains Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    background-image: var(--bg-grad);
+    background-attachment: fixed;
+    color: var(--fg);
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    justify-content: center;
+    padding: 48px 24px 64px;
+    min-height: 100vh;
+  }
+
+  .canvas { width: 100%; max-width: 900px; }
+
+  .header { text-align: center; margin-bottom: 48px; }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--fg-muted); font-weight: 500;
+  }
+  .header h1 {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 3.5vw, 36px);
+    color: var(--fg-strong); line-height: 1.15; margin-top: 8px;
+  }
+  .header h1 .accent { color: var(--amber); }
+  .header p {
+    font-size: 13px; color: var(--fg-muted); margin-top: 8px;
+    font-family: var(--font-mono);
+  }
+
+  /* ── Shared ── */
+  .flow { display: flex; flex-direction: column; gap: 0; }
+  .arrow { display: flex; align-items: center; justify-content: center; padding: 10px 0; gap: 10px; }
+  .arrow-line {
+    width: 1.5px; height: 28px;
+    background: var(--border-strong); position: relative;
+  }
+  .arrow-line::after {
+    content: '';
+    position: absolute; bottom: -1px; left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-top: 5px solid var(--border-strong);
+  }
+  .arrow-label {
+    font-family: var(--font-mono);
+    font-size: 9px; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--fg-faint);
+    background: var(--surface-1); padding: 2px 8px;
+    border-radius: 4px; border: 1px solid var(--border);
+    white-space: nowrap;
+  }
+
+  .box {
+    padding: 20px 24px; border-radius: 16px;
+    border: 1px solid var(--border);
+    background: var(--surface-0);
+    backdrop-filter: blur(12px);
+  }
+  .box--amber { background: linear-gradient(135deg, rgba(255,179,71,0.12), rgba(255,179,71,0.04)); border-color: rgba(255,179,71,0.25); }
+  .box--cyan { background: linear-gradient(135deg, rgba(56,189,248,0.1), rgba(56,189,248,0.03)); border-color: rgba(56,189,248,0.2); }
+  .box--green { background: linear-gradient(135deg, rgba(52,211,153,0.1), rgba(52,211,153,0.03)); border-color: rgba(52,211,153,0.2); }
+  .box--strong { background: var(--surface-2); border-color: var(--border-strong); }
+
+  .box-head { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+  .box-icon { font-size: 20px; }
+  .box-title { font-family: var(--font-serif); font-size: 15px; font-weight: 600; color: var(--fg-strong); }
+  .box--amber .box-title { color: var(--amber); }
+  .box--cyan .box-title { color: var(--cyan); }
+  .box--green .box-title { color: var(--green); }
+  .box-sub { font-size: 12px; color: var(--fg-muted); font-weight: 500; }
+
+  /* ── Methods grid ── */
+  .methods {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 8px; margin-top: 12px;
+  }
+  .method {
+    padding: 10px 14px; border-radius: 10px;
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    transition: border-color 0.15s;
+  }
+  .method:hover { border-color: var(--border-strong); }
+  .method-name {
+    font-family: var(--font-mono);
+    font-size: 12px; font-weight: 600; color: var(--amber);
+  }
+  .method-desc { font-size: 11px; color: var(--fg-muted); margin-top: 3px; }
+
+  /* ── Registration table ── */
+  .reg-table {
+    width: 100%; border-collapse: collapse;
+    margin-top: 14px; font-size: 11px;
+  }
+  .reg-table th {
+    font-family: var(--font-mono);
+    font-size: 9px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--fg-faint); text-align: left;
+    padding: 6px 8px;
+    border-bottom: 1px solid var(--border-strong);
+  }
+  .reg-table td {
+    padding: 7px 8px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .reg-table .name {
+    font-family: var(--font-mono);
+    font-weight: 600; color: var(--fg); font-size: 11px;
+  }
+  .reg-table .impl {
+    font-family: var(--font-mono);
+    font-size: 10px; color: var(--fg-muted);
+  }
+  .reg-table .deps {
+    font-family: var(--font-mono);
+    font-size: 10px; color: var(--fg-faint);
+  }
+  .reg-type {
+    font-family: var(--font-mono);
+    font-size: 8px; font-weight: 600;
+    letter-spacing: 0.06em;
+    padding: 2px 6px; border-radius: 3px;
+    white-space: nowrap;
+  }
+  .reg-type--singleton { background: rgba(52,211,153,0.15); color: var(--green); border: 1px solid rgba(52,211,153,0.3); }
+  .reg-type--instance { background: rgba(56,189,248,0.15); color: var(--cyan); border: 1px solid rgba(56,189,248,0.3); }
+
+  /* ── Row ── */
+  .row { display: flex; gap: 12px; }
+  .row > * { flex: 1; }
+
+  .divider { display: flex; align-items: center; gap: 12px; margin: 36px 0 24px; }
+  .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border-strong); }
+  .divider span {
+    font-family: var(--font-mono);
+    font-size: 10px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--fg-faint); font-weight: 500;
+  }
+
+  @media (max-width: 600px) { .row { flex-direction: column; } }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <header class="header">
+    <div class="eyebrow">Stella E-Commerce</div>
+    <h1>DI <span class="accent">Container</span></h1>
+    <p>Conteneur custom (256 lignes, 0 dep) &middot; register / resolve / singleton</p>
+  </header>
+
+  <div class="flow">
+
+    <!-- CONTAINER CLASS -->
+    <div class="box box--strong">
+      <div class="box-head">
+        <span class="box-icon">&#128230;</span>
+        <span class="box-title" style="color:var(--fg-strong);">DIContainer</span>
+      </div>
+      <div class="box-sub">Classe generique avec resolution recursive des dependances</div>
+      <div class="methods">
+        <div class="method">
+          <div class="method-name">register()</div>
+          <div class="method-desc">Class + dependencies + singleton flag</div>
+        </div>
+        <div class="method">
+          <div class="method-name">registerInstance()</div>
+          <div class="method-desc">Objet pre-configure directement</div>
+        </div>
+        <div class="method">
+          <div class="method-name">registerFactory()</div>
+          <div class="method-desc">Factory function + dependencies</div>
+        </div>
+        <div class="method">
+          <div class="method-name">resolve()</div>
+          <div class="method-desc">Resolution recursive + cache singleton</div>
+        </div>
+        <div class="method">
+          <div class="method-name">validateAll()</div>
+          <div class="method-desc">Detection dependances circulaires</div>
+        </div>
+        <div class="method">
+          <div class="method-name">resetContainer()</div>
+          <div class="method-desc">Teardown pour les tests</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrow">
+      <div class="arrow-line"></div>
+      <span class="arrow-label">containerConfig.js</span>
+      <div class="arrow-line"></div>
+    </div>
+
+    <!-- REGISTRATIONS -->
+    <div class="box">
+      <div class="box-head">
+        <span class="box-icon">&#128221;</span>
+        <span class="box-title">Enregistrements Backend</span>
+      </div>
+      <div class="box-sub">13 services enregistres au demarrage</div>
+
+      <table class="reg-table">
+        <thead>
+          <tr><th>Service</th><th>Implementation</th><th>Dependencies</th><th>Type</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="name">hashingService</td><td class="impl">BcryptHashingService</td><td class="deps">—</td><td><span class="reg-type reg-type--singleton">singleton</span></td></tr>
+          <tr><td class="name">userRepository</td><td class="impl">SequelizeUserRepository</td><td class="deps">—</td><td><span class="reg-type reg-type--singleton">singleton</span></td></tr>
+          <tr><td class="name">starRepository</td><td class="impl">SequelizeStarRepository</td><td class="deps">—</td><td><span class="reg-type reg-type--singleton">singleton</span></td></tr>
+          <tr><td class="name">orderRepository</td><td class="impl">SequelizeOrderRepository</td><td class="deps">—</td><td><span class="reg-type reg-type--singleton">singleton</span></td></tr>
+          <tr><td class="name">cartRepository</td><td class="impl">SequelizeCartRepository</td><td class="deps">—</td><td><span class="reg-type reg-type--singleton">singleton</span></td></tr>
+          <tr><td class="name">wishlistRepository</td><td class="impl">SequelizeWishlistRepository</td><td class="deps">—</td><td><span class="reg-type reg-type--singleton">singleton</span></td></tr>
+          <tr><td class="name">reviewRepository</td><td class="impl">SequelizeReviewRepository</td><td class="deps">—</td><td><span class="reg-type reg-type--singleton">singleton</span></td></tr>
+          <tr><td class="name">cartService</td><td class="impl">CartService</td><td class="deps">cartRepo, starRepo</td><td><span class="reg-type reg-type--singleton">singleton</span></td></tr>
+          <tr><td class="name">starAdminService</td><td class="impl">StarAdminService</td><td class="deps">starRepo</td><td><span class="reg-type reg-type--singleton">singleton</span></td></tr>
+          <tr><td class="name">orderService</td><td class="impl">OrderService</td><td class="deps">orderRepo, starRepo, userRepo</td><td><span class="reg-type reg-type--singleton">singleton</span></td></tr>
+          <tr><td class="name">tokenService</td><td class="impl">(pre-configured)</td><td class="deps">—</td><td><span class="reg-type reg-type--instance">instance</span></td></tr>
+          <tr><td class="name">paymentService</td><td class="impl">(pre-configured)</td><td class="deps">—</td><td><span class="reg-type reg-type--instance">instance</span></td></tr>
+          <tr><td class="name">emailService</td><td class="impl">(pre-configured)</td><td class="deps">—</td><td><span class="reg-type reg-type--instance">instance</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="arrow">
+      <div class="arrow-line"></div>
+      <span class="arrow-label">getService(name)</span>
+      <div class="arrow-line"></div>
+    </div>
+
+    <!-- CONSUMERS -->
+    <div class="row">
+      <div class="box box--amber">
+        <div class="box-head">
+          <span class="box-icon">&#127919;</span>
+          <span class="box-title">Controllers</span>
+        </div>
+        <div class="box-sub">Resolvent les services via getService() dans chaque handler</div>
+      </div>
+      <div class="box box--cyan">
+        <div class="box-head">
+          <span class="box-icon">&#129514;</span>
+          <span class="box-title">Tests</span>
+        </div>
+        <div class="box-sub">createTestContainer(mocks) pour injecter des fakes</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FRONTEND DI -->
+  <div class="divider"><span>DI Container Frontend</span></div>
+
+  <div class="box box--green">
+    <div class="box-head">
+      <span class="box-icon">&#9878;&#65039;</span>
+      <span class="box-title">FrontendDIContainer</span>
+    </div>
+    <div class="box-sub">Meme pattern cote client — repositories API injectes dans les stores Zustand</div>
+
+    <table class="reg-table">
+      <thead>
+        <tr><th>Service</th><th>Implementation</th><th>Consommateur</th><th>Type</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">cartRepository</td><td class="impl">ApiCartRepository</td><td class="deps">useCartStore</td><td><span class="reg-type reg-type--singleton">singleton</span></td></tr>
+        <tr><td class="name">wishlistRepository</td><td class="impl">ApiWishlistRepository</td><td class="deps">useWishlistStore</td><td><span class="reg-type reg-type--singleton">singleton</span></td></tr>
+        <tr><td class="name">userRepository</td><td class="impl">ApiUserRepository</td><td class="deps">useUserStore</td><td><span class="reg-type reg-type--singleton">singleton</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+</body>
+</html>

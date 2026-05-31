@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { useScroll, useTransform, motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { FaEye } from "react-icons/fa";
+import { FaEye, FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import { PROJECTS } from "@/data/projects";
 
@@ -99,8 +99,8 @@ function ProjectGroup({ title, items, startIndex, t }: {
 							className="w-full flex flex-col lg:flex-row gap-6 items-start
 							bg-gradient-to-br from-lime/20 via-orange/10 to-violet/5
 							dark:from-lime/10 dark:via-orange/5 dark:to-violet/10
-							backdrop-blur-md border border-lime/30 dark:border-lime/20 rounded-2xl shadow-glow-lime p-6
-							hover:shadow-glow-lime-lg hover:scale-[1.01]
+							backdrop-blur-md border border-lime/30 dark:border-lime/20 rounded-2xl shadow-card p-6
+							hover:shadow-card-hover hover:scale-[1.01]
 							transition-all duration-300 ease-[cubic-bezier(0.83,0,0.17,1)]"
 						>
 							<div className="w-full lg:w-1/2 aspect-[4/3]">
@@ -113,29 +113,61 @@ function ProjectGroup({ title, items, startIndex, t }: {
 							</div>
 							<div className="w-full lg:w-1/2 flex flex-col gap-2">
 								<div className="flex items-end gap-4 mb-2">
-									<span className="text-6xl font-display font-extralight text-orange-dark leading-none">
+									<span className="text-7xl md:text-8xl font-display font-thin text-orange-dark leading-none tracking-[-0.03em]" style={{ fontVariationSettings: 'var(--fv-ghost)' }}>
 										{globalIndex + 1}.
 									</span>
 									<h3 className="text-3xl font-extrabold font-display leading-snug">
 										{projectTranslations?.title || project.title}
 									</h3>
 								</div>
-								<p className="text-lg leading-snug text-violet/80 dark:text-beige/80">{projectTranslations?.description || project.description}</p>
+								<p className="text-xl font-display font-light leading-snug text-violet/80 dark:text-beige/80">{projectTranslations?.description || project.description}</p>
 								<p className="text-sm font-sans font-bold uppercase tracking-wider text-violet/60 dark:text-beige/60 mt-3">{t('labels.deliverables')}</p>
 								<p className="text-base mb-1 text-violet/80 dark:text-beige/80">{projectTranslations?.deliverables || project.deliverables}</p>
 								<p className="text-sm font-sans font-bold uppercase tracking-wider text-violet/60 dark:text-beige/60 mt-3">{t('labels.context')}</p>
 								<p className="text-base text-violet/80 dark:text-beige/80">{projectTranslations?.context || project.context}</p>
-								<Link
-									to={`/projet/${project.id}`}
-									className="mt-6 px-4 py-2 rounded-full bg-orange/10 text-orange-dark dark:text-orange border border-orange/20
-									hover:bg-orange hover:text-beige dark:hover:bg-orange/20 dark:hover:text-orange
-									transition-all duration-300
-									inline-flex items-center gap-2 self-start font-medium text-sm
-									hover:shadow-glow-orange hover:scale-105 active:scale-95"
-									aria-label={`${t('labels.seeMore')} ${projectTranslations?.title || project.title}`}
-								>
-									<FaEye className="inline-block" /> {t('labels.moreDetails')}
-								</Link>
+								<div className="flex flex-wrap gap-3 mt-6">
+									<Link
+										to={`/projet/${project.id}`}
+										className="px-4 py-2 rounded-full bg-orange/10 text-orange-dark dark:text-orange border border-orange/20
+										hover:bg-orange hover:text-beige dark:hover:bg-orange/20 dark:hover:text-orange
+										transition-all duration-300
+										inline-flex items-center gap-2 font-medium text-sm
+										hover:shadow-cta hover:scale-105 active:scale-95"
+										aria-label={`${t('labels.seeMore')} ${projectTranslations?.title || project.title}`}
+									>
+										<FaEye className="inline-block" /> {t('labels.moreDetails')}
+									</Link>
+									{project.githubUrl && (
+										<a
+											href={project.githubUrl}
+											target="_blank"
+											rel="noopener noreferrer"
+											className="px-4 py-2 rounded-full bg-orange/10 text-orange-dark dark:text-orange border border-orange/20
+											hover:bg-orange hover:text-beige dark:hover:bg-orange/20 dark:hover:text-orange
+											transition-all duration-300
+											inline-flex items-center gap-2 font-medium text-sm
+											hover:shadow-cta hover:scale-105 active:scale-95"
+											aria-label={`Code source ${projectTranslations?.title || project.title}`}
+										>
+											<FaGithub className="inline-block" /> Code
+										</a>
+									)}
+									{project.demoUrl && (
+										<a
+											href={project.demoUrl}
+											target="_blank"
+											rel="noopener noreferrer"
+											className="px-4 py-2 rounded-full bg-orange/10 text-orange-dark dark:text-orange border border-orange/20
+											hover:bg-orange hover:text-beige dark:hover:bg-orange/20 dark:hover:text-orange
+											transition-all duration-300
+											inline-flex items-center gap-2 font-medium text-sm
+											hover:shadow-cta hover:scale-105 active:scale-95"
+											aria-label={`Demo live ${projectTranslations?.title || project.title}`}
+										>
+											<FaExternalLinkAlt className="inline-block" /> Demo
+										</a>
+									)}
+								</div>
 							</div>
 						</article>
 					</FadeInUpOnScroll>

@@ -924,6 +924,43 @@ export const PROJECTS: Project[] = [
 					src: "/assets/media/projects/stella/design-system-6.html",
 					caption: "Design System — Carte étoile, badges & iconographie",
 					group: "Design System"
+				},
+				// --- Swagger API ---
+				{
+					type: "image",
+					src: "/assets/media/projects/stella/swagger-api-1.webp",
+					caption: "Swagger API — Header + Admin (dashboard, users, stars, system)",
+					group: "API"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/stella/swagger-api-2.webp",
+					caption: "Swagger API — Authentication (register, login, refresh, logout) + Cart (CRUD)",
+					group: "API"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/stella/swagger-api-3.webp",
+					caption: "Swagger API — Orders (CRUD + update status) + Payments (initiate, status, refund, stats, webhook)",
+					group: "API"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/stella/swagger-api-4.webp",
+					caption: "Swagger API — Refunds + Payment Stats + Webhooks",
+					group: "API"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/stella/swagger-api-5.webp",
+					caption: "Swagger API — Reviews (CRUD) + Stars (list, filter, search, detail)",
+					group: "API"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/stella/swagger-api-6.webp",
+					caption: "Swagger API — Profile (CRUD, password, stats, export RGPD) + Wishlist (CRUD)",
+					group: "API"
 				}
 			]
 		}

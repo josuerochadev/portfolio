@@ -961,6 +961,31 @@ export const PROJECTS: Project[] = [
 					src: "/assets/media/projects/stella/swagger-api-6.webp",
 					caption: "Swagger API — Profile (CRUD, password, stats, export RGPD) + Wishlist (CRUD)",
 					group: "API"
+				},
+				// --- Tests & CI/CD ---
+				{
+					type: "image",
+					src: "/assets/media/projects/stella/e2e-results.webp",
+					caption: "Playwright E2E — 14 tests passés (auth, catalogue, navigation, 404, health check)",
+					group: "Tests"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/stella/tests-backend.webp",
+					caption: "Jest backend — 4 suites, 76 tests passés (PaymentValidator, detectCardBrand, validateCreditCard, currencies)",
+					group: "Tests"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/stella/tests-frontend.webp",
+					caption: "Jest frontend — 4 suites, 25 tests passés (AuthContainer, cartCalculations, passwordValidation, orderTypes)",
+					group: "Tests"
+				},
+				{
+					type: "image",
+					src: "/assets/media/projects/stella/ci-pipeline.webp",
+					caption: "Pipeline CI/CD — Lint & Test → E2E → Deploy to Render + Security Audit",
+					group: "Tests"
 				}
 			]
 		}

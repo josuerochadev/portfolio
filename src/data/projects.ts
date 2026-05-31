@@ -856,6 +856,13 @@ export const PROJECTS: Project[] = [
 				{ label: "ADRs documentés", value: "5 (Zustand, DI container, JS backend, Sequelize sync, repository pattern)" }
 			],
 			media: [
+				// --- Démo ---
+				{
+					type: "video",
+					src: "/assets/media/projects/stella/stella-demo.mp4",
+					caption: "Démo complète — parcours achat (catalogue, filtres, panier, commande) + auth & profil (inscription, login, wishlist, historique)",
+					group: "Démo"
+				},
 				// --- Architecture ---
 				{
 					type: "embed",
